@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            padding: 30vh 0 0 40vw;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        footer {
+            border: solid 1px black;
+            width: 400px;
+            height: 250px;
+
+            display: flex;
+            flex-flow: column wrap;
+
+            /* 首端对齐 */
+            /*align-items: flex-start;*/
+            /* 尾端对齐 */
+            /*align-items: flex-end;*/
+            /* 居中对齐 */
+            /*align-items: center;*/
+            /* 拉伸: 受当前元素的 height 属性影响。如果不设定高度，则填充满整个父元素 */
+            /*align-items: stretch;*/
+
+            /* 平局分布 */
+            /* 1. 首尾端的最近的两个元素，分别首尾端对齐。中间的其余元素，平均分布 */
+            /*align-content: space-between;*/
+            /* 2. 所有元素平均间距分布，会产生效果：首尾端最近的两个元素举例边界一倍平均间距。与相邻的元素二倍平均间距（因为相邻元素自身也有平均间距）。 */
+            /*align-content: space-around;*/
+            /* 3. 完全平均间距分布 */
+            align-content: space-evenly;
+        }
+
+        footer div {
+            background: black;
+            margin: 5px;
+            width: 70px;
+            height: 150px;
+
+            color: red;
+            text-align: center;
+            line-height: 70px;
+        }
+    </style>
+</head>
+
+<body>
+<footer>
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+</footer>
+</body>
+
+</html>

@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            padding: 30vh 0 0 40vw;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        footer {
+            border: solid 1px black;
+            width: 500px;
+            height: 300px;
+
+            display: flex;
+            flex-flow: column;
+        }
+
+        /* begin */
+        footer :first-child {
+            align-self: flex-end;
+        }
+
+        footer :nth-child(2) {
+            align-self: center;
+        }
+
+        footer :nth-child(3) {
+            align-self: flex-start;
+        }
+
+        footer :nth-child(4) {
+            /* 取消元素的宽度，使 align-self 生效 */
+            width: unset;
+            align-self: stretch;
+        }
+        /* end */
+
+        footer div {
+            background: black;
+            margin: 5px;
+            width: 70px;
+            height: 50px;
+
+            color: red;
+            text-align: center;
+            line-height: 50px;
+        }
+
+    </style>
+</head>
+
+<body>
+<footer>
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+    <div>4</div>
+</footer>
+</body>
+
+</html>

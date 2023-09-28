@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <!--
+
+        flex-shrink: 缩放参数比例。默认为1，即自适应缩放。0 表示不缩放。
+
+    -->
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            padding: 30vh 0 0 40vw;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        footer {
+            border: solid 1px black;
+            width: 400px;
+            height: 400px;
+
+            display: flex;
+        }
+
+        footer div {
+            background: black;
+            height: 150px;
+            margin: 5px;
+
+            /* div 总宽度计大于 footer 的 400px 触发溢出 */
+            width: 200px;
+
+            color: red;
+            text-align: center;
+            line-height: 100px;
+        }
+
+        /*footer div:nth-child(1) {*/
+        /*    flex-shrink: 1;*/
+        /*}*/
+        /*footer div:nth-child(2) {*/
+        /*    flex-shrink: 1;*/
+        /*}*/
+        /*footer div:nth-child(3) {*/
+        /*    flex-shrink: 1;*/
+        /*}*/
+
+        /*footer div:nth-child(1) {*/
+        /*    flex-shrink: 0;*/
+        /*}*/
+        /*footer div:nth-child(2) {*/
+        /*    flex-shrink: 0;*/
+        /*}*/
+        /*footer div:nth-child(3) {*/
+        /*    flex-shrink: 0;*/
+        /*}*/
+
+        footer div:nth-child(1) {
+            flex-shrink: 0;
+        }
+        footer div:nth-child(2) {
+            /* 缩放 1/4 */
+            flex-shrink: 1;
+        }
+        footer div:nth-child(3) {
+            /* 缩放 3/4 */
+            flex-shrink: 3;
+        }
+    </style>
+</head>
+
+<body>
+<footer>
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+</footer>
+</body>
+
+</html>

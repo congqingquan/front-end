@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            padding: 30vh 0 0 40vw;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        footer {
+            border: solid 1px black;
+            width: 500px;
+            height: 300px;
+
+            display: flex;
+            flex-flow: column;
+        }
+
+        /* begin */
+
+        /* 剩余空间：300 - 60 * 3 = 120px，平均分 4 份：120 / 4 = 30px */
+        footer :first-child {
+            flex-grow: 0;
+        }
+
+        /* 50 + 30px */
+        footer :nth-child(2) {
+            flex-grow: 1;
+        }
+
+        /* 50 + 90px */
+        footer :nth-child(3) {
+            flex-grow: 3;
+        }
+        /* end */
+
+        footer div {
+            background: black;
+            margin: 5px;
+            width: 70px;
+            height: 50px;
+
+            color: red;
+            text-align: center;
+            line-height: 50px;
+        }
+
+    </style>
+</head>
+
+<body>
+<footer>
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+</footer>
+</body>
+
+</html>
