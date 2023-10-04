@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+</head>
+
+<!--
+
+    absolute 绝对定位会使得元素脱离当前层，不参与弹性布局。relative 则相反。
+
+-->
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        display: flex;
+        flex-flow: row;
+    }
+
+    div {
+        width: 200px;
+        height: 200px;
+        margin: 5px;
+        background: blueviolet;
+
+        flex-grow: 1;
+    }
+
+    div:first-child {
+        width: 100px;
+        height: 100px;
+        background: black;
+
+        /*position: absolute;*/
+        position: relative;
+    }
+</style>
+
+<body>
+
+    <div></div>
+    <div></div>
+    <div></div>
+
+</body>
+
+</html>

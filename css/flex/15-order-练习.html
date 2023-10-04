@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        height: 100vh;
+        width: 100vw;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    article section {
+        width: 300px;
+        height: 150px;
+        padding: 10px;
+
+        font-size: 20px;
+        color: white;
+
+        display: flex;
+        flex-flow: column;
+    }
+
+    section div {
+        background: blueviolet;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex: 1;
+    }
+
+    section span {
+        background: black;
+        cursor: pointer;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
+
+<script>
+    function up(el) {
+        el.parentElement.style.order = getComputedStyle(el.parentElement, null).order * 1 - 1;
+        console.log(getComputedStyle(el.parentElement, null).order)
+    }
+</script>
+
+<body>
+
+    <main>
+        <article>
+            <section>
+                <div>第一个 Section</div>
+                <span onclick="up(this)">up</span>
+            </section>
+            <section>
+                <div>第二个 Section</div>
+                <span onclick="up(this)">up</span>
+            </section>
+            <section>
+                <div>第三个 Section</div>
+                <span onclick="up(this)">up</span>
+            </section>
+        </article>
+    </main>
+
+</body>
+
+</html>
