@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+
+    <style>
+
+        /* not 可以对已匹配的元素进一步或多步的进行过滤 */
+        /*article>ul>li:nth-child(-n+3):not(:nth-child(1)) {*/
+        article>ul>li:nth-child(-n+3):not(:nth-child(2)):not(:first-child) {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+<article>
+    <ul>
+        <li>A</li>
+        <li>B</li>
+        <li>C</li>
+        <li>D</li>
+    </ul>
+</article>
+
+</body>
+</html>

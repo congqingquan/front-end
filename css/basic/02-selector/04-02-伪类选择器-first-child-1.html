@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        /* 首个子元素匹配 */
+
+        /* 结合标签选择器: 匹配 html 标签所有后代元素的各自的第一个子元素, 且该元素类型必须为 div  */
+        div:first-child {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+<article>
+    <div>first div-1</div>
+    <div>
+        <div>first div-2</div>
+        <div>div</div>
+    </div>
+    <div>div</div>
+</article>
+
+</body>
+</html>

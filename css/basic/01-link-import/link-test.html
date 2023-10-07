@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <!-- green -->
+    <link rel="stylesheet" href="link-test1.css" type="text/css">
+    <!-- black -->
+    <link rel="stylesheet" href="link-test2.css" type="text/css">
+
+    <!--
+        priority:
+            1. style attribute
+            2. style tag
+            3. linked stylesheet files (后引入的样式文件中的样式 覆盖 先引入的样式文件中的样式)
+    -->
+    <style>
+        div {
+            height: 100px;
+            width: 100px;
+            background: red;
+
+            /* 不报错，也不影响已有的样式 */
+            testAttr: test;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div style="background: blue"></div>
+
+</body>
+</html>

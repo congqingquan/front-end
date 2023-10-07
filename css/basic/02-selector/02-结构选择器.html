@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <!--
+        后代：tag tag {}
+        子级：tag>tag {}
+        兄弟: tag~tag {} (所有) / tag+tag {} (向后紧邻的第一个)
+    -->
+    <style>
+
+        /* 后代 */
+        /*article h2 {*/
+        /*    color: red;*/
+        /*}*/
+
+        /* 子级 */
+        /*article > h2 {*/
+        /*    color: red;*/
+        /*}*/
+
+        /* 兄弟 */
+        /*article h1~h2 {*/
+        /*    color: red;*/
+        /*}*/
+
+        article h1 + h2 {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<article>
+    <h1>H1</h1>
+    <h2>H2-1</h2>
+    <section>
+        <h2>H2-2 (section)</h2>
+    </section>
+    <h2>H2-3</h2>
+    <h2>H2-4</h2>
+</article>
+</body>
+</html>

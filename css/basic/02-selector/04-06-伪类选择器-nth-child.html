@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        /* 指定位置的子元素匹配 */
+
+        /**
+            与 first、last 集合结构选择器时的逻辑是一样的。
+         */
+
+        .test1 :nth-child(2) {
+            color: red;
+        }
+
+        .test1 h1:nth-child(1) {
+            color: green;
+        }
+
+        /**
+            特别点在于 nth-child 中可以设置任意常量，表示匹配第 n 个元素。
+
+            或变量 n，n 从 0 开始自增。
+            那么可以实现以下范围匹配效果：
+            1. 奇数: 2n-1
+            2. 偶数: 2n
+            3. 从第 x 个开始：n+x
+            4. 匹配前 x 个元素：-n+x
+         */
+        /*.test2>ul>li:nth-child(2n-1) {*/
+        /*.test2>ul>li:nth-child(odd) {*/
+        /*.test2>ul>li:nth-child(2n) {*/
+        /*.test2>ul>li:nth-child(even) {*/
+        .test2>ul>li:nth-child(n+2) {
+        /*.test2>ul>li:nth-child(-n+1) {*/
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+<article class="test1">
+    <h1>H1-1</h1>
+    <h1>H1-2</h1>
+    <div>
+        <h2>H2-1</h2>
+        <h2>H2-2</h2>
+    </div>
+</article>
+
+<br>
+
+<article class="test2">
+    <ul>
+        <li>A</li>
+        <li>B</li>
+        <li>C</li>
+        <li>D</li>
+    </ul>
+</article>
+
+</body>
+</html>

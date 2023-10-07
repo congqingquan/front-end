@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+
+        /* ============ 超链接 ============= */
+
+        a {
+            text-decoration: none;
+        }
+
+        /* 显示 */
+        a:link {
+            color: red;
+        }
+
+        /* 鼠标悬浮 */
+        a:hover {
+            color: green;
+        }
+
+        /* 点击中 */
+        a:active {
+            color: yellow;
+        }
+
+        /* 访问后 */
+        a:visited {
+            color: black;
+        }
+
+        /* ============ 抵达锚点 ============= */
+        #target {
+            width: 200px;
+            height: 200px;
+            background-color: red;
+            margin-top: 100vh;
+        }
+
+        #target:target {
+            background-color: green;
+        }
+    </style>
+</head>
+<body>
+
+<main>
+    <a href="#">超链接</a>
+
+    <hr>
+
+    <a href="#target">锚点</a>
+    <div id="target"></div>
+</main>
+
+</body>
+</html>

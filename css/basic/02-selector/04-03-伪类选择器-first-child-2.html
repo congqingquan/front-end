@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        /* 首个子元素匹配 */
+
+        /* 结合后代选择器: 匹配 article 自身以及所有后代元素的各自的第一个子元素 */
+        .test1 :first-child {
+            color: red;
+        }
+
+        /* 结合后代选择器: 等同于 04-02-伪类选择器-first-child-1.html 中的测试内容, 只不过是额外限定了搜索范围为 'class=.test2'  */
+        .test2 h1:first-child {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+<article class="test1">
+    <h1>H1-1</h1>
+    <div>
+        <h1>H1-2</h1>
+    </div>
+    <h1>H1-3</h1>
+</article>
+
+<br>
+
+<article class="test2">
+    <h1>H1-1</h1>
+    <div>
+        <h1>H1-2</h1>
+    </div>
+    <h1>H1-3</h1>
+</article>
+
+</body>
+</html>

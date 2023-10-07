@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+</head>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    ul {
+        list-style: none;
+    }
+
+    main {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        flex-flow: column-reverse;
+    }
+
+    footer {
+        width: 100vw;
+        height: 5vh;
+
+        border-top: solid 1px #ccc;
+
+        display: flex;
+    }
+
+    footer > section {
+        height: 5vh;
+        flex: 1;
+        border-right: solid 1px #ccc;
+        background-color: lightgrey;
+        display: flex;
+        flex-flow: column-reverse;
+    }
+
+    footer > section:last-child {
+        border-right: none;
+    }
+
+    footer > section > h4 {
+        flex: 1 0 5vh;
+        cursor: pointer;
+
+        /* 文字居中 */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    footer > section > ul {
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+
+        border: solid 1px #ccc;
+        border-radius: 10px;
+    }
+
+    footer > section > ul > li {
+        width: 100%;
+        flex: 1 0 5vh;
+        border-bottom: solid 1px #ccc;
+        cursor: pointer;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
+
+<body>
+
+    <main>
+        <footer>
+            <section>
+                <h4>教程</h4>
+                <ul>
+                    <li>JAVA</li>
+                    <li>Rust</li>
+                    <li>GO</li>
+                </ul>
+            </section>
+            <section>
+                <h4>课件</h4>
+                <ul>
+                    <li>JAVA</li>
+                    <li>Rust</li>
+                    <li>GO</li>
+                </ul>
+            </section>
+            <section>
+                <h4>软件</h4>
+                <ul>
+                    <li>JAVA</li>
+                    <li>Rust</li>
+                    <li>GO</li>
+                </ul>
+            </section>
+        </footer>
+    </main>
+
+</body>
+
+</html>

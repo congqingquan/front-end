@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        /* 1. 属性匹配 */
+        h1[existsAttr] {
+            color: red;
+        }
+
+        /* 2. 属性值匹配 */
+
+        /* 等值匹配 */
+        h1[h2Attr="value"] {
+            color: green;
+        }
+
+        /* 头部匹配 */
+        /* 1) 完全匹配 */
+        h2[h2Attr^="cqq"] {
+            color: red;
+        }
+        /* 2) 匹配格式："属性值-" */
+        h2[h2Attr|="cqq"] {
+            color: blue;
+        }
+
+        /* 尾部匹配 */
+        h2[h2Attr$="com"] {
+            background-color: green;
+        }
+
+        /* 包含匹配 */
+        h2[h2Attr*="contain"] {
+            background-color: red;
+        }
+
+        /* 包含单词匹配 */
+        h2[h2Attr~="word"] {
+            background-color: green;
+        }
+
+    </style>
+</head>
+<body>
+<article>
+    <h1>H1-1</h1>
+    <h1 existsAttr>H1-2</h1>
+
+    <hr>
+
+    <h1 h2Attr="value">H1-3</h1>
+    <h2 h2Attr="cqq.com">H2-1</h2>
+    <h2 h2Attr="cqq-com">H2-2</h2>
+    <h2 h2Attr="doc.cqq.com">H2-3</h2>
+    <h2 h2Attr="a.contain.c">H2-4</h2>
+    <h2 h2Attr="a. word .c">H2-5</h2>
+</article>
+</body>
+</html>
