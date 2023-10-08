@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+
+    <style>
+
+        /* has 父元素选择器：根据 has 的参数，匹配宿主元素 */
+
+
+        /* 匹配：含有 class 为 g-test-has 的子元素所有 div  */
+        div:has(.g-test-has) {
+            border: 1px solid red;
+        }
+
+        /* 匹配：内部嵌套了 h2 且 h2 后面紧邻的兄弟元素为 label 的 div  */
+        div:has(>h2+label) {
+            border: 1px solid red;
+        }
+
+    </style>
+</head>
+<body>
+
+<main>
+    <div>
+        <p>div -- p</p>
+    </div>
+    <div>
+        <p class="g-test-has">div -- p.has</p>
+    </div>
+    <div>
+        <p>div -- p</p>
+    </div>
+
+    <hr>
+
+    <div>
+        <div>div-1</div>
+        <div>
+            div-2
+            <h2></h2>
+            <label></label>
+        </div>
+        <div>div-3</div>
+    </div>
+</main>
+
+</body>
+</html>

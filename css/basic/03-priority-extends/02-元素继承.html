@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        article {
+            width: 200px;
+            height: 200px;
+
+            /* 无法被继承 */
+            border: solid 1px black;
+            /* 可以被继承，被继承的属性没有权重，为 NULL */
+            color: red;
+        }
+
+        /* 通配符与继承的优先级: 通配符的权重为0，继承的权重为 NULL，所以通配符的权重高。 */
+
+        section {
+            color: red;
+        }
+
+        /** {*/
+        /*    color: green;*/
+        /*}*/
+
+        /*
+            为了避免继承属性可能被覆盖的问题，一般不通过 '* {}' 来设置样式，而是通过 html {} 这样的方法设置可继承属性。
+            避免发生权重 0 与 NULL的冲突，导致继承属性不生效，发生违反直觉的事情。
+        */
+
+        html {
+            color: green;
+        }
+
+    </style>
+</head>
+<body>
+
+<article>
+    <div>extends</div>
+</article>
+
+<hr>
+
+<section>
+    <span>Section</span>
+</section>
+
+</body>
+</html>

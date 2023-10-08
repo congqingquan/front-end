@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        div {
+            font-size: 15px;
+        }
+
+        h1 {
+            /* 1. 字重：字体粗细 */
+            /*font-weight: bold;*/
+            /*font-weight: lighter;*/
+            font-weight: 700;
+
+            /* 2. 字体大小 */
+            /*font-size: 100px;*/
+            /* 百分比对照物：父级元素中设置的 font-size 大小 */
+            font-size: 110%;
+
+            /* 3. 字体颜色 */
+            /* 单词明文 */
+            /*color: red;*/
+
+            /* 16 进制形式 */
+            /*color: #cccccc;*/
+
+            /* rgb 形式：最多255 */
+            /*color: rgb(255, 0, 0);*/
+
+            /* rbg 透明色: 最后一个参数为透明度系数 */
+            color: rgba(255, 0, 0, 0.5);
+        }
+
+        p {
+            /* 4. 行高设置：推荐使用自适应的单位，比如 em。随着字体的大小自动调整行高，在不同终端上的展示效果不会错乱(可以改成 px 查看一下错乱的效果) */
+            font-size: 20px;
+            /*line-height: 15px;*/
+            line-height: 1.5em;
+        }
+
+        h2 {
+            /* 5. 组合设置 */
+            /*font-weight: bold;*/
+            /*font-style: italic;*/
+            /*font-size: 20px;*/
+            /*line-height: 1.5em;*/
+            /*font-family: "Noto Color Emoji";*/
+
+            /*font: bold italic 20px/1.5em "Noto Color Emoji";*/
+
+            /* 6. 字体大小写 */
+            text-transform: uppercase;
+        }
+
+        /* 7. 线条设置 */
+        h3 {
+            text-decoration: underline;
+            text-decoration: line-through;
+            text-decoration: overline;
+        }
+
+        a {
+            /* 由于历史原因，a 标签默认都是带有 underline 属性的，可以手动取消 */
+            text-decoration: none;
+        }
+
+        /* 8. 阴影设置 */
+        h4 {
+            /*
+                参数：颜色 / 阴影 x 轴的偏移量 / 阴影 y 轴的偏移量 / 阴影的模糊度(越小越清晰)
+             */
+            text-shadow: rgba(255, 0, 0, .5) 5px 5px 2px;
+        }
+
+    </style>
+</head>
+<body>
+<div>
+    <h1>字体测试一，嘤嘤嘤</h1>
+    <hr>
+
+    <h2>字体测试二，Yingyingying</h2>
+    <hr>
+
+    <p>
+        自由飞翔(Live) - 凤凰传奇
+        Yo Yo Come On Baby Go
+        Yo Yo 这 这感觉就像
+        一路的芳香还有婆娑轻波
+        转了念的想那些是非因果
+        一路的芳香让我不停捉摸
+        Yo Yo Baby Come On
+        是谁在唱歌温暖了寂寞
+        白云悠悠蓝天依旧泪水在漂泊
+        在那一片苍茫中一个人生活
+        看见远方天国那璀璨的烟火
+    </p>
+    <hr>
+
+    <h3>线条测试</h3>
+    <a href="#">超链接</a>
+    <hr>
+
+    <h4>阴影测试</h4>
+</div>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        input {
+            outline: none;
+        }
+
+        /* ============ 聚焦 ============= */
+        .hoverFocusTest:hover {
+            background-color: red;
+        }
+
+        .hoverFocusTest:focus {
+            background-color: green;
+        }
+
+        /* ============ 启用、禁用 ============= */
+        .enabledDisabledTest:enabled {
+            background-color: red;
+        }
+
+        .enabledDisabledTest:disabled {
+            background-color: green;
+        }
+
+        /* ============ 选中 ============= */
+        form:nth-of-type(2) > input:checked + label {
+            color: red;
+        }
+
+        /* ============ 必填、可选(默认即可选) ============= */
+        input:required {
+            border: solid 1px red;
+        }
+
+        form:nth-of-type(3) > input:optional {
+            border: solid 2px green;
+        }
+
+        /* ============ 校验 ============= */
+        /* 因为 email input 不是必填，所以默认校验通过 */
+        form:nth-of-type(4) > input:valid {
+            border: solid 1px green;
+        }
+
+        form:nth-of-type(4) > input:invalid {
+            border: solid 1px red;
+        }
+    </style>
+</head>
+<body>
+
+<main>
+    <label>
+        <input class="hoverFocusTest" type="text">
+    </label>
+    <hr>
+
+    <form>
+        <label>
+            <input class="enabledDisabledTest" type="text">
+        </label>
+        <label>
+            <input class="enabledDisabledTest" type="text" disabled>
+        </label>
+    </form>
+    <hr>
+
+    <form>
+        <input type="radio" id="man">
+        <label for="man">男</label>
+
+        <input type="radio" id="woman">
+        <label for="woman">女</label>
+    </form>
+    <hr>
+
+    <form>
+        <label for="required">必填</label>
+        <input type="text" required id="required">
+
+        <label for="optional">可选</label>
+        <input type="text" id="optional">
+
+        <button>保存</button>
+    </form>
+    <hr>
+
+    <form>
+        <label for="email">邮箱</label>
+        <input type="email" id="email">
+        <button>保存</button>
+    </form>
+</main>
+
+</body>
+</html>

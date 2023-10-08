@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        /* 1. 搜索操作系统本地字体册：指定加载顺序，若都没有搜索到，则使用浏览器默认字体。且若字体册由多个单词组成，则需要使用双引号包裹。 */
+        h1 {
+            font-family:
+                    ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+                    Helvetica Neue, Arial, Noto Sans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+                    Segoe UI Symbol, "Noto Color Emoji";
+        }
+
+        /* 2. 自定义字体册 */
+        @font-face {
+            font-family: "hk-font";
+            src: url("font/华康娃娃体W5-GB5.ttc") format("opentype");
+        }
+
+        h2 {
+            font-family: hk-font;
+        }
+
+        /* 3. 一般不使用中文字体册，因为一般都太大了 */
+    </style>
+</head>
+<body>
+<h1>字体测试一，嘤嘤嘤</h1>
+<h2>字体测试二，嘤嘤嘤12345</h2>
+</body>
+</html>

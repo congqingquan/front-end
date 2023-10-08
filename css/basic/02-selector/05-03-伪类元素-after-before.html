@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+
+    <style>
+
+        /*
+            伪元素需要结合 content 属性追加内容以及设置对应的样式：
+
+            在 CSS 中，伪元素的 content 属性主要是用于生成内容，并可以通过 :before 和 :after 伪元素添加到元素中。然而，content 属性只接受字符串值，而不接受 HTML 标签。
+            你可以在 content 属性中使用文本字符串、URL 或图片等，但不能直接使用 HTML 标签。
+            如果你想在伪元素中添加复杂的 HTML 结构，你需要使用额外的 HTML 标记，而不是直接在 CSS 的 content 属性中编写。
+        */
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        input {
+            outline: none;
+            border: none;
+        }
+
+        div {
+            border: solid 1px black;
+        }
+
+        div>input+span:after {
+            content: "\293D";
+            position: relative;
+            right: 5px;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+<div>
+    <input type="text"><span></span>
+</div>
+
+</body>
+</html>

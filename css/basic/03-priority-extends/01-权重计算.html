@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        div {
+            width: 200px;
+            height: 200px;
+        }
+
+        /*
+            规则	        粒度
+            --------------------
+            *	            0000
+            标签，伪元素	    0001
+            class，类属性值	0010
+            ID	            0100
+            行内样式	        1000
+        */
+
+        * {
+            background-color: black;
+        }
+
+        div {
+            background-color: red;
+        }
+
+        .divClass {
+            background-color: blue;
+        }
+
+        div[class] {
+            background-color: yellow;
+        }
+
+        #divId {
+            background-color: green;
+        }
+
+        /* 叠加: 以上的各种情况都可以叠加在选择表达式中，根据不同的选择方法进行权重的累加 */
+        main #divId {
+            background-color: white;
+        }
+
+        /*
+            强制提升权重优先级: !important
+
+            假若其他的样式设置中也使用了 !important，则此时依旧需要再次比较选择方法的权重累加
+        */
+        div {
+            background-color: red !important;
+        }
+    </style>
+</head>
+<body>
+
+<main>
+<!--    <div id="divId" class="divClass" style="background-color: blueviolet"></div>-->
+    <div id="divId" class="divClass"></div>
+</main>
+
+</body>
+</html>
