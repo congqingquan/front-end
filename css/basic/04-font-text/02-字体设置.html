@@ -38,14 +38,14 @@
         }
 
         p {
-            /* 4. 行高设置：推荐使用自适应的单位，比如 em。随着字体的大小自动调整行高，在不同终端上的展示效果不会错乱(可以改成 px 查看一下错乱的效果) */
+            /* 4. 行高：推荐使用自适应的单位，比如 em。随着字体的大小自动调整行高，在不同终端上的展示效果不会错乱(可以改成 px 查看一下错乱的效果) */
             font-size: 20px;
             /*line-height: 15px;*/
             line-height: 1.5em;
         }
 
         h2 {
-            /* 5. 组合设置 */
+            /* 5. 字体组合设置 */
             /*font-weight: bold;*/
             /*font-style: italic;*/
             /*font-size: 20px;*/
@@ -58,7 +58,7 @@
             text-transform: uppercase;
         }
 
-        /* 7. 线条设置 */
+        /* 7. 线条 */
         h3 {
             text-decoration: underline;
             text-decoration: line-through;
@@ -70,7 +70,7 @@
             text-decoration: none;
         }
 
-        /* 8. 阴影设置 */
+        /* 8. 阴影 */
         h4 {
             /*
                 参数：颜色 / 阴影 x 轴的偏移量 / 阴影 y 轴的偏移量 / 阴影的模糊度(越小越清晰)
@@ -78,6 +78,74 @@
             text-shadow: rgba(255, 0, 0, .5) 5px 5px 2px;
         }
 
+        /* 9. 空格与换行符与根据内容自动换行设置 */
+        .white-space-div {
+            width: 100px;
+            border: solid 1px black;
+
+            /* 1) 保留空格与换行符：通过 css 的方式使得具有 <pre> 标签的特性，完全保留文本的原样 */
+            white-space: pre;
+
+            /* 2) 只保留换行符 */
+            /*white-space: pre-line;*/
+
+            /* 3) 不保留空格与换行符，并不根据内容自动换行，可能会溢出 */
+            white-space: nowrap;
+
+            /* 4) 默认不保留空格与换行符，并根据内容自动换行 */
+            /*white-space: normal;*/
+        }
+
+        /* 10. 溢出处理 */
+        .overflow-div {
+            width: 100px;
+
+            /* 强制溢出 */
+            white-space: nowrap;
+
+            /* 1. 内容溢出隐藏 */
+            overflow: hidden;
+
+            /* 2. 文本溢出：省略号展示 */
+            text-overflow: ellipsis;
+        }
+
+        /* 11. 文本排列 */
+        .text-align-div {
+            width: 300px;
+            height: 120px;
+            border: solid 1px black;
+
+            /* 1) 文本水平对齐 */
+            /*text-align: center;*/
+
+            /* 3) 文本缩进 */
+            font-size: 12px;
+            /* 缩进两个字宽, 随着 font-size 的变化而变化 */
+            /*text-indent: 2em;*/
+
+            /* 4) 排版方式 */
+            /* 垂直 - 右(r)到左(l) */
+            /*writing-mode: vertical-rl;*/
+        }
+
+        .text-align-div img {
+            width: 100px;
+            height: 100px;
+            border: solid 1px red;
+
+            /* 2) 文本垂直对齐 */
+            vertical-align: middle;
+            /*vertical-align: 50px;*/
+        }
+
+        /* 12. 文本间隙 */
+        .text-spacing-div {
+            /* 字母间隙 */
+            letter-spacing: 10px;
+            /* 单词间隙 */
+            /*word-spacing: 10px;*/
+        }
     </style>
 </head>
 <body>
@@ -108,6 +176,23 @@
     <hr>
 
     <h4>阴影测试</h4>
+    <hr>
+
+    <div class="white-space-div">留白    、
+        留换行测试</div>
+    <hr>
+
+    <div class="overflow-div">溢出测试测试测试测试测试测试测试测试</div>
+    <hr>
+
+    <div class="text-align-div">
+        <img src="https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png">
+        文本对齐测试测试测试测试测试
+    </div>
+    <hr>
+
+    <div class="text-spacing-div">字间隙测试测试测试测试测试测试测试测试Hello CSS</div>
+    <hr>
 </div>
 </body>
 </html>
