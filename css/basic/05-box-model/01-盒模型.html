@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        main {
+            display: flex;
+            flex-flow: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        div:has(div) {
+            width: 226px;
+            height: 226px;
+            border: solid 1px black;
+        }
+
+        /* 1. 边框、内外边距 */
+        main > div:first-of-type > div:nth-of-type(1) {
+            width: 100px;
+            height: 100px;
+
+            /* 内边距 */
+            padding: 30px;
+            /* 边框 */
+            border: solid 3px red;
+            /* 外边距 */
+            margin: 30px;
+        }
+
+        /* 2. 边距的 auto */
+        main > div:nth-of-type(2) > div:nth-of-type(1) {
+            width: 100px;
+            height: 100px;
+
+            /* 内边距: 没有auto */
+            /*padding: 0 auto;*/
+
+            /* 边框 */
+            border: solid 3px red;
+
+            /* 外边距: 使用 auto 实现自动水平居中对齐，不需要计算 px */
+            margin: 0 auto;
+        }
+
+        /* 3. 边距的负值 */
+        main > div:nth-of-type(3) > div:nth-of-type(1) {
+            /* 没有宽高的情况下 */
+            /*border: solid 3px red;*/
+            /*margin: 0 -50px;*/
+
+            /* 有宽高的情况下，margin-right 的负值无效 */
+            width: 100px;
+            height: 100px;
+            border: solid 3px red;
+            /*margin-right: -50px;*/
+
+            /* padding 负值无效果 */
+            /*padding: -50px;*/
+        }
+
+        /* 4. 边距合并: 只有上下合并，左右没有合并 */
+        main > div:nth-of-type(4) > div {
+            width: 150px;
+            height: 50px;
+            border: solid 3px red;
+        }
+
+        main > div:nth-of-type(4) > div:nth-of-type(1) {
+            margin-bottom: 10px;
+        }
+
+        /* 最终会使用上下盒子的上下边距非 30px，而是取二者最大的边距 20px */
+        main > div:nth-of-type(4) > div:nth-of-type(2) {
+            margin-top: 20px;
+        }
+
+        /* 5. 盒大小限制 */
+        main > div:nth-of-type(5) {
+            /* 此时盒的宽高为: (50 + 3 + 50 + 50) * 2，肯定是大于设定的 50px 宽高的 */
+            width: 50px;
+            height: 50px;
+            border: solid 3px red;
+            padding: 50px;
+            margin: 50px;
+
+            /* 强制设定盒子不因边框、内外边距而变换大小 */
+            box-sizing: border-box;
+            /* 默认的是自动变化大小的 */
+            /*box-sizing: content-box;*/
+        }
+
+        /* 6. 边框 */
+        main > div:nth-of-type(6) {
+            width: 100px;
+            height: 100px;
+
+            /*border-top-style: groove;*/
+            /*border-top-width: 30px;*/
+            /*border-top-color: gray;*/
+            border: groove 30px gray;
+        }
+
+        /* 7. 轮廓线(不占用具体空间，会发生样式重叠, 比如下面的输入框) */
+        main > div:nth-of-type(7) {
+            width: 100px;
+            height: 100px;
+            border: groove 30px green;
+
+            /*outline-style: groove;*/
+            /*outline-width: 30px;*/
+            /*outline-color: red;*/
+            outline: groove 30px red;
+        }
+
+        main > div:nth-of-type(7) + input:focus {
+            /* 去除轮廓线 */
+            outline: none;
+        }
+
+        /* 8. 圆角 */
+        main > div:nth-of-type(8) {
+            width: 100px;
+            height: 100px;
+            border: solid 1px red;
+            margin-top: 20px;
+
+            /*border-top-left-radius: 50%;*/
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+
+<main>
+    <div>
+        <!-- 内容 -->
+        <div>非 auto 盒子</div>
+    </div>
+    <hr/>
+
+    <div>
+        <div>auto 盒子</div>
+    </div>
+    <hr/>
+
+    <div>
+        <div>负值盒子</div>
+    </div>
+    <hr/>
+
+    <div>
+        <div>边距合并：上盒子</div>
+        <div>边距合并：下盒子</div>
+    </div>
+    <hr/>
+
+    <div>固定大小盒子</div>
+    <hr/>
+
+    <div>边框盒子</div>
+    <hr/>
+
+    <div>轮廓线盒子</div>
+    <input type="text"/>
+    <hr/>
+
+    <div>圆角盒子</div>
+    <hr/>
+</main>
+
+</body>
+</html>
