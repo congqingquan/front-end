@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        /* 1. 背景色、图 */
+        main > div:first-of-type {
+            width: 500px;
+            height: 300px;
+
+            /* 背景色中的透明度会渗透到图片下 */
+            background-color: rgba(255, 180, 0, .2);
+            background-image: url("img/baidu.png");
+
+            border: solid 1px black;
+        }
+
+        /* 2. 背景裁剪 */
+        main > div:nth-of-type(2) {
+            width: 200px;
+            height: 200px;
+            background-color: rgba(255, 180, 0, .2);
+            border: dotted 5px black;
+            padding: 10px;
+
+            /* 背景裁剪 */
+            /*background-clip: content-box;*/
+            /*background-clip: padding-box;*/
+            /* 默认为 border-box */
+            background-clip: border-box;
+        }
+
+        /* 3. 背景重复设置 */
+        main > div:nth-of-type(3) {
+            width: 500px;
+            height: 200px;
+            border: solid 2px black;
+            background-image: url("img/category.png");
+
+            /* 默认重复 */
+            background-repeat: repeat;
+            background-repeat: no-repeat;
+            background-repeat: repeat-x;
+            background-repeat: repeat-y;
+            /* 均匀重复 */
+            background-repeat: space;
+            background-repeat: round;
+        }
+
+        /* 4. 背景滚动 */
+        main > div:nth-of-type(4) {
+            width: 220px;
+            height: 200px;
+            border: solid 2px black;
+            overflow: auto;
+        }
+
+        main > div:nth-of-type(4) > div {
+            width: 200px;
+            height: 300px;
+            background-image: url("img/user.png");
+            background-repeat: round;
+            /* 1) 结合父元素中的溢出设置才能生效。父元素的 overflow 也有 scroll 的值 */
+            background-attachment: scroll;
+
+            /* 2) 背景图片会固定在窗口中，不会随着页面的滚动而移动。这使得背景图像始终显示在视口的相同位置。 */
+            /*background-attachment: fixed;*/
+        }
+
+        /* 5. 背景定位 */
+        main > div:nth-of-type(5) {
+            width: 200px;
+            height: 200px;
+            border: solid 1px black;
+            background-image: url("img/user.png");
+            background-repeat: no-repeat;
+
+            /* 调整位置 */
+            background-position: center;
+            /*background-position: right bottom;*/
+            /* 水平 - 垂直 */
+            /*background-position: 10% 50%;*/
+            /*background-position: -20px 100px;*/
+        }
+
+        /* 6. 背景尺寸 */
+        main > div:nth-of-type(6) {
+            width: 20vw;
+            height: 200px;
+            border: solid 1px black;
+            background-image: url("img/user.png");
+            background-repeat: no-repeat;
+
+            /* 背景大小 */
+            /*background-size: 100% 100%;*/
+            /*background-size: 200px 100px;*/
+
+            /* 1) 当设定的宽或高使得图片发生了变形，那么可以对没有设置的宽或高设置为 auto，使得根据可以根据已经设定的像素值自动平衡 */
+            /*background-size: 200px auto;*/
+
+            /*
+                2) 图片覆盖整个元素，并根据元素宽高的变化自动调整图片大小。当元素与图片的大小比例不同时，就会发生图片变形。
+                    图片可能不会 100% 全部在整个元素内展示，但可以完全填满，没有留白。
+             */
+            background-size: cover;
+
+            /*
+                3) 图片覆盖整个元素，并根据元素宽高的变化自动调整图片大小。当元素与图片的大小比例不同时，就会发生图片变形。
+                    保证图片 100% 全部在整个元素内展示，但可能不完全填充满，会发生留白。
+             */
+            /*background-size: contain;*/
+        }
+
+        /* 7. 多背景 */
+        main > div:nth-of-type(7) {
+            width: 200px;
+            height: 200px;
+            border: solid 1px black;
+
+            background-image: url("img/user.png"), url("img/category.png");
+            background-repeat: no-repeat, no-repeat;
+            background-position: left top, center;
+        }
+
+        /* 8. 背景组合定义 */
+        main > div:nth-of-type(8) {
+            width: 200px;
+            height: 200px;
+            border: solid 1px black;
+
+            /* 注意 position 与 size 的写法 */
+            background: blueviolet url("img/user.png") no-repeat 50% 50%/100px auto;
+        }
+    </style>
+</head>
+<body>
+<main>
+    <!-- 背景色、图 -->
+    <div></div>
+    <hr>
+
+    <!-- 背景裁剪 -->
+    <div></div>
+    <hr>
+
+    <!-- 背景重复设置-->
+    <div></div>
+    <hr>
+
+    <!-- 背景滚动-->
+    <div>
+        <div></div>
+    </div>
+    <hr>
+
+    <!-- 背景定位 -->
+    <div></div>
+    <hr>
+
+    <!-- 背景尺寸 -->
+    <div></div>
+    <hr>
+
+    <!-- 多背景 -->
+    <div></div>
+    <hr>
+
+    <!-- 背景组合定义 -->
+    <div></div>
+    <hr>
+</main>
+</body>
+</html>

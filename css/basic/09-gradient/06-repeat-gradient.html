@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <!-- 可重复的渐变 -->
+
+    <style>
+        body {
+            width: 100vw;
+            height: 100vh;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        div {
+            width: 500px;
+            height: 200px;
+            /*
+                黑 -> 白: 将中间渐变点设定到与白色渐变区间的尾端，实现黑色覆盖掉白色
+                白 -> 紫: 将中间渐变点设定到与白色渐变区间的首端，实现紫色覆盖掉白色
+             */
+            background: repeating-linear-gradient(to right, black, 25px, white 25px, 25px, blueviolet 50px);
+        }
+    </style>
+</head>
+<body>
+<main>
+    <div></div>
+</main>
+</body>
+</html>

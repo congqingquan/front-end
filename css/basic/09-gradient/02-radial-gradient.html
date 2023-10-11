@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <!-- 径向渐变(从中心点向四周辐射) -->
+
+    <style>
+        div {
+            width: 500px;
+            height: 500px;
+            /* 至少两个颜色参数，默认渐变方向从中心向四周渲染 */
+            background: radial-gradient(red, green);
+
+            /* 1) 定义多种渐变颜色 */
+            background: radial-gradient(red, green, blueviolet);
+
+            /* 2) 定义渐变内容大小 */
+            /* 排除最后一个颜色，其余颜色所占用的大小 */
+            /*background: radial-gradient(100px 150px, red, green, blueviolet);*/
+
+            /* 3) 定义渐变点位 */
+            background: radial-gradient(at left top, red, green, blueviolet);
+            /*background: radial-gradient(at center, red, green, blueviolet);*/
+        }
+    </style>
+</head>
+<body>
+<main>
+    <div></div>
+</main>
+</body>
+</html>

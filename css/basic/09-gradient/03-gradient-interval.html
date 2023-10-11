@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <!-- 渐变区间 -->
+
+    <style>
+        div {
+            width: 500px;
+            height: 500px;
+            /*
+                纯色范围：红色 [0, 49%]，绿色 [91%, 100%]
+                渐变色范围：红色渐变至绿色 [50%, 90%]
+             */
+            background: linear-gradient(to right, red 50%, green 90%);
+            /* 如果不符合区间段，则无法渐变 */
+            /*background: linear-gradient(to right, red 50%, green 40%);*/
+        }
+    </style>
+</head>
+<body>
+<main>
+    <div></div>
+</main>
+</body>
+</html>

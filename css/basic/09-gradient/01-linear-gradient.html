@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <!-- 线性渐变 -->
+
+    <style>
+        div {
+            width: 500px;
+            height: 500px;
+            /* 至少两个颜色参数，默认渐变方向从上向下渲染（由于起始渲染方向为从低向上，所以可以理解默认渐变方向为 180deg），多种颜色所占空间比例相同，即均分 */
+            background: linear-gradient(red, green);
+
+            /* 1) 定义多种渐变颜色 */
+            background: linear-gradient(red, green, blue, blueviolet);
+
+            /* 2) 定义渐变方向 */
+            background: linear-gradient(0deg, red, green, blue, blueviolet);
+            background: linear-gradient(90deg, red, green, blue, blueviolet);
+            /*background: linear-gradient(-90deg, red, green, blue, blueviolet);*/
+
+            /* 语义化方向参数，都可以找到对应的度数。如：to right 为 90deg / to left bottom 为 225deg。从 bottom 开始，顺时针方向，每 45deg 为一个跨度 */
+            /*background: linear-gradient(to right, red, green, blue, blueviolet);*/
+            background: linear-gradient(to left bottom, red, green, blue, blueviolet);
+        }
+    </style>
+</head>
+<body>
+<main>
+    <div></div>
+</main>
+</body>
+</html>
