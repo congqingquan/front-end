@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+
+        /*
+            清除浮动的应用：父元素根据子元素内容而自动变化高度。但因为子元素使用了浮动，导致父元素发生塌陷。
+
+            clearfix: 在父元素的最底部定义一个没有实际空间确真实存在的子元素, 并设置浮动清除，使得该元素处于浮动元素的底部。
+                      通过这个看不见的元素，使得父元素可以间接感知到浮动元素，进而可以自适应高度。
+        */
+
+        main {
+            width: 300px;
+            /* 注意没有高度，根据内容而变化 */
+            border: solid 2px black;
+        }
+
+        main > div:first-of-type {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            float: left;
+        }
+        main > div:nth-of-type(2) {
+            width: 100px;
+            height: 100px;
+            background-color: green;
+            float: left;
+        }
+
+        .clearfix {
+            clear: both;
+        }
+    </style>
+</head>
+<body>
+<main>
+    <div></div>
+    <div></div>
+    <div class="clearfix"></div>
+</main>
+</body>
+</html>

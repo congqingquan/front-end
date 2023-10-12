@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        body {
+            padding: 10px;
+        }
+
+        main > div:first-of-type {
+            width: 330px;
+            height: 330px;
+            border: solid 1px black;
+        }
+
+        main > div:first-of-type > div:first-of-type {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+
+            float: left;
+        }
+        main > div:first-of-type > div:nth-of-type(2) {
+            width: 110px;
+            height: 110px;
+            background-color: green;
+
+            float: right;
+        }
+
+        main > div:first-of-type > div:nth-of-type(3) {
+            width: 120px;
+            height: 120px;
+            background-color: gray;
+
+            /* 1. 清除左浮动，gray 盒子会在什么位置？ */
+            /*clear: left;*/
+            /* 2. 清除右浮动，gray 盒子会在什么位置？ */
+            /*clear: right;*/
+            /* 3. 清除左右浮动，gray 盒子会在什么位置？ */
+            clear: both;
+        }
+    </style>
+</head>
+<body>
+<main>
+    <div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+</main>
+</body>
+</html>

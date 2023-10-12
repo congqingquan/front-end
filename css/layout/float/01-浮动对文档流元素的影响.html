@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        /*
+            一：浮动对于文档流元素的影响
+
+            默认的，所有元素都是在文档流中的。
+            1. 脱离文档流
+                    1) 通过浮动属性修饰后，使得元素脱离文档流至浮动层。
+                    2) 若父元素没有设定盖度，当子元素浮动后，使得父元素发生坍缩。
+        */
+        main > div:first-of-type > div:first-of-type {
+            width: 200px;
+            height: 200px;
+            background-color: red;
+            /* 若第一元素浮动，会使得后面的元素占用当前的空间 */
+            float: left;
+        }
+        main > div:first-of-type > div:nth-of-type(2) {
+            width: 300px;
+            height: 300px;
+            background-color: green;
+            /* 若第二个元素浮动，则不影响前面的元素 */
+            /*float: left;*/
+        }
+
+        /* 2. 在盒模型中，浮动元素的起始位置在父元素的 padding 内*/
+        main > div:first-of-type {
+            width: 500px;
+            height: 500px;
+
+            border: solid 5px black;
+            padding: 10px;
+            margin: 10px;
+        }
+
+        /*
+            二：浮动元素的块状化：
+                1. 块元素浮动后转为行内块，提升到浮动层，原有空间会被其他元素占用
+                2. 行元素浮动后转为行内块，使得可以设置宽高。提升到浮动层，但仍保留在行内的位置，行内的其他元素不会顶替浮动元素的原始位置空间
+        */
+        main > div:nth-of-type(2) > span:first-of-type {
+            width: 50px;
+            height: 50px;
+            border: solid 2px red;
+            float: left;
+        }
+
+        main > div:nth-of-type(2) > span:nth-of-type(2) {
+            width: 50px;
+            height: 50px;
+            border: solid 2px red;
+
+            /*display: inline-block;*/
+        }
+    </style>
+</head>
+<body>
+<main>
+    <div>
+        <div></div>
+        <div></div>
+    </div>
+
+    <div>
+        <span>行内元素1</span>
+        <span>行内元素2</span>
+    </div>
+</main>
+</body>
+</html>

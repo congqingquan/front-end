@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        /*
+            定义列表 dl：等同于 ul
+                1. dt 为标题，默认没有 margin 样式
+                2. dd 等同于 li，但默认会有 margin-left 样式
+        */
+        dd {
+            list-style: lower-roman;
+            /*margin-left: 0;*/
+        }
+    </style>
+</head>
+<body>
+<main>
+    <dl>
+        <dt>前端</dt>
+        <dd>JavaScript</dd>
+        <dd>CSS</dd>
+
+        <dt>后端</dt>
+        <dd>Java</dd>
+        <dd>Rust</dd>
+    </dl>
+</main>
+</body>
+</html>

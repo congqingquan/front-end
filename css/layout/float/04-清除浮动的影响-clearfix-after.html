@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+
+        /*
+            通过 after 伪元素实现 clearfix 浮动清除
+        */
+
+        main {
+            width: 300px;
+            border: solid 2px black;
+        }
+
+        main > div:first-of-type {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            float: left;
+        }
+        main > div:nth-of-type(2) {
+            width: 100px;
+            height: 100px;
+            background-color: green;
+            float: left;
+        }
+
+        main::after {
+            content: "";
+            clear: both;
+            /* 必须定义为 block 元素 */
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<main>
+    <div></div>
+    <div></div>
+</main>
+</body>
+</html>
