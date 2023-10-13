@@ -1,0 +1,194 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+ul li {
+  list-style: none;
+}
+main {
+  width: 100vw;
+}
+main header {
+  border-bottom: solid 2px #24859b;
+  box-shadow: 0 10px 10px rgba(128, 128, 128, 0.2);
+}
+main header nav {
+  width: 70vw;
+  margin: 0 auto;
+  overflow: hidden;
+  padding: 15px;
+}
+main header nav ul li {
+  width: 100px;
+  font-weight: bolder;
+  text-align: center;
+  text-indent: 1.2em;
+  color: gray;
+  float: left;
+}
+main header nav ul li a {
+  color: seagreen;
+  font-weight: bold;
+  text-decoration: none;
+}
+main header nav ul li:nth-of-type(1) {
+  background: url("img/旗帜.png") no-repeat;
+  background-size: 15px 15px;
+  background-position-y: 4px;
+}
+main header nav ul li:last-of-type {
+  color: green;
+}
+main header nav .button > div {
+  width: 50px;
+  margin-left: 5px;
+  text-align: center;
+  color: #24859b;
+  border: solid 2px #24859b;
+  float: right;
+}
+main header nav .button > div:hover {
+  color: white;
+  background: #24859b;
+  cursor: pointer;
+}
+main .middle {
+  width: 100%;
+  background-color: #f3f1ef;
+  overflow: hidden;
+}
+main .middle .ml {
+  width: 50%;
+  box-sizing: border-box;
+  background-color: white;
+  padding: 10px;
+  margin: 3% 2% 2% 7%;
+  box-shadow: 5px 5px 15px gray;
+  float: left;
+}
+main .middle .ml > span {
+  display: block;
+  color: gray;
+  font-size: 1.5em;
+  font-weight: bold;
+  margin: 10px;
+}
+main .middle .ml div {
+  color: gray;
+  text-align: center;
+}
+main .middle .ml div:nth-of-type(1) {
+  width: 35px;
+  border: solid 1px #c1c3c2;
+  border-right: none;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  margin: 10px 0 10px 10px;
+  float: left;
+}
+main .middle .ml div:nth-of-type(2) {
+  width: 35px;
+  border: solid 1px #c1c3c2;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  margin: 10px 0 10px 0;
+  float: left;
+}
+main .middle .ml ol {
+  clear: left;
+  padding: 5px 0 0 20px;
+  color: #7d8088;
+}
+main .middle .ml ol li {
+  padding-bottom: 20px;
+  margin: 15px;
+  border-bottom: solid 1px #c1c3c2;
+}
+main .middle .mr {
+  width: 20%;
+  margin-top: 3%;
+  box-sizing: border-box;
+  float: left;
+}
+main .middle .mr .top {
+  color: gray;
+  background-color: white;
+  box-shadow: 5px 5px 15px gray;
+}
+main .middle .mr .top > div {
+  padding: 15px;
+  border-bottom: solid 1px #c1c3c2;
+}
+main .middle .mr .top > div:first-of-type {
+  text-indent: 1.8em;
+  background: url("img/对号.png") no-repeat 15px 15px;
+  background-size: 23px;
+}
+main .middle .mr .top > div:nth-of-type(3) {
+  overflow: hidden;
+}
+main .middle .mr .top > div:nth-of-type(3) span:first-of-type {
+  display: block;
+  width: fit-content;
+  padding: 5px 15px 5px 10px;
+  margin-right: 15px;
+  border: solid 1px green;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  font-weight: bold;
+  color: #5aaf63;
+  text-indent: 1.8em;
+  background: url("img/笔记本-绿.png") no-repeat 10px 8px;
+  background-size: 20px;
+  float: left;
+}
+main .middle .mr .top > div:nth-of-type(3) span:nth-of-type(1):hover {
+  color: white;
+  background: #5aaf63 url("img/笔记本-白.png") no-repeat 10px 8px;
+  background-size: 20px;
+}
+main .middle .mr .top > div:nth-of-type(3) span:nth-of-type(2) {
+  display: block;
+  width: fit-content;
+  padding: 5px 15px 5px 10px;
+  border: solid 1px #de9d9e;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  font-weight: bold;
+  color: #de9d9e;
+  text-indent: 1.4em;
+  background: url("img/旗帜-红.png") no-repeat 8px 7px;
+  background-size: 20px;
+  float: left;
+}
+main .middle .mr .top > div:nth-of-type(3) span:nth-of-type(2):hover {
+  color: white;
+  background: #de9d9e url("img/旗帜-白.png") no-repeat 10px 8px;
+  background-size: 20px;
+}
+main .middle .mr .bottom {
+  background-color: white;
+  box-shadow: 5px 5px 15px gray;
+  margin-top: 20px;
+}
+main .middle .mr .bottom ul {
+  color: #7d8088;
+}
+main .middle .mr .bottom ul li {
+  padding: 18px;
+  border-bottom: solid 1px #c1c3c2;
+}
+main .middle .mr .bottom ul li:first-of-type > span {
+  display: block;
+  text-indent: 1.7em;
+  background: url("img/摄像头.png") no-repeat 0 2px;
+  background-size: 20px;
+}
+main footer {
+  color: #7d8088;
+  white-space: pre;
+  text-align: center;
+}
+/*# sourceMappingURL=06-浮动布局练习-后盾人官网页面结构.css.map */

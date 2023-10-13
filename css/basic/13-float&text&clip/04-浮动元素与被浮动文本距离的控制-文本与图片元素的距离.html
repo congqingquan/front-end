@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+
+        body {
+            background-color: black;
+        }
+
+        p {
+            /* p 标签是块元素 */
+            width: 300px;
+            color: white;
+            overflow: hidden;
+        }
+
+        img {
+            width: 100px;
+            height: 100px;
+
+            float: left;
+
+            clip-path: circle(50%);
+            shape-outside: circle(50%);
+
+            /* md 不会切圆形图片，如果是圆形图，设置 shape-outside 为图片路径就可以读取到图片属性，实现文字环绕图片了 */
+            /*shape-outside: url("img/凤凰传奇.jpg");*/
+        }
+    </style>
+</head>
+<body>
+<main>
+    <p>
+        <img src="img/凤凰传奇.jpg  " class="shape"/>
+        自由飞翔(Live) - 凤凰传奇
+        Yo Yo Come On Baby Go
+        Yo Yo 这 这感觉就像
+        一路的芳香还有婆娑轻波
+        转了念的想那些是非因果
+        一路的芳香让我不停捉摸
+        Yo Yo Baby Come On
+        是谁在唱歌温暖了寂寞
+        白云悠悠蓝天依旧泪水在漂泊
+        在那一片苍茫中一个人生活
+        看见远方天国那璀璨的烟火
+    </p>
+</main>
+</body>
+</html>

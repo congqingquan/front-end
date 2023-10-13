@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        main > div:first-of-type {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+        }
+
+        main > div:nth-of-type(3) {
+            width: 100px;
+            height: 100px;
+            background-color: blue;
+        }
+
+        main > div:nth-of-type(2) {
+            width: 100px;
+            height: 100px;
+            background-color: black;
+
+            /*
+                相对定位：
+                    1. 相对自己的原始位置
+                    2. 不脱离文档流，移动后保留原有空间
+            */
+            position: relative;
+
+            /* 互斥，只有 top 生效 */
+            top: 50px;
+            bottom: 50px;
+
+            /* 互斥，只有 left 生效 */
+            left: 50px;
+            /* 等于 right: 50px */
+            /*left: -50px;*/
+            right: 50px;
+        }
+    </style>
+</head>
+<body>
+<main>
+    <div></div>
+    <div></div>
+    <div></div>
+</main>
+</body>
+</html>

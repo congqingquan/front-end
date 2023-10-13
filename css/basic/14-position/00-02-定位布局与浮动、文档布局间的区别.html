@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        /*
+            定位的自由度要高于使用浮动、文档流的排版方式，可以使得元素处于页面的任意位置，实现一些文档流排版无法实现的样式。
+
+            那么是否可以只使用定位进行布局？并不是。定位有一个很大的问题，定位元素间失去了文档元素的自适应性。
+            比如设置一个元素的 margin 使得产生空白区域，当变更元素的高度时 margin 值不需要改变就可以与其他元素依旧保持外边距。
+            但若通过定位的方式，就会使得这种效果失效，必须手动调试两个元素间的边距值。
+
+            总结下来说：文档流使用相对逻辑，定位使用绝对逻辑。二者相结合使用可以实现更复杂的样式。
+         */
+
+        /* 1. 文档流排版 */
+        /*main > div:first-of-type {*/
+        /*    width: 100px;*/
+        /*    height: 100px;*/
+        /*    background-color: red;*/
+        /*}*/
+
+        /*main > div:nth-of-type(2) {*/
+        /*    width: 100px;*/
+        /*    height: 100px;*/
+        /*    background-color: black;*/
+        /*    margin-top: 10px;*/
+        /*}*/
+
+        /* 2. 定位排版 */
+        main > div:first-of-type {
+            width: 100px;
+            /* 第一个盒子增加 10px 高度后，也必须同时修改第二个盒子的 top */
+            height: 110px;
+            background-color: red;
+        }
+
+        main > div:nth-of-type(2) {
+            width: 100px;
+            height: 100px;
+            background-color: black;
+
+            position: absolute;
+            top: 110px;
+        }
+    </style>
+</head>
+<body>
+<main>
+    <div></div>
+    <div></div>
+</main>
+</body>
+</html>

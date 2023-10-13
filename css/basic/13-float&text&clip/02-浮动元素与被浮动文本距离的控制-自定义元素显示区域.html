@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+
+        p {
+            /* p 标签是块元素 */
+            width: 300px;
+            overflow: hidden;
+        }
+
+        span {
+            width: 100px;
+            height: 100px;
+            background-color: black;
+
+            float: left;
+
+            /* 1. 裁剪为圆形: circle 函数，可以创建一个圆形裁剪区域 */
+            /* 1) 大小：circle(50%) 创建了一个半径为容器宽高一半的圆形裁剪区域。也就是说，如果>50%，会使得无法将圆全部展示。[50%, 0] 则使得圆逐渐变小 */
+            /*clip-path: circle(50%);*/
+            /* 2) 位置：设置圆心在元素中的 x,y 坐标 */
+            /* 元素中心点坐标 */
+            /*clip-path: circle(50% at 50% 50%);*/
+            /* 左上角定点坐标 */
+            /*clip-path: circle(50% at 0 0);*/
+
+            /* 2. 裁剪为多边形: 顺时针的方向，指定多边形每个顶点的坐标 */
+            /* 1) 等腰三角形 */
+            clip-path: polygon(50% 0, 0 100%, 100% 100%);
+            /* 2) 直角三角形 */
+            clip-path: polygon(0 0, 0 100%, 100% 100%);
+            /* 3) 平行四边形 */
+            clip-path: polygon(25% 0, 75% 0, 50% 100%, 0 100%);
+        }
+    </style>
+</head>
+<body>
+<main>
+    <p>
+        <span class="shape"></span>
+        自由飞翔(Live) - 凤凰传奇
+        Yo Yo Come On Baby Go
+        Yo Yo 这 这感觉就像
+        一路的芳香还有婆娑轻波
+        转了念的想那些是非因果
+        一路的芳香让我不停捉摸
+        Yo Yo Baby Come On
+        是谁在唱歌温暖了寂寞
+        白云悠悠蓝天依旧泪水在漂泊
+        在那一片苍茫中一个人生活
+        看见远方天国那璀璨的烟火
+    </p>
+</main>
+</body>
+</html>

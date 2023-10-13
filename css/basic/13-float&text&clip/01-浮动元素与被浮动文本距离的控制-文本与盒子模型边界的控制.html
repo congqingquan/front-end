@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        p {
+            /* p 标签是块元素 */
+            width: 300px;
+            overflow: hidden;
+        }
+
+        span {
+            width: 100px;
+            height: 100px;
+            border: solid 5px red;
+            padding: 10px;
+            margin: 10px;
+
+            /* 通过浮动属性将文本浮动到元素旁。layout 中有 float 的笔记 */
+            float: left;
+
+            /* 与盒模型的距离控制 */
+            /*shape-outside: border-box;*/
+            /*shape-outside: padding-box;*/
+            /* 默认 */
+            /*shape-outside: margin-box;*/
+        }
+    </style>
+</head>
+<body>
+<main>
+    <p>
+        <span class="shape"></span>
+        自由飞翔(Live) - 凤凰传奇
+        Yo Yo Come On Baby Go
+        Yo Yo 这 这感觉就像
+        一路的芳香还有婆娑轻波
+        转了念的想那些是非因果
+        一路的芳香让我不停捉摸
+        Yo Yo Baby Come On
+        是谁在唱歌温暖了寂寞
+        白云悠悠蓝天依旧泪水在漂泊
+        在那一片苍茫中一个人生活
+        看见远方天国那璀璨的烟火
+    </p>
+</main>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            /* 注意点2：若找不到带有 position 属性且值不为 static 的父元素，则以顶级父元素 html 为准，而不是以 body 为准 */
+            margin-top: 100px;
+            border: solid 1px black;
+        }
+
+        main > div:first-of-type {
+            width: 200px;
+            height: 200px;
+            background-color: red;
+
+            margin: 100px auto;
+
+            /* 注意点1：static 无法被视为绝对定位的根 */
+            /*position: static;*/
+        }
+
+        main > div > div:first-of-type {
+            width: 100px;
+            height: 100px;
+            background-color: blue;
+            /*
+                绝对定位：
+                    1. 相对带有 position 属性且值不为 static 的父元素，若找不到则以顶级父元素 html 为准
+                    2. 脱离文档流
+            */
+            position: absolute;
+            top: 10px;
+            left: 10px;
+        }
+    </style>
+</head>
+<body>
+<main>
+    <div>
+        <div></div>
+    </div>
+</main>
+</body>
+</html>
