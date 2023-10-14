@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+
+        .parent_div {
+            width: 600px;
+            height: 600px;
+            background: red;
+        }
+
+        .parent_div > div:nth-of-type(1) {
+            width: 200px;
+            height: 200px;
+            background: green;
+
+            color: white;
+            text-align: center;
+        }
+
+        .parent_div div:nth-of-type(2) {
+            width: 200px;
+            height: 200px;
+            background: blue;
+
+            color: white;
+            text-align: center;
+            line-height: 200px;
+        }
+
+        .parent_div > div:nth-of-type(1) > div:nth-of-type(1) {
+            width: 100px;
+            height: 100px;
+            background: blue;
+
+            text-align: center;
+            line-height: 100px;
+        }
+
+        /* =============== 修改同级以及子级元素 =============== */
+        .parent_div > div:first-of-type:hover + div, .parent_div > div:first-of-type:hover > div:first-of-type {
+            background: green;
+        }
+
+
+        /* =============== */
+
+        .parent_div > div:nth-of-type(3) {
+            width: 200px;
+            height: 200px;
+            background: green;
+
+            color: white;
+            text-align: center;
+            line-height: 200px;
+        }
+
+        /* =============== 修改父级元素：无法选中 =============== */
+        .parent_div > div:nth-of-type(3):hover div:has(.parent_div) {
+        /*.parent_div > div:nth-of-type(3):hover .parent_div {*/
+            background: yellow;
+        }
+    </style>
+</head>
+<body>
+
+<main>
+    <div class="parent_div">
+        <div>
+            将蓝色子、兄盒子变为绿色
+            <div>子盒子</div>
+        </div>
+        <div>兄弟盒子</div>
+        <div>将红色父盒子变为黄色</div>
+    </div>
+</main>
+
+</body>
+</html>

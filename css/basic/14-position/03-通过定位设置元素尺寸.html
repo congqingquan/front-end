@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        main > div:first-of-type {
+            width: 200px;
+            height: 200px;
+            border: solid 2px black;
+            margin: 100px auto;
+
+            position: relative;
+        }
+
+        /* 1. 当设置了宽高后，如下： */
+        /*main > div > div:first-of-type {*/
+        /*    width: 100px;*/
+        /*    height: 100px;*/
+        /*    background-color: red;*/
+        /*    position: absolute;*/
+
+        /*    !* 互斥，只有 top 生效 *!*/
+        /*    top: 50px;*/
+        /*    bottom: 50px;*/
+
+        /*    !* 互斥，只有 left 生效 *!*/
+        /*    left: 50px;*/
+        /*    !* 等于 right: 50px *!*/
+        /*    !*left: -50px;*!*/
+        /*    right: 50px;*/
+        /*}*/
+
+        /* 2. 若没有设置宽高，那么元素的宽高则根据定位属性决定 */
+        main > div > div:first-of-type {
+            background-color: red;
+            position: absolute;
+
+            /* half */
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            right: 0;
+        }
+    </style>
+</head>
+<body>
+<main>
+    <div>
+        <div></div>
+    </div>
+</main>
+</body>
+</html>

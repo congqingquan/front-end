@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        main > div:first-of-type {
+            width: 500px;
+            height: 300px;
+            margin: 0 auto;
+            border: solid 2px black;
+
+            cursor: pointer;
+            color: white;
+            text-align: center;
+            font-weight: bold;
+            line-height: 300px;
+
+            position: relative;
+        }
+
+        main > div:first-of-type > img:first-of-type {
+            width: 100%;
+            height: 100%;
+
+            position: absolute;
+            left: 0;
+            z-index: 1;
+        }
+
+        main > div:first-of-type > span:first-of-type {
+            width: 8em;
+            height: 2em;
+            text-align: center;
+            line-height: 2em;
+            color: white;
+            background: black;
+            border-radius: 50%;
+            box-shadow: 0 0 5px gray;
+
+            position: absolute;
+            top: 15px;
+            left: 30px;
+            z-index: 2;
+        }
+
+        main > div:first-of-type > div:first-of-type  {
+            width: 500px;
+            height: 300px;
+            background: blueviolet;
+
+            position: absolute;
+            z-index: 3;
+        }
+
+        /* 降低最外层 div 的优先级 */
+        main > div:first-of-type:hover div:first-of-type {
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+<main>
+    <div>
+        <span>凤凰传奇牛逼</span>
+        <img src="img/凤凰传奇.jpg" />
+        <div>猜猜我是谁</div>
+    </div>
+</main>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        main > div:first-of-type {
+            width: 200px;
+            height: 200px;
+            border: solid 2px black;
+            margin: 100px auto;
+
+            position: relative;
+        }
+
+        main > div > div:first-of-type {
+            background-color: red;
+            position: absolute;
+
+
+            width: 100px;
+            height: 100px;
+            /* 方式一：(parent width/height - child width/height) / 2 */
+            /*top: 50px;*/
+            /*left: 50px;*/
+
+            /* 方式二：(parent width/height)/2 -  (child width/height)/2，就是把第一种方式拆开，但好处是可以百分比指定父元素宽高 */
+            top: 50%;
+            left: 50%;
+            margin-top: -50px;
+            margin-left: -50px;
+        }
+    </style>
+</head>
+<body>
+<main>
+    <div>
+        <div></div>
+    </div>
+</main>
+</body>
+</html>
