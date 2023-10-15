@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        div {
+            width: 100px;
+            height: 100px;
+        }
+
+        /* 默认的，后面的定位元素的优先级要高于前面的定位元素 */
+
+        /* absolute */
+        .absolute_div > div:first-of-type {
+            background: red;
+            position: absolute;
+        }
+
+        .absolute_div > div:nth-of-type(2) {
+            background: green;
+            position: absolute;
+        }
+
+        /* relative */
+        .relative_div > div:nth-of-type(1) {
+            background: black;
+            position: relative;
+        }
+
+        .relative_div > div:nth-of-type(2) {
+            background: blueviolet;
+
+            top: -50px;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+<main>
+    <div class="absolute_div">
+        <div></div>
+        <div></div>
+    </div>
+
+    <hr>
+
+    <div class="relative_div">
+        <div></div>
+        <div></div>
+    </div>
+</main>
+</body>
+</html>

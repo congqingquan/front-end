@@ -32,7 +32,7 @@
 
             /*
                 相对定位：
-                    1. 相对自己的原始位置
+                    1. 相对自己的原始位置(即使存在带有 position 属性的父元素，也以自己的原始位置为准)
                     2. 不脱离文档流，移动后保留原有空间
             */
             position: relative;
@@ -47,6 +47,30 @@
             /*left: -50px;*/
             right: 50px;
         }
+
+
+        /* 测试 1. 相对自己的原始位置(即使存在带有 position 属性的父元素) */
+        .parent_div {
+            width: 100px;
+            height: 100px;
+            background-color: black;
+
+
+            box-sizing: border-box;
+            padding: 50px 0 0 50px;
+            position: relative;
+        }
+
+        .parent_div > div {
+            width: 50px;
+            height: 50px;
+            background-color: red;
+
+            position: relative;
+            top: 0;
+            left: 0;
+        }
+
     </style>
 </head>
 <body>
@@ -54,6 +78,12 @@
     <div></div>
     <div></div>
     <div></div>
+
+    <hr>
+
+    <div class="parent_div">
+        <div></div>
+    </div>
 </main>
 </body>
 </html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        article {
+            width: 300px;
+            height: 300px;
+            margin: 0 auto;
+            border: solid 5px blueviolet;
+            overflow: scroll;
+        }
+
+        h2 {
+            color: white;
+            background: blueviolet;
+
+            /*
+                同级元素间的粘性定位：
+                    1. 以当前父元素为页面窗口，固定于页面窗口的特定位置。当页面发生滚动，也一直处于页面的特定位置。
+                    2. 当页面出现第二个粘性元素时，第一个粘性元素依旧保持固定特性，直到第二个粘性元素随着滚动覆盖第一个粘性元素。且第二个粘性元素在覆盖后也保持固定特性。
+            */
+
+            position: sticky;
+            top: 0;
+            left: 0;
+        }
+
+        h2:nth-of-type(even) {
+            background: gray;
+        }
+
+
+        p {
+            text-indent: 2em;
+        }
+
+    </style>
+</head>
+<body>
+<main>
+    <article>
+        <h2>标题一</h2>
+        <p>第一段内容：
+            第一段内容第一段内容第一段内容第一段内容第一段内容第一段内容第一段内容第一段内容第一段内容第一段内容第一段内容
+            第一段内容第一段内容第一段内容第一段内容第一段内容第一段内容第一段内容第一段内容第一段内容第一段内容第一段内容
+        </p>
+
+        <h2>标题二</h2>
+        <p>第二段内容：
+            第二段内容第二段内容第二段内容第二段内容第二段内容第二段内容第二段内容第二段内容第二段内容第二段内容第二段内容
+            第二段内容第二段内容第二段内容第二段内容第二段内容第二段内容第二段内容第二段内容第二段内容第二段内容第二段内容
+        </p>
+
+        <h2>标题三</h2>
+        <p>第三段内容：
+            第三段内容第三段内容第三段内容第三段内容第三段内容第三段内容第三段内容第三段内容第三段内容第三段内容第三段内容
+            第三段内容第三段内容第三段内容第三段内容第三段内容第三段内容第三段内容第三段内容第三段内容第三段内容第三段内容
+        </p>
+
+        <h2>标题四</h2>
+        <p>第四段内容：
+            第四段内容第四段内容第四段内容第四段内容第四段内容第四段内容第四段内容第四段内容第四段内容第四段内容第四段内容
+            第四段内容第四段内容第四段内容第四段内容第四段内容第四段内容第四段内容第四段内容第四段内容第四段内容第四段内容
+        </p>
+    </article>
+</main>
+</body>
+</html>

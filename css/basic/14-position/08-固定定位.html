@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        /*
+            固定定位：
+                1. 固定于页面窗口的特定位置。当页面发生滚动，也一直处于页面的特定位置 (即使存在带有 position 属性的父元素，也以页面窗口为准)
+                2. 脱离文档流
+        */
+
+        .parent_div {
+            width: 100px;
+            height: 1500px;
+            background-color: black;
+            position: relative;
+        }
+
+        .parent_div > div:first-of-type {
+            width: 50px;
+            height: 50px;
+            background-color: red;
+
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+
+        .parent_div > div:nth-of-type(2) {
+            width: 75px;
+            height: 75px;
+            background-color: blueviolet;
+        }
+
+    </style>
+</head>
+<body>
+<main>
+    <div class="parent_div">
+        <div></div>
+        <div></div>
+    </div>
+</main>
+</body>
+</html>
