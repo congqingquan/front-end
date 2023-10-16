@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        body {
+            background: black;
+        }
+
+        .parent_div {
+            background: #5aaf63;
+
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin: -100px 0 0 -100px;
+        }
+
+        .parent_div > div:first-of-type {
+            width: 200px;
+            height: 200px;
+            background: blueviolet;
+            position: absolute;
+            color: blueviolet;
+
+            transform: perspective(900px);
+        }
+
+        .parent_div:hover > div:nth-of-type(1) {
+            transition: 1s;
+
+            /*
+                rotateX: 顶部 > 向顶部的前后倒
+                rotateY: 正面 > 向正面的左右扭
+                rotateZ: 顶部 > 向顶部的左右扭
+
+                参看下面的测试 case + 示意图 进行理解
+            */
+            /*transform: perspective(900px) rotateX(45deg);*/
+            /*transform: perspective(900px) rotateY(25deg);*/
+            /*transform: perspective(900px) rotateZ(25deg);*/
+            transform: perspective(900px) rotate3d(0, 0, 1, 45deg);
+        }
+    </style>
+</head>
+<body>
+<main>
+    <div class="parent_div">
+        <div></div>
+    </div>
+</main>
+</body>
+</html>

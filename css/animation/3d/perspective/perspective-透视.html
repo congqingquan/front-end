@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+
+        /*
+            在CSS中，transform: perspective属性用于规定观察点距离元素的距离，从而影响元素的变形和灭点距离。
+            具体来说，当观察点距离元素越近时，元素变形就越大，灭点距离也就越近。相反，当观察点距离元素越远时，元素变形就越小，灭点距离也就越远。
+            例如，设置transform: perspective(1200px)，就表示观察点距离元素的距离为1200px。
+            但需要注意的是，这个值是给解析器看的，用于生成具有立体效果图形，而不是说让观察者距离屏幕1200px去观察。
+
+            在 3d 属性测试中，如果不加 perspective 是无法直观将 3d 效果展现在页面上的。
+        */
+        body {
+            width: 100vw;
+            height: 100vh;
+            background: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .parent_div {
+            width: 200px;
+            height: 200px;
+            border: solid 5px white;
+            margin: 50px;
+        }
+
+        /* 下面测试 perspective 属性的效果 */
+        .parent_div > div:first-of-type {
+            width: 200px;
+            height: 200px;
+            background: blueviolet;
+
+            transform: rotateY(45deg);
+        }
+
+        /* 两个盒子都设置悬浮后变形 */
+        .parent_div > div:first-of-type:hover {
+            transition: 1s;
+            transform: perspective(900px) rotateY(45deg) translateZ(90px);
+        }
+
+        .parent_div2 > div:first-of-type {
+            width: 200px;
+            height: 200px;
+            background: blueviolet;
+
+            transform: perspective(900px) rotateY(45deg);
+        }
+    </style>
+</head>
+<body>
+<main>
+    <div class="parent_div parent_div1">
+        <div></div>
+    </div>
+
+    <div class="parent_div parent_div2">
+        <div></div>
+    </div>
+</main>
+</body>
+</html>

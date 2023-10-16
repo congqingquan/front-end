@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        .parent_div {
+            width: 200px;
+            height: 200px;
+            background: #5aaf63;
+
+            color: white;
+            text-align: center;
+            line-height: 200px;
+
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin: -100px 0 0 -100px;
+        }
+
+        /* 2d 中的旋转没有轴的概念，就是将图形顺、逆时针的进行旋转 */
+        .parent_div:hover {
+            transition: 1s;
+            /* 1. 正向旋转 */
+            transform: rotate(90deg);
+            /* 2. 逆向旋转 */
+            /*transform: rotate(-90deg);*/
+        }
+    </style>
+</head>
+<body>
+<main>
+    <div class="parent_div"> Rotate </div>
+</main>
+</body>
+</html>

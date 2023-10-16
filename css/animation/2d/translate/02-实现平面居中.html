@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+
+            /* 1. flex 布局实现居中 */
+            /*display: flex;*/
+            /*justify-content: center;*/
+            /*align-items: center;*/
+        }
+
+        div {
+            width: 200px;
+            height: 200px;
+            background: #5aaf63;
+
+            position: absolute;
+
+            /* 2. 绝对定位 布局实现居中 */
+            /*top: 50%;*/
+            /*left: 50%;*/
+            /*margin: -100px 0 0 -100px;*/
+
+            /* 3. 绝对定位 + translate 实现居中，进一步优化绝对定位居中需要指定具体 margin 值（宽高变更时，同时需要改变 margin 的具体值），实现完全通过百分比控制 */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+<body>
+<main>
+    <div></div>
+</main>
+</body>
+</html>

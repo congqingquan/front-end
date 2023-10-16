@@ -11,11 +11,15 @@
     <style>
 
         /*
-            伪元素需要结合 content 属性追加内容以及设置对应的样式：
+            一：伪元素需要结合 content 属性追加内容以及设置对应的样式：
 
             在 CSS 中，伪元素的 content 属性主要是用于生成内容，并可以通过 :before 和 :after 伪元素添加到元素中。然而，content 属性只接受字符串值，而不接受 HTML 标签。
             你可以在 content 属性中使用文本字符串、URL 或图片等，但不能直接使用 HTML 标签。
             如果你想在伪元素中添加复杂的 HTML 结构，你需要使用额外的 HTML 标记，而不是直接在 CSS 的 content 属性中编写。
+
+            二：伪元素是在指定元素的起始(before)、结尾(after)追加子节点，而不是在自身的前后追加兄弟节点。
+            三：因为第二点，所以说明伪元素无法被追加到单标签中。
+                    如何解决呢？在单标签元素的外层套一层双标签的元素，比如 div。在 div 中追加子伪元素，实现在单标签前后追加内容。
         */
 
         * {
@@ -29,18 +33,47 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            flex-flow: column;
         }
 
+        /* 1. 测试伪元素添加位置 */
+        .append_after_div {
+            width: 100px;
+            height: 70px;
+            background-color: #5aaf63;
+            margin-bottom: 100px;
+            color: white;
+            text-align: center;
+        }
+        .append_after_div::before {
+            content: 'before';
+            background-color: red;
+
+            display: block;
+            width: 90px;
+            height: 20px;
+        }
+        .append_after_div::after {
+            content: 'after';
+            background-color: red;
+
+            display: block;
+            width: 90px;
+            height: 20px;
+        }
+
+
+        /* 2. after 案例 */
         input {
             outline: none;
             border: none;
         }
 
-        div {
+        .after_demo_div {
             border: solid 1px black;
         }
 
-        div>input+span:after {
+        .after_demo_div > input + span:after {
             content: "\293D";
             position: relative;
             right: 5px;
@@ -50,7 +83,11 @@
 </head>
 <body>
 
-<div>
+<div class="append_after_div">
+    <div>Append div</div>
+</div>
+
+<div class="after_demo_div">
     <input type="text"><span></span>
 </div>
 

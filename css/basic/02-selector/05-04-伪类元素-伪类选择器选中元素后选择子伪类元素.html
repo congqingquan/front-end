@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: black;
+        }
+
+        div {
+            width: 100px;
+            height: 100px;
+            background-color: white;
+            font-size: 10px;
+            text-align: center;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-flow: column;
+        }
+
+        div::before {
+            content: '';
+            display: block;
+
+            width: 50px;
+            height: 50px;
+            background-color: blueviolet;
+        }
+
+        /* 注意这里的写法：直接追加伪元素！不需要追加结构选择器符号，如：div:hover > ::before */
+        div:hover::before {
+            background-color: #5aaf63;
+        }
+
+    </style>
+</head>
+<body>
+
+<div>悬浮白色盒子变更紫色伪元素的颜色</div>
+
+</body>
+</html>
