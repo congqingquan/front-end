@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./iconfont/iconfont.css">
+    <title>Document</title>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+
+            display: flex;
+            flex-flow: column;
+        }
+
+        body:before {
+            content: 'Welcome';
+            position: absolute;
+
+            color: black;
+            font-size: 2em;
+            font-weight: bold;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        main {
+            width: 100vw;
+            flex: 1;
+
+            position: relative;
+        }
+
+        main div {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: -100%;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            transition: 1s;
+        }
+
+        /* 这里需要使用类名的原因：类名选择器的权重要高于标签选择器，所以 style 标签中设定的字体大小会被 iconfont.css 文件中的字体大小覆盖 */
+        .iconfont {
+            color: white;
+            font-size: 6em;
+        }
+
+        main div:target {
+            /*transition: 1s;*/
+            transform: translateY(100%);
+        }
+
+        main div:nth-of-type(1) {
+            background-color: #9b59b6;
+        }
+
+        main div:nth-of-type(2) {
+            background-color: #f1c40f;
+        }
+
+        main div:nth-of-type(3) {
+            background-color: #2ecc71;
+        }
+
+        footer {
+            width: 100vw;
+            height: 10vh;
+            background-color: black;
+        }
+
+        footer nav {
+            width: 100vw;
+            height: 10vh;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            text-align: center;
+        }
+
+        footer nav a {
+            color: white;
+            font-size: 1.5em;
+            text-decoration: none;
+            text-transform: uppercase;
+
+            flex: 1;
+        }
+
+        footer nav a:nth-of-type(2) {
+            border-left: solid 1px white;
+            border-right: solid 1px white;
+        }
+    </style>
+</head>
+<body>
+<main>
+    <div id="home">
+        <span class="iconfont icon-home"></span>
+    </div>
+    <div id="about">
+        <span class="iconfont icon-camera"></span>
+    </div>
+    <div id="blog">
+        <span class="iconfont icon-blog"></span>
+    </div>
+</main>
+<footer>
+    <nav>
+        <a href="#home">home</a>
+        <a href="#about">about</a>
+        <a href="#blog">blog</a>
+    </nav>
+</footer>
+</body>
+</html>

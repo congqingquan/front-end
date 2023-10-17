@@ -8,12 +8,12 @@
     <title>Document</title>
 
     <style>
+        body {
+            background: black;
+        }
+
         .parent_div {
             background: #5aaf63;
-
-            color: white;
-            text-align: center;
-            line-height: 200px;
 
             position: absolute;
             top: 50%;
@@ -24,33 +24,39 @@
         .parent_div > div:first-of-type {
             width: 200px;
             height: 200px;
-            background: blueviolet;
+            background: blue;
+            position: absolute;
+            color: white;
+
+            transform: perspective(900px) rotateY(45deg);
         }
 
         .parent_div > div:nth-of-type(2) {
             width: 200px;
             height: 200px;
-            background: blue;
+            background: blueviolet;
+            position: absolute;
+
+            transform: perspective(900px) rotateY(45deg);
         }
 
-        .parent_div:hover > div:first-of-type {
-            transition: 1s;
-            transform: translateX(200px);
-        }
+        /*
+            需要通过旋转，体现出 纵深Z轴 的变化。否则只能看到图形向上提升的效果，正确但效果不明显。
 
+            纵深轴必须指定移动像素的具体值，不能使用百分比。
+         */
         .parent_div:hover > div:nth-of-type(2) {
             transition: 1s;
-            /*transform: translateX(-200px) translateY(-200px);*/
-            /*transform: translateX(-100%) translateY(-100%);*/
-            transform: translate(-100%, -100%);
+            /*transform: perspective(900px) rotateY(45deg) translateZ(90px);*/
+            transform: perspective(900px) rotateY(45deg) translate3d(50%, 50%, 90px);
         }
     </style>
 </head>
 <body>
 <main>
     <div class="parent_div">
-        <div>X 轴移动</div>
-        <div>X,Y 轴同时移动</div>
+        <div>起始位置</div>
+        <div></div>
     </div>
 </main>
 </body>

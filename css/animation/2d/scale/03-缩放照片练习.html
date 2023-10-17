@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .pic-div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            transition: 1s;
+        }
+
+        /* 样式一：选中照片放大，其余照片模糊缩小 */
+        /*.pic-div > div {*/
+        /*    width: 100px;*/
+        /*    height: 100px;*/
+        /*    margin: 10px;*/
+        /*}*/
+
+        /*.pic-div img {*/
+        /*    width: 100px;*/
+        /*    height: 100px;*/
+
+        /*    transition: 1s;*/
+        /*}*/
+
+        /*.pic-div:hover img {*/
+        /*    filter: blur(5px);*/
+        /*    transform: scale(.7);*/
+        /*}*/
+
+        /*.pic-div:hover img:hover {*/
+        /*    filter: none;*/
+        /*    transform: scale(1.4);*/
+        /*}*/
+
+        /* 样式二：选中照片在盒子内放大，并解除模糊 */
+        .pic-div > div {
+            width: 100px;
+            height: 100px;
+            margin: 10px;
+            overflow: hidden;
+        }
+
+        .pic-div img {
+            width: 100px;
+            height: 100px;
+
+            filter: blur(5px);
+            transition: 1s;
+        }
+
+        .pic-div > div > img:hover {
+            filter: none;
+            transform: scale(1.4);
+        }
+    </style>
+</head>
+<body>
+<main>
+    <div class="pic-div">
+        <div>
+            <img src="img/荷花.png" alt="暂无图片"/>
+        </div>
+        <div>
+            <img src="img/荷花.png" alt="暂无图片"/>
+        </div>
+        <div>
+            <img src="img/荷花.png" alt="暂无图片"/>
+        </div>
+    </div>
+</main>
+</body>
+</html>

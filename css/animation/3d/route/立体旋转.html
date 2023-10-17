@@ -8,43 +8,62 @@
     <title>Document</title>
 
     <style>
-        body {
-            background: black;
+        * {
+            padding: 0;
+            margin: 0;
         }
 
         .parent_div {
-            background: #5aaf63;
+            width: 300px;
+            height: 300px;
+            border: solid 2px gray;
 
             position: absolute;
             top: 50%;
             left: 50%;
             margin: -100px 0 0 -100px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .parent_div > div:first-of-type {
-            width: 200px;
-            height: 200px;
-            background: blueviolet;
-            position: absolute;
-            color: blueviolet;
+            width: 150px;
+            height: 150px;
+            background-color: #e67e22;
 
+            transition: 1s;
             transform: perspective(900px);
         }
 
-        .parent_div:hover > div:nth-of-type(1) {
-            transition: 1s;
+        /* 1. rotateX: 顶部 > 向顶部的前后倒 */
+        /*.parent_div {*/
+        /*    transform-style: preserve-3d;*/
+        /*    transform: perspective(900px) rotateX(-45deg);*/
+        /*}*/
+        /*.parent_div:hover > div:first-of-type {*/
+        /*    transform: perspective(900px) rotateX(90deg);*/
+        /*}*/
 
-            /*
-                rotateX: 顶部 > 向顶部的前后倒
-                rotateY: 正面 > 向正面的左右扭
-                rotateZ: 顶部 > 向顶部的左右扭
+        /*!* 2. rotateY: 正面 > 向正面的左右扭 *!*/
+        /*.parent_div {*/
+        /*    transform-style: preserve-3d;*/
+        /*    transform: perspective(900px) rotateY(-45deg);*/
+        /*}*/
+        /*.parent_div:hover > div:first-of-type {*/
+        /*    transform: perspective(900px) rotateY(90deg);*/
+        /*}*/
 
-                参看下面的测试 case + 示意图 进行理解
-            */
-            /*transform: perspective(900px) rotateX(45deg);*/
-            /*transform: perspective(900px) rotateY(25deg);*/
-            /*transform: perspective(900px) rotateZ(25deg);*/
-            transform: perspective(900px) rotate3d(0, 0, 1, 45deg);
+        /* 3. rotateZ: 顶部 > 向顶部的左右扭 */
+        .parent_div {
+            transform-style: preserve-3d;
+            transform: perspective(900px) rotateY(-45deg);
+        }
+        .parent_div:hover > div:first-of-type {
+            transform: perspective(900px) rotateZ(90deg);
+            /* 根据三个轴的向量，顺时针旋转 */
+            transform: perspective(900px) rotate3d(.5, 1, .1, 90deg);
         }
     </style>
 </head>

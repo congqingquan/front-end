@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+
+            width: 100vw;
+            height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        main {
+            width: 300px;
+            height: 300px;
+            border: solid 3px #95a5a6;
+
+            position: relative;
+
+            /* 字体 */
+            color: white;
+            text-align: center;
+            line-height: 200px;
+
+            /* 居中 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            /* 动画 */
+            transition: 1s;
+            transform-style: preserve-3d;
+            transform: perspective(900px) rotateY(45deg);
+        }
+
+        main > div:first-of-type {
+            width: 200px;
+            height: 200px;
+            background: #e67e22;
+
+            position: absolute;
+
+            transform: perspective(900px) translateZ(100px);
+        }
+
+        main > div:nth-of-type(2) {
+            width: 200px;
+            height: 200px;
+            background: #9b59b6;
+
+            position: absolute;
+
+            transform: perspective(900px) translateZ(-200px);
+        }
+
+        /* 注意：操作的是含有 3d 元素的父元素 */
+        main:hover {
+            /* 纵深 Z轴 缩放：1 为不变，> 1 放大， < 1 缩小 */
+            /*transform: perspective(900px) rotateY(45deg) scaleZ(2);*/
+            transform: perspective(900px) rotateY(45deg) scale3d(2, 2, 4);
+        }
+
+    </style>
+</head>
+<body>
+<main>
+    <div class="font"> Font </div>
+    <div class="back"> Back </div>
+</main>
+</body>
+</html>

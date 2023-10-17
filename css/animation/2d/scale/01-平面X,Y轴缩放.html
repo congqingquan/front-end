@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        .parent_div {
+            width: 200px;
+            height: 200px;
+            background: #5aaf63;
+
+            color: white;
+            text-align: center;
+            line-height: 200px;
+
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin: -100px 0 0 -100px;
+        }
+
+
+        .parent_div:hover {
+            transition: 1s;
+            /* x 轴与 y 轴缩放：1 为不变，> 1 放大， < 1 缩小 */
+            /*transform: scaleX(.5) scaleY(2);*/
+            /*transform: scale(2);*/
+            transform: scale(.5, 2);
+        }
+    </style>
+</head>
+<body>
+<main>
+    <div class="parent_div"> Scale </div>
+</main>
+</body>
+</html>

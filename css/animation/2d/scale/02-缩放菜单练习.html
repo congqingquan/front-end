@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+        }
+
+        main {
+            width: 100vw;
+            height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        ul {
+            width: 100%;
+            background-color: #e67e22;
+
+            transform: scale(0);
+        }
+
+        ul li {
+            display: flex;
+            flex-flow: column;
+
+            padding: 10px;
+            list-style: none;
+        }
+
+        strong {
+            display: inline-block;
+            width: 100px;
+            height: 30px;
+            background-color: #2ecc71;
+            text-align: center;
+            line-height: 30px;
+        }
+
+        a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .front-end, .back-end {
+            color: white;
+            text-align: center;
+            margin: 10px;
+        }
+
+        .front-end > ul, .back-end > ul {
+            transform-origin: left top;
+            transition: 1s;
+        }
+
+        .front-end:hover > ul, .back-end:hover > ul {
+            transform: scale(1);
+        }
+    </style>
+</head>
+<body>
+<main>
+    <div class="front-end">
+        <strong>Front-end</strong>
+        <ul>
+            <li>
+                <a href="#">JavaScript</a>
+            </li>
+            <li>
+                <a href="#">TypeScript</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="back-end">
+        <strong>Back-end</strong>
+        <ul>
+            <li>
+                <a href="#">Java</a>
+            </li>
+            <li>
+                <a href="#">Rust</a>
+            </li>
+        </ul>
+    </div>
+</main>
+</body>
+</html>

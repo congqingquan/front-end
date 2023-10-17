@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+
+            width: 100vw;
+            height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .two-dimension-div {
+            width: 200px;
+            height: 200px;
+            background: #5aaf63;
+
+            color: white;
+            text-align: center;
+            line-height: 200px;
+
+            transition: 1s;
+        }
+
+
+        /* 二维变形基准点 */
+        .two-dimension-div:hover {
+            /*
+                二维变形基准点 transform-origin: x,y
+            */
+            /*transform-origin: 0 0;*/
+            /*transform-origin: left top;*/
+
+            /* 旋转、缩放受基准点的影响 */
+            /*transform: rotate(45deg);*/
+            /*transform: scale(2);*/
+
+            /* 平移不受基准点的影响 */
+            transform-origin: right;
+            transform: translate(50%, 50%);
+        }
+
+    </style>
+</head>
+<body>
+<main>
+    <div class="two-dimension-div"> 2D div </div>
+</main>
+</body>
+</html>
