@@ -41,15 +41,23 @@
         /*}*/
 
         /* 2. 若没有设置宽高，那么元素的宽高则根据定位属性决定 */
+        /*main > div > div:first-of-type {*/
+        /*    background-color: red;*/
+        /*    !* half *!*/
+        /*    position: absolute;*/
+        /*    top: 0;*/
+        /*    bottom: 0;*/
+        /*    left: 50%;*/
+        /*    right: 0;*/
+        /*}*/
+
+        /* 3. 若盒子内容为空，设置的宽高为百分比，仍然可以撑开盒子，大小与父元素的百分比宽高 */
         main > div > div:first-of-type {
             background-color: red;
+            /* auto */
             position: absolute;
-
-            /* half */
-            top: 0;
-            bottom: 0;
-            left: 50%;
-            right: 0;
+            width: 100%;
+            height: 100%;
         }
     </style>
 </head>
