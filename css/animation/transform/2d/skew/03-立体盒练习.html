@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+</head>
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+    }
+
+    body {
+        width: 100vw;
+        height: 100vh;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    main {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .left {
+        width: 30px;
+        height: 100px;
+        border: solid 1px black;
+        background-color: #8e44ad;
+
+        transform: skewY(-45deg);
+    }
+
+    .top-front {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-flow: column;
+    }
+
+    .top {
+        width: 200px;
+        height: 100px;
+        border: solid 1px black;
+        background-color: #8e44ad;
+        border-left: none;
+    }
+
+    .front {
+        width: 200px;
+        height: 30px;
+        margin-left: -32px;
+        border: solid 1px black;
+        background-color: #8e44ad;
+        border-top: none;
+        border-left: none;
+
+        transform: skewX(-45deg);
+    }
+
+</style>
+<body>
+<main>
+    <div class="left"></div>
+    <div class="top-front">
+        <div class="top"></div>
+        <div class="front"></div>
+    </div>
+</main>
+</body>
+</html>
