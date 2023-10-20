@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card {
+            width: 200px;
+            height: 200px;
+            background: #5aaf63;
+
+            color: white;
+            text-align: center;
+            line-height: 200px;
+
+            position: relative;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            transform-style: preserve-3d;
+            transform: perspective(900px) rotateX(30deg) rotateY(-30deg);
+        }
+
+        .card::before,
+        .card::after  {
+            width: 50%;
+            height: 100%;
+            color: white;
+            background-color: #e74c3c;
+            position: absolute;
+            transition: 1s;
+        }
+
+        .card::before {
+            content: '新年';
+            left: 0;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            /* 注意！！！不能在浮动时添加定位点，否则动画执行时样式会错乱，虽然最终结果是对的 */
+            transform-origin: 0 100%;
+        }
+        .card:hover::before {
+            transform: rotateY(-180deg);
+        }
+
+        .card::after {
+            content: '快乐';
+            right: 0;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            /* 注意！！！不能在浮动时添加定位点，否则动画执行时样式会错乱，虽然最终结果是对的 */
+            transform-origin: 100% 100%;
+        }
+        .card:hover::after {
+            transform: rotateY(180deg);
+        }
+
+    </style>
+</head>
+<body>
+<main>
+    <div class="card">硬硬邦邦</div>
+</main>
+</body>
+</html>

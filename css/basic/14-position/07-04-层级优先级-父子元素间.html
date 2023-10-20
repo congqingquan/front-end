@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        /*
+            父子元素中，子元素层级会高于父元素层级。且 z-index 也无法影响，即父元素层级永远低于子元素。
+         */
+        main > div:first-of-type {
+            width: 200px;
+            height: 200px;
+            background-color: red;
+
+            position: relative;
+            z-index: 100;
+        }
+
+        main > div:first-of-type > div {
+            width: 100px;
+            height: 100px;
+            background-color: blue;
+
+            position: absolute;
+        }
+
+    </style>
+</head>
+<body>
+<main>
+    <div>
+        <div></div>
+    </div>
+</main>
+</body>
+</html>

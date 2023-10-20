@@ -21,8 +21,8 @@
         }
 
         .three-dimension-div {
-            width: 300px;
-            height: 300px;
+            width: 200px;
+            height: 200px;
             border: solid 3px #95a5a6;
             margin-top: 100px;
 
@@ -31,7 +31,7 @@
             /* 字体 */
             color: white;
             text-align: center;
-            line-height: 200px;
+            line-height: 100px;
 
             /* 居中 */
             display: flex;
@@ -39,66 +39,60 @@
             align-items: center;
 
             /* 动画 */
-            transition: 1s;
             transform-style: preserve-3d;
             transform: perspective(900px) rotateY(45deg);
         }
 
         .three-dimension-div > div:first-of-type {
-            width: 200px;
-            height: 200px;
+            width: 100px;
+            height: 100px;
             background: #e67e22;
 
             position: absolute;
+            z-index: 1;
 
-            transform: perspective(900px) translateZ(100px);
+            transition: 1s;
+            transform: perspective(900px);
         }
 
         .three-dimension-div > div:nth-of-type(2) {
-            width: 200px;
-            height: 200px;
+            width: 100px;
+            height: 100px;
             background: #9b59b6;
 
             position: absolute;
 
-            transform: perspective(900px) translateZ(-200px);
+            transition: 1s;
+            transform: perspective(900px);
+            /*transform-origin: left top 100px;*/
+            /*transform-origin: right top 100px;*/
         }
 
-        /* 2. 三维变形基准点 */
-        .three-dimension-div:hover {
-            /*
-                三维变形基准点 transform-origin: x,y,z
-
-                z 轴基点为正数时意味着视觉上会变小远离，负数则变大靠近
-             */
-
+        /*
+           三维变形基准点 transform-origin: x,y,z
+           z 轴基点为正数时意味着视觉上会变小远离，负数则变大靠近
+        */
+        .three-dimension-div:hover > div:first-of-type {
             /* 旋转、缩放、平移 都受基准点的影响 */
-            /*transform-origin: left top 500px;*/
-            /*transform-origin: right top 500px;*/
-            /*transform: perspective(900px) rotateY(90deg);*/
+            /*transform: perspective(900px) rotateX(45deg);*/
             /*transform: perspective(900px) rotateY(90deg);*/
             /*transform: perspective(900px) rotateZ(90deg);*/
 
-
-            /*transform-origin: left top 500px;*/
-            /*transform-origin: right top 500px;*/
             /*transform: perspective(900px) scaleX(2);*/
             /*transform: perspective(900px) scaleY(2);*/
             /*transform: perspective(900px) scaleZ(3);*/
 
-            /*transform-origin: left top 500px;*/
-            /*transform-origin: right top 500px;*/
             /*transform: perspective(900px)  translateX(100px);*/
-            /*transform: perspective(900px) translateY(200px);*/
-            /*transform: perspective(900px) translateZ(200px);*/
+            /*transform: perspective(900px) translateY(100px);*/
+            /*transform: perspective(900px) translateZ(100px);*/
         }
     </style>
 </head>
 <body>
 <main>
     <div class="three-dimension-div">
-        <div class="font"> Font </div>
-        <div class="back"> Back </div>
+        <div class="font">  </div>
+        <div class="back"> </div>
     </div>
 </main>
 </body>

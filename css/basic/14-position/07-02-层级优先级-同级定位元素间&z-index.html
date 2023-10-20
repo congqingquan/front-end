@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+
+        /*
+            同级定位元素间，后面元素的层级会高于之前层级。想要改变层级关系，使用z-index，同级元素中 z-index 越大层级越高。
+        */
+
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        main > div:first-of-type {
+            width: 200px;
+            height: 200px;
+            background-color: black;
+
+            position: absolute;
+            /*z-index: 1;*/
+        }
+
+        main > div:nth-of-type(2) {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+<main>
+    <div></div>
+    <div></div>
+</main>
+</body>
+</html>
