@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        /*
+            反转父元素，内部子元素的 backface-visibility 不会生效，解决方式：父元素增加 transform-style: preserve-3d
+        */
+        .parent-div {
+            width: 200px;
+            height: 200px;
+
+            transition: 1s;
+            transform-style: preserve-3d;
+        }
+
+        .backface-div {
+            width: 200px;
+            height: 200px;
+            background-color: #2ecc71;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+
+            transition: 2s;
+            /* 反转父元素，内部子元素的 backface-visibility 不会生效 */
+            backface-visibility: hidden;
+        }
+
+        .parent-div:hover {
+            transform: rotateY(180deg);
+        }
+    </style>
+</head>
+<body>
+<main>
+
+    <div class="parent-div">
+        <div class="backface-div">Front</div>
+    </div>
+</main>
+</body>
+</html>

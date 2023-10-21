@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        /*
+            背面控制
+        */
+        .backface_div {
+            width: 200px;
+            height: 200px;
+            background-color: #2ecc71;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+
+            transition: 2s;
+            /* 隐藏背面：旋转后，将看不到背景 */
+            backface-visibility: hidden;
+        }
+
+        .backface_div:hover {
+            transform: rotateY(180deg);
+        }
+    </style>
+</head>
+<body>
+<main>
+
+    <div class="backface_div">Front</div>
+</main>
+</body>
+</html>

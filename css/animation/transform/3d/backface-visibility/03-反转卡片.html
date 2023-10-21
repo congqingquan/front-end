@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            background-color: black;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /*
+            两个盒子叠在一起，都设置背面隐藏。
+
+            默认 front 保持正面，back 转到背面。悬浮时，front 转到背面，back 转到正面。
+        */
+        .parent-div {
+            perspective: 900px;
+        }
+        .front-div, .back-div {
+            width: 200px;
+            height: 200px;
+            background-color: #2ecc71;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+
+            position: absolute;
+
+            transition: 1s;
+            transform: rotateY(30deg);
+            backface-visibility: hidden;
+        }
+
+        .back-div {
+            transform: rotateY(-180deg);
+        }
+
+        .parent-div:hover > .back-div {
+            transform: rotateY(0);
+        }
+
+        .parent-div:hover > .front-div {
+            transform: rotateY(180deg);
+        }
+    </style>
+</head>
+<body>
+<main>
+    <div class="parent-div">
+        <div class="front-div">Front</div>
+        <div class="back-div">Back</div>
+    </div>
+</main>
+</body>
+</html>

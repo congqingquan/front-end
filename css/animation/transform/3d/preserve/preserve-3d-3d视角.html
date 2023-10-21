@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        /*
+            preserve: 当我们操作 z 轴时，默认是看不到效果的，即使加了透视。这时我们就需要借助另一个属性：preserve: preserve-3d 来设置 3d 效果。
+        */
+        .parent_div {
+            width: 200px;
+            height: 200px;
+            border: solid 2px gray;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .parent_div > div {
+            width: 50px;
+            height: 50px;
+            background-color: #2ecc71;
+            margin: 10px;
+        }
+
+        .parent_div {
+            /* 单纯的 perspective 是没有 3d 效果的 */
+            /*transform-style: preserve-3d;*/
+            transform: perspective(600px) rotateY(45deg);
+        }
+
+        .parent_div > div {
+            transform: translateZ(100px);
+        }
+    </style>
+</head>
+<body>
+<main>
+    <div class="parent_div">
+        <div></div>
+        <div></div>
+    </div>
+</main>
+</body>
+</html>
