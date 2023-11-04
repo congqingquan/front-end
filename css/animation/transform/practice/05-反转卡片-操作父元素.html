@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            background-color: black;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        main {
+            width: 200px;
+            height: 400px;
+            display: flex;
+
+            position: relative;
+
+            justify-content: center;
+            align-items: center;
+            flex-flow: column;
+        }
+
+        .parent-div {
+            width: 100%;
+            height: 100%;
+            perspective: 900px;
+            transition: 1s;
+            transform-style: preserve-3d;
+        }
+
+        .login-div, .register-div {
+            width: 100%;
+            height: 100%;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+
+            position: absolute;
+
+            transition: 1s;
+            backface-visibility: hidden;
+        }
+
+        .login-div {
+            background-color: #2ecc71;
+            transform: rotateY(0);
+        }
+
+        .register-div {
+            background-color: blueviolet;
+            transform: rotateY(-180deg);
+        }
+
+        nav {
+            width: 100%;
+            height: 10%;
+            position: absolute;
+            z-index: 99;
+            bottom: 0;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        nav a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+        }
+
+        .rotateY0 {
+            transform: rotateY(0);
+        }
+
+        .rotateY-180 {
+            transform: rotateY(-180deg);
+        }
+    </style>
+</head>
+<body>
+<main>
+    <div class="parent-div">
+        <div class="login-div">Login</div>
+        <div class="register-div">Register</div>
+    </div>
+    <nav>
+        <a href="#" onclick="reverse('login')">Login</a>
+        <a href="#" onclick="reverse('register')">Register</a>
+    </nav>
+
+    <script>
+        function reverse(type) {
+            switch (type) {
+                case 'login':
+                    document.body.getElementsByClassName("parent-div")[0].classList.remove("rotateY-180");
+                    document.body.getElementsByClassName("parent-div")[0].classList.add("rotateY0");
+                    break;
+                case 'register':
+                    document.body.getElementsByClassName("parent-div")[0].classList.remove("rotateY0");
+                    document.body.getElementsByClassName("parent-div")[0].classList.add("rotateY-180");
+                    break;
+            }
+        }
+    </script>
+</main>
+</body>
+</html>
