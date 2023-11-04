@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            background-color: #95a5a6;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        div {
+            height: 200px;
+            width: 200px;
+            background-color: #5aaf63;
+            color: white;
+            letter-spacing: 3px;
+
+            position: relative;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            transition-property: border-radius, border, background-color;
+            transition-duration: 1s;
+
+            /* transition-timing-function 过渡效果控制: time/progression */
+
+            /* 1. bezier 曲线取值: cubic-bezier.com */
+            /*transition-timing-function: cubic-bezier(1,0,.69,1.05);*/
+
+            /*transition-timing-function: ease;*/
+            /*transition-timing-function: ease-in;*/
+            /*transition-timing-function: ease-in-out;*/
+            /*transition-timing-function: ease-out;*/
+            /*transition-timing-function: linear;*/
+
+            /* 2. steps 歩径 */
+            /* 分为 4 次进行过渡. start 会立即开始过渡，end 会延迟一下 */
+            transition-timing-function: steps(4, start);
+
+            /* 简写 */
+            /*transition-timing-function: steps(1, start);*/
+            /*transition-timing-function: step-start;*/
+
+            /*transition-timing-function: steps(1, end);*/
+            /*transition-timing-function: step-end;*/
+        }
+        div:hover {
+            border-radius: 50%;
+            border: solid 5px white;
+            background-color: #9b59b6;
+        }
+    </style>
+</head>
+<body>
+<main>
+    <div>Qingquan.Cong</div>
+</main>
+</body>
+</html>

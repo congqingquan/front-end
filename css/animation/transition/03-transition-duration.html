@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            background-color: #95a5a6;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        div {
+            height: 200px;
+            width: 200px;
+            background-color: #5aaf63;
+            color: white;
+            letter-spacing: 3px;
+
+            position: relative;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            transition-property: border-radius, border, background-color;
+            /*
+                分别设置不同属性的过渡时间
+            */
+            transition-duration: 2s, 1s, 100ms;
+            /* 所有属性都是相同的过渡时间 */
+            /*transition-duration: 2s;*/
+        }
+        div:hover {
+            border-radius: 50%;
+            border: solid 5px white;
+            background-color: #9b59b6;
+        }
+    </style>
+</head>
+<body>
+<main>
+    <div>Qingquan.Cong</div>
+</main>
+</body>
+</html>

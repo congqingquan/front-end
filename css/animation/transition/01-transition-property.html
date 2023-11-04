@@ -22,11 +22,33 @@
             justify-content: center;
             align-items: center;
         }
+
+        div {
+            height: 200px;
+            width: 200px;
+            background-color: #5aaf63;
+            margin-top: 30px;
+
+            transition: 1s;
+        }
+
+        main:hover > div {
+            border-radius: 50%;
+            border: solid 5px white;
+            background-color: #9b59b6;
+        }
+
+        main > div:nth-of-type(2) {
+            /* 针对特殊的属性进行特殊的配置: 由于没有指定边框，所以边框会立即变成白色 */
+            transition-property: background-color, border-radius;
+            /*transition-property: all;*/
+        }
     </style>
 </head>
 <body>
 <main>
-
+    <div></div>
+    <div></div>
 </main>
 </body>
 </html>
