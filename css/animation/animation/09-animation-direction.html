@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="iconfont/iconfont.css">
+    <title>Document</title>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            background-color: #34495e;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        main {
+            width: 100px;
+            height: 100px;
+            position: relative;
+
+            /*animation-name: heartbeat;*/
+            /*animation-duration: 2s;*/
+            /*animation-iteration-count: infinite;*/
+        }
+
+        ul {
+            width: 100px;
+            height: 100px;
+            list-style: none;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        li {
+            flex: 1;
+            color: #e74c3c;
+            padding: 50px;
+
+            display: flex;
+            align-items: center;
+            flex-flow: column;
+        }
+
+        span {
+            padding: 50px;
+        }
+
+        i.icon-redheart {
+            font-size: 2em;
+
+            animation-name: heartbeat;
+            animation-iteration-count: infinite;
+            animation-duration: 1s;
+        }
+
+        .heartbeat1 {
+            animation-direction: normal;
+        }
+        .heartbeat2 {
+            animation-direction: reverse;
+        }
+
+        @keyframes heartbeat {
+            to {
+                transform: scale(3);
+            }
+        }
+    </style>
+</head>
+<body>
+<main>
+    <ul>
+        <li>
+            <i class="iconfont icon-redheart heartbeat1"></i>
+            <span>normal</span>
+        </li>
+        <li>
+            <i class="iconfont icon-redheart heartbeat2"></i>
+            <span>reverse</span>
+        </li>
+    </ul>
+</main>
+</body>
+</html>

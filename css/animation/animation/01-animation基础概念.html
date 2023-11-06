@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        /*
+            动画帧：在 duration 期间内，设置不同进度时的样式。
+
+            动画帧中的不同帧间的 duration:
+                1. animation-duration * (动画帧2的时长百分比 - 动画帧1的时长百分比)
+                2. 起始帧比较特殊，没有过度时间，因为它是第一帧，没有更前面的动画帧
+        */
+
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            background-color: #95a5a6;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        main {
+            width: 300px;
+            height: 300px;
+            background-color: white;
+
+            animation-name: kf;
+            animation-duration: 5s;
+        }
+
+        @keyframes kf {
+            /* 起始帧：当不设置起始帧时，默认会使用元素原始的样式作为起始帧 */
+            /* 0% */
+            from {
+                background-color: green;
+            }
+
+            /* 结束帧：当不设置结束帧时，默认也会使用元素原始的样式作为结束帧 */
+            /* 100% */
+            to {
+                background-color: blueviolet;
+            }
+        }
+
+        /*@keyframes kf {*/
+        /*    20% {*/
+        /*        background-color: #5aaf63;*/
+        /*    }*/
+
+        /*    50% {*/
+        /*        background-color: orange;*/
+        /*    }*/
+
+        /*    90% {*/
+        /*        background-color: #8e44ad;*/
+        /*    }*/
+        /*}*/
+    </style>
+</head>
+<body>
+<main>
+
+</main>
+</body>
+</html>

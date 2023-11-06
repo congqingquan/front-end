@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="iconfont/iconfont.css">
+    <title>Document</title>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            background-color: #95a5a6;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        i {
+            color: #ecf0f1;
+            position: absolute;
+        }
+
+        main.like > i:first-of-type {
+            color: #e74c3c;
+            transform: scale(4);
+            transition: 1s;
+            opacity: 0;
+        }
+
+        main.like > i:nth-of-type(2) {
+            color: #e74c3c;
+        }
+
+    </style>
+</head>
+<body>
+<main id="likeMain">
+    <i class="iconfont icon-redheart" onclick="like()"></i>
+    <i class="iconfont icon-redheart" onclick="like()"></i>
+</main>
+<script>
+    function like() {
+        document.getElementById("likeMain").className === 'like'
+            ? document.getElementById("likeMain").className = '' : document.getElementById("likeMain").className = 'like'
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            background-color: #95a5a6;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        main {
+            width: 300px;
+            height: 300px;
+            background-color: white;
+        }
+
+        div {
+            width: 50px;
+            height: 50px;
+            background-color: black;
+
+            animation-name: move, background-color, radius;
+            /* 依旧遵循：循环设置 */
+            animation-duration: 5s, 2s;
+        }
+
+        @keyframes move {
+            25% {
+                transform: translate(250px);
+            }
+            50% {
+                transform: translate(250px, 250px);
+            }
+            75% {
+                transform: translate(0, 250px);
+            }
+        }
+
+        @keyframes background-color {
+            50% {
+                background-color: black;
+            }
+
+            25%, 75% {
+                background-color: blueviolet;
+            }
+        }
+
+        @keyframes radius {
+            50% {
+                border-radius: 0;
+            }
+
+            25%, 75% {
+                border-radius: 50%;
+            }
+        }
+    </style>
+</head>
+<body>
+<main>
+    <div></div>
+</main>
+</body>
+</html>

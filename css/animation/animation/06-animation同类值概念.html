@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            background-color: #95a5a6;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        main {
+            width: 100px;
+            height: 100px;
+            background-color: #8e44ad;
+
+            border: solid 2px white;
+
+            animation-name: middleValue;
+            animation-duration: 5s;
+        }
+
+        @keyframes middleValue {
+            to {
+                /* 动画中的 width / height 是同类值，可以逐渐变化 */
+                width: 200px;
+                height: 200px;
+                /*
+                    border 中的 dotted 与 solid 不是同类值，虽然都是边框的样式，但一个是实线、一个是 dot，无法逐渐变化，只能瞬时变化。
+                    也许未来的浏览器，会支持二者间的逐渐过渡变化。
+                */
+                border: dotted 15px white;
+            }
+        }
+
+    </style>
+</head>
+<body>
+<main>
+</main>
+</body>
+</html>
