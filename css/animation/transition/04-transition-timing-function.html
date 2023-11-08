@@ -37,7 +37,7 @@
             align-items: center;
 
             transition-property: border-radius, border, background-color;
-            transition-duration: 1s;
+            transition-duration: 2s;
 
             /* transition-timing-function 过渡效果控制: time/progression */
 
@@ -51,8 +51,12 @@
             /*transition-timing-function: linear;*/
 
             /* 2. steps 歩径 */
-            /* 分为 4 次进行过渡. start 会立即开始过渡，end 会延迟一下 */
-            transition-timing-function: steps(4, start);
+            /*
+                分为 4 次进行过渡.
+                start: 以过渡样式为第一帧，开始过渡
+                end：以自身样式为第一帧，开始过渡
+            */
+            transition-timing-function: steps(4, end);
 
             /* 简写 */
             /*transition-timing-function: steps(1, start);*/

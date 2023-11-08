@@ -28,10 +28,6 @@
             width: 100px;
             height: 100px;
             position: relative;
-
-            /*animation-name: heartbeat;*/
-            /*animation-duration: 2s;*/
-            /*animation-iteration-count: infinite;*/
         }
 
         ul {
@@ -66,11 +62,21 @@
             animation-duration: 1s;
         }
 
+        /* 0% > 100% > 0%(瞬间) */
         .heartbeat1 {
             animation-direction: normal;
         }
+        /* 100% > 0% > 100%(瞬间) */
         .heartbeat2 {
             animation-direction: reverse;
+        }
+        /* 0% > 100% > 0%(平滑) */
+        .heartbeat3 {
+            animation-direction: alternate;
+        }
+        /* 100% > 0% > 100%(平滑) */
+        .heartbeat4 {
+            animation-direction: alternate-reverse;
         }
 
         @keyframes heartbeat {
@@ -90,6 +96,14 @@
         <li>
             <i class="iconfont icon-redheart heartbeat2"></i>
             <span>reverse</span>
+        </li>
+        <li>
+            <i class="iconfont icon-redheart heartbeat3"></i>
+            <span>alternate</span>
+        </li>
+        <li>
+            <i class="iconfont icon-redheart heartbeat4"></i>
+            <span>alternate-reverse</span>
         </li>
     </ul>
 </main>

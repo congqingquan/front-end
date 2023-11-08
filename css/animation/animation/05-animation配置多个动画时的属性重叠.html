@@ -36,7 +36,8 @@
 
             /*
                 后指定的优先级最高:
-                在 repeat 执行的 2s 内，transform / background 都会使用 repeat 中设定的配置。执行结束后，在使用 move / background-color 中的配置。
+                在 repeat 执行的 2s 内，transform / background 都会使用 repeat 中设定的配置，即使不同动画中的含有相同属性配置的帧所在的进度是交叉的！！！
+                执行结束后，在使用 move / background-color 中的配置。
             */
             animation-name: move, background-color, repeat;
             animation-duration: 5s, 5s, 2s;
@@ -65,12 +66,12 @@
         }
 
         @keyframes repeat {
-            50% {
+            33% {
                 background-color: red;
                 transform: translate(300px);
             }
 
-            25%, 75% {
+            66% {
                 background-color: red;
                 transform: translate(0);
             }

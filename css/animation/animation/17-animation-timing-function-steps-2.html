@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="iconfont/iconfont.css">
+    <title>Document</title>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            background-color: #34495e;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .outer {
+            width: 20vw;
+            height: 10vh;
+
+            color: white;
+
+            margin-top: 20px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .outer > div {
+            width: 5vw;
+            height: 10vh;
+
+            text-align: center;
+            line-height: 10vh;
+
+            border: solid 2px black;
+            border-right: none;
+        }
+
+        .outer > div:last-of-type {
+            border-right: solid 2px black;
+        }
+
+        .first {
+            position: relative;
+        }
+
+        /*
+            start: 以过渡样式为第一帧，开始过渡
+            end：以自身样式为第一帧，开始过渡
+        */
+        .first-1::after {
+            content: 'START';
+
+            width: 5vw;
+            height: 10vh;
+            background-color: #e67e22;
+
+            left: 0;
+            position: absolute;
+
+            animation-name: step;
+            animation-duration: .5s;
+            animation-iteration-count: infinite;
+            animation-timing-function: step-start;
+            /* step-start 等价于 */
+            /*animation-timing-function: steps(1, start);*/
+        }
+
+        .first-2::after {
+            content: 'END';
+
+            width: 5vw;
+            height: 10vh;
+            background-color: #e67e22;
+
+            left: 0;
+            position: absolute;
+
+            animation-name: step;
+            animation-duration: .5s;
+            animation-iteration-count: infinite;
+            animation-timing-function: step-end;
+            /* step-end 等价于 */
+            /*animation-timing-function: steps(1, end);*/
+        }
+
+        @keyframes step {
+            50% {
+                transform: translateX(5vw);
+            }
+            to {
+                transform: translateX(0vw);
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="outer">
+    <div class="first first-1">1</div>
+    <div>2</div>
+    <div>3</div>
+    <div>4</div>
+</div>
+<div class="outer">
+    <div class="first first-2">1</div>
+    <div>2</div>
+    <div>3</div>
+    <div>4</div>
+</div>
+</body>
+</html>

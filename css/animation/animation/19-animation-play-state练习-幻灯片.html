@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="iconfont/iconfont.css">
+    <title>Document</title>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            background-color: #34495e;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        main {
+            width: 600px;
+            height: 500px;
+
+            overflow: hidden;
+            border: solid 2px black;
+
+            position: relative;
+        }
+
+        .slide {
+            width: 600px;
+            height: 500px;
+
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+
+            animation-name: slide;
+            animation-duration: 4s;
+            animation-iteration-count: infinite;
+            animation-timing-function: steps(3, end);
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+        }
+
+        @keyframes slide {
+            to {
+                transform: translateX(-1800px);
+            }
+        }
+
+        /* ===================================================== */
+
+        .slide-point {
+            list-style: none;
+            color: white;
+
+
+            /* 不能使用 父元素：宽度 100% / 子元素 flex 实现居中。因为宽度 100% 会使得父元素的左右有自适应宽高。操作居中子元素到其他子元素旁时，无法定位到子元素的位置 */
+            /*width: 100%;*/
+
+            /* 必须通过定位将父元素居中，这时父元素的左右没有自适应的宽高，大小由内部的子元素撑开。因为没有多余的自适应宽高，使得定位时可以直接定位到第一个居中子元素。 */
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .slide-point li {
+
+            width: 30px;
+            height: 30px;
+            margin: 20px;
+
+            text-align: center;
+            line-height: 30px;
+
+            border-radius: 50%;
+            background-color: rgba(189, 195, 199, .5);
+        }
+
+        .slide-point::before {
+            content: '';
+
+            width: 30px;
+            height: 30px;
+            margin: 20px;
+
+            border-radius: 50%;
+            background-color: rgba(230, 126, 34, 1.0);
+
+            position: absolute;
+            left: 0;
+            z-index: -1;
+
+            animation-name: slide-point;
+            animation-duration: 4s;
+            animation-iteration-count: infinite;
+            animation-timing-function: steps(3, end);
+        }
+
+        @keyframes slide-point {
+            to {
+                transform: translateX(210px);
+            }
+        }
+
+        .slide:hover,
+        .slide:hover + .slide-point::before {
+            animation-play-state: paused;
+        }
+    </style>
+</head>
+<body>
+<main>
+    <div class="slide">
+        <img alt="" src="img/halo1.jpg">
+        <img alt="" src="img/halo2.jpg">
+        <img alt="" src="img/halo3.jpg">
+    </div>
+    <ul class="slide-point">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+    </ul>
+</main>
+</body>
+</html>

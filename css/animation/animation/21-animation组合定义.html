@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="iconfont/iconfont.css">
+    <title>Document</title>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            background-color: #34495e;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        main {
+            width: 600px;
+            height: 600px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        div {
+            width: 100px;
+            height: 100px;
+
+            background-color: #e67e22;
+            color: white;
+            border-radius: 50%;
+
+            margin-right: 10px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        div:nth-of-type(1) {
+            /* 组合: name fill-mode duration delay */
+            animation: scale none 2s 2s;
+        }
+
+        div:nth-of-type(2) {
+            /* 组合: name fill-mode duration delay */
+            animation: scale backwards 2s 2s;
+        }
+
+        div:nth-of-type(3) {
+            /* 组合: name fill-mode duration delay */
+            animation: scale forwards 2s 2s;
+        }
+
+        div:nth-of-type(4) {
+            /* 组合: name fill-mode duration delay */
+            animation: scale both 2s 2s;
+        }
+
+        @keyframes scale {
+            from {
+                transform: scale(0);
+            }
+
+            to {
+                background-color: #27ae60;
+                transform: scale(1);
+            }
+        }
+
+    </style>
+</head>
+<body>
+<main>
+    <div>normal</div>
+    <div>backwards</div>
+    <div>forwards</div>
+    <div>both</div>
+</main>
+</body>
+</html>

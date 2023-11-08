@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="iconfont/iconfont.css">
+    <title>Document</title>
+
+    <style>
+
+        /* 一个动画执行的时间总长为：delay + duration */
+
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            background-color: #34495e;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        main {
+            width: 100px;
+            height: 100px;
+            position: relative;
+        }
+
+        /* 延迟帧：每次动画都会延迟一秒后执行 */
+        /*div:nth-of-type(1) {*/
+        /*    width: 50px;*/
+        /*    height: 50px;*/
+        /*    background: radial-gradient(#e74c3c, #e67e22);*/
+
+        /*    animation-name: scale;*/
+        /*    animation-duration: 2s;*/
+        /*    animation-direction: alternate;*/
+        /*    animation-iteration-count: infinite;*/
+        /*}*/
+
+        /*@keyframes scale {*/
+        /*    50% {*/
+        /*        transform: scale(1);*/
+        /*    }*/
+        /*    to {*/
+        /*        transform: scale(2);*/
+        /*    }*/
+        /*}*/
+
+        /* 延迟属性：第一次执行前延迟，之后的循环不再延迟 */
+        div:nth-of-type(1) {
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(#e74c3c, #e67e22);
+
+            animation-name: scale;
+            animation-delay: 2s;
+            animation-duration: 2s;
+            animation-direction: alternate;
+            animation-iteration-count: infinite;
+        }
+
+        @keyframes scale {
+            to {
+                transform: scale(2);
+            }
+        }
+    </style>
+</head>
+<body>
+<main>
+    <div></div>
+</main>
+</body>
+</html>

@@ -8,6 +8,15 @@
     <title>Document</title>
 
     <style>
+        /**
+            此属性将 flex 子项作为一个整体起作用，它的基本单位是所有子项构成的行，设置这个整体在副轴上的默认对齐方式。
+            只有在 flex 容器高度固定且设置了flex-wrap: wrap时，align-content才会有效。
+
+            相比 align-items：
+                1. align-content 有使用条件：只有在 flex 容器高度固定且设置了flex-wrap: wrap时生效
+                2. 根据第一点中提到的必须设置了 flex-wrap 才能生效，说明 align-content 可以处理元素溢出换行时的排列方式
+                3. align-content 会将所有 flex 子项构成的行视为一个整体，并操作这个整体。
+         */
         * {
             margin: 0;
             padding: 0;
@@ -27,29 +36,22 @@
             display: flex;
             flex-flow: column wrap;
 
-            /* 首端对齐 */
-            /*align-items: flex-start;*/
-            /* 尾端对齐 */
-            /*align-items: flex-end;*/
-            /* 居中对齐 */
-            /*align-items: center;*/
-            /* 拉伸: 受当前元素的 height 属性影响。如果不设定高度，则填充满整个父元素 */
-            /*align-items: stretch;*/
-
             /* 平局分布 */
             /* 1. 首尾端的最近的两个元素，分别首尾端对齐。中间的其余元素，平均分布 */
             /*align-content: space-between;*/
             /* 2. 所有元素平均间距分布，会产生效果：首尾端最近的两个元素举例边界一倍平均间距。与相邻的元素二倍平均间距（因为相邻元素自身也有平均间距）。 */
             /*align-content: space-around;*/
             /* 3. 完全平均间距分布 */
-            align-content: space-evenly;
+            /*align-content: space-evenly;*/
+            /* 4. 居中对齐 */
+            /*align-content: center;*/
         }
 
         footer div {
             background: black;
             margin: 5px;
             width: 70px;
-            height: 150px;
+            height: 50px;
 
             color: red;
             text-align: center;

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="iconfont/iconfont.css">
+    <title>Document</title>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            background-color: #34495e;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        main {
+            width: 100px;
+            height: 100px;
+            position: relative;
+        }
+
+        div:nth-of-type(1) {
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(#e74c3c, #e67e22);
+            border-radius: 50%;
+
+            position: relative;
+
+            animation-name: jump;
+            animation-iteration-count: infinite;
+            animation-duration: .5s;
+            animation-direction: alternate;
+        }
+
+        div:nth-of-type(2) {
+            width: 50px;
+            height: 10px;
+            background-color: rgba(0, 0, 0, .5);
+            border-radius: 50%;
+
+            bottom: -60px;
+            position: absolute;
+
+            animation-name: scale;
+            animation-iteration-count: infinite;
+            animation-duration: .5s;
+            animation-direction: alternate;
+        }
+
+        @keyframes jump {
+            from {
+                transform: translateY(0);
+            }
+            to {
+                transform: translateY(100px);
+            }
+        }
+
+        @keyframes scale {
+            from {
+                transform: scale(0);
+            }
+            to {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+<main>
+    <div></div>
+    <div></div>
+</main>
+</body>
+</html>
