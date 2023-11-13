@@ -1,0 +1,3 @@
+@import url("link-common.css") all;
+@import url("link-screen.css") screen;
+@import url("link-print.css") print;

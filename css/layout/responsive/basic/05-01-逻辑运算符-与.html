@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <!--
+        screen 类型设备下有很多的子类型设备，如果只是处理 screen 这一种宽泛的设备类型，是绝对不够的。
+
+        screen 下包含了如下的子类型设备：
+            1. PC
+            2. iPad
+            3. Mobile（iPhone 7, 8, XR...）、手机屏幕反转，宽高互换后的宽屏。
+
+        所以，需要设置 media=screen && 子类型设备，更细粒度的处理不同类型的设备。
+
+        逻辑运算符：
+            1. && > and
+            2. || > ,    (注意是一个逗号即可)
+            3. !  > not
+    -->
+
+    <style media="screen and (min-width: 700px) and (max-width: 800px) ">
+        h1 {
+            color: #8e44ad;
+        }
+    </style>
+
+    <!-- 800px 时，使用哪个样式？谁在最后编写的，用谁，即 #2ecc71 -->
+
+    <style media="screen and (min-width: 800px) and (max-width: 900px) ">
+        h1 {
+            color: red;
+        }
+    </style>
+
+    <!--
+        横屏：orientation: landscape
+
+        一、横屏具体的宽度是多少，根据具体的设备而定。比如 iPhoneXR: 414 x 896，那么横屏宽度即 896。
+        二、横屏样式设置后，会使得上面对于具体宽高的样式设置失效。如果想同时保留，二者，见：05-02-逻辑运算符-或.html。
+    -->
+    <style media="screen and (orientation: landscape)">
+        h1 {
+            color: #2ecc71;
+        }
+    </style>
+</head>
+<body>
+<h1>Cortana</h1>
+</body>
+</html>

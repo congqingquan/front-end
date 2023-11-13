@@ -1,0 +1,102 @@
+header {
+    border-bottom: solid 5px #27ae60;
+    box-shadow: 0 5px 10px rgba(52, 73, 94, .3);
+    
+    .navbar {
+        height: 60px;
+        display: flex;
+        align-items: center;
+        
+        .logo {
+            color: #2ecc71;
+            font-weight: bold;
+            
+            margin: 0 20px;
+            font-size: 1.3rem;
+        }
+        
+        .links {
+            flex-grow: 1;
+            display: flex;
+            
+            a {
+                color: #7f8c8d;
+                margin: 0 10px;
+                
+                &:hover {
+                    color: black;
+                }
+            }
+        }
+    
+        .form {
+            a {
+                color: #27ae60;
+                border: solid 1px #27ae60;
+                border-radius: .3rem;
+                padding: .3rem .5rem;
+                
+                &:nth-of-type(2) {
+                    color: white;
+                    background-color: #27ae60;
+                }
+            }
+        }
+        
+        .menu {
+            display: none;
+        }
+    }
+}
+
+@media screen and (max-width: 959px) {
+    header {
+        .navbar {
+            height: auto;
+            flex-wrap: wrap;
+            
+            .logo {
+                // 都可以实现填充满的效果
+                //flex-grow: 1;
+                margin-right: auto;
+            }
+    
+            .menu {
+                display: block;
+        
+                font-size: 1.5rem;
+                margin-right: 25px;
+                cursor: pointer;
+        
+                padding: .8rem;
+        
+                &+input {
+                    display: none;
+                }
+        
+                &+input:checked +.links,
+                &+input:checked ~.form {
+                    display: block;
+                }
+            }
+            
+            .links {
+                display: none;
+                
+                // 水平排列时，通过设定某个元素的宽度为 100% 配合 wrap，使得该元素被换行到下一行
+                width: 100%;
+                flex-direction: column;
+                
+                li {
+                    margin: .5rem;
+                }
+            }
+            
+            .form {
+                display: none;
+    
+                margin: 1rem;
+            }
+        }
+    }
+}

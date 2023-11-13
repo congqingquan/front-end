@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <!--
+        响应式布局并不是指页面的内容，以很小的变动值为单位，频繁的缩放元素大小而达到响应式
+
+        一般是根据不同设配的宽高而定的，每一种、或多种设备对应一套样式布局，这样维护起来也方便。
+
+        ty tty screen print，很多类型已经随着时间被删掉了，如 ty tty。目前一般都专注与 screen 屏幕设备。
+    -->
+
+    <!-- 默认所有设备 -->
+    <style media="all">
+        h1 {
+            color: red;
+        }
+    </style>
+
+    <!-- 屏幕设备样式 -->
+    <style media="screen">
+        h1 {
+            color: red;
+        }
+    </style>
+
+    <!-- 打印机设备样式(ctrl p 在浏览器中唤起打印页面) -->
+    <style media="print">
+        h1 {
+            color: blueviolet;
+        }
+    </style>
+
+    <!-- 指定多种设备 -->
+    <style media="screen, print">
+        h1 {
+            color: green;
+        }
+    </style>
+
+    <!-- 若在多个 style 标签前出现了对同一设备的样式设定，可以进行累加 -->
+</head>
+<body>
+<h1>Cortana.John.S117</h1>
+</body>
+</html>

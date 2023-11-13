@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <!--
+        screen 类型设备下有很多的子类型设备，如果只是处理 screen 这一种宽泛的设备类型，是绝对不够的。
+
+        screen 下包含了如下的子类型设备：
+            1. PC
+            2. iPad
+            3. Mobile（iPhone 7, 8, XR...）、手机屏幕反转，宽高互换后的宽屏。
+
+        所以，需要设置 media=screen && 子类型设备，更细粒度的处理不同类型的设备。
+
+        逻辑运算符：
+            1. && > and
+            2. || > ,    (注意是一个逗号即可)
+            3. !  > not
+    -->
+
+    <!-- 测试 iPhoneXR -->
+    <style media="screen and (min-width: 400px) and (max-width: 500px), screen and (orientation: landscape)">
+        h1 {
+            color: #8e44ad;
+        }
+    </style>
+</head>
+<body>
+<h1>Cortana</h1>
+</body>
+</html>
