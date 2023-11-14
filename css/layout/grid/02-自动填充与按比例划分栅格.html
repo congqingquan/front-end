@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            background-color: #95a5a6;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+         }
+
+        article {
+            display: grid;
+
+            width: 500px;
+            height: 500px;
+            border: solid 2px red;
+
+            /*
+                1. auto-fill：它可以使网格 item 在可用空间中自动复制和扩展现有的网格项，以填充可用的空间。
+                例如，假设你有一个包含四个网格项的网格，而你的网格容器有更多的空间。使用 auto-fill，网格会自动复制现有的网格项，以填充可用的空间。
+
+                每个网格 item 的宽高大小即设置的 row/column auto-fill 大小。
+            */
+            /*grid-template-rows: repeat(auto-fill, 250px);*/
+            /*grid-template-columns: repeat(auto-fill, 100px);*/
+
+            /* 如果 auto-fill 的大小不合理，会使得 item 溢出 container */
+            /*grid-template-rows: repeat(auto-fill, 400px);*/
+            /*grid-template-columns: repeat(auto-fill, 150px);*/
+
+            /*
+                2. fr 相对剩余空间单位：fr 是一种新的长度单位，表示 Grid 布局中剩余空间的一部分。
+                一般来说，1fr 的意思是“100%的剩余空间”，.25fr 意味着“25%的剩余空间”。当 fr 大于 1 的时候，则会重新计算比例来分配。它是一个相对尺寸单位，表示剩余空间做等分。
+            */
+            grid-template-rows: repeat(5, 1fr);
+            grid-template-columns: 1fr 2fr;
+        }
+
+        div {
+            /* item 元素不指定宽高，根据 grid 的 rows / columns 的设置自适应 */
+            box-sizing: border-box;
+
+            padding: 10px;
+
+            background-clip: content-box;
+            background-color: blueviolet;
+            border: solid 2px blueviolet;
+        }
+    </style>
+</head>
+<body>
+<article>
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+    <div>4</div>
+    <div>5</div>
+
+    <div>6</div>
+    <div>7</div>
+    <div>8</div>
+    <div>9</div>
+    <div>10</div>
+</article>
+</body>
+</html>
