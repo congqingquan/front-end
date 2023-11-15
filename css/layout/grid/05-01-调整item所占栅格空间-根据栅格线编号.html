@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            background-color: #95a5a6;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+         }
+
+        article {
+            display: grid;
+
+            width: 300px;
+            height: 300px;
+            border: solid 2px red;
+
+            /* 3*3 矩阵 */
+            grid-template-rows: repeat(3, 1fr);
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        div {
+            /* item 元素不指定宽高，根据 grid 的 rows / columns 的设置自适应 */
+            background-color: blueviolet;
+
+            /*
+                1. 通过设置起始、结束栅格线，实现调整元素所占空间，无论如何调整变化，最终依旧是矩形，不能是不规则图形。
+                2. 通过设置起始、结束栅格线，实现调整元素所占空间，实际上就是：定位矩形的左上角 > 定位矩形的右下角
+            */
+
+            /* 填满 */
+            /*grid-row-start: 1;*/
+            /*grid-column-start: 1;*/
+            /*grid-row-end: 4;*/
+            /*grid-column-end: 4;*/
+
+            /* 中线 */
+            /*grid-row-start: 1;*/
+            /*grid-column-start: 2;*/
+            /*grid-row-end: 4;*/
+            /*grid-column-end: 3;*/
+
+            /* 中心点 */
+            /*grid-row-start: 2;*/
+            /*grid-column-start: 2;*/
+            /*grid-row-end: 3;*/
+            /*grid-column-end: 3;*/
+        }
+    </style>
+</head>
+<body>
+<article>
+    <div></div>
+</article>
+</body>
+</html>

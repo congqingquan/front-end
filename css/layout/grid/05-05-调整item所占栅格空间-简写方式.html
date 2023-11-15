@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            background-color: #95a5a6;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+         }
+
+        article {
+            display: grid;
+
+            width: 300px;
+            height: 300px;
+            border: solid 2px red;
+
+            grid-template-rows: repeat(3, [r-start] 1fr [r-end]);
+            grid-template-columns: repeat(3, [c-start] 1fr [c-end]);
+        }
+
+        div {
+            /* item 元素不指定宽高，根据 grid 的 rows / columns 的设置自适应 */
+            background-color: blueviolet;
+
+
+            /*
+                格式：
+
+                grid-row: [grid-row-start]/[grid-row-end];
+                grid-column: [grid-column-start]/[grid-column-end];
+
+                第一部分取值：
+                1. none(default 1)
+                2. number
+                3. name(equal to name/1)
+                4. name/number
+
+                第二部分取值：
+                1. number
+                2. span number
+             */
+
+
+            /* 中心点例子 */
+
+            /*grid-row: 2/3;*/
+            /*grid-column: 2/3;*/
+
+            /*grid-row: 2/span 1;*/
+            /*grid-column: 2/span 1;*/
+
+            /*grid-row: r-start 2/span 1;*/
+            /*grid-column: c-start 2/span 1;*/
+
+            /* 第一行的例子 */
+            /*grid-row: span 1;*/
+            /*grid-column: span 3;*/
+            /* 等价于 */
+            grid-row: 1/ span 1;
+            grid-column: 1/ span 3;
+        }
+    </style>
+</head>
+<body>
+<article>
+    <div></div>
+</article>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            background-color: #95a5a6;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+         }
+
+        article {
+            display: grid;
+
+            width: 300px;
+            height: 300px;
+            border: solid 2px red;
+
+            /*
+                对比显示命名的方式，repeat 的方式不再需要设置具体的栅格线名称中的数，使用同一个名称。
+                那么相对地，就需要在子元素中显示的指定这个数，才能在多个同名的栅格线中定位到需要的栅格线。
+            */
+            grid-template-rows: repeat(3, [r-start] 1fr [r-end]);
+            grid-template-columns: repeat(3, [c-start] 1fr [c-end]);
+        }
+
+        div {
+            /* item 元素不指定宽高，根据 grid 的 rows / columns 的设置自适应 */
+            background-color: blueviolet;
+
+            /* 填满 */
+            /*grid-row-start: r-start 1;*/
+            /*grid-column-start: c-start 1;*/
+            /*grid-row-end: r-end 3;*/
+            /*grid-column-end: c-end 3;*/
+            /* 填满方式二 */
+            /*grid-row-start: r-start 1;*/
+            /*grid-column-start: c-start 1;*/
+            /*grid-row-end: r-start 4;*/
+            /*grid-column-end: c-start 4;*/
+
+            /* 中线 */
+            /*grid-row-start: r-start 1;*/
+            /*grid-column-start: c-start 2;*/
+            /*grid-row-end: r-end 3;*/
+            /*grid-column-end: c-end 2;*/
+
+            /* 中心点 */
+            /*grid-row-start: r-start 2;*/
+            /*grid-column-start: c-start 2;*/
+            /*grid-row-end: r-end 2;*/
+            /*grid-column-end: c-end 2;*/
+        }
+    </style>
+</head>
+<body>
+<article>
+    <div></div>
+</article>
+</body>
+</html>

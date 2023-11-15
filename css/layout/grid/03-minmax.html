@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            background-color: #95a5a6;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+         }
+
+        article {
+            display: grid;
+
+            width: 300px;
+            height: 300px;
+            border: solid 2px red;
+
+            /* minmax 控制 item 的最小、最大宽高值, 同 min width / max width  */
+            grid-template-rows: repeat(2, minmax(50px, 100px));
+            grid-template-columns: repeat(5, 1fr);
+        }
+
+        div {
+            /* item 元素不指定宽高，根据 grid 的 rows / columns 的设置自适应 */
+            box-sizing: border-box;
+
+            padding: 10px;
+
+            background-clip: content-box;
+            background-color: blueviolet;
+            border: solid 2px blueviolet;
+        }
+    </style>
+</head>
+<body>
+<article>
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+    <div>4</div>
+    <div>5</div>
+
+    <div>6</div>
+    <div>7</div>
+    <div>8</div>
+    <div>9</div>
+    <div>10</div>
+</article>
+</body>
+</html>

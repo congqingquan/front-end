@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            background-color: #95a5a6;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+         }
+
+        article {
+            display: grid;
+
+            width: 300px;
+            height: 300px;
+            border: solid 2px red;
+
+            grid-template-rows: [r1-start] 100px [r1-end r2-start] 100px [r2-end r3-start] 100px [r3-end r4-start];
+            grid-template-columns: [c1-start] 100px [c1-end c2-start] 100px [c2-end c3-start] 100px [c3-end c4-start];
+        }
+
+        div {
+            /* item 元素不指定宽高，根据 grid 的 rows / columns 的设置自适应 */
+            background-color: blueviolet;
+
+            /* 填满 */
+            /*grid-row-start: r1-start;*/
+            /*grid-column-start: c1-start;*/
+            /*grid-row-end: r3-end;*/
+            /*grid-column-end: c3-end;*/
+            /* 填满方式二 */
+            /*grid-row-start: r1-start;*/
+            /*grid-column-start: c1-start;*/
+            /*grid-row-end: r4-start;*/
+            /*grid-column-end: c4-start;*/
+
+            /* 中线 */
+            /*grid-row-start: r1-start;*/
+            /*grid-column-start: c2-start;*/
+            /*grid-row-end: r3-end;*/
+            /*grid-column-end: c2-end;*/
+
+            /* 中心点 */
+            /*grid-row-start: r2-start;*/
+            /*grid-column-start: c2-start;*/
+            /*grid-row-end: r2-end;*/
+            /*grid-column-end: c2-end;*/
+        }
+    </style>
+</head>
+<body>
+<article>
+    <div></div>
+</article>
+</body>
+</html>

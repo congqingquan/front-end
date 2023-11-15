@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            background-color: #95a5a6;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+         }
+
+        article {
+            display: grid;
+
+            width: 300px;
+            height: 300px;
+            border: solid 2px red;
+
+            grid-template-rows: repeat(3, [r-start] 1fr [r-end]);
+            grid-template-columns: repeat(3, [c-start] 1fr [c-end]);
+        }
+
+        div:nth-of-type(1) {
+            background-color: blueviolet;
+
+            grid-row: r-start 1/span 3;
+            grid-column: c-start 1/span 1;
+        }
+
+        div:nth-of-type(2) {
+            background-color: green;
+
+            grid-row: r-start 1/span 2;
+            grid-column: c-start 2/span 2;
+        }
+
+        div:nth-of-type(3) {
+            background-color: blue;
+
+            /* 根据元素当前位置，设置较小的条件即可 */
+            grid-column: span 2;
+            /* 计算的方式 */
+            /*grid-row: r-start 3/span 1;*/
+            /*grid-column: c-start 2/span 2;*/
+        }
+    </style>
+</head>
+<body>
+<article>
+    <div></div>
+    <div></div>
+    <div></div>
+</article>
+</body>
+</html>
