@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            background-color: #95a5a6;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        article {
+            display: grid;
+
+            width: 100vw;
+            height: 100vh;
+
+            grid-template-rows: 1fr 5fr 1fr;
+            grid-template-columns: 1fr 3fr;
+
+            /* 1. 对所有的栅格划分区域 */
+            grid-template-areas:
+                    "header header"
+                    "nav    main"
+                    "footer footer";
+        }
+
+        header, nav, main, footer, div {
+            background-clip: content-box;
+            padding: 10px;
+        }
+
+        /* 2. 指定元素所对应的区域 */
+        header {
+            border: solid 2px blueviolet;
+            background-color: blueviolet;
+
+            grid-area: header;
+        }
+
+        nav {
+            border: solid 2px green;
+            background-color: green;
+
+            grid-area: nav;
+        }
+
+        main {
+            border: solid 2px red;
+            background-color: red;
+
+            grid-area: main;
+        }
+
+        footer {
+            border: solid 2px blue;
+            background-color: blue;
+
+            grid-area: footer;
+
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        footer div {
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+<article>
+    <header></header>
+    <nav></nav>
+    <main></main>
+    <footer>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </footer>
+</article>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            background-color: #95a5a6;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        article {
+            display: grid;
+
+            width: 300px;
+            height: 300px;
+            border: solid 2px red;
+
+            grid-template-rows: repeat(3, 1fr);
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        div {
+            background-color: blueviolet;
+            background-clip: content-box;
+            padding: 10px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+
+        article {
+            /* 1. 排列方向 */
+            /* 默认按水平行排列 */
+            /*grid-auto-flow: row;*/
+            /* 垂直排列 */
+            /*grid-auto-flow: column;*/
+        }
+
+        article {
+            /* 2. 堆聚方式 */
+            /* 填满空白栅格 */
+            grid-auto-flow: row dense;
+        }
+        /*div:nth-of-type(1) {*/
+        /*    grid-column: 1/span 2;*/
+        /*}*/
+        /*div:nth-of-type(2) {*/
+        /*    grid-column: 2/span 2;*/
+        /*}*/
+    </style>
+</head>
+<body>
+<article>
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+    <div>4</div>
+</article>
+</body>
+</html>

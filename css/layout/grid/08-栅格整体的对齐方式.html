@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            background-color: #95a5a6;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        article {
+            display: grid;
+
+            width: 200px;
+            height: 200px;
+            border: solid 2px red;
+
+            grid-template-rows: 50px;
+            grid-template-columns: repeat(3, 50px);
+
+            /* 与 flex 布局中的对齐方式非常类似 */
+
+            /* 1. 栅格整体水平对齐方式 */
+            /*justify-content: start;*/
+            /*justify-content: end;*/
+            /*justify-content: center;*/
+            /*justify-content: space-between;*/
+            /*justify-content: space-around;*/
+            /*justify-content: space-evenly;*/
+
+            /* 2. 栅格整体垂直对齐方式 */
+            /*align-content: start;*/
+            /*align-content: end;*/
+            /*align-content: center;*/
+            /*align-content: space-evenly;*/
+        }
+
+        div {
+            border: solid 1px blueviolet;
+            background-color: blueviolet;
+            background-clip: content-box;
+            padding: 10px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<article>
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+</article>
+</body>
+</html>

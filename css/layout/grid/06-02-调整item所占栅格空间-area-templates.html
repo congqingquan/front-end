@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            background-color: #95a5a6;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        article {
+            display: grid;
+
+            width: 300px;
+            height: 300px;
+            border: solid 2px red;
+
+            grid-template-rows: repeat(3, [r-start] 1fr);
+            grid-template-columns: repeat(3, [c-start] 1fr);
+
+            /* 1. 对所有的栅格划分区域 */
+            grid-template-areas:
+                    "top top top"
+                    "middle middle middle"
+                    "bottom bottom bottom";
+        }
+
+        div {
+            border: solid 2px blueviolet;
+            background-color: blueviolet;
+            background-clip: content-box;
+            padding: 10px;
+        }
+
+        /* 2. 指定元素所对应的区域 */
+        div:nth-of-type(1) {
+            grid-area: top;
+        }
+
+        div:nth-of-type(2) {
+            grid-area: middle;
+        }
+
+        div:nth-of-type(3) {
+            grid-area: bottom;
+        }
+
+    </style>
+</head>
+<body>
+<article>
+    <div>top</div>
+    <div>middle</div>
+    <div>bottom</div>
+</article>
+</body>
+</html>

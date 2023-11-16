@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            background-color: #95a5a6;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        article {
+            display: grid;
+
+            width: 200px;
+            height: 200px;
+            border: solid 2px red;
+
+            grid-template-rows: repeat(3, 50px);
+            grid-template-columns: repeat(3, 50px);
+
+            /* 格式：place-content/items/self: align-content/items/self justify-content/items/self. 只写一个值时，同时应用到 align/justify */
+
+            /* 1. content */
+            /*place-content: end space-between;*/
+            /*place-content: end;*/
+
+            /* 2. items */
+            /*place-items: start end;*/
+        }
+
+        div:nth-of-type(2) {
+            /* 3. self */
+            place-self: end;
+        }
+
+        div {
+            width: 20px;
+            height: 20px;
+
+            border: solid 1px blueviolet;
+            background-color: blueviolet;
+            background-clip: content-box;
+            padding: 10px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<article>
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+</article>
+</body>
+</html>

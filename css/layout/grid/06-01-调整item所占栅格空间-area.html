@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            background-color: #95a5a6;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        article {
+            display: grid;
+
+            width: 300px;
+            height: 300px;
+            border: solid 2px red;
+
+            grid-template-rows: repeat(3, [r-start] 1fr);
+            grid-template-columns: repeat(3, [c-start] 1fr);
+        }
+
+        div {
+            background-color: blueviolet;
+
+            /*
+                grid-row & grid-column 的再次简写
+
+                grid-area: start-row/start-colum- / end-row/end-column
+            */
+
+            /* 中心点 */
+            /*grid-area: 2/2    /    3/3;*/
+            /*grid-area: 2/2    /    span 1/span 1;*/
+            /*grid-area: r-start 2/c-start 2    /    r-start 3/c-start 3;*/
+            /*grid-area: r-start 2/c-start 2    /    span 1/span 1;*/
+        }
+    </style>
+</head>
+<body>
+<article>
+    <div></div>
+</article>
+</body>
+</html>
