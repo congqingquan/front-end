@@ -1,0 +1,22 @@
+.page {
+  display: flex;
+}
+.page a {
+  padding: 0.2rem 0.5rem;
+  color: #16a085;
+  border: solid 1px #bdc3c7;
+  margin-left: -1px;
+}
+.page a:first-of-type {
+  border-top-left-radius: 0.2rem;
+  border-bottom-left-radius: 0.2rem;
+}
+.page a:last-of-type {
+  border-top-right-radius: 0.2rem;
+  border-bottom-right-radius: 0.2rem;
+}
+.page .current {
+  color: white;
+  background-color: #16a085;
+}
+/*# sourceMappingURL=page.css.map */

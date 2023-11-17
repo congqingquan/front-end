@@ -1,0 +1,30 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+.container {
+    margin: 0 auto;
+}
+
+.row {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+}
+
+.loop(@counter) when (@counter > 0) {
+    .col-@{counter} {
+        grid-column: span @counter;
+    }
+    .loop(@counter - 1)
+}
+
+.loop(12);

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="css/index.css" type="text/css">
+
+    <style>
+        .row {
+            width: 200px;
+            height: 150px;
+        }
+
+        .col {
+            background-color: blueviolet;
+            background-clip: content-box;
+            border: solid 1px blueviolet;
+
+            padding: 5px;
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="container row">
+    <!--
+        通过添加 class 改变元素样式，而非每次都改动 css 样式。
+        只需要添加对应的 class 名称即可改变元素在不同设备上占用的 column 数量。
+    -->
+
+    <!-- 1. 设置不同设备下的大小 -->
+    <!--    <div class="col col-lg-12 col-md-4 col-sm-4 col-smx-3"></div>-->
+    <!--    <div class="col col-lg-11 col-md-4 col-sm-4 col-smx-3"></div>-->
+    <!--    <div class="col col-lg-10 col-md-4 col-sm-4 col-smx-3"></div>-->
+
+    <!-- 2. 设置不同设备下的通用带下，并特殊设置在 smx 设备下的样式 -->
+    <div class="col col-4 col-smx-3"></div>
+    <div class="col col-4 col-smx-3"></div>
+    <div class="col col-4 col-smx-3"></div>
+</div>
+</body>
+</html>

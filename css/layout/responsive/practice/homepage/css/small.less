@@ -1,0 +1,12 @@
+:root {
+    font-size: 10px;
+}
+
+.loop(@counter) when (@counter > 0) {
+    .col-sm-@{counter} {
+        grid-column: span @counter;
+    }
+    .loop(@counter - 1)
+}
+
+.loop(12);

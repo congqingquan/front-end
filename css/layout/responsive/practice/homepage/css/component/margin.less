@@ -1,0 +1,35 @@
+// margin-top
+.mtLoop(@counter) when (@counter > 0) {
+    .mt-@{counter} {
+        margin-top: unit(@counter, rem);
+    }
+    .mtLoop(@counter - 1)
+}
+.mtLoop(3);
+
+// margin-right
+.mrLoop(@counter) when (@counter > 0) {
+    .mr-@{counter} {
+        margin-right: unit(@counter, rem);
+    }
+    .mrLoop(@counter - 1)
+}
+.mrLoop(3);
+
+// margin-bottom
+.mbLoop(@counter) when (@counter > 0) {
+    .mb-@{counter} {
+        margin-bottom: unit(@counter, rem);
+    }
+    .mbLoop(@counter - 1)
+}
+.mbLoop(3);
+
+// margin-left
+.mlLoop(@counter) when (@counter > 0) {
+    .ml-@{counter} {
+        margin-left: unit(@counter, rem);
+    }
+    .mlLoop(@counter - 1)
+}
+.mlLoop(3);

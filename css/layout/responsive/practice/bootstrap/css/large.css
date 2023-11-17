@@ -1,0 +1,13 @@
+.col-lg-12 {
+    grid-column: span 12;
+}
+
+.col-lg-11 {
+    grid-column: span 11;
+}
+
+.col-lg-10 {
+    grid-column: span 10;
+}
+
+/* .............. */

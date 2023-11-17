@@ -1,0 +1,78 @@
+header {
+  border-bottom: solid 5px #27ae60;
+  box-shadow: 0 5px 10px rgba(52, 73, 94, 0.3);
+}
+header .navbar {
+  height: 60px;
+  display: flex;
+  align-items: center;
+}
+header .navbar .logo {
+  color: #2ecc71;
+  font-weight: bold;
+  margin: 0 20px;
+  font-size: 1.3rem;
+}
+header .navbar .links {
+  flex-grow: 1;
+  display: flex;
+}
+header .navbar .links a {
+  color: #7f8c8d;
+  margin: 0 10px;
+}
+header .navbar .links a:hover {
+  color: black;
+}
+header .navbar .form a {
+  color: #27ae60;
+  border: solid 1px #27ae60;
+  border-radius: 0.3rem;
+  padding: 0.3rem 0.5rem;
+}
+header .navbar .form a:nth-of-type(2) {
+  color: white;
+  background-color: #27ae60;
+}
+header .navbar .menu {
+  display: none;
+}
+header .navbar .menu + input {
+  display: none;
+}
+@media screen and (max-width: 959px) {
+  header .navbar {
+    height: auto;
+    flex-wrap: wrap;
+  }
+  header .navbar .logo {
+    margin-right: auto;
+  }
+  header .navbar .menu {
+    display: block;
+    font-size: 1.5rem;
+    margin-right: 25px;
+    cursor: pointer;
+    padding: 0.8rem;
+  }
+  header .navbar .menu + input {
+    display: none;
+  }
+  header .navbar .menu + input:checked + .links,
+  header .navbar .menu + input:checked ~ .form {
+    display: block;
+  }
+  header .navbar .links {
+    display: none;
+    width: 100%;
+    flex-direction: column;
+  }
+  header .navbar .links li {
+    margin: 0.5rem;
+  }
+  header .navbar .form {
+    display: none;
+    margin: 1rem;
+  }
+}
+/*# sourceMappingURL=navbar.css.map */

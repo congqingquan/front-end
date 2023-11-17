@@ -1,0 +1,40 @@
+:root {
+  font-size: 10px;
+}
+.col-smx-12 {
+  grid-column: span 12;
+}
+.col-smx-11 {
+  grid-column: span 11;
+}
+.col-smx-10 {
+  grid-column: span 10;
+}
+.col-smx-9 {
+  grid-column: span 9;
+}
+.col-smx-8 {
+  grid-column: span 8;
+}
+.col-smx-7 {
+  grid-column: span 7;
+}
+.col-smx-6 {
+  grid-column: span 6;
+}
+.col-smx-5 {
+  grid-column: span 5;
+}
+.col-smx-4 {
+  grid-column: span 4;
+}
+.col-smx-3 {
+  grid-column: span 3;
+}
+.col-smx-2 {
+  grid-column: span 2;
+}
+.col-smx-1 {
+  grid-column: span 1;
+}
+/*# sourceMappingURL=small-x.css.map */
