@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+    // js 中非 boolean 类型数值可以转为 boolean 值并参与运算，如：number 1 > true / number 0 > false。
+    // 并且，参与逻辑运算后可再次赋值给其他变量，如下：
+    let i = 1
+    let j = 0
+    console.log(i || j) // 1
+
+    i = 10
+    console.log(i || j) // 10
+
+    // 实际应用，设置默认值：
+
+    function star(num) {
+        return "*".repeat(num || 5);
+    }
+    console.log(star(1));
+    console.log(star());
+
+    let gender = prompt("请输入性别") || "保密";
+    console.log(gender);
+</script>
+</body>
+</html>

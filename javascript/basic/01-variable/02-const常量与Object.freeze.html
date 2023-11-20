@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<main>
+    <h1>Qingquan.Cong</h1>
+</main>
+<script type="text/javascript">
+    "use strict";
+
+    // java 中的 final 修饰的常量
+
+    // 1. const
+    // 预编译期间就会检查出是否重复赋值了常量
+    // const NAME = "cqq"
+    // NAME = "cqq2" // Uncaught TypeError: Assignment to constant variable.
+    // console.log(NAME);
+
+    // 2. Object.freeze: 阻止修改对象的成员属性的值
+    const SERVER = {
+        url: "https://localhost",
+        port: 443
+    };
+    // js 中的对象无法用 final 即 const 修改内部的成员属性，使得内部的成员属性也是常量。
+    // console.log(SERVER.port);
+    // SERVER.port = 8080;
+    // console.log(SERVER.port);
+
+    // 这时候就可以使用 Object.freeze 了。
+    Object.freeze(SERVER);
+    SERVER.port = 8080; // 默认运行不抛出异常，但修改会失效。
+                        // 如果想要抛出异常（Uncaught TypeError: Cannot assign to read only property 'port' of object '#<Object>'），可以使用严格模式
+    console.log(SERVER.port);
+</script>
+</body>
+</html>

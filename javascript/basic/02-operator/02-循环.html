@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        span { color: white; }
+    </style>
+</head>
+<body>
+<script type="text/javascript">
+    while (false) {}
+
+    do {} while (false) {}
+
+    // for: 杨辉三角
+    function print(row) {
+        for (let i = 1; i <= row; i++) {
+            for (let j = row - i; j > 0; j--) {
+                document.write("<span>*</span>");
+            }
+            for (let j = 0; j < i * 2 - 1; j++) {
+                document.write("*");
+            }
+            document.write("<br>")
+        }
+    }
+    print(5);
+
+    // label
+    outer: for (let i = 1; i <= 10; i++) {
+        for (let j = 1; j <= i; j++) {
+            if (i < 7) {
+                continue outer;
+            }
+            console.log(i, "   ", j);
+        }
+    }
+
+    // for-in / for-of
+
+</script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<main>
+    <h1>Qingquan.Cong</h1>
+</main>
+<script type="text/javascript">
+    console.log("begin")
+
+    // =================================    变量提升    =================================
+    // 1. 预编译：
+    // 定义一个名称为关键字的变量: 会提示语法错误，上面的 begin 也不会打印。
+    // js 虽然是动态解释性语言，加载一句执行一句，但还是存在预编译的过程。若预编译不过，仍会使得整体无法执行。变量提升就是在预编译期间发生的。
+    // var var = "var" //  Uncaught SyntaxError: Unexpected token 'var'
+
+
+    // 2. 测试：
+    // 1) 提前打印一个未声明的变量: 没有提示语法错误，而是打印了 undefined。说明预编译过了！正是预编译期间的变量提升使得可以编译通过！
+    // console.log(up) // undefined
+    // var up = "cqq"
+
+    // 等价于下面
+
+    // var up
+    // console.log(up)
+    // up = "cqq"
+
+    // 2)
+    // if (false) {
+    //     var up = "cqq"
+    // }
+    // console.log(up)
+
+    // 等价于下面
+
+    // var up
+    // if (false) {
+    //     up = "cqq"
+    // }
+    // console.log(up)
+
+    // 3. 总结：如果一定要通过 var 关键字声明变量，必须在使用前声明好，避免出现变量提升的问题。
+    //         对于变量提升这个问题，后续推出了新的关键字来解决。
+
+    // =================================    解决变量提升    =================================
+
+    // 1. 通过 let 关键字，使得编写者必须提前声明，否则在运行期间会抛出运行时异常。
+    // console.log(name); // uncaught ReferenceError: Cannot access 'name' before initialization
+    // let name = "cqq"
+
+    // 2. 通过 const 关键字
+    // console.log(name) // uncaught ReferenceError: Cannot access 'name' before initialization
+    // const name = "cqq"
+</script>
+</body>
+</html>

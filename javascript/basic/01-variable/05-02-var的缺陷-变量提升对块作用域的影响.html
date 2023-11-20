@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<main>
+    <h1>Qingquan.Cong</h1>
+</main>
+<script type="text/javascript">
+    // 由于 i 是通过 var 声明的， 是的 i 进行了变量提升，突破了 for 的块作用域。
+    // 又因 var 声明的变量可以覆盖同名变量，使得最终打印 i 为 5。
+    var i = 99;
+    console.log("before foreach: " + i);
+    for (var i = 0; i < 5; i++) {
+        console.log(i)
+    }
+    console.log("after foreach: " + i); // 输出 5 ...
+
+    // 解决方式：使用 let。let 修饰的变量不会进行变量提升、同名覆盖。不会变量提升则会不会突破自己的块作用域。
+    let j = 99;
+    console.log("before foreach: " + j);
+    for (let j = 0; j < 5; j++) {
+        console.log(j)
+    }
+    console.log("after foreach: " + j);
+</script>
+</body>
+</html>

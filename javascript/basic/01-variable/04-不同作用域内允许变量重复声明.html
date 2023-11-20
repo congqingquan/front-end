@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<main>
+    <h1>Qingquan.Cong</h1>
+</main>
+<script type="text/javascript">
+
+    // js 虽然不允许同作用域内声明同名变量，但是允许在不同作用域内声明同名变量 ... 就很违反直觉
+
+    let name = "cqq"
+    if (true) {
+        let name = "cqq2"
+        console.log(name);
+    }
+    console.log(name);
+
+    function fn () {
+        let name = "cqq"
+        if (true) {
+            let name = "cqq2"
+            console.log(name);
+        }
+        console.log(name);
+    }
+    fn();
+</script>
+</body>
+</html>

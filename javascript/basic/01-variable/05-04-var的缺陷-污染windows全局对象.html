@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<main>
+    <h1>Qingquan.Cong</h1>
+</main>
+<script type="text/javascript">
+    // var 修饰的变量最终会绑定在 window 对象上
+    var name = "cqq"
+    console.log(name)
+    console.log(window.name)
+
+    // 如果自定义的变量与 window 上的页面变量命名冲突，就会使得覆盖了 window 对象的页面变量
+    console.log("window.screenLeft: " + window.screenLeft)
+    var screenLeft = "cqq"
+    console.log("window.screenLeft: " + window.screenLeft)
+
+    // 解决方式：使用 let
+    let name2 = "cqq2"
+    console.log(name2)
+    console.log(window.name2)
+</script>
+</body>
+</html>

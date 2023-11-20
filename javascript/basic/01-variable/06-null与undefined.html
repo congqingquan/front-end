@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<main>
+    <h1>Qingquan.Cong</h1>
+</main>
+<script type="text/javascript">
+    // 1. null
+    // 引用类型没有确定值时使用 null
+    let obj = null;
+    console.log(obj)
+
+    // 2. undefined
+    // 1) 基本类型没有确定值时使用 undefined
+    let n1 = undefined;
+    console.log(n1)
+
+    // 2) 读取未定义变量类型，返回为 undefined
+    console.log("typeof: ", typeof xx)
+    console.log("data type returned by typeof: ", typeof typeof xx); // 注意 typeof 返回的值类型为 string
+
+    // 3) 读取 void 函数的返回值，返回为 undefined
+    function voidFn() {
+    }
+    console.log("data type of void function: ", voidFn());
+
+    // 4) 未传递实参时的形参的值，返回为 undefined
+    function fn(param) {
+        console.log("param: ", param)
+    }
+    fn()
+</script>
+</body>
+</html>

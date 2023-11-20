@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<main>
+    <h1>Qingquan.Cong</h1>
+</main>
+<script src="03-var-pollution.js"></script>
+<script type="text/javascript">
+    // 2. 解决方式：使用严格模式
+    "use strict";
+
+    // 0. 默认的，如果通过 var 修饰、或不指定 var 修饰的变量，最终会绑定在 window 对象上
+    name = "cqq"
+    // 1. fn 内部定义的 window 全局变量会使得当前文件中的 name 变量值被修改
+    fn();
+    // console.log(name);
+    console.log(window.name);
+</script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<main>
+    <h1>Qingquan.Cong</h1>
+</main>
+<script type="text/javascript">
+    console.log("begin")
+    // =================================    同作用域内的重复声明    =================================
+
+    // 不会抛出异常 ...
+    // var name = "cqq"
+    // var name = "cqq"
+    // console.log(name);
+
+    // =================================    解决同作用域内的重复声明    =================================
+
+    // 预编译期间（即开始的 begin 不会被打印）就会抛出异常
+    // let name = "cqq" // uncaught SyntaxError: Identifier 'name' has already been declared
+    // let name = "cqq" // uncaught SyntaxError: Identifier 'name' has already been declared
+    // console.log(name);
+
+    // const name = "cqq" // uncaught SyntaxError: Identifier 'name' has already been declared
+    // const name = "cqq" // uncaught SyntaxError: Identifier 'name' has already been declared
+    // console.log(name);
+</script>
+</body>
+</html>
