@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<main>
+    <h1>Qingquan.Cong</h1>
+</main>
+<script type="text/javascript">
+
+    // ==================== 空值类型 ====================
+    // null
+    let nullVal1 = null; // null is also object type
+    // undefined
+    let und;
+
+    // ==================== 基础类型(值类型) ====================
+    // string
+    let str = "str"; // 本质还是 String 对象类型。之所以可以通过非构造函数创建的字符串直接调用字符串函数，正是因为解释器在执行前会先将 string 转为 String 对象。
+    // number
+    let n = 1;       // number 与 string 同理，调用数字函数时如 valueOf，会被解释器转为 Number 对象进行调用。
+    // boolean
+    let bool = true; // boolean 与 string 同理，调用布尔函数时如 valueOf，会被解释器转为 Boolean 对象进行调用。
+
+    // 可以发现，其实就是 java 中的包装类，使用时会自动进行拆箱、装箱
+
+    // ==================== 引用类型 ====================
+    // object(contain array)
+    let obj = {}
+    let nullVal2 = null;
+    let arr = []
+    // function
+    let fn = function () {}
+    let lambdaFn = () => {}
+
+    // ==================== 基本数据类型对应的全局函数与构造函数的区别 ====================
+
+    // 1. 前者是全局函数，后者是构造函数。
+    // 2. 前者返回的数据类型为基本类型，后者返回的类型为 object 对象类型(可以根据 typeof 查看)
+    String("A"); // typeof > string
+    new String("A"); // typeof > object
+
+    Number(1);
+    new Number(1);
+
+    Boolean(true);
+    new Boolean(true);
+</script>
+</body>
+</html>

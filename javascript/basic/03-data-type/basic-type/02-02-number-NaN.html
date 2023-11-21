@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+    console.log("================= NaN =================")
+    console.log(1 / "a")
+    console.log(typeof 1 / "a")
+    console.log(( 1 / "a") == ( 1 / "a")) // NaN != NaN ...
+
+    console.log("================= Compare NaN =================")
+    // 如何想要比较 NaN，可以通过下面的两种方式
+    console.log(Number.isNaN(1 / "a"))
+    console.log(Object.is(1 / "a", NaN))
+</script>
+</body>
+</html>

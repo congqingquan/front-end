@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+<button onclick="booleanTest()">Boolean 测试</button>
+
+<script type="text/javascript">
+
+    /**
+     * 解释器的 boolean 隐式转换规则，记住四条：
+     * 1. == 直接比较时：Boolean(Number(..))
+     * 2. 参与运算时：Boolean(..)
+     * 3. Boolean(..) 全局函数转换数据为 boolean 时的逻辑：'' / 0 / NaN / undefined / null 为 false，其余都为 true。
+     * 4. Boolean() 全局函数转换的另一种等价方式: !!var
+     */
+
+    console.log("================= Number to Boolean =================")
+
+    // number > boolean
+    let n0 = 0
+    let n1 = 1
+    let n2 = 2
+
+    // 直接比较
+    console.log(`0 == true ? ${n0 == true}, Number() -> ${Number(n0)}, Boolean(Number()) -> ${Boolean(Number(n0))}`)
+    console.log(`1 == true ? ${n1 == true}, Number() -> ${Number(n1)}, Boolean(Number()) -> ${Boolean(Number(n1))}`)
+    console.log(`>1 == true ? ${n2 == true}, Number() -> ${Number(n2)}, Boolean(Number()) -> ${Boolean(Number(n2))}`)
+
+    // 通过 Boolean 全局函数转为 boolean 值时，判断依据可以理解为 n 是否为一个正向值 ...
+    console.log(`Boolean(0) == true ? ${Boolean(0) == true}`)
+    console.log(`Boolean(1) == true ? ${Boolean(1) == true}`)
+    console.log(`Boolean(>1) == true ? ${Boolean(2) == true}`)
+
+    // if 中就是直接通过 Boolean 全局函数先进行转换，在进行判断
+    let n = 2;
+    if (n) {
+        console.log(`>1 == true in if statement`)
+    }
+
+    console.log("================= String to Boolean =================")
+
+    // string > number > boolean
+    let s1 = '0'
+    let s2 = '1'
+    let s3 = 'a'
+    let s4 = ''
+    let s5 = '    '
+
+    // 直接比较
+    console.log(`'0' == true ? ${s1 == true}, Number() -> ${Number(s1)}, Boolean(Number()) -> ${Boolean(Number(s1))}`)
+    console.log(`'1' == true ? ${s2 == true}, Number() -> ${Number(s2)}, Boolean(Number()) -> ${Boolean(Number(s2))}`)
+    console.log(`'a' == true ? ${s3 == true}, Number() -> ${Number(s3)}, Boolean(Number()) -> ${Boolean(Number(s3))}`)
+    console.log(`'' == true ? ${s4 == true},  Number() -> ${Number(s4)}, Boolean(Number()) -> ${Boolean(Number(s4))}`)
+    console.log(`'    ' == true ? ${s5 == true}, Number() -> ${Number(s5)}, Boolean(Number()) -> ${Boolean(Number(s5))}`)
+
+    // 通过 Boolean 全局函数转为 boolean 值时，判断依据可以理解为：只要字符串不为''则为 true，即字符串是否含有内容，纵使内容为 blank ...
+    console.log(`Boolean('0') == true ? ${Boolean(s1) == true}`)
+    console.log(`Boolean('1') == true ? ${Boolean(s2) == true}`)
+    console.log(`Boolean('a') == true ? ${Boolean(s3) == true}`)
+    console.log(`Boolean('') == true ? ${Boolean(s4) == true}`)
+    console.log(`Boolean('    ') == true ? ${Boolean(s5) == true}`)
+
+    // if 中就是直接通过 Boolean 全局函数先进行转换，在进行判断
+    if (s1) {
+        console.log(`'0' == true in if statement`)
+    }
+    if (s2) {
+        console.log(`'1' == true in if statement`)
+    }
+    if (s3) {
+        console.log(`'a' == true in if statement`)
+    }
+    if (s4) {
+        console.log(`'' == true in if statement`)
+    } else {
+        console.log(`'' == false in if statement`)
+    }
+    if (s5) {
+        console.log(`'    ' == true in if statement`)
+    }
+
+    console.log("================= Array to Boolean =================")
+
+    let arr1 = []
+    let arr2 = [1]
+    let arr3 = [1, 2]
+
+    // 直接比较
+    console.log(`[] == true ? ${arr1 == true}, Number() -> ${Number(arr1)}, Boolean(Number()) -> ${Boolean(Number(arr1))}`)
+    console.log(`[1] == true ? ${arr2 == true}, Number() -> ${Number(arr2)}, Boolean(Number()) -> ${Boolean(Number(arr2))}`)
+    console.log(`[1, 2] == true ? ${arr3 == true}, Number() -> ${Number(arr3)}, Boolean(Number()) -> ${Boolean(Number(arr3))}`)
+
+    // 通过 Boolean 全局函数转为 boolean 值时，判断依据可以理解为 n 是否为一个正向值 ...
+    console.log(`Boolean([]) == true ? ${Boolean(arr1) == true}`)
+    console.log(`Boolean([1]) == true ? ${Boolean(arr2) == true}`)
+    console.log(`Boolean([1, 2]) == true ? ${Boolean(arr3) == true}`)
+
+    console.log("================= Object to Boolean =================")
+
+    let obj1 = {}
+    let obj2 = { name: "cqq" }
+
+    // 直接比较
+    console.log(`{} == true ? ${obj1 == true}, Number() -> ${Number(obj1)}, Boolean(Number()) -> ${Boolean(Number(obj1))}`)
+    console.log(`{ name: xxx } == true ? ${obj2 == true}, Number() -> ${Number(obj2)}, Boolean(Number()) -> ${Boolean(Number(obj2))}`)
+
+    // 通过 Boolean 全局函数转为 boolean 值时，判断依据可以理解为 n 是否为一个正向值 ...
+    console.log(`Boolean({}) == true ? ${Boolean(obj1) == true}`)
+    console.log(`Boolean({ name: xxx }) == true ? ${Boolean(obj2) == true}`)
+
+    console.log("================= Boolean() == false 时的情况, 其余情况都为 true =================")
+    console.log(`Boolean('') -> ${Boolean('')}`)
+    console.log(`Boolean(0) -> ${Boolean(0)}`)
+    console.log(`Boolean(NaN) -> ${Boolean(Number("a"))}`)
+    console.log(`Boolean(undefined) -> ${Boolean(undefined)}`)
+    console.log(`Boolean(null) -> ${Boolean(null)}`)
+
+    console.log("================= Boolean() 全局函数转换的另一种等价方式 =================")
+    console.log(`!!'' -> ${Boolean('')}, typeof ${typeof Boolean('')}`)
+    console.log(`!!0 -> ${Boolean(0)}, typeof ${typeof Boolean(0)}`)
+    console.log(`!!NaN) -> ${Boolean(Number("a"))}, typeof ${typeof Boolean(Number("a"))}`)
+    console.log(`!!undefined -> ${Boolean(undefined)}, typeof ${typeof Boolean(undefined)}`)
+    console.log(`!!null -> ${Boolean(null)}, typeof ${typeof Boolean(null)}`)
+
+
+    // ==============================================================================================
+
+    function booleanTest() {
+        while (1) {
+            let ans = prompt("Cortana").trim();
+            if (!ans) continue;
+            if (ans === 'john') {
+                break;
+            }
+        }
+    }
+</script>
+</body>
+</html>

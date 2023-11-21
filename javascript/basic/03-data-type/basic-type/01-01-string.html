@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+
+    // 1. 字符串
+
+    console.log("==================== 字符串 ====================")
+    // 1) 通过构造函数
+    let str = new String("String");
+    console.log(str)
+    // 2) 简写
+    let str2 = "String";
+    console.log(str2)
+    // 3) 通过索引的形式读取字符
+    for (let i = 0; i < str2.length; i++) {
+        console.log(str2[i])
+    }
+    // 4) 字符串字面量与字符串对象
+    console.log(typeof str)
+    console.log(typeof str2) // 字符串字面量本质还是 String 对象类型。之所以可以通过非构造函数创建的字符串直接调用字符串函数，正是因为解释器在执行前会先将 string 转为 String 对象
+
+
+    // 2. single quote / double quote
+    console.log("==================== 单、双引号 ====================")
+    let sq = 'single quote';
+    let dq = "double quote";
+    let mixture = 'single quote "double quote"';
+    console.log(mixture)
+
+    // 3. 字符串模版 (推荐)
+    console.log("==================== 字符串模版 ====================")
+    let name = "cqq";
+    let gender = "man";
+    let strTemplate =
+    `
+        String template:
+        name > ${name}
+        gender > ${gender}
+    `;
+    console.log(strTemplate)
+
+    // 1) 模版嵌套
+    const lessons = [
+        {
+            title: "HTML",
+            author: 'CQQ'
+        },
+        {
+            title: "CSS",
+            author: 'CQQ'
+        },
+        {
+            title: "JavaScript",
+            author: 'CQQ'
+        }
+    ]
+    let ulHtml = `<ul> ${lessons.map(lesson => `<li>${lesson.title}</li>`).join("")} </ul>`
+    document.write(ulHtml)
+
+    // 2) 模版标签: 指定处理字符串模板的标签函数, 并将函数的返回结果作为最终的字符串模版
+    let strTemplateTag = tag``
+    let strTemplateTag2 = tag`left-${"value"}-right`
+    // param1: 非占位值的字符串数组. 且 param1.length >= param2.length
+    // param2: 所有的占位值数组
+    function tag(strings, ...vars) {
+        console.log(strings, vars)
+    }
+    console.log(strTemplateTag, strTemplateTag2)
+
+    ulHtml = `<ul>
+        ${
+            lessons.map(
+                lesson => links`<li>课程: ${lesson.title} - 作者: ${lesson.author}</li>`
+            ).join("")
+        }
+    </ul>`;
+    function links(strings, ...vars) {
+        return strings.map((str, index) => str + (vars[index] ? `<a href='#'>${vars[index]}</a>` : "")).join("")
+    }
+    document.write(ulHtml)
+</script>
+</body>
+</html>

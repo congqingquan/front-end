@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+    console.log("================= Number =================")
+    let n1 = new Number(99);
+    let n2 = 99;
+    let f1 = 99.99;
+
+    console.log(typeof n1)
+    console.log(typeof n2)
+    console.log(typeof f1)
+
+    console.log("================= Number member function =================")
+
+    console.log(n1.valueOf())
+    console.log(n2.valueOf())
+    console.log(f1.valueOf())
+
+    console.log(9.114.toFixed(2)) // 默认四舍五入
+    console.log(9.115.toFixed(2)) // 默认四舍五入
+
+    console.log("================= Number static function =================")
+
+    console.log(Number.isInteger(n1))
+    console.log(Number.isInteger(n2))
+    console.log(Number.isInteger(f1))
+
+    console.log(Number.isNaN("a"))
+    console.log(Number.isNaN(Number("a")))
+
+    console.log(Number.parseInt("99.99abc"))
+    console.log(Number.parseFloat("99.99abc"))
+</script>
+</body>
+</html>

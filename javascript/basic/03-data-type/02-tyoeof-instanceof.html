@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+
+    // typeof: 检查数据类型
+    console.log("================= typeof =================")
+
+    // ==================== 空值类型 ====================
+    console.log("空值类型")
+    let nullVal = null;
+    let noExists;
+    console.log(typeof nullVal) // null is also object type
+    console.log(typeof noExists)
+
+    // ==================== 基础类型 ====================
+    console.log("基础类型")
+    console.log(typeof 1)
+    console.log(typeof "str")
+    console.log(typeof true)
+
+    // ==================== 引用类型 ====================
+    console.log("引用类型")
+    console.log(`object: ${typeof {}}`)
+    console.log(`array: ${typeof []}`)
+    console.log(`function: ${typeof function () {}}`)
+
+    // instanceof: 判断具体的实例类型
+    console.log("================= instanceof =================")
+
+    console.log(`array instanceof: ${[] instanceof Array}`);
+    function User() {}
+    console.log(`User instanceof: ${new User() instanceof User}`);
+</script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+    console.log("================= String to Number =================")
+    let n1 = "1"
+    let n2 = 2
+    console.log(n1 + n2)
+    console.log("隐式转换(* 1): ", n1 * 1 + n2)
+    console.log("隐式转换(/ 1): ", n1 / 1 + n2)
+    console.log("隐式转换(- 0): ", n1 - 0 + n2)
+    console.log("Number 全局函数: ", Number(n1) + n2)
+
+    console.log("================= Number to String  =================")
+    let n3 = 3;
+    let n4 = "111abc";
+    let n5 = "111.23abc";
+    console.log("拼接空字符串: ", typeof (n3 + ""))
+    console.log("String 全局函数 ", typeof String(n3))
+    console.log(`parseInt 函数(${n4}): `, parseInt(n4))
+    console.log(`parseFloat 函数(${n5}): `, parseFloat(n5))
+</script>
+</body>
+</html>

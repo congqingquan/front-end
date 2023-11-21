@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+
+    console.log("====================== min/max ======================")
+    let arr = [9, 1, 11]
+    console.log(`max: `, Math.max(...arr));
+    console.log(`min: `, Math.min(...arr));
+
+    console.log("====================== ceil/floor ======================")
+    // 直接进位
+    console.log(Math.ceil(1.5))
+    console.log(Math.floor(1.5))
+
+    console.log("====================== round ======================")
+    // 四舍五入到整数位
+    console.log(`round: ${Math.round(1.12345)}`);
+    console.log(`round: ${Math.round(1.5)}`);
+
+    console.log("====================== random ======================")
+    console.log(`range: [0, 1): ${Math.random()}`);
+
+    // random range [0, n] 公式：Math.floor(Math.random() * ++n)
+    let n = 5;
+    let r1 = Math.floor(Math.random() * ++n);
+    console.log(`random range: [0, n=5]: ${r1}`);
+
+    // random range [min, max] 公式：min + Math.floor(Math.random() * (max-min+1))
+    let r2 = randomBetween(2, 5)
+    console.log(`range: [min=2, max=5]: ${r2}`);
+
+    function randomBetween(min, max) {
+        return min + Math.floor(Math.random() * (max - min + 1));
+    }
+
+    // 例子：随机读取数组中的某个元素
+    console.log(`random get array element: ${arr[randomBetween(0, arr.length - 1)]}`)
+</script>
+</body>
+</html>

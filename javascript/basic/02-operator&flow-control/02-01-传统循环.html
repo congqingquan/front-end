@@ -31,17 +31,14 @@
     print(5);
 
     // label
-    outer: for (let i = 1; i <= 10; i++) {
+    outer: for (let i = 1; i <= 5; i++) {
         for (let j = 1; j <= i; j++) {
-            if (i < 7) {
+            if (i < 3) {
                 continue outer;
             }
             console.log(i, "   ", j);
         }
     }
-
-    // for-in / for-of
-
 </script>
 </body>
 </html>

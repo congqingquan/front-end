@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        li {
+            width: 100px;
+            height: 50px;
+            border: solid 1px black;
+            list-style: none;
+        }
+    </style>
+</head>
+<body>
+
+<ul>
+    <li></li>
+    <li></li>
+</ul>
+
+<script type="text/javascript">
+
+    let arr = ["Cortana", "John"];
+    let obj = {
+        name: "cqq",
+        gender: "man"
+    }
+
+
+    // for in
+    // 1) for in array
+    for (let index in arr) {
+        console.log(`index: ${index} - value: ${arr[index]}`)
+    }
+
+    // 2) for in object
+    for (let key in obj) {
+        console.log(`object key: ${key} - value: ${obj[key]}`)
+    }
+
+    // for of iterator
+    // 1) array
+    for (let value of arr) {
+        console.log(`array value: ${value}`)
+    }
+
+    // 2) string
+    for (let char of "John") {
+        console.log(`char: ${char}`)
+    }
+
+    // 3) dom node list
+    let list = document.querySelectorAll("li");
+    console.log(list)
+    for (const li of list) {
+        li.addEventListener("click", function () {
+            li.style.background = "blueviolet"
+        })
+    }
+
+    // 后期学习迭代器的时候在补充 case
+</script>
+</body>
+</html>
