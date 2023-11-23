@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script src="moment-with-locales.js"></script>
+<script type="text/javascript">
+
+    // 格式化日期
+    moment().format('MMMM Do YYYY, h:mm:ss a'); // 十一月 22日 2023, 9:59:49 上午
+    moment().format('dddd');                    // 星期三
+    moment().format("MMM Do YY");               // 11月 22日 23
+    moment().format('YYYY [escaped] YYYY');     // 2023 escaped 2023
+    moment().format();                          // 2023-11-22T09:59:49+08:00
+    // 相对时间
+    moment("20111031", "YYYYMMDD").fromNow(); // 12 年前
+    moment("20120620", "YYYYMMDD").fromNow(); // 11 年前
+    moment().startOf('day').fromNow();        // 10 小时前
+    moment().endOf('day').fromNow();          // 14 小时后
+    moment().startOf('hour').fromNow();       // 1 小时前
+    // 日历时间
+    moment().subtract(10, 'days').calendar(); // 2023/11/12
+    moment().subtract(6, 'days').calendar();  // 上周四09:59
+    moment().subtract(3, 'days').calendar();  // 上周日09:59
+    moment().subtract(1, 'days').calendar();  // 昨天09:59
+    moment().calendar();                      // 今天09:59
+    moment().add(1, 'days').calendar();       // 明天09:59
+    moment().add(3, 'days').calendar();       // 本周六09:59
+    moment().add(10, 'days').calendar();      // 2023/12/02
+    // 多语言环境支持
+    moment.locale();         // zh-cn
+    moment().format('LT');   // 09:59
+    moment().format('LTS');  // 09:59:49
+    moment().format('L');    // 2023/11/22
+    moment().format('l');    // 2023/11/22
+    moment().format('LL');   // 2023年11月22日
+    moment().format('ll');   // 2023年11月22日
+    moment().format('LLL');  // 2023年11月22日上午9点59分
+    moment().format('lll');  // 2023年11月22日 09:59
+    moment().format('LLLL'); // 2023年11月22日星期三上午9点59分
+    moment().format('llll');
+</script>
+</body>
+</html>

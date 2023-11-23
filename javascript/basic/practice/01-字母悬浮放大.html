@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background-color: #7f8c8d;
+        }
+
+        div {
+            font-size: 2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 10px;
+
+            display: flex;
+        }
+
+        /* 动画对于行级元素无效 */
+        span {
+            width: 100%;
+            height: 100%;
+
+            cursor: pointer;
+        }
+
+        .color {
+            animation-name: color;
+            animation-duration: .5s;
+            animation-direction: alternate;
+            animation-timing-function: linear;
+        }
+
+        @keyframes color {
+            from {
+                color: #f1c40f;
+                transform: scale(1);
+            }
+            50% {
+                color: #e67e22;
+                transform: scale(2);
+            }
+            to {
+                color: #e74c3c;
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div>Cortana.John</div>
+
+<script type="text/javascript">
+    let div = document.querySelector("div");
+
+    let textContent = div.textContent;
+    div.innerHTML = "";
+
+    for (const char of textContent) {
+        let span = document.createElement("span");
+        span.innerHTML = char;
+        span.addEventListener("mouseover", function () {
+            this.classList.add("color");
+        })
+        span.addEventListener("animationend", function () {
+            this.classList.remove("color");
+        })
+        div.appendChild(span);
+    }
+</script>
+</body>
+</html>

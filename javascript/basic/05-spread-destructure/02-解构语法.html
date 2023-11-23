@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+<div></div>
+<div></div>
+
+<script type="text/javascript">
+    console.log("================== 数组上的解构语法 ==================")
+    // 1. 根据索引正向赋值
+    // 2. 可以设置默认值
+    // 3. 利用数组接收可以匹配到的值(不包含没有匹配到的属性，比如 weight)
+    let arr = ["cqq", 23]
+    let [name, age, weight = 200] = arr;
+    // console.log([name, age, weight] = arr)
+    console.log(name + "\t" + age + "\t", weight)
+
+    console.log("================== 字符串上的解构语法 ==================")
+    let halo = "Cortana.John"
+    let [char1, char2, char3] = halo;
+    console.log(`${char1}  ${char2}  ${char3}`)
+
+    console.log("================== 跳过某些值 ==================")
+    let arr2 = ["cqq", 23, "man"]
+    let [name2, , gender] = arr2
+    console.log(name2, "\t", gender)
+
+    console.log("================== 解构的默认值 ==================")
+    let arr3 = []
+    let [name3 = "default name"] = arr3
+    console.log(name3)
+
+    console.log("================== 方法形参上的解构语法 ==================")
+
+    function fn([name, age]) {
+        console.log(name, "\t", age)
+    }
+
+    fn(["cqq", 23])
+
+    console.log("================== 对象上的解构语法 ==================")
+    // 1. 完全根据名称匹配
+    // 2. 可以设置默认值
+    let {myName1, myGender, myAge = 999} = {myName: "cqq", myGender: "man"}
+    console.log(myName1 + "\t" + myGender + "\t" + myAge)
+    // 3. 可以设置属性别名
+    let {myName: myNameAlias} = {myName: "cqq", myGender: "man"}
+    console.log(myNameAlias + "\t" + myGender + "\t" + myAge)
+    // 4. 利用对象接收可以匹配到的属性(不包含没有匹配到的属性，比如 myAge)
+    console.log({myName1, myGender, myAge = 999} = {myName: "cqq", myGender: "man"})
+
+    console.log("================== 解构嵌套数据 ==================")
+
+    // 对象数组交织嵌套
+    let {
+        parentName: parentNameAlias,
+        child,
+        child: {
+            childName: childNameAlias, hobby: [hobby1, hobby2]
+        }
+    } = {
+        parentName: "parent-name", child: {
+            childName: "child-name", hobby: ["eat", "sleep"]
+        }
+    }
+    console.log(parentNameAlias)
+    console.log(child)
+    console.log(childNameAlias)
+    console.log(hobby1)
+    console.log(hobby2)
+
+    console.log("====================================")
+
+    let [{
+        parentName: firstParentName,
+        child: firstChild,
+        child: {
+            childName: firstChildName,
+            hobby: [firstChildHobby1, firstChildHobby2]
+        }
+    }, {
+        parentName: secondParentName,
+        child: secondChild,
+        child: {
+            childName: secondChildName,
+            hobby: [secondChildHobby1, secondChildHobby2]
+        }
+    }] = [{
+        parentName: "parent-name-1", child: {
+            childName: "child-name-1", hobby: ["eat", "sleep"]
+        }
+    }, {
+        parentName: "parent-name-2", child: {
+            childName: "child-name-2", hobby: ["make friends", "outdoor sport"]
+        }
+    }]
+
+    console.log(firstParentName)
+    console.log(firstChild)
+    console.log(firstChildName)
+    console.log(firstChildHobby1)
+    console.log(firstChildHobby2)
+
+    console.log("====================================")
+
+    console.log(secondParentName)
+    console.log(secondChild)
+    console.log(secondChildName)
+    console.log(secondChildHobby1)
+    console.log(secondChildHobby2)
+</script>
+</body>
+</html>

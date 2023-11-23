@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+<div></div>
+<div></div>
+
+<script type="text/javascript">
+    function keysDemo() {
+        console.log("================== keys 迭代器 ==================")
+
+        let arr = ["A", "B", "C"]
+        let keys = arr.keys();
+        // key 的 Array Iterator
+        console.log(keys)
+
+        // 1. Iterator 中的 key entity 结构：{value: X, done: true/false}, done 为 true 时表示已迭代完成
+        // // {value: 0, done: false}
+        // console.log(keys.next())
+        // // {value: 1, done: false}
+        // console.log(keys.next())
+        // // {value: 2, done: false}
+        // console.log(keys.next())
+        // // {value: undefined, done: true}
+        // console.log(keys.next())
+        // // {value: undefined, done: true}
+        // console.log(keys.next())
+
+        // 2. 通过迭代器 API 遍历数据
+        // ({value, done} = keys.next()) && !done
+        //      如果不加 ()，即 {value, done} = keys.next() && !done
+        //              则会先执行 keys.next() && !done，会提示 done isn't defined
+        // while (({value, done} = keys.next()) && !done) {
+        //     console.log(value, done);
+        // }
+
+        // 3. 迭代的简化写法，如 java 中的 for (Type t : Iterable) {}
+        // for (const key of keys) {
+        //     console.log(key)
+        // }
+    }
+    keysDemo()
+
+    function valuesDemo() {
+        console.log("================== values 迭代器 ==================")
+
+        let arr = ["A", "B", "C"]
+        let values = arr.values();
+        // value 的 Array Iterator
+        console.log(values)
+
+        // 1. Iterator 中的 value entity 结构：{value: X, done: true/false}, done 为 true 时表示已迭代完成
+        // // {value: "A", done: false}
+        // console.log(values.next())
+        // // {value: "B", done: false}
+        // console.log(values.next())
+        // // {value: "C", done: false}
+        // console.log(values.next())
+        // // {value: undefined, done: true}
+        // console.log(values.next())
+        // // {value: undefined, done: true}
+        // console.log(values.next())
+
+        // 2. 通过迭代器 API 遍历数据
+        // while (({value, done} = values.next()) && !done) {
+        //     console.log(value, done);
+        // }
+
+        // 3. 迭代的简化写法，如 java 中的 for (Type t : Iterable) {}
+        // for (const value of values) {
+        //     console.log(value)
+        // }
+    }
+    valuesDemo()
+
+    function entriesDemo() {
+        console.log("================== entries 迭代器 ==================")
+
+        let arr = ["A", "B", "C"]
+        let entries = arr.entries();
+        // entry 的 Array Iterator
+        console.log(entries)
+
+        // 1. Iterator 中的 entry 结构：{value: [key, value], done: true/false}, done 为 true 时表示已迭代完成
+        // // {value: [0, "A"], done: false}
+        // console.log(entries.next())
+        // // {value: [1, "B"], done: false}
+        // console.log(entries.next())
+        // // {value: [2, "C"], done: false}
+        // console.log(entries.next())
+        // // {value: undefined, done: true}
+        // console.log(entries.next())
+        // // {value: undefined, done: true}
+        // console.log(entries.next())
+
+        // 2. 通过迭代器 API 遍历数据
+        // while (({value, done} = entries.next()) && !done) {
+        //     console.log(value, value[0], value[1], done);
+        // }
+
+        // 应用解构对象的数组属性时，当最后一次遍历完成后调用 next() 方法返回：{value: undefined, done: true}，
+        // 此时对 undefined 进行 destructure 会抛出异常：Uncaught TypeError: Cannot destructure property 'Symbol(Symbol.iterator)' of 'entries.next(...)' as it is undefined.
+        // while (({value: [k, v], done} = entries.next()) && !done) {
+        //     console.log(k, v, done);
+        // }
+
+        // 3. 迭代的简化写法，如 java 中的 for (Type t : Iterable) {}
+        // for (const entry of entries) {
+        //     console.log(entry, entry[0], entry[1])
+        // }
+    }
+    entriesDemo()
+</script>
+</body>
+</html>

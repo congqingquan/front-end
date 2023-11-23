@@ -46,7 +46,8 @@
 
 
     // for in
-    // 1) for in array
+    // 1) for in array(同时会打印出原型上自定义的属性)
+    Array.prototype.findValue = function () {}
     for (let index in arr) {
         console.log(`index: ${index} - value: ${arr[index]}`)
     }
@@ -62,12 +63,17 @@
         console.log(`array value: ${value}`)
     }
 
-    // 2) string
+    // 2) No iterable object
+    // for (let t of {name: "name", age: 10}) {
+    //     console.log(t) // Uncaught TypeError: {(intermediate value)(intermediate value) is not iterable }
+    // }
+
+    // 3) string
     for (let char of "John") {
         console.log(`char: ${char}`)
     }
 
-    // 3) dom node list
+    // 4) dom node list
     let list = document.querySelectorAll("li");
     console.log(list)
     for (const li of list) {
@@ -75,8 +81,6 @@
             li.style.background = "blueviolet"
         })
     }
-
-    // 后期学习迭代器的时候在补充 case
 </script>
 </body>
 </html>

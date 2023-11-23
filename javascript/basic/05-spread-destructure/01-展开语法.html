@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+<div></div>
+<div></div>
+
+<script type="text/javascript">
+    console.log("================== 应用在数组上 ==================")
+    let merge1 = [1, 2, 3];
+    let merge2 = [4, 5, 6];
+
+    // concat
+    // let res = merge1.concat(merge2)
+    // console.log(res)
+
+    // push
+    // for (let val of merge2) {
+    //     merge1.push(val)
+    // }
+    // console.log(merge1)
+
+    merge1 = [...merge1, ...merge2] // 展开语法糖，等价于：merge1 = [1, 2, 3, 4, 5, 6]，避免手动编写
+    console.log(merge1)
+
+    console.log("================== 应用在方法形参上 ==================")
+    sum(1, 2, 3)
+    function sum(...args) {
+        // 拓展语法，本质是使用数组存储数据。与 java 中的可变参数一毛一样。
+        console.log(args)
+        let sum = 0;
+        for (const arg of args) {
+            sum += arg;
+        }
+        console.log(`求和：${sum}`)
+    }
+
+    // 展开语法与 java 中可变参数的不同: java 中可变参数编译后就是一个数组，可以直接传递一个数组作为整个可变参数。
+    // 但 js 中不是，如果直接传递一个数组，会将其作为单个元素传递到数组的 0 索引上。
+    sum([1, 2, 3]) // 会打印一个二维数组
+
+    // 所以，需要想要把一个数组正确地传递进取，也需要使用拓展语法：将单个数组打散为多个数组元素值
+    sum(...[1, 2, 3])
+
+    console.log("================== 应用在 iterable 对象上 ==================")
+    let nodes = document.querySelectorAll("div");
+    console.log(Object.prototype.toString.call(nodes))
+    // console.log(Array.from(nodes))
+    let nodeArr = [...nodes]
+    console.log(nodeArr)
+
+    let str = "Cortana.John"
+    let strArr = [...str] // [C, o, r, t, a, n, a, ., J, o, h, n]
+    console.table(strArr)
+</script>
+</body>
+</html>

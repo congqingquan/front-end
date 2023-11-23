@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+<div></div>
+<div></div>
+
+<script type="text/javascript">
+    console.log("================== 通过索引尾部追加元素 ==================")
+    let arr = [1, 2]
+    arr[arr.length] = 3
+    console.log(arr)
+
+    console.log("================== 队列操作 ==================")
+    let arr2 = [1, 2]
+    // 入队: 返回入队后的队列长度
+    console.log(arr2.push(3, 4, ...[5, 6]))
+    // 出队: 返回移除元素
+    console.log(arr2.pop())
+    console.log(arr2)
+
+    console.log("================== 栈操作 ==================")
+    let arr3 = [1, 2]
+    // 入栈: 返回入栈后的栈的长度
+    console.log(arr3.unshift(-1, 0))
+    console.log(arr3)
+    // 出栈: 返回出栈元素
+    console.log(arr3.shift())
+
+    console.log("================== fill 填充操作 ==================")
+    let arr4 = [1, 2, 3, 4, 5]
+    // 填充 0 到索引区间 [1, end]
+    // arr4.fill(0, 1)
+    // 填充0 到索引区间 [1, 3)
+    // arr4.fill(0, 1, 3)
+    console.log(arr4)
+
+    console.log("================== slice 截取操作 ==================")
+    let arr5 = [1, 2, 3, 4, 5]
+    // 1) 截取所有
+    console.log(arr5.slice())
+    // 2) 截取索引区间 [1, end]
+    console.log(arr5.slice(1))
+    // 3) 截取索引区间 [1, 3)
+    console.log(arr5.slice(1, 3))
+    // 不影响源数组
+    console.log(arr5)
+
+    console.log("================== splice 截取后可替换操作 ==================")
+    // 对比 slice:
+    // 1. 影响源数组
+    // 2. 截取的第二个参数不再是终止索引位置，而是需要截取的个数
+
+    let arr6 = [1, 2, 3, 4, 5]
+    // 1) 截取所有
+    // console.log(arr6.splice(0));
+    // 2) 从 1 索引开始截取两个
+    // console.log(arr6.splice(1, 2));
+    // 3) 截取后替换元素(替换元素数量可以大于截取元素数量)
+    // console.log(arr6.splice(1, 2, 100, 200, 300))
+    // 4) 在指定索引位置添加元素
+    arr6.splice(0, 0, -1)
+    // 影响源数组
+    console.log(arr6);
+
+    // splice 实例: 移动元素(注意不是交换)
+    console.log(move([1, 2, 3], 0, 2));
+    function move(arr, from, to) {
+        let newArr = [...arr]
+        newArr.splice(to, 0, ...newArr.splice(from, 1))
+        return newArr
+    }
+
+    console.log("================== 拆分、合并数组 ==================")
+    console.log("A,B,C".split(","))
+    console.log("A,B,C".split(",").join("-"))
+    console.log("A,B,C".split(",").concat(["D", "E"], ["F", "G"]))
+    console.log([...["A", "B"], ...["C", "D"]]) // [...arr1, ...arr2]
+
+    // copyWithin 两个参数：将 [start, target] 索引区间的元素复制一份插入到 target 索引前，并移除因 copy 后顺推导致溢出的元素
+    console.log(["A", "B", "C", "D", "E"].copyWithin(2, 0))
+    // copyWithin 三个参数：将 [start, end] 索引区间的元素复制一份插入到 target 索引位，并直接从 target 索引位开始覆盖元素
+    console.log(["A", "B", "C", "D", "E"].copyWithin(2, 0, 2))
+
+    console.log("================== 清空数组 ==================")
+    let arr7 = [1, 2, 3, 4, 5]
+    // 1. 直接修改 length
+    arr7.length = 0
+    // 2. 丢弃指针指向
+    // arr7 = []
+    console.log(arr7)
+
+    console.log("================== 查找元素 ==================")
+    let arr8 = [1, 2, 3, 1]
+    // 1) indexOf
+    // 正向查找
+    console.log(arr8.indexOf(1))
+    // 指定正向查找的起始位置(从索引 1 位开始查找元素 1)
+    console.log(arr8.indexOf(1, 1))
+    // 类型严格匹配查找，查找不到返回 -1
+    console.log(arr8.indexOf(9))
+    // 2) includes
+    // includes 函数返回 boolean，而不再是 -1
+    console.log(arr8.includes(1))
+    console.log(arr8.includes(9))
+
+    // 3) find/findIndex
+    // find / findIndex: 自定义匹配规则，以此支持搜索引用类型数据，或复杂搜索。
+    arr8 = [
+        { name: "cqq1" },
+        { name: "cqq2" }
+    ]
+    console.log(arr8.find(el => el.name === "cqq2"));
+    console.log(arr8.findIndex(el => el.name === "cqq2"));
+    // 4) 自定义 find 实现并绑定到 Array 的原型对象上
+    Array.prototype.findValue = function(callback) {
+        for (const value of this) {
+            if (callback(value)) {
+                return value;
+            }
+        }
+        return undefined;
+    }
+    console.log(arr8.findValue(el => el.name === "cqq2"));
+
+    // 5) every: 等同于 java 中的 Stream.allMatch
+    arr8 = [10, 20, 30]
+
+    let everyResult = arr8.every(function (value, index, originArr) {
+        console.log(index, value, originArr)
+        return value < 30;
+    })
+    console.log(everyResult)
+
+    // 6) some: 等同于 java 中的 Stream.anyMatch
+    let someResult = arr8.some(function (value, index, originArr) {
+        console.log(index, value, originArr)
+        return value > 10;
+    })
+    console.log(someResult)
+
+    console.log("================== 排序数组 ==================")
+    let arr9 = [1, 2, 4, 9, 3]
+    // 默认升序: a-b
+    console.log(arr9.sort());
+    // 自定义排序: 实现倒序 b-a
+    console.log(arr9.sort(function (a, b) {
+        return b - a;
+    }));
+
+    console.log("================== 迭代数组 ==================")
+    let arr10 = ["A", "B"]
+
+    for (let i = 0; i < arr10.length; i++) {
+        console.log(arr10[i]);
+    }
+
+    // 同时会打印出原型上自定义的属性
+    for (const i in arr10) {
+        console.log(arr10[i]);
+    }
+
+    // 迭代器 API 获取: key/value/entry 就不测试了，会在 iterator 笔记中专门进行测试
+    for (const val of arr10) {
+        console.log(val);
+    }
+
+    arr10.forEach(function (value, index, originArr) {
+        console.log(index, value, originArr)
+    })
+
+    console.log("================== 过滤元素 ==================")
+    // 等同于 java 中的 Stream.filter
+    let arr11 = [
+        { name: "cqq1", age: 21 },
+        { name: "cqq2", age: 22 },
+        { name: "cqq3", age: 23 },
+    ]
+    let filterResult = arr11.filter(function (value, index, originArr) {
+        console.log(index, value, originArr)
+        return value.age > 21;
+    })
+    console.log(filterResult)
+
+    let myFilterResult = myFilter([1, 2, 3], function (n) { return n > 2 });
+    function myFilter(arr, callback) {
+        let result = [];
+        for (const value of arr) {
+            if (callback(value)) result.push(value);
+        }
+        return result;
+    }
+    console.log(`myFilter: ${myFilterResult}`)
+
+    console.log("================== 映射元素 ==================")
+    // 等同于 java 中的 Stream.map
+    let arr12 = [
+        { name: "cqq1", age: 21 },
+        { name: "cqq2", age: 22 },
+        { name: "cqq3", age: 23 },
+    ]
+    let mapResult = arr12.map(function (value, index, originArr) {
+        console.log(index, value, originArr);
+        value.name += "-updated";
+        return value;
+    })
+    console.log(mapResult);
+
+    console.log("================== reduce 数组 ==================")
+    // 等同于 java 中的 Stream.reduce
+
+    // 1. 求和
+    let reduceSum = [1, 2, 3].reduce(function (previousValue, currentValue, currentIndex, originArray) {
+        return previousValue + currentValue;
+    }, 10);
+    console.log("reduceSum: " + reduceSum);
+
+    // 2. 线性统计
+    let reduceStatistic = [1, 2, 3].reduce(function (previousValue, currentValue, currentIndex, originArray) {
+        return currentValue === 3 ? ++previousValue : previousValue;
+    }, 0);
+    console.log("reduceStatistic: " + reduceStatistic);
+
+    // 3. 最大值
+    let reduceMax = [1, 2, 3].reduce(function (previousValue, currentValue, currentIndex, originArray) {
+        return currentValue > previousValue? currentValue : previousValue;
+    });
+    console.log("reduceMax: " + reduceMax);
+
+    // 4. 收集元素
+    let reduceCollect = [1, 2, 3].reduce(function (collector, currentValue, currentIndex, originArray) {
+        if (currentValue > 1) {
+            collector.push(currentValue);
+        }
+        return collector;
+    }, []);
+    console.log("reduceCollect: " + reduceCollect);
+
+    // 5. 去重元素
+    let reduceDistinct = [2, 3, 3].reduce(function (collector, currentValue, currentIndex, originArray) {
+        if (!collector.includes(currentValue)) {
+            collector.push(currentValue);
+        }
+        return collector;
+    }, []);
+    console.log("reduceDistinct: " + reduceDistinct);
+</script>
+</body>
+</html>

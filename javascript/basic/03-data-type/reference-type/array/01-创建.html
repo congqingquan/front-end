@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+    console.log("================== 对象创建的方式 ==================")
+    let arr1 = new Array(1, 2, 3, "A");
+    console.log(`typeof: ${typeof arr1}`)
+    console.table(arr1)
+
+    console.log("================== 对象创建的方式的缺陷 ==================")
+    // 使用对象的方式有一个缺陷：当构造参数只有一个时，参数值表示开辟的空间大小
+    console.log(new Array(5))
+    // 可以通过 Array.of 解决
+    console.log(Array.of(5))
+
+    console.log("================== 字面量的方式 ==================")
+    let arr2 = [1, 2, 3, "A"];
+    console.log(`typeof: ${typeof arr2}`)
+    console.table(arr2)
+
+    console.log("================== 获取、设置溢出索引上的值 ==================")
+    // js 中的数组是动态的，不是严格检查索引的。可以理解为，数组对象是这样的结构：{ 0: value1, 1: value2, 2: value3}，即 key 为索引，value 为存储值。
+    let arr4 = [1]
+    arr4[1] = 2
+    console.log(arr4)
+
+    // 获取一个不存在的索引上的值时，会返回 undefined
+    console.log(arr4[10])
+
+    // 设置一个不连续索引上的值
+    arr4[4] = 5
+    console.log(arr4)
+
+    console.log("================== 通过 Array.from 将自定义的数组模拟对象转为真实的数组 ==================")
+    let myArr = {
+        0: 1,
+        1: "A",
+        2: Array.from({
+            0: "Inner index 0",
+            length: 1
+        }),
+        length: 3
+    }
+    console.log(Array.from(myArr));
+
+    console.log("================== 多维数组 ==================")
+    let arr3 = [[1, 2], ["A", "B"]]
+    console.table(arr3)
+</script>
+</body>
+</html>

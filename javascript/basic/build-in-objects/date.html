@@ -34,6 +34,16 @@
     console.log(new Date("1999-11-18 00:00:00"));
     console.log(new Date(1999, 11 - 1, 18, 0, 0, 0)); // 月份需要 - 1，因为从 0 开始
 
+    console.log("========================== get ==========================")
+    let birthday = new Date("1999-11-18 00:00:00");
+    console.log(`年: ${birthday.getFullYear()}`)
+    console.log(`月: ${birthday.getMonth() + 1}`)
+    console.log(`日: ${birthday.getDate()}`)
+    console.log(`时: ${birthday.getHours()}`)
+    console.log(`分: ${birthday.getMinutes()}`)
+    console.log(`秒: ${birthday.getSeconds()}`)
+    console.log(`星期: ${birthday.getDay()}`)
+
     console.log("========================== time ==========================")
     // 1. 执行耗时统计
     let start = Date.now();
@@ -50,6 +60,25 @@
     let timestamp = Date.now();
     console.log(new Date(timestamp));
 
+    console.log("========================== data format ==========================")
+
+    console.log(dataFormat(new Date(), "YYYY-MM-DD HH:mm:ss"))
+
+    function dataFormat(date, format) {
+        const config = {
+            YYYY: date.getFullYear(),
+            MM: date.getMonth() + 1,
+            DD: date.getDate(),
+
+            HH: date.getHours(),
+            mm: date.getMinutes(),
+            ss: date.getSeconds(),
+        }
+        for (let key in config) {
+            format = format.replace(key, config[key]);
+        }
+        return format;
+    }
 </script>
 </body>
 </html>
