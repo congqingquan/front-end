@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+
+    // symbol：唯一且不可变 / 作为对象属性名时，该 object key 受保护，需要使用特定的 API 才能获取到该 key
+
+    console.log("============ 全局函数：非全局 Symbol ============")
+    let s1 = Symbol("cqq");
+    let s2 = Symbol("cqq");
+    // 1. 打印描述
+    console.log(s1.description)
+    // 2. 值比较：由于都不是全局的，都不会在 symbol pool 中保存全局的 symbol。所以即使 description 相同，但是两个 symbol 仍不是相同的 symbol
+    console.log(s1 === s2)
+    // 3. 获取全局 Symbol 的 description：由于通过全局函数创建的 Symbol 是非全局的，所以获取不到 description
+    console.log(`keyFor: ${Symbol.keyFor(s1)}`)
+
+    console.log("============ Symbol.for：全局 Symbol ============")
+    let for1 = Symbol.for(`cqq`);
+    let for2 = Symbol.for(`cqq`);
+    // 1. 打印描述
+    console.log(for1.description)
+    // 2. 值比较：因为都是全局的，创建 for2 时会检查全局中是否有该 description 的 Symbol，如果有则直接返回该 Symbol，所以 for1 == for2
+    console.log(for1 === for2)
+    // 2. 值比较：全局 symbol 不等于 非全局 symbol
+    console.log(for1 === s1)
+    // 3. 获取全局 Symbol 的 description
+    console.log(`keyFor: ${Symbol.keyFor(for1)}`)
+
+    console.log("============ Symbol 解决重复值 - 1 ============")
+    let user1 = "cortana"
+    let user2 = "cortana"
+    let grade = {
+        [user1]: { js: 100, css: 100 },
+        [user2]: { js: 90, css: 90 }
+    }
+    console.log(grade)
+
+    // 注意：不能使用 Symbol.for(name) 这样的形式时，否则会使得重复
+    user1 = { name: "cortana", key: Symbol()}
+    user2 = { name: "cortana", key: Symbol()}
+    grade = {
+        [user1.key]: { js: 100, css: 100 },
+        [user2.key]: { js: 90, css: 90 }
+    }
+    console.log(grade)
+
+    console.log(grade[user1.key])
+    console.log(grade[user2.key])
+
+    console.log("============ Symbol 解决重复值 - 2 ============")
+    class Cache {
+        static data = {};
+
+        static set(key, value) {
+            return (this.data[key] = value);
+        }
+
+        static get(key) {
+            return this.data[key];
+        }
+    }
+    let programmer = {
+        name: "cortana",
+        skill: ["js", "css", "html"],
+        key: Symbol("programmer")
+    }
+
+    let nurse = {
+        name: "cortana",
+        skill: ["care for patients"],
+        key: Symbol("nurse")
+    }
+
+    // Cache.set(programmer.name, programmer)
+    // Cache.set(nurse.name, nurse)
+    // console.log(Cache.get(programmer.name))
+
+    Cache.set(programmer.key, programmer)
+    Cache.set(nurse.key, nurse)
+    console.log(Cache.get(programmer.key))
+    console.log(Cache.get(nurse.key))
+
+    console.log("============ 访问对象上的 Symbol 属性 ============")
+    let symbol = Symbol("cortana symbol")
+    let cortana = {
+        name: "cortana",
+        gender: "women",
+        [symbol]: "my symbol"
+    }
+
+    console.warn("for in: ")
+    for (let key in cortana) {
+        console.log(`${key} - ${cortana[key]}`)
+    }
+
+    console.warn("object.keys: ")
+    for (const key of Object.keys(cortana)) {
+        console.log(`${key} - ${cortana[key]}`)
+    }
+
+    console.warn("object.getOwnPropertyNames: ")
+    for (const key of Object.getOwnPropertyNames(cortana)) {
+        console.log(`${key} - ${cortana[key]}`)
+    }
+
+    console.warn("object.getOwnPropertySymbols: ")
+    for (const key of Object.getOwnPropertySymbols(cortana)) {
+        console.log(key, key.description)
+    }
+
+    console.warn("Reflect.ownKeys: ")
+    for (const key of Reflect.ownKeys(cortana)) {
+        if (typeof key === "symbol") {
+            console.log(`${key.toString()} - ${cortana[key]}`)
+            // symbol 可以转为 string 但是必须调用 toString。但在拼接字符串时，解释器不会想其处理其他基本类型一样隐式的转为包装类后调用 toString，详细可以查阅 MDN 文档。
+
+            // console.log(`${key} - ${cortana[key]}`) // Uncaught TypeError: Cannot convert a Symbol value to a string
+            continue;
+        }
+        console.log(`${key} - ${cortana[key]}`)
+    }
+</script>
+</body>
+</html>

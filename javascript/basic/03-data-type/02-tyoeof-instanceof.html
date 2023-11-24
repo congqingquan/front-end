@@ -11,25 +11,21 @@
 <script type="text/javascript">
 
     // typeof: 检查数据类型
-    console.log("================= typeof =================")
-
-    // ==================== 空值类型 ====================
-    console.log("空值类型")
+    console.log("================= typeof 基础类型 =================")
     let nullVal = null;
     let noExists;
-    console.log(typeof nullVal) // null is also object type
+    console.log(typeof nullVal, "(null)") // null is also object type
     console.log(typeof noExists)
 
-    // ==================== 基础类型 ====================
-    console.log("基础类型")
     console.log(typeof 1)
     console.log(typeof "str")
     console.log(typeof true)
+    // console.log(typeof new Symbol()) // Uncaught TypeError: Symbol is not a constructor
+    console.log(typeof Symbol())
 
-    // ==================== 引用类型 ====================
-    console.log("引用类型")
+    console.log("================= typeof 引用类型 =================")
     console.log(`object: ${typeof {}}`)
-    console.log(`array: ${typeof []}`)
+    console.log(`object(array): ${typeof []}`)
     console.log(`function: ${typeof function () {}}`)
 
     // instanceof: 判断具体的实例类型
@@ -37,7 +33,7 @@
 
     console.log(`array instanceof: ${[] instanceof Array}`);
     function User() {}
-    console.log(`User instanceof: ${new User() instanceof User}`);
+    console.log(`user instanceof: ${new User() instanceof User}`);
 </script>
 </body>
 </html>
