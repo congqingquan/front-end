@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+
+    // WeakSet 对比 Set，主要区别在于：
+    // 1. WeakSet 只能添加引用类型数据，添加基础类型会抛出异常
+    // 2. WeakSet 是不可迭代的(不是 iterable 的没有 size，也不能通过 for in 进行迭代)
+    // 3. WeakSet 只有：add / has / delete API
+
+    // let weakSet = new WeakSet([1, "1"]); // Uncaught TypeError: Invalid value used in weak set
+
+    console.log("============== 新增/查询 ==============")
+    let obj = { name: "cortana"}
+    let arr  = [1, 2, 3]
+    let weakSet = new WeakSet();
+    weakSet.add(obj)
+    weakSet.add(arr)
+    // set.add(1) // Uncaught TypeError: Invalid value used in weak set
+    console.log(weakSet)
+    console.log(weakSet.has(obj));
+    console.log(weakSet.has(arr));
+
+    console.log("============== 删除 ==============")
+    console.log(weakSet.delete(obj));
+    console.log(weakSet.delete(3));
+    console.log(weakSet)
+
+    // 重点：为什么 WeakSet 不可迭代、只能添加引用类型呢？
+    // 因为 WeakSet 不会强引用存储的引用类型数据。也就是说：当引用类型数据被 JS 的垃圾回收器通过垃圾回收算法回收时（与 java 中 jvm 的垃圾回收一个意思），无法在从 WeakSet 中获取该数据了。
+    // 所以，WeakSet 没有提供迭代、获取元素的方法，因为可能获取不到。
+    // 所以，只能添加引用类型数据，因为基本数据类型不存在垃圾回收。
+
+    console.log("============== WeakSet 弱引用特性测试 ==============")
+    let testWeakSet = new WeakSet();
+    let testObj = { name: "cortana" }
+    testWeakSet.add(testObj);
+
+    testObj = null;
+
+    setTimeout(() => {
+        // 在当前的环境中打印 testWeakSet 仍然可以看到 testObj
+        console.log(testWeakSet);
+        // 但通过 has 函数判断时是正确的，返回 false，说明 testObj 已经被垃圾回收
+        console.log(testWeakSet.has(testObj));
+    }, 3_000)
+</script>
+</body>
+</html>

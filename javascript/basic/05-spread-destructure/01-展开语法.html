@@ -30,7 +30,7 @@
     merge1 = [...merge1, ...merge2] // 展开语法糖，等价于：merge1 = [1, 2, 3, 4, 5, 6]，避免手动编写
     console.log(merge1)
 
-    console.log("================== 应用在方法形参上 ==================")
+    console.log("================== 应用在方法形参上(使用数组存储多个形参) ==================")
     sum(1, 2, 3)
     function sum(...args) {
         // 拓展语法，本质是使用数组存储数据。与 java 中的可变参数一毛一样。
@@ -49,7 +49,7 @@
     // 所以，需要想要把一个数组正确地传递进取，也需要使用拓展语法：将单个数组打散为多个数组元素值
     sum(...[1, 2, 3])
 
-    console.log("================== 应用在 iterable 对象上 ==================")
+    console.log("================== 应用在 iterable 对象上(将 iterable 对象转为数组) ==================")
     let nodes = document.querySelectorAll("div");
     console.log(Object.prototype.toString.call(nodes))
     // console.log(Array.from(nodes))

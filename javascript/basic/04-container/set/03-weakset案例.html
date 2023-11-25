@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+
+        }
+
+        div > span {
+            align-self: start;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        li {
+            width: 200px;
+            margin: 5px;
+            padding: 5px;
+            border: solid 3px transparent;
+            border-radius: .5rem;
+
+            border-image-source: linear-gradient(to right, #3967FF, #B500FE);
+            border-image-slice: 1;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        li a {
+            color: blueviolet;
+            font-weight: bold;
+        }
+
+        .button {
+            width: 30px;
+            height: 30px;
+            /* transition-property 不支持 background-image */
+            /*background-image: linear-gradient(to right, #3967FF, #B500FE);*/
+            background-color: #B500FE;
+            border-radius: .5rem;
+            cursor: pointer;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .button div {
+            width: 1px;
+            height: 60%;
+            background-color: white;
+
+            pointer-events: none;
+        }
+
+        .button div:nth-of-type(1) {
+            transform: rotate(45deg);
+        }
+
+        .button div:nth-of-type(2) {
+            transform: rotate(-45deg);
+        }
+
+        /* ============================================= */
+
+        .remove {
+            border-image-source: linear-gradient(to right, #bdc3c7, #bdc3c7);
+            border-image-slice: 1;
+        }
+
+        .remove a {
+            color: #95a5a6;
+        }
+
+        .remove .button {
+            /* transition-property 不支持 background-image */
+            /*background-image: linear-gradient(to right, #bdc3c7, #bdc3c7);*/
+            background-color: #bdc3c7;
+        }
+
+        .background-transition {
+            transition-property: background;
+            transition-duration: .5s;
+            transition-timing-function: ease-in-out;
+        }
+
+        .color-transition {
+            transition-property: color;
+            transition-duration: .5s;
+            transition-timing-function: ease-in-out;
+        }
+
+        .border-image-transition {
+            transition-property: border-image;
+            transition-duration: .5s;
+            transition-timing-function: ease-in-out;
+        }
+    </style>
+</head>
+<body>
+
+
+<div>
+    <span>TODO</span>
+    <ul>
+        <li class="border-image-transition">
+            <a href="#" class="color-transition">baidu.com</a>
+            <div class="button background-transition">
+                <div></div>
+                <div></div>
+            </div>
+        </li>
+        <li class="border-image-transition">
+            <a href="#" class="color-transition">huawei.com</a>
+            <div class="button background-transition">
+                <div></div>
+                <div></div>
+            </div>
+        </li>
+    </ul>
+</div>
+
+<script type="text/javascript">
+
+    // 免责声明：单纯为了用 WeakSet 而用 WeakSet，换成其他容器如 Set 也可以。或者就干脆不用 Set 存储，直接判断类名即可！
+
+    class Todo {
+        constructor() {
+            this.list = document.querySelectorAll("ul > li");
+            this.removedSet = new WeakSet();
+        }
+
+        run() {
+            this.addEvent()
+        }
+
+        addEvent() {
+            for (let li of this.list) {
+                [...li.childNodes.values()].filter(child => child.classList && child.classList.contains('button')).forEach(child => {
+                    this.addRemoveEventListener(child);
+                })
+            }
+        }
+
+        addRemoveEventListener(node) {
+            node.addEventListener("click", event => {
+                let parentElement = event.target.parentElement;
+                if (this.removedSet.has(parentElement)) {
+                    parentElement.classList.remove("remove")
+                    this.removedSet.delete(parentElement)
+                    return
+                }
+                parentElement.classList.add("remove")
+                this.removedSet.add(parentElement)
+            })
+        }
+    }
+
+    new Todo().run();
+
+</script>
+</body>
+</html>

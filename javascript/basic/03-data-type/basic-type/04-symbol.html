@@ -120,7 +120,7 @@
     for (const key of Reflect.ownKeys(cortana)) {
         if (typeof key === "symbol") {
             console.log(`${key.toString()} - ${cortana[key]}`)
-            // symbol 可以转为 string 但是必须调用 toString。但在拼接字符串时，解释器不会想其处理其他基本类型一样隐式的转为包装类后调用 toString，详细可以查阅 MDN 文档。
+            // symbol 可以转为 string 但是必须调用 toString。但在拼接字符串时，解释器不会像处理其他基本类型一样隐式的转为包装类后调用 toString，详细可以查阅 MDN 文档。
 
             // console.log(`${key} - ${cortana[key]}`) // Uncaught TypeError: Cannot convert a Symbol value to a string
             continue;

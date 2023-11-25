@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+    // java 中的 LinkedHashSet
+
+    console.log("============== 新增/查询 ==============")
+    let set = new Set();
+    set.add("2")
+    set.add(1)
+    set.add("1")
+    for (let value of set) {
+        console.log(`typeof ${typeof value} - ${value}`);
+    }
+    set.forEach(function (value, value2, originSet) {
+        console.log(value, " - ", value2, " - ", originSet)
+    })
+    console.log(set.size)
+    console.log(set.has(1));
+    console.log(set.has(2));
+
+    console.log("============== 删除 ==============")
+    set = new Set([1, 2])
+
+    console.log(set.delete(1));
+    console.log(set.delete(3));
+    set.clear()
+
+    console.log("============== 修改(覆盖) ==============")
+
+    console.log("============== 构造参数 ==============")
+    // 1) iterable
+    console.log(new Set(set))
+    console.log(new Set("CQQ"))
+    // 2) array
+    console.log(new Set([1, 2, 3]))
+
+    console.log("============== Set 转 Array ==============")
+    set = new Set([1, 2, 3, 4, 5]);
+    set = new Set([...set].filter(function (n) {
+        return n < 3;
+    }))
+    console.log(set);
+
+    let arr = [1, 1, 2, 2, 3, 3]
+    arr = [...new Set(arr)]
+    console.log(arr)
+
+    console.log("============== 交集 ==============")
+    let originSet = new Set([1, 2, 3])
+    let compareSet = new Set([3, 4, 5])
+    // let resultSet = new Set()
+    // for (let value of originSet) {
+    //     if (compareSet.has(value)) {
+    //         resultSet.add(value)
+    //     }
+    // }
+    let resultSet = [...originSet].filter((value) => compareSet.has(value))
+    console.log(resultSet)
+
+    console.log("============== 并集 ==============")
+    resultSet = new Set([...originSet, ...compareSet])
+    console.log(resultSet)
+
+    console.log("============== 差集(双向) ==============")
+    // for (let value of originSet) {
+    //     if (!compareSet.has(value)) {
+    //         resultSet.add(value)
+    //     }
+    // }
+    // for (let value of compareSet) {
+    //     if (!originSet.has(value)) {
+    //         resultSet.add(value)
+    //     }
+    // }
+    resultSet = new Set(
+        [
+            ...[...originSet].filter((value) => !compareSet.has(value)),
+            ...[...compareSet].filter((value) => !originSet.has(value))
+        ]
+    )
+    console.log(resultSet)
+</script>
+</body>
+</html>
