@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+    console.log("================== object 为 object key 时的特性 ==================")
+
+    // object 其实也是一种映射表，但是会存在下面的问题：
+    // 任何类型数据作为对象的 key 时，都会先将其转为 string 后在作为对象的 key。
+    // 如将一个 object 作为 key 时，会先将转为 [object Object]，而不是使用对象的引用作为 key。
+    // 将一个 string 作为 key 时，会将 string 的具体字符串值作为 key（这个是没问题的，可以根据 string 变量再次获取到对应的 value）
+
+    // 这样就无法在通过 变量key 获取到对应的值了
+
+    let objKey = { name: "cortana" }
+    let strKey = "john"
+    let sparta  = {
+        name: "sparta",
+        [objKey]: objKey.name,
+        [strKey]: strKey
+    }
+    console.log(sparta)
+    console.log(sparta.john)
+    console.log(sparta["[object Object]"])
+    console.log(sparta["[object Object]"] = "updated cortana")
+    console.log(sparta)
+
+    // 为了解决 object 中 key 不能为任意数据类型的问题，引入了 map
+
+    console.log("================== 通过 new 创建 Map ==================")
+    let map = new Map();
+    map.set("obj", objKey);
+    map.set("str", strKey);
+    console.log(map.get("obj"))
+    console.log(map.get("str"))
+    console.log(map)
+
+    console.log("================== 通过构造函数创建 Map ==================")
+    // 参数格式：[[key1, value], [ke2, value], ...]
+    let map2 = new Map([[objKey, objKey], [strKey, strKey]])
+    console.log(map2)
+
+    console.log("================== Map 的增删改 ==================")
+    let map3 = new Map()
+    let nameKey = "name"
+    let roleKey = "role"
+    // 增
+    map3.set("noValue")
+    map3.set(nameKey, "cortana")
+    map3.set(roleKey, "ai")
+    // 改
+    map3.set(nameKey, "cortana-updated")
+    console.log(map3)
+    // 删
+    console.log(map3.delete(nameKey))
+    console.log(map3)
+    map3.clear()
+    console.log(map3)
+
+    console.log("================== Map 的查询 ==================")
+    let map4 = new Map([["name", "cortana"], ["role", "ai"]])
+
+    console.log(map4.size)
+
+    // iterable
+    for (const key of map4.keys()) {
+        console.log(map4.get(key))
+    }
+    for (const value of map4.values()) {
+        console.log(value)
+    }
+
+    for (const entry of map4.entries()) {
+        console.log(entry)
+    }
+    // 等价于上面
+    for (const [key, value] of map4) {
+        console.log(key, ' - ', value)
+    }
+
+    map4.forEach((value, key) => console.log(value, key))
+
+    // has
+    console.log(map4.has("name"))
+    console.log(map4.has("name2"))
+
+    console.log("================== Map 的展开语法 ==================")
+
+    let map5 = new Map([["name", "cortana"], ["role", "ai"]])
+    console.log(...map5)
+</script>
+</body>
+</html>

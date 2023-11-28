@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+
+    // key 具备 WeakSet 的特性的 Map。
+    // 除了可以额外设置 value，其余与 WeakSet 完全相同。
+
+    let weakKey = { name: "cortana" }
+
+    let weakMap = new WeakMap();
+    weakMap.set(weakKey, "Value of weak key")
+    // weakMap.set("str", "String value")
+    console.log(weakMap, weakMap.get(weakKey));
+
+    weakKey = null;
+
+    setInterval(() => console.log("Timing in rotation: ", weakMap, " / value: ", weakMap.get(weakKey)), 1_000)
+</script>
+</body>
+</html>
