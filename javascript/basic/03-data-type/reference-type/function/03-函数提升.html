@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+
+    console.log("======================= 函数提升 =======================")
+
+    // 可以直接调用后面声明的函数的原因便是函数提升（与变量提升一样，函数也会提升。对比变量的提升，函数的提升可以理解的）
+    myFunc();
+    function myFunc() {
+        console.log("my function")
+    }
+
+    console.log("======================= 匿名函数提升 =======================")
+
+    // 但匿名函数是不存在函数提升的，即使是通过 var 变量进行接收
+
+    // letAnonymousFunc(); // Uncaught ReferenceError: Cannot access 'anonymousFunc' before initialization
+    let letAnonymousFunc = function () {
+        console.log("let anonymous function")
+    }
+
+    // varAnonymousFunc(); // Uncaught TypeError: anonymousFunc is not a function
+    var varAnonymousFunc = function () {
+        console.log("var anonymous function")
+    }
+
+    console.log("======================= 例子 =======================")
+    testFunc(); // 因为 字面量形式的 testFunc 的提升所以打印 Test function
+    var testFunc = function () {
+        console.log("Var test function")
+    }
+    function testFunc () {
+        console.log("Test function")
+    }
+    testFunc(); // 字面量形式的 testFunc 覆盖了先出现的 匿名 testFunc 函数
+</script>
+</body>
+</html>

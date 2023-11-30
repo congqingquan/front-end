@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+
+    console.log("================= 构建 Function 对象声明函数 =================")
+    // 在 js 中函数本身也是对象，可以通过 new 的方式进行创建
+
+    let myFunc = new Function("param", "console.log('myFunc: ', param);");
+    console.log(myFunc)
+    console.log("typeof: ", typeof myFunc, "instanceof: ", myFunc instanceof Object)
+    myFunc(1)
+
+    console.log("================= 字面量的方式声明函数 =================")
+    // 通过构建 Function 对象的方式十分麻烦，所以可以通过字面量的方式进行简化声明
+    function myFunc2(param) { // 等价于：let myFunc2 = new Function("param", "console.log('myFunc2: ', param);");
+        console.log("myFunc2: ", param)
+    }
+    console.log("typeof: ", typeof myFunc2, "instanceof: ", myFunc2 instanceof Object)
+    myFunc2(1)
+
+    let myFunc2Ref = myFunc2
+    console.log("myFunc2Ref > ", "typeof: ", typeof myFunc2Ref, "instanceof: ", myFunc2Ref instanceof Object)
+    console.log(myFunc2Ref === myFunc2)
+    myFunc2Ref(1)
+
+    console.log("================= 匿名函数 =================")
+    // 匿名函数
+    let anonymousFunc = function() {
+        console.log("I'm Anonymous func 1")
+    };
+    anonymousFunc();
+
+    // 这种方式的声明，其中 func3 是无意义的，不能作为函数对象的引用
+    let anonymousFunc2 = function func2() {
+        console.log("I'm Anonymous func 2")
+    }
+    // func2(1); // Uncaught ReferenceError: func2 is not defined
+    anonymousFunc2(1);
+
+    // 匿名自调用函数
+    (function () {
+        console.log("I'm Anonymous func call by myself")
+    })()
+
+    console.log("================= 对象函数属性 =================")
+    function print() {
+        console.log("print something")
+    }
+
+    let obj = {
+        name,
+        setName: function (name) {
+            this.name = name;
+        },
+        // 对象中可以简写函数属性
+        getName() {
+            return this.name;
+        },
+        // 绑定作用域内的函数
+        printCopy: print,
+        // 绑定作用域内的函数(简写)
+        print
+    }
+    obj.printCopy()
+    obj.print()
+    obj.setName("cortana")
+    console.log(obj.getName())
+
+    console.log("================= lambda =================")
+
+    // 与 java 中的 lambda 大部分一样。但仍存在区别：没有方法引用。
+
+    let l1 = () => console.log("l1");
+    l1();
+
+    let l2 = value => console.log(value);
+    l2("val");
+
+    let l3 = (v1, v2) => console.log(v1, " - ", v2);
+    l3("value1", "value2");
+
+    let l4 = (v1, v2) => {
+        console.log(v1, " - ", v2);
+    };
+    l4("value1", "value2");
+
+</script>
+</body>
+</html>

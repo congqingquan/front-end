@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+
+    console.log("======================= 全局函数的定义以及特性 =======================")
+    // 当我们直接通过字面量的方式定义函数时，实际上就是在 window 对象上定义函数。
+    // 与通过 var、或不指定 var 修饰的变量最终会绑定到 window 对象上，造成变量污染是一样原理。
+    function myFunc() {
+        console.log("my function")
+    }
+    // 直接调用
+    myFunc()
+    // 通过 window 对象调用
+    window.myFunc()
+
+    // 这种机制是不对的，因为可能会覆盖 window 上的原生属性。默认会板顶到 window 对象上，这是历史遗留问题
+    function screenX() {
+        console.log("my screenX")
+    }
+    console.log(window.screenX)
+
+    console.log("======================= 解决方法 =======================")
+    // 1. 在类或模块中声明函数，降低函数的作用域
+    // 2. 通过块作用域、匿名自调用函数
+    // 3. 通过 let 定义函数
+    var varFunc = function() {
+        console.log("my var function")
+    };
+    varFunc()
+    console.log(window.varFunc)
+
+    let letFunc = function() {
+        console.log("my let function")
+    };
+    letFunc()
+    console.log(window.letFunc)
+</script>
+</body>
+</html>

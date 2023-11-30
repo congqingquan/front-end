@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript" src="04-component1.js"></script>
+<script type="text/javascript" src="04-component2.js"></script>
+<script type="text/javascript">
+
+    // 远古时期，在没有模块化前，实现命名空间的方式，用于隔离变量方法
+
+    console.log("============================= 不限定作用域 =============================")
+    // 由于 04-component2.js 被后引入，所以只有这里面的 func1 / func2 会生效
+    func1()
+    func2()
+
+    console.log("============================= 限定作用域 =============================")
+    component1.func1();
+    component1.func2();
+    component2.func1();
+    component2.func2();
+</script>
+</body>
+</html>
