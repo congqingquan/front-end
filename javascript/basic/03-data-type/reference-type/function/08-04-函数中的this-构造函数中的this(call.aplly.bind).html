@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+    "use strict";
+
+    function People(name, age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    // 改变构造函数中的 this 指向
+
+    console.log("================== call ==================")
+    let cortana = { role: "AI" }
+    People.call(cortana, "cortana", 20);
+    console.log(cortana);
+
+    console.log("================== apply ==================")
+    let john = { role: "soldier" }
+    People.apply(john, ["john", 30]);
+    console.log(john);
+
+    console.log("================== bind ==================")
+    let qqc = { role: "civilian" }
+    let newConstructor = People.bind(qqc, "qqc");
+    console.log(typeof newConstructor);
+    console.log(newConstructor);
+    // 1) 创建一个 copy 源构造函数的函数
+    console.log(newConstructor === People)
+
+    newConstructor();
+    console.log(qqc);
+
+    qqc.name = "unknown"
+    console.log(qqc);
+    newConstructor(40);
+    console.log(qqc);
+
+    /**
+     * call / apply / bind：
+     *
+     * 1. 三者都可以改变 this 的指向
+     * 2. call 与 apply 的区别在于传递的参数格式不同：前者是可变参数，后者是数组
+     * 3. bind 与 call / apply 的区别在于：
+     *      3.1) bind 函数会返回一个 copy 函数，即不会立即执行。call / apply 则立即执行。
+     *      3.2) bind 函数的参数的传递时机：如果在 bind 时就指定了部分参数，则调用返回的 copy 函数时传递的实参，会跳过这些参数后顺推赋值形参。
+     */
+
+</script>
+</body>
+</html>

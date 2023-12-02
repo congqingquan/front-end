@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+    "use strict";
+
+    // 1. lambda 函数中没有 this。this 会从执行上下文中的父级上下文获取。
+    // 2. 并且！lambda 函数中的 this 确定后就不会再改变了。不会随着调用对象的不同而不同!
+
+    let lambdaFunc;
+    let obj = {
+        name: "object1",
+        createLambdaFunc() {
+            lambdaFunc = () => console.log(this);
+        }
+    }
+    obj.createLambdaFunc();
+
+    // 将 lambdaFunc 绑定到另一个对象上，在通过该对象调用 lambdaFunc，打印的依旧是 object1。
+    let obj2 = {
+        name: "object2",
+        lambdaFunc: lambdaFunc
+    }
+    obj2.lambdaFunc();
+</script>
+</body>
+</html>

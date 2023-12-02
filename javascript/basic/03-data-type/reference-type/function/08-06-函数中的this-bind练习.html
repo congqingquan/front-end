@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        div {
+            font-size: 1.5rem;
+            letter-spacing: 1rem;
+        }
+
+        div > span {
+            font-weight: bold;
+        }
+
+        .background-color-transition {
+            transition-property: background-color;
+            transition-duration: 1s;
+        }
+    </style>
+</head>
+<body class="background-color-transition">
+
+<div>
+    <span class="background-color-transition">Cortana</span>.John.S117
+</div>
+
+<script type="text/javascript">
+    "use strict";
+
+   function RandomColor(dom) {
+       this.dom = dom;
+       this.colors = ["#9b59b6", "#27ae60", "#f39c12", "#e74c3c"];
+       this.run = function () {
+           let callback = function () {
+               this.dom.style.background = this.colors[Math.floor(Math.random() * this.colors.length)];
+           }.bind(this);
+
+           setInterval(callback, 1_000)
+       }
+   }
+
+   new RandomColor(document.querySelector("body")).run();
+   new RandomColor(document.querySelector("span")).run();
+</script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+    // "use strict";
+
+    // js 中的 function 是可以脱离 class 单独存在的。所以，函数中的 this 取值就需要看函数当前的所属者是谁而定了。
+
+    console.log("==================== 0. 全局 this ====================")
+    // 默认的 this 指向的当前 Window 对象
+    console.log(this);
+
+    console.log("==================== 1.0 严格模式下，普通函数中原本指向 Window 的 this 都会指向 undefined。指向了 Window 是历史遗留问题 ====================")
+    console.log("==================== 1.1 普通函数 > 块作用域下的普通函数(Window) ====================")
+    {
+        function blockFunc() {
+            console.log("blockFunc", this) // undefined
+            function blockInnerFunc() {
+                console.log("blockFuncInnerFunc", this) // undefined
+            }
+            blockInnerFunc();
+        }
+        blockFunc();
+    }
+
+    function User(who) {
+        this.who = who;
+        console.log(this);
+    }
+    console.log("==================== 1.2 普通函数 > 全局普通函数(Window) ====================")
+    let user1 = User("globalFunc"); // undefined
+    console.log("globalFunc return value", user1)
+
+    console.log("==================== 1.3 普通函数 > 实例函数中嵌套的普通函数(Window) ====================")
+    let obj = {
+        name: "cortana",
+        printThis() {
+            // 此时的 innerFunc 为普通函数，因为它不是对象上的一个属性
+            function innerFunc() {
+                console.log("objectFuncInnerFunc", this); // undefined
+            }
+            innerFunc();
+        }
+    }
+    obj.printThis();
+
+    console.log("==================== 2. 构造函数(object) ====================")
+    // 1. 通过 new 指令调用函数时，函数则转为了构造函数，返回的返回值会变为一个对象
+    // 2. this 根据调用对象是谁而定
+    console.log("constructorFunc return value", new User("constructorFunc1"))
+    console.log("constructorFunc return value", new User("constructorFunc2"))
+
+    console.log("==================== 3.1 实例函数(object) ====================")
+    let obj2 = {
+        name: "cortana",
+        printThis() {
+            console.log(this);
+        }
+    }
+    obj2.printThis();
+
+    console.log("==================== 3.2 实例函数 > 实例函数中嵌套的 lambda 函数(Object) ====================")
+    let obj3 = {
+        name: "cortana",
+        printThis() {
+            // lambda 函数中没有 this。所以此时的 this 是上下文中的this，在实例函数这种场景下，this 指向的就是父级上下文中的 this > object
+            (() => console.log(this))()
+        }
+    }
+    obj3.printThis();
+
+</script>
+</body>
+</html>

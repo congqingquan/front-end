@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+    "use strict";
+
+    // 实例函数中嵌套的普通函数中使用 this，指向不了当前对象。因为此时嵌套函数不是对象上的一个属性，所以不属于该对象，只是一个普通函数。  >  只能说 6
+
+    let obj = {
+
+        name: "cortana",
+        hobbies: ["eat", "sleep", "pc game"],
+        handleHobbies: function () {
+            // this.hobbies = this.hobbies.map(function (value, index, originArr) {
+            //     console.log(this); // undefined
+            //     return `${this.name} like ${value}`; // Uncaught TypeError: Cannot read properties of undefined (reading 'name')
+            // });
+
+            // 解决方式：外部存储 this
+            // const self = this;
+            // this.hobbies = this.hobbies.map(function (value, index, originArr) {
+            //     return `${self.name} like ${value}`;
+            // });
+
+            // 针对于数组中 lambda 函数，也可将 this 作为参数传递到匿名回调函数中
+            this.hobbies = this.hobbies.map(function (value, index, originArr) {
+                return `${this.name} like ${value}`;
+            }, this);
+
+            this.hobbies.forEach(hobby => console.log(hobby));
+        }
+    }
+
+    obj.handleHobbies()
+</script>
+</body>
+</html>

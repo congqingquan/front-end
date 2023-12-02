@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<button id="add_btn">添加</button>
+<button>删除</button>
+
+<body>
+<script type="text/javascript">
+    "use strict";
+
+    let Button = {
+        name: "提交按钮",
+        bind: function () {
+            let addBtn = document.querySelector("#add_btn");
+
+            // 1. 为什么 addEventListener 的回调方法中，可以正确输出 this ? 为什么不是 undefined(若在严格模式下) ?
+            // addBtn.addEventListener("click", function () {
+            //     console.log(this)
+            // })
+            // 因为 addEventListener 等价于下面这样在 dom 对象的 onclick 属性上设置了一个回调函数，所以此时的回调函数属于对象属性，所以可以正确打印 this。
+            // addBtn.onclick = function () {
+            //     console.log(this)
+            // }
+
+            // 2. 如果将匿名函数转为 lambda 的形式，this 是谁？
+            // lambda 函数中没有 this。所以此时的 this 是执行 addBtn.onclick = () => console.log(this) 时上下文中的this，即 Button 实例。
+            // 并且！lambda 函数中的 this 确定后就不会再改变了。所以即使此时 lambda 函数是 dom 对象的上的属性，但 this 依旧为 Button 实例。
+            // addBtn.onclick = () => console.log(this);
+
+            // 3. lambda 函数获取父级上下文 this 测试
+            let allBtn = document.querySelectorAll("button");
+            // allBtn.forEach(function (btn) {
+            //     btn.addEventListener("click", (event) => {
+            //         console.log(this); // undefined
+            //     })
+            // })
+
+            // 由于 forEach 是 lambda 函数，所以 forEach 中的 this 是 Button 实例。
+            // 由于 forEach 是 btn.addEventListener 的回调 lambda 函数中父级作用域，所以回调 lambda 函数中的 this 也指向的 Button。
+            allBtn.forEach((btn) => {
+                btn.addEventListener("click", (event) => {
+                    console.log(this); // Button
+                })
+            })
+        }
+    }
+    Button.bind();
+</script>
+</body>
+</html>
