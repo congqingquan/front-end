@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+
+    console.log("================= Function closure =================")
+
+    function closure1() {
+        let i = 1;
+        return function closure2() {
+            let j = 1;
+            return function closure3() {
+                let k = 1;
+                console.log(`i = ${++i} / j = ${++j} / k = ${++k}`)
+            }
+        }
+    }
+    let closure2 = closure1();
+    let closure3 = closure2();
+    console.log(closure2);
+    console.log(closure3);
+
+    closure3(); // i = 2 / j = 2 / k = 2
+    closure3(); // i = 3 / j = 3 / k = 2
+
+    console.log("================= Constructor closure =================")
+    function User(name) {
+        this.name = name;
+        let age = 0;
+        this.plusAge = function () {
+            console.log(`age: ${++age}`);
+        }
+    }
+    let cortana = new User("cortana");
+    cortana.plusAge();
+    cortana.plusAge();
+    cortana.plusAge();
+</script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+    "use strict";
+
+    let obj = {
+        name: "cortana-1",
+        age: 18
+    }
+
+    console.log("===================== 查看对象属性特征 =====================")
+    console.table(Object.getOwnPropertyDescriptor(obj, "name"))
+
+
+    console.log("===================== 定义对象属性特征 =====================")
+
+    Object.defineProperty(obj, "name", {
+        // 属性值
+        // 1) 重置属性值
+        value: "cortana-2",
+        // 2) 属性值可写的
+        writable: false,
+
+        // 属性
+        // 1) 属性可列举的
+        enumerable: false,
+        // 2) 属性可再定义的
+        configurable: false
+    });
+
+    console.log("===================== 属性值测试 =====================")
+    // obj.name = "cortana-3"; // Uncaught TypeError: Cannot assign to read only property 'name' of object '#<Object>'
+
+    console.log("===================== 属性测试 =====================")
+    // 1)
+    // console.log(Object.keys(obj)); // ['age']
+
+    // 2)
+    // delete obj.name; // Uncaught TypeError: Cannot delete property 'name' of #<Object>
+
+    // Object.defineProperty(obj, "name", {
+    //     value: "cortana-4", // Uncaught TypeError: Cannot redefine property: name
+    //     configurable: true  // Uncaught TypeError: Cannot redefine property: name
+    // });
+
+    // 3) 对象新增属性
+    console.log("===================== Object.preventExtensions =====================")
+
+    Object.preventExtensions(obj);
+    // obj.hobbies = []; // Uncaught TypeError: Cannot add property hobbies, object is not extensible
+    console.log("extensible: ", Object.isExtensible(obj))
+    console.log("sealed: ", Object.isSealed(obj))
+    console.log("frozen: ", Object.isFrozen(obj))
+
+    console.log("===================== Object.seal =====================")
+    let obj2 = { name: "john", age: 20 }
+    Object.seal(obj2)
+    console.table(Object.getOwnPropertyDescriptors(obj2))
+    console.log("extensible: ", Object.isExtensible(obj2))
+    console.log("sealed: ", Object.isSealed(obj2))
+    console.log("frozen: ", Object.isFrozen(obj2))
+
+    console.log("===================== Object.frozen =====================")
+    let obj3 = { name: "john", age: 20 }
+    Object.freeze(obj3)
+    console.table(Object.getOwnPropertyDescriptors(obj3))
+    console.log("extensible: ", Object.isExtensible(obj3))
+    console.log("sealed: ", Object.isSealed(obj3))
+    console.log("frozen: ", Object.isFrozen(obj3))
+</script>
+</body>
+</html>

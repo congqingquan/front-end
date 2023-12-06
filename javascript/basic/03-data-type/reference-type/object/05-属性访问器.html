@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+    "use strict";
+
+
+    console.log("======================== 语法 ========================")
+    let obj = {
+
+        data: {
+            name
+        },
+
+        // 1. 定义 set 访问器的同时，就表示着声明了一个属性
+
+        // name: "cortana-1", // Duplicate declaration
+        set name(value) { // Duplicate declaration
+            console.log("set name...")
+            this.data.name = value;
+        },
+
+        // 2. set / get 关键字的作用：
+        // object.xxx = "" > 执行 set xxx(value) 访问器
+        // let xxx = object.xxx = "" > 执行 get xxx() 访问器
+        get name() {
+            console.log("get name...")
+            return this.data.name;
+        }
+    }
+
+    obj.name = "cortana";
+    console.log(obj.name);
+
+    console.log("======================== 伪造属性 ========================")
+
+    // 以为访问的是一个对象属性，实则是一个访问器
+
+    let obj2 = {
+        data: [1, 2, 3, 4],
+
+        get total() {
+            return this.data.reduce((pre, cur) => pre + cur, 0);
+        }
+    }
+    console.log(obj2.total);
+
+    let obj3 = {
+        name: "",
+        url: "",
+
+        set site(value) {
+            [this.name, this.url] = value.split(",");
+        },
+
+        get site() {
+            return `${this.name} - ${this.url}`
+        }
+    }
+
+    obj3.site = "halo,halo.com";
+    console.log(obj3.site)
+
+    console.log("======================== 访问器案例 ========================")
+    let Request = {
+        set token(value) {
+            localStorage.setItem("token", value);
+        },
+
+        get token() {
+            return localStorage.getItem("token");
+        }
+    }
+    Request.token = "cqq123456";
+    console.log(Request.token)
+</script>
+</body>
+</html>

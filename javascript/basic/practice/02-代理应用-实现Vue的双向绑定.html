@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<input type="text" v-model="title"/>
+<input type="text" v-model="title"/>
+
+<hr>
+
+<div v-bind="title"></div>
+<body>
+<script type="text/javascript">
+    "use strict";
+
+    // 一定要使用代理吗？如果我有一个map: {v-model-attribute-value, [dom array]}，是不是也可以实现？
+
+    function Vue() {
+       let proxy = new Proxy(this, {
+
+           set(target, property, value, receiver) {
+               // console.log("set: ", target, property, value)
+               document.querySelectorAll(`[v-model=${property}]`).forEach(el => el.value = value);
+               document.querySelectorAll(`[v-bind=${property}]`).forEach(el => el.innerHTML = value);
+               return true;
+           },
+
+           get(target, property, receiver) {
+               console.log("get: ", target, property)
+           }
+       });
+
+       this.init = function () {
+           document.querySelectorAll("[v-model]").forEach(el => {
+              el.addEventListener("keyup", function (event) {
+                  let target = event.target;
+                  proxy[target.getAttribute("v-model")] = target.value;
+              })
+           });
+       }
+    }
+
+    new Vue().init();
+</script>
+</body>
+</html>

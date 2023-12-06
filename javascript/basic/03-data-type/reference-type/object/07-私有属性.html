@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+    "use strict";
+
+    // 将私有属性放在闭包对象中
+
+    function User(name, age) {
+        let data = {name, age};
+        this.setName = function (name) {
+            data.name = name;
+        }
+        this.getName = function () {
+            return data.name;
+        }
+    }
+
+    let user = new User("cortana", 18);
+    user.setName("cortana-updated");
+    console.log(user.getName());
+
+</script>
+</body>
+</html>

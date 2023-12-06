@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+    "use strict";
+
+    function User(name) {
+        this.name = name;
+        this.printThis = function () {
+            console.log(this);
+        }
+        // 1. 通过 new 指令创建对象时，会默认返回 this
+        // return this;
+    }
+
+    let user = new User("CQQ");
+    user.printThis();
+
+    // 2. 先创建构造函数的实例对象，在根据构造函数的实例对象创建实例对象
+    let UserConstructor = new User.constructor(
+        "name",
+        `
+        this.name = name;
+        this.printName = function () {
+            console.log(this.name);
+        }
+        `
+    );
+    let userConstructor = new UserConstructor("CQQ-2");
+    userConstructor.printName();
+
+    // 2. 因为不通过对象应用调用的该函数，且又因为是严格模式，所以输出 undefined
+    let printThisFunc = user.printThis;
+    printThisFunc();
+</script>
+</body>
+</html>

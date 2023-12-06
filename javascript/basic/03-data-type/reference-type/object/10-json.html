@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+    "use strict";
+
+    console.log("================= stringify =================")
+
+    let obj = {
+        name: "cortana",
+        age: 18,
+        hobbies: ["eat", "sleep"]
+    }
+    // 参数一：对象
+    // 参数二：指定需要保留的 item
+    // 参数三：缩进长度，用于格式化
+    let stringify = JSON.stringify(obj, ["name", "hobbies"], 4);
+    console.log(stringify);
+
+    console.log("================= 重写 toJSON 时的回调函数 =================")
+
+    let obj2 = {
+        name: "cortana",
+        age: 18,
+        hobbies: ["eat", "sleep"],
+
+        toJSON() {
+            return {
+                name: this.name,
+                hobbies: this.hobbies.join(",")
+            }
+        }
+    }
+    console.log(JSON.stringify(obj2, null, 4));
+
+    console.log("================= parse =================")
+
+    let jsonStr = JSON.stringify({ name: "cortana", age: 18});
+    let parsed = JSON.parse(jsonStr, (key, value) => {
+        console.log(key, value);
+        if (key === 'age') {
+            value += 2;
+        }
+        return value;
+    });
+    console.log(parsed);
+</script>
+</body>
+</html>

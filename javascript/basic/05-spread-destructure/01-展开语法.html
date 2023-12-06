@@ -30,6 +30,12 @@
     merge1 = [...merge1, ...merge2] // 展开语法糖，等价于：merge1 = [1, 2, 3, 4, 5, 6]，避免手动编写
     console.log(merge1)
 
+    console.log("================== 应用在对象上 ==================")
+    let obj1 = { name: "cortana", age: 18, lang: "zh" };
+    let obj2 = { name: "john", age: 20}
+    let obj3 = {...obj1, ...obj2};
+    console.log(obj3);
+
     console.log("================== 应用在方法形参上(使用数组存储多个形参) ==================")
     sum(1, 2, 3)
     function sum(...args) {

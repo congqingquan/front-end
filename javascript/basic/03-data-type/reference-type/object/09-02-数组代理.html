@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+    "use strict";
+
+    console.log("================ 数组代理 ================")
+
+    let arr = []
+
+    let arrayProxy = new Proxy(arr, {
+
+        // 数组本身也是对象，每个索引则是对象上的一个 object key
+        set(target, property, value, receiver) {
+            console.log("set array element...")
+            console.log("target: ", target)
+            console.log("property: ", property)
+            console.log("value: ", value)
+            console.log("receiver: ", receiver)
+            target[property] = value;
+            return true;
+        },
+
+        get(target, property, receiver) {
+            console.log("get array element...")
+            console.log("target: ", target)
+            console.log("property: ", property)
+            console.log("receiver: ", receiver)
+            return target[property];
+        }
+    });
+
+    arrayProxy[0] = "A";
+    console.log(arrayProxy[0]);
+</script>
+</body>
+</html>

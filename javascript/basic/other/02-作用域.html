@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+
+    console.log("================= global scope =================")
+
+    var gv = "global variable";
+    var gf = function () {
+        console.log("global function");
+    }
+    console.log(window.gv);
+    window.gf()
+
+    console.log("================= function scope =================")
+
+    function funcScope() {
+        let fv = "func variable";
+        let ff = function () {
+            console.log("func function")
+        }
+        console.log(fv);
+        ff();
+    }
+
+    funcScope();
+    // not defined
+    // console.log(fv);
+    // ff();
+
+    console.log("================= block scope =================")
+
+    {
+        let bv = "block variable";
+        let bf = function () {
+            console.log("block function")
+        }
+        console.log(bv);
+        bf();
+    }
+    // not defined
+    // console.log(bv);
+    // bf();
+
+    let arr = []
+    for (let i = 0; i < 5; i++) {
+        arr.push(i);
+    }
+
+
+</script>
+</body>
+</html>

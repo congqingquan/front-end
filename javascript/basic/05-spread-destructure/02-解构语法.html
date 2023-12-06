@@ -39,11 +39,15 @@
 
     console.log("================== 方法形参上的解构语法 ==================")
 
-    function fn([name, age]) {
+    function fn1([name, age]) {
         console.log(name, "\t", age)
     }
+    fn1(["cqq", 23])
 
-    fn(["cqq", 23])
+    function fn2({ name, age }) {
+        console.log(name, "\t", age)
+    }
+    fn2({name: "cortana", myAge: 18}) // myAge 无法映射到结构中的 age 属性上
 
     console.log("================== 对象上的解构语法 ==================")
     // 1. 完全根据名称匹配

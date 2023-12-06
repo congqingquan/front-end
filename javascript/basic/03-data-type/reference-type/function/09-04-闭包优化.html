@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<button class="but1" desc="button 1">Click me !!!</button>
+<button class="but2" desc="button 2">Click me !!!</button>
+<button class="but3" desc="button 3">Click me !!!</button>
+<body>
+<script type="text/javascript">
+
+    // let buttons = document.querySelectorAll("button");
+    // buttons.forEach(button => {
+    //    button.addEventListener("click", () => {
+    //        alert(button.getAttribute("desc"));
+    //    });
+    // });
+
+    // 点击回调函数中依赖闭包变量 button，但实际上只是要获取 desc 属性。
+    // 所以，可以将 desc 属性读取后，就释放掉 button 对象，减小闭包引用的不会释放内存变量的大小。
+
+    let buttons = document.querySelectorAll("button");
+    buttons.forEach(button => {
+        let desc = button.getAttribute("desc");
+        button.addEventListener("click", () => {
+            alert(desc);
+        });
+        button = null;
+    });
+</script>
+</body>
+</html>

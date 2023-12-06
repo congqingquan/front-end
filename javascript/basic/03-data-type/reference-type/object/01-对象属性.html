@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+    "use strict";
+
+    console.log("================== object 为 object key 时的特性 ==================")
+
+    // object 其实也是一种映射表，但是会存在下面的问题：
+    // 任何类型数据作为对象的 key 时，都会先将其转为 string 后在作为对象的 key。
+    // 如将一个 object 作为 key 时，会先将转为 [object Object]，而不是使用对象的引用作为 key。
+    // 将一个 string 作为 key 时，会将 string 的具体字符串值作为 key（这个是没问题的，可以根据 string 变量再次获取到对应的 value）
+
+    // 这样就无法在通过 变量key 获取到对应的值了
+
+    let objKey = {name: "cortana"}
+    let strKey = "john"
+    let sparta = {
+        name: "sparta",
+        [objKey]: objKey.name,
+        [strKey]: strKey
+    }
+    console.log(sparta)
+    console.log(sparta.john)
+    console.log(sparta["[object Object]"])
+    console.log(sparta["[object Object]"] = "updated cortana")
+    console.log(sparta)
+
+    // 为了解决 object 中 key 不能为任意数据类型的问题，引入了 map。
+
+    console.log("================== 对象的解构、展开（在 05-spread-destructure 中有详细记录） ==================")
+
+    console.log("================== 对象属性的定义 ==================")
+    console.log({
+        ["name"]: "cortana",
+        age: 18
+    })
+
+    console.log("================== 对象属性的计算 ==================")
+    let c = 0;
+    let computeObj = {
+        [`c-${++c}`]: c,
+        [`c-${++c}`]: c,
+        [`c-${++c}`]: c
+    };
+    console.log(computeObj)
+
+    const lessons = [
+        {
+            title: "媒体查询响应式布局",
+            category: "css"
+        },
+        {
+            title: "FLEX 弹性盒模型",
+            category: "css"
+        },
+        {
+            title: "MYSQL多表查询随意操作",
+            category: "mysql"
+        }
+    ];
+    console.log(
+        lessons.reduce((res, cur, index) => {
+            res[`${cur.category}-${index}`] = cur;
+            return res;
+        }, {})
+    );
+
+    console.log("================== 对象属性的简写 ==================")
+    let name = "cortana";
+    let age = 18;
+    console.log({name: name, age: age})
+    // 当对象的键与值同名时，可以简写
+    console.log({name, age})
+
+    console.log("================== 新增对象属性 ==================")
+    let addObj = {}
+    addObj.name = "cortana";
+    addObj["age"] = 18;
+    console.log(addObj)
+
+    console.log("================== 删除对象属性 ==================")
+    let deleteObj = {name: "cortana", age: 20}
+    delete deleteObj.name;
+    console.log(deleteObj)
+    console.log(deleteObj.hasOwnProperty("name"))
+    console.log(deleteObj.hasOwnProperty("age"))
+
+    console.log("================== 对象属性、原型属性检测 ==================")
+    let father = {lastName: "Cong"}
+    let son = {firstName: "John"}
+
+    // 设置原型对象
+    // son.__prototype__ = father
+    Object.setPrototypeOf(son, father);
+
+    console.log("hasOwnProperty: ", son.hasOwnProperty("firstName"), son.hasOwnProperty("lastName"));
+    console.log("in: ", "firstName" in son, "lastName" in son);
+
+    console.log("================== 对象属性分配 ==================")
+    // 同名属性会覆盖
+    let assignObj = { name: "john" }
+    Object.assign(assignObj, {name: "cortana"}, {age: 18});
+    console.log(assignObj)
+
+    console.log("================== 对象属性迭代 ==================")
+    let iterableObj = {
+        name: "cortana",
+        age: 18
+    }
+    console.log(Object.keys(iterableObj));
+    console.log(Object.values(iterableObj));
+    console.log(Object.entries(iterableObj));
+
+    for (const key in iterableObj) {
+        console.log(key, iterableObj[key])
+    }
+
+    for (const [key, value] of Object.entries(iterableObj)) {
+        console.log(key, value)
+    }
+</script>
+</body>
+</html>

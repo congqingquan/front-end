@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+    "use strict";
+
+    let source = {
+        name: "cortana",
+        husband: {
+            name: "john",
+        },
+        hobbies: [
+            {
+                name: "eat"
+            },
+            {
+                name: "sleep"
+            }
+        ]
+    }
+    let target = { name: "target-cortana" }
+    console.log(source)
+    console.log(target)
+
+    deepCopy(source, target);
+    target.husband.name = "target-john"
+    target.hobbies[0].name = "target-eat";
+    target.hobbies[1].name = "target-sleep";
+
+    console.log("source: ", JSON.stringify(source, null, 2))
+    console.log("target: ", JSON.stringify(target, null, 2))
+
+    function deepCopy(source, target) {
+        for (let [key, value] of Object.entries(source)) {
+            if (value instanceof Array) {
+                value = deepCopy(value, []);
+            }
+            else if (value instanceof Object) {
+                value = deepCopy(value, {});
+            }
+            target[key] = value;
+        }
+        return target;
+    }
+</script>
+</body>
+</html>

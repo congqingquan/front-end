@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            align-items: start;
+        }
+    </style>
+</head>
+
+<button class="but1">Click me !!!</button>
+<button class="but2">Click me !!!</button>
+<button class="but3">Click me !!!</button>
+<body>
+<script type="text/javascript">
+
+    console.log("================= 闭包实现移动动画 =================")
+
+    // 1. 抖动问题：每次点击都会生成新的定时器，多个定时器并发执行。由于 but1Left 是每个定时器私有的，所以多个定时器操作多个变量。
+    let but1 = document.querySelector(".but1");
+    but1.addEventListener("click", function () {
+        let but1Left = 0;
+        setInterval(function () {
+            but1.style.marginLeft = (but1Left += 10) + "px";
+        }, 100)
+    });
+
+    // 2. 加速问题：每次点击都会生成新的定时器，多个定时器并发执行。由于 but2Left 是被共享的，所以多个定时器会操作一个变量。
+    let but2 = document.querySelector(".but2");
+    let but2Left = 0;
+    but2.addEventListener("click", function () {
+        setInterval(function () {
+            but2.style.marginLeft = (but2Left += 10) + "px";
+        }, 100)
+    });
+
+    // 3. 正确方式：判断启动状态。
+    let but3 = document.querySelector(".but3");
+    let but3Started = false;
+    but3.addEventListener("click", function () {
+        if (but3Started) {
+            return;
+        }
+        let but3Left = 0;
+        but3Started = setInterval(function () {
+            but3.style.marginLeft = (but3Left += 10) + "px";
+        }, 100)
+    });
+</script>
+</body>
+</html>

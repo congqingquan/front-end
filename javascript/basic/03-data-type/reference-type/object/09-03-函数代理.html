@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+    "use strict";
+
+    console.log("================ 函数代理 ================")
+
+    function factorial(n) {
+        return n === 1 ? 1 : n * factorial(n - 1);
+    }
+
+    let factorialProxy = new Proxy(factorial, {
+        apply(target, thisArg, argArray) {
+            console.log("target: ", target)
+            console.log("thisArg: ", thisArg)
+            console.log("argArray: ", argArray)
+
+            console.time("factorial");
+            let result = target(argArray);
+            // let result = target.call(thisArg, argArray);
+            console.timeEnd("factorial");
+
+            return result;
+        }
+    });
+
+    // console.log(factorialProxy(3));
+    console.log(factorialProxy.call({ name: "caller"}, 3));
+
+</script>
+</body>
+</html>

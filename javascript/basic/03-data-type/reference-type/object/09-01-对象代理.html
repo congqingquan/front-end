@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+    "use strict";
+
+    console.log("================ 对象代理 ================")
+
+    let obj = {}
+
+    let objProxy = new Proxy(obj, {
+        /**
+         * interface ProxyHandler<T extends object> {
+         *     apply?(target: T, thisArg: any, argArray: any[]): any;
+         *     construct?(target: T, argArray: any[], newTarget: Function): object;
+         *     defineProperty?(target: T, p: string | symbol, attributes: PropertyDescriptor): boolean;
+         *     deleteProperty?(target: T, p: string | symbol): boolean;
+         *     get?(target: T, p: string | symbol, receiver: any): any;
+         *     getOwnPropertyDescriptor?(target: T, p: string | symbol): PropertyDescriptor | undefined;
+         *     getPrototypeOf?(target: T): object | null;
+         *     has?(target: T, p: string | symbol): boolean;
+         *     isExtensible?(target: T): boolean;
+         *     ownKeys?(target: T): ArrayLike<string | symbol>;
+         *     preventExtensions?(target: T): boolean;
+         *     set?(target: T, p: string | symbol, value: any, receiver: any): boolean;
+         *     setPrototypeOf?(target: T, v: object | null): boolean;
+         * }
+         */
+        set(target, property, value, receiver) {
+            console.log("set property...")
+            console.log("target: ", target)
+            console.log("property: ", property)
+            console.log("value: ", value)
+            console.log("receiver: ", receiver)
+            target[property] = value;
+            return true;
+        },
+
+        get(target, property, receiver) {
+            console.log("get property...")
+            return target[property];
+        }
+    });
+
+    objProxy.name = "cortana";
+    console.log(objProxy.name)
+</script>
+</body>
+</html>

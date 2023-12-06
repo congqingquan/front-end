@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+
+    // 其实就是作用域的问题。闭包函数不属于对象属性，所以为 Window 或 undefined(严格模式下)。
+
+    let obj  = {
+        name: "cortana",
+        getPrintNameFunc() {
+            let This = this;
+            return function () {
+                console.log("getPrintNameFunc: ", this);
+                console.log("getPrintNameFunc: ", This);
+                console.log("getPrintNameFunc: ", this.name);
+            }
+        },
+        getPrintNameLambdaFunc() {
+            return () => {
+                console.log("getPrintNameLambdaFunc: ", this);
+                console.log("getPrintNameLambdaFunc: ", this.name);
+            }
+        }
+    }
+
+    obj.getPrintNameFunc()();
+    obj.getPrintNameLambdaFunc()();
+</script>
+</body>
+</html>
