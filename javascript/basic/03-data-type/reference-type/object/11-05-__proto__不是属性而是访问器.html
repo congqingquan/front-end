@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+    "use strict";
+
+    let obj = {};
+
+    // 1. 设置一个非对象类型的原型对象，没有生成设置上
+    obj.__proto__ = "cqq"
+    console.log(obj.__proto__);
+
+    // 2. 设置一个对象类型的原型对象，设置成功
+    obj.__proto__ = { name: "custom __proto__"}
+    console.log(obj.__proto__);
+
+    // 这说明 __proto__ 是一个访问器，可以在浏览器管控台中查看到。
+
+    // 实现方式大概如下：
+    let obj2 = {
+        __proto0__: null,
+
+        set __proto__(__proto__) {
+            if (__proto__ instanceof Object) {
+                this.__proto0__ = __proto__;
+            }
+        },
+
+        get __proto__() {
+            return this.__proto0__;
+        }
+    }
+</script>
+</body>
+</html>

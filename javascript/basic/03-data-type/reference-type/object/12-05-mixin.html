@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+    "use strict";
+
+    function Person(name) {
+        this.name = name;
+    }
+    Person.prototype.printName = function () {
+        console.log("Print name:", this.name)
+    }
+
+    function Member(name) {
+        Person.call(this, name);
+    }
+
+    extend(Member, Person);
+
+    function extend(sub, sup) {
+        sub.prototype = Object.create(sup.prototype);
+        Object.defineProperty(sub.prototype, "constructor", {
+            value: sub,
+            enumerable: false
+        })
+    }
+
+    // ======================== mixin ========================
+
+    const Request = {
+        ajax() {
+            console.log("Ajax request...")
+        }
+    }
+
+    const Address = {
+        getAddress() {
+            console.log("Get address...")
+        }
+    }
+
+    // mixin
+    Member.prototype = Object.assign(Member.prototype, Request, Address);
+
+    let member = new Member("Cortana");
+    console.log(member);
+    member.printName();
+    member.ajax();
+    member.getAddress();
+</script>
+</body>
+</html>

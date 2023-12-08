@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+    "use strict";
+
+    // 1. 如果在构造函数中设置函数，每个实例化的对象都会有这个函数
+    //
+    // function User(name) {
+    //     this.name = name;
+    //     this.printName = function () {
+    //         console.log(this.name)
+    //     }
+    // }
+    //
+    // console.log(new User("cortana"));
+    // console.log(new User("john"));
+
+
+    // 2. 将函数存放在原型对象中时，就会节省每个对象都存放该函数的内存空间
+    function User(name) {
+        this.name = name;
+    }
+
+    User.prototype = {
+        constructor: User,
+        printName() {
+            console.log(this.name)
+        }
+    }
+    User.prototype.printName = function () {
+        console.log(this.name)
+    }
+
+    console.log(new User("cortana"));
+    console.log(new User("john"));
+
+    // 既然加在原型上这么方便，可不可以将所有函数都放到原型上？
+
+    // 对于系统原型而言，不建议在系统原型上添加属性。因为你不确定是否被会引入的其他三房库给覆盖掉。
+    // 而业务原型，根据需求而定即可。
+</script>
+</body>
+</html>

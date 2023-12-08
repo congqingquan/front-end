@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+    "use strict";
+
+    // 前言：改变构造函数的原型对象并不是继承，改变构造函数的原型对象的原型对象才是继承。
+
+    function Person(name) {
+        this.name = name;
+    }
+    Person.prototype.printName = function () {
+        console.log(this.name);
+    }
+
+    function Admin(name, account) {
+        this.name = name;
+        this.account = account;
+    }
+    Admin.prototype.printAccount = function () {
+        console.log(this.account);
+    }
+
+    // 1. 如果为了复用 printName 函数，修改 Admin 构造函数中的原型对象，就会使得 printAccount 函数丢失：
+    // Admin.prototype = Person.prototype;
+
+    // let admin = new Admin("admin", "1814031271");
+    // admin.printName();
+    // admin.printAccount(); // Uncaught TypeError: admin.printAccount is not a function
+
+    // 2. 正确的继承方式：
+
+    // 1) 通过标准 API
+    // Object.setPrototypeOf(Admin.prototype, Person.prototype);
+
+    // 2) 非标准 API
+    // Admin.prototype.__proto__ = Person.prototype;
+
+    // 3) 重新构建原型对象
+    let oldAdmin = new Admin("admin", "111222");
+
+    Admin.prototype = Object.create(Person.prototype) // Object.create 只有一个参数时表示：将该参数作为新的空对象的 prototype
+    // 3.1) 第三种方式的问题一：创建的新原型的 constructor 属性丢失了，无法在通过原型对象找到构造器并创建对象了
+    Admin.prototype.constructor = Admin
+
+    // 3.2) 第三种方式的问题二：老对象中的原型对象不是最新创建的，无法调用新原型中的函数。但新对象可以。
+    // oldAdmin.printName(); // Uncaught TypeError: oldAdmin.printName is not a function
+    let newAdmin = new Admin();
+    newAdmin.printName();
+
+    // 3.2) 第三种方式的问题三：新增的 constructor 属性可以被迭代
+    for (let key in newAdmin) {
+        console.log(key);
+    }
+    console.log("=============== after constructor redefined ===============")
+    Object.defineProperty(Admin.prototype, "constructor", {
+        value: Admin,
+        enumerable: false
+    })
+    for (let key in newAdmin) {
+        console.log(key);
+    }
+
+    // 第三种方式完整步骤如下：
+    function extend(sub, sup) {
+        sub.prototype = Object.create(sup.prototype);
+        Object.defineProperty(sub.prototype, "constructor", {
+            value: sub,
+            enumerable: false
+        })
+    }
+    // extend(Admin, Person);
+</script>
+</body>
+</html>

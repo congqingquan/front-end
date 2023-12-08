@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+    "use strict";
+    let obj = {
+        name: "cortana"
+    }
+
+    Object.setPrototypeOf(obj, {
+        max() {
+            return this.data.sort((a, b) => b - a)[0];
+        }
+    })
+
+    let lessons = {
+        lessonArr: [
+            {
+                name: "js",
+                score: 100
+            },
+            {
+                name: "css",
+                score: 90
+            },
+            {
+                name: "html",
+                score: 80
+            }
+        ],
+
+        // 2. 重写 get 访问器
+        get data() {
+            return this.lessonArr.map(lesson => lesson.score);
+        }
+    }
+
+    // 1. 改变 this 指针
+    console.log(obj.max.call(lessons));
+
+</script>
+</body>
+</html>

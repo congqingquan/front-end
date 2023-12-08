@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+    "use strict";
+
+    function Person(name) {
+        this.name = name;
+    }
+    Person.prototype.printName = function () {
+        console.log("printNameFunc: ", this.name);
+    }
+
+    function Admin(name) {
+        // 1. 调用父类构造函数初始化自己：super(name);
+        Person.call(this, name);
+    }
+
+    // 2. Admin extends Person
+    extend(Admin, Person);
+    function extend(sub, sup) {
+        sub.prototype = Object.create(sup.prototype);
+        Object.defineProperty(sub.prototype, "constructor", {
+            value: sub,
+            enumerable: false
+        })
+    }
+
+    // 3. override function
+    Admin.prototype.printName = function () {
+        console.log("override printNameFunc: ", this.name);
+
+        // 4. super.printName()
+        Object.getPrototypeOf(Object.getPrototypeOf(this)).printName.call(this);
+        // 5. super.field: 由于字段最终都是绑定在当前实例上，没有绑定在 this.__proto__.__proto__ 上，所以直接 this.field 即可。
+    }
+
+    let admin = new Admin("cortana");
+    admin.printName();
+    console.log(admin)
+</script>
+</body>
+</html>

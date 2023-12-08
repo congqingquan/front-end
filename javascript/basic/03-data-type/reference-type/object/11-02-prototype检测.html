@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+    "use strict";
+
+    function A() {
+    }
+    A.prototype.helloA = function () {}
+
+    function B() {
+    }
+    B.prototype.helloB = function () {}
+
+    function C() {
+    }
+    C.prototype.helloC = function () {}
+
+    // B extends A
+    let a = new A();
+    Object.setPrototypeOf(B.prototype, A.prototype);
+    // B.prototype.__proto__ = A.prototype
+
+    // C extends B
+    let b = new B();
+    Object.setPrototypeOf(C.prototype, B.prototype);
+    // C.prototype.__proto__ = B.prototype
+
+    let c = new C();
+    c.helloC();
+    console.log(c)
+
+    console.log("================= instanceof 判断对象的原型链上是否有指定类型的原型 =================")
+
+    console.log(b instanceof A)
+    console.log(c instanceof A)
+    console.log(c instanceof B)
+
+    console.log(a instanceof B)
+    console.log(a instanceof C)
+    console.log(b instanceof C)
+
+    console.log("================= isPrototypeOf 判断对象的原型链上是否有指定对象类型的原型 =================")
+
+    console.log(a.isPrototypeOf(b))
+    console.log(a.isPrototypeOf(c))
+    console.log(b.isPrototypeOf(c))
+
+    console.log(b.isPrototypeOf(a))
+    console.log(c.isPrototypeOf(a))
+    console.log(c.isPrototypeOf(b))
+
+    console.log("================= in/hasOwnProperty 属性检查 =================")
+
+    let obj =  { name: "" }
+    let obj2 = { url: "" }
+
+    Object.setPrototypeOf(obj, obj2);
+
+    // hasOwnProperty 仅检查自身
+    console.log(obj.hasOwnProperty("url"));
+    // 检查整个原型链
+    console.log("url" in obj);
+
+    // 迭代所有的自己的属性
+    for (let key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            console.log(key);
+        }
+        // console.log(key)
+    }
+
+</script>
+</body>
+</html>

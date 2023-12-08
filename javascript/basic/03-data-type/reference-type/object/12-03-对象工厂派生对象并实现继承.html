@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+    "use strict";
+
+    function Person(name) {
+        this.name = name;
+    }
+    Person.prototype.printName = function () {
+        console.log("printNameFunc: ", this.name);
+    }
+
+    function Admin(name) {
+        // 1. 调用父类构造函数初始化自己：super(name);
+        // 实际上，super 这个引用一直是没有的，只有 this。通过父类构造函数，初始化自己，父类构造函数中操作的还是 this。
+        Person.call(this, name);
+    }
+
+    // Admin extends Person
+    Admin.prototype = Object.create(Person.prototype);
+    Object.defineProperty(Admin.prototype, "constructor", {
+        value: Admin,
+        enumerable: false
+    });
+
+    // 2. override function
+    Admin.prototype.printName = function () {
+        console.log("override printNameFunc: ", this.name);
+
+        // 3. super.printName()
+        Object.getPrototypeOf(Object.getPrototypeOf(this)).printName.call(this);
+    }
+
+    let admin = new Admin("cortana");
+    admin.printName();
+    console.log(admin)
+</script>
+</body>
+</html>

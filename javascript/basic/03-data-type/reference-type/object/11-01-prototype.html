@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+    "use strict";
+
+    //
+    //
+    // 注意：新版的浏览器中不再使用 __proto__ 属性表示为对象原型，而是 [[Prototype]]:Object 。
+    // 所以，通过 __proto__ 属性设置原型是一种非标准的方式了，应该通过 setPrototypeOf 函数设置。
+    //
+    //
+
+    console.log("================= 获取原型 =================")
+
+    let obj1 = {}
+    let obj2 = {}
+
+    /// 1) 通过 __proto__ 属性
+    console.log(obj1.__proto__ === obj2.__proto__);
+    // 2) 通过 Object.getPrototypeOf 函数
+    console.log(Object.getPrototypeOf(obj1) === Object.getPrototypeOf(obj2));
+
+    console.log("================= 创建一个没有原型的对象 =================")
+    let noPrototypeObj = Object.create(null, {
+        name: {
+            value: "cortana",
+            writable: true
+        }
+    });
+    console.log(noPrototypeObj);
+    console.log(Object.getPrototypeOf(noPrototypeObj));
+
+    console.log("================= 对象函数与原型函数的优先级 =================")
+
+    let obj3 = {
+        render(param) {
+            console.log("render: ", param)
+        }
+    }
+    obj3.__proto__.render = function (param) {
+        console.log("prototype render: ", param);
+    }
+    obj3.render("obj3");
+
+    let obj4 = {}
+    obj4.render("obj4");
+
+    console.log("================= 创建一个有原型的对象 =================")
+    let parent = { name: "parent" }
+    let child = { name: "child" }
+
+    // 标准 API
+    Object.setPrototypeOf(child, parent)
+    // 非标准方式
+    // child.__proto__ = parent;
+
+    console.log(child)
+
+    console.log("================= 通过原型对象中的 constructor 创建对象 =================")
+    function User(name) {
+        this.name = name;
+    }
+    console.log(User.prototype.constructor === User);
+    console.log(new User.prototype.constructor("cortana"));
+    console.log(new User.prototype.constructor("cortana").__proto__ === User.prototype);
+
+    // 有点像 java 中的反射。根据 obj 拿到 class 对象（对应 js 中的原型对象 obj.__proto__），根据 class 对象调用 newInstance 方法（对应 js 中的 new obj.__proto__.constructor）
+    console.log(createAnotherObj(new User("cortana"), "john"));
+
+    function createAnotherObj(obj, ...args) {
+        // return new obj.__proto__.constructor;
+        return new (Object.getPrototypeOf(obj).constructor)(...args);
+    }
+
+    // 若要重新覆盖原型对象，请再次设置好构造器引用，以便可以通过原型找到构造器进行对象创建
+    User.prototype = {
+        // constructor: User,
+        // ....
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+    "use strict";
+
+    function Person(name) {
+        this.name = name;
+    }
+    Person.prototype.printName = function () {
+        console.log("printNameFunc: ", this.name);
+    }
+
+    // Admin extends Person
+    function Admin(name) {
+        this.name = name;
+    }
+    Admin.prototype = Object.create(Person.prototype);
+    Object.defineProperty(Admin.prototype, "constructor", {
+        value: Admin,
+        enumerable: false
+    });
+    Admin.prototype.printName = function () {
+        console.log("Admin printNameFunc: ", this.name);
+    }
+
+    // User extends Person
+    function User(name) {
+        this.name = name;
+    }
+    User.prototype = Object.create(Person.prototype);
+    Object.defineProperty(User.prototype, "constructor", {
+        value: User,
+        enumerable: false
+    });
+    User.prototype.printName = function () {
+        console.log("User printNameFunc: ", this.name);
+    }
+
+    // test
+    for (const obj of [new Admin("Admin"), new User("VipUser")]) {
+        obj.printName();
+    }
+</script>
+</body>
+</html>
