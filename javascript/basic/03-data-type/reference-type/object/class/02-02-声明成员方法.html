@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+    console.log("============= 声明成员方法 =============");
+
+    class Person {
+
+        eat() {
+            console.log("eat")
+        }
+
+        sleep() {
+            console.log("sleep")
+        }
+    }
+
+    let person = new Person();
+    person.eat();
+    person.sleep();
+
+    console.log("============= 等价于 =============");
+    // function Person() {
+    // }
+    // Person.prototype.eat = function () {}
+    // Person.prototype.sleep = function () {}
+
+    console.log("============= Class 声明的方法无法被迭代 =============");
+
+    let classMemberDescriptors = Object.getOwnPropertyDescriptors(Person.prototype);
+    for (let descriptorsKey in classMemberDescriptors) {
+        if (descriptorsKey === 'constructor') {
+            continue;
+        }
+        console.log(classMemberDescriptors[descriptorsKey]); // enumerable 为 false
+    }
+
+    // 但构造函数中的原型对象上声明的方法是可迭代的
+
+    function User() {
+    }
+    User.prototype.eat = function () {
+        console.log("eat")
+    }
+    User.prototype.sleep = function () {
+        console.log("sleep")
+    }
+    let descriptors = Object.getOwnPropertyDescriptors(User.prototype);
+    for (let descriptorsKey in descriptors) {
+        if (descriptorsKey === 'constructor') {
+            continue;
+        }
+        console.log(descriptors[descriptorsKey]); // enumerable 为 true
+    }
+
+    console.log("============= Class 默认使用严格模式 =============");
+    class Admin {
+        test() {
+            function inner() {
+                console.log(this); // undefined
+            }
+            inner();
+        }
+    }
+    new Admin().test();
+</script>
+</body>
+</html>

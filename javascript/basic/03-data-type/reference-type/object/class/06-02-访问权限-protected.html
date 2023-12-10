@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+    "use strict";
+
+    console.log("=============== 通过 Symbol 实现对属性的保护 ===============")
+
+    // 模块化开发中，PROTECTED 是不会对外暴露的，只会暴露类：Coder、Person
+    const PROTECTED = Symbol();
+
+    class Person {
+
+        [PROTECTED] = {}
+
+        constructor(name) {
+            this[PROTECTED].name = name;
+        }
+
+        set name(name) {
+            this[PROTECTED].name = name;
+        }
+
+        get name() {
+            return this[PROTECTED].name;
+        }
+    }
+
+    class Coder extends Person {
+        age;
+
+        constructor(name, age) {
+            super(name);
+            this.age = age;
+        }
+    }
+
+    let coder = new Coder("cqq", 24);
+    console.log(coder.name);
+    coder.name = "cqq-updated";
+    console.log(coder.name);
+
+    coder[PROTECTED].name = "qqc";
+    console.log(coder.name);
+</script>
+</body>
+</html>

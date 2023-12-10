@@ -21,7 +21,7 @@
     }
 
     function Admin(name, account) {
-        this.name = name;
+        Person.call(this, name);
         this.account = account;
     }
     Admin.prototype.printAccount = function () {
@@ -52,7 +52,7 @@
 
     // 3.2) 第三种方式的问题二：老对象中的原型对象不是最新创建的，无法调用新原型中的函数。但新对象可以。
     // oldAdmin.printName(); // Uncaught TypeError: oldAdmin.printName is not a function
-    let newAdmin = new Admin();
+    let newAdmin = new Admin("new admin", "111222");
     newAdmin.printName();
 
     // 3.2) 第三种方式的问题三：新增的 constructor 属性可以被迭代

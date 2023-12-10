@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+    "use strict";
+
+    console.log("============= 类的本质 =============");
+   // Class 是一种操作原型的一种语法糖。本质上一个 Class 依旧是一个 Function。
+
+    class User {}
+    console.log(typeof User)
+    console.dir(User)
+    console.log(User === User.prototype.constructor)
+
+    let Admin = class {}
+    console.log(typeof Admin)
+    console.dir(Admin)
+
+
+    console.log("============= 基本语法 =============");
+    class Person {
+        constructor(name, age) {
+            this.name = name;
+            this.age = age;
+        }
+
+        setName(name) {
+            this.name = name;
+        }
+
+        getName() {
+            return this.name;
+        }
+    }
+
+    // 等价于下方：
+    // function Person(name, age) {
+    //     this.name = name;
+    //     this.age = age;
+    // }
+    //
+    // Person.prototype.setName = function (name) {
+    //     this.name = name;
+    // }
+    // Person.prototype.getName = function () {
+    //     return this.name;
+    // }
+
+    let person = new Person("cortana", 18);
+    console.log(person);
+    person.setName("cortana-updated");
+    console.log(person);
+    // 检查类函数是否挂到了原型对象上
+    console.log(Object.getOwnPropertyNames(Person.prototype));
+</script>
+</body>
+</html>

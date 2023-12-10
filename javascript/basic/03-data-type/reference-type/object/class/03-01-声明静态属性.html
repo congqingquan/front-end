@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+    "use strict";
+
+    console.log("============= 声明静态属性 =============");
+
+    class Request {
+        static serverUrl = "localhost:8080";
+
+        api(url) {
+            return Request.serverUrl + `/${url}`;
+        }
+    }
+
+    let request = new Request();
+    console.log(request.api("userList"));
+    console.dir(Request);
+
+    console.log("============= 等价于 =============");
+    // function Request() {}
+    // Request.serverUrl = "localhost:8080";
+    // console.log(Request.serverUrl)
+
+</script>
+</body>
+</html>

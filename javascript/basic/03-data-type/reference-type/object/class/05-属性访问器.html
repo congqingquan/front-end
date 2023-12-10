@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+    "use strict";
+
+    console.log("============= 属性访问器，访问器与属性名不重名 =============");
+
+    class Request {
+
+        constructor(serverUrl) {
+            // 为了避免与属性访问器重名，需要追加一个下划线 _ 用于区分。
+            this._serverUrl = serverUrl;
+        }
+
+        set serverUrl(url) {
+            if (!url.startsWith("https://")) {
+                throw new Error("Invalid url");
+            }
+            this._serverUrl = url;
+        }
+
+        get serverUrl() {
+            return this._serverUrl;
+        }
+
+        send() {
+            console.log(this._serverUrl);
+        }
+    }
+
+    let request = new Request("https://localhost:8080");
+    console.log(request.serverUrl);
+    // request.serverUrl = "localhost:8080"; // Uncaught Error: Invalid url
+
+    console.log("============= 属性访问器，访问器与属性名重名 =============");
+
+    // 但若属性访问器访问的属性被显示声明类上了，那么是访问器与属性名可以重名的！
+
+    class Admin {
+        name;
+        constructor(name) {
+            this.name = name;
+        }
+
+        set name(name) {
+            this.name = name;
+        }
+
+        get name() {
+            return this.name;
+        }
+    }
+    let admin = new Admin("john");
+    console.log(admin);
+    console.log(admin.name);
+    admin.name = "john-updated";
+    console.log(admin.name);
+</script>
+</body>
+</html>

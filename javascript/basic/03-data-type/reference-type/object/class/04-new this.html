@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+    "use strict";
+
+    class Person {
+
+        constructor(name, age) {
+            this.name = name;
+            this.age = age;
+        }
+
+        static create(...args) {
+            // this 根据当下的类名动态变化
+            return new this(...args);
+        }
+    }
+
+    let person = Person.create("cortana", 18);
+    console.log(person);
+
+</script>
+</body>
+</html>

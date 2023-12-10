@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+    "use strict";
+
+    console.log("=============== 命名规则 + 访问器实现属性保护 ===============")
+
+    // 这种方式只是一种声明式的方式，仍然可以手动进行修改
+
+    class Person {
+
+        _name;
+
+        constructor(name) {
+            this._name = name;
+        }
+
+        set name(name) {
+            this._name = name;
+        }
+
+        get name() {
+            return this._name;
+        }
+    }
+
+    let person = new Person("cortana");
+    console.log(person.name);
+    person._name = "cortana-updated";
+    console.log(person._name);
+
+    console.log("=============== # 修饰符 ===============")
+
+    class Admin {
+
+        #name
+
+        constructor(name) {
+            this.name = name;
+        }
+
+        set name(name) {
+            this.#name = name;
+        }
+
+        get name() {
+            return this.#name;
+        }
+    }
+
+    let admin = new Admin("john");
+    console.log(admin);
+    // admin.#name = "john-updated"; // Uncaught SyntaxError: Private field '#name' must be declared in an enclosing class
+    console.log(admin);
+</script>
+</body>
+</html>
