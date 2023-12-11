@@ -19,7 +19,8 @@
         }
 
         static create(...args) {
-            // this 根据当下的类名动态变化
+            // 等价于 return new Person(...args);
+            // 但 new this 可以根据当下的类名动态变化，不用每次修改
             return new this(...args);
         }
     }

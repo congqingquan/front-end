@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+    "use strict";
+
+    class ArrayPlus extends Array {
+
+        // constructor(...args) {
+        //     super(...args);
+        // }
+
+        remove(callback) {
+            return this.filter(el => callback(el));
+        }
+    }
+
+    let arrayPlus = new ArrayPlus(1, 2, 2, 3);
+    console.log(arrayPlus);
+    console.log(arrayPlus.remove(el => el !== 2));
+</script>
+</body>
+</html>

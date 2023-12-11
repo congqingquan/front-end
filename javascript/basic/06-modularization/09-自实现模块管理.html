@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+
+    let module = (function () {
+        // modules 结构如下：
+        /**
+             {
+                moduleName1: {
+                    func1() {};
+                    func2() {};
+                },
+
+                moduleName2: {
+                    func1() {};
+                    func2() {};
+                },
+
+                ...
+             }
+         */
+        const modules = {}
+
+        function define(defineName, depends, action) {
+            depends.map((moduleName, index) => {
+                depends[index] = modules[moduleName];
+            })
+            modules[defineName] = action(...depends);
+        }
+
+        return {
+            modules, define
+        }
+    })();
+
+    console.log("================ 模块只会被初始化一次 ================")
+
+
+    module.define("compute", [], function () {
+
+        console.log("init compute module");
+
+        return {
+            sumNumber(a, b) {
+                return a + b;
+            }
+        }
+    });
+
+    module.define("sumTest", ["compute"], function (compute) {
+        let sumRes = compute.sumNumber(1, 2);
+        return {
+            sumRes
+        };
+    });
+
+    console.log("================ 模块的返回结果被共享 ================")
+
+    module.define("getSumTest1", ["sumTest"], function (sumTest) {
+        console.log(sumTest.sumRes);
+        sumTest.sumRes = 10;
+    });
+
+    module.define("getSumTest2", ["sumTest"], function (sumTest) {
+        console.log(sumTest.sumRes);
+    });
+
+    console.log(module.modules);
+</script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+    <!-- 1. 引入模块，必须指定 script 的 type 为 module。因为模块化是相比较新的概念，需要特殊解析。 -->
+    <script type="module">
+        import {name, printName} from "./01-module-1.js"
+        printName();
+
+        // 2. type 为 module 的 script 会被延迟加载。所以，能读取到后面出现的文档节点
+        console.log(document.querySelector(".btn"));
+    </script>
+    <body>
+        <button class="btn">Click me !!!</button>
+    </body>
+</html>

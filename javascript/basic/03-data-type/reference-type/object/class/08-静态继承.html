@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+    "use strict";
+
+    // 当通过 super 设置属性时，该属性将被设置在 this 上。
+
+    {
+        class Person {
+            static myName = "unknown"
+            static printContent(content) {
+                console.log(content);
+            }
+        }
+
+        class Coder extends Person {
+        }
+
+        console.dir(Coder);
+        console.log(Coder.myName);
+        Coder.printContent("qqc");
+    }
+
+    console.log("============= 等价于 =============");
+
+    {
+        function Person() {
+        }
+
+        Person.myName = "unknown"
+        Person.printContent = function(content) {
+            console.log(content);
+        }
+
+        function Coder() {
+        }
+
+        Object.setPrototypeOf(Coder, Person);
+
+        console.dir(Coder);
+        console.log(Coder.myName);
+        Coder.printContent("qqc");
+    }
+</script>
+</body>
+</html>

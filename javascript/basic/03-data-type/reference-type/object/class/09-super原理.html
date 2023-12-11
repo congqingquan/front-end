@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+    "use strict";
+
+
+    // 1. super.xxx === this.__proto__.__proto__
+
+    // 2. 当通过 super 设置属性时，该属性将被设置在 this 上。
+    // 这一点说明，无法通过 super.field 调用父类属性。因为最终属性会绑定在 this 上，而不是 this.__proto__.__proto__ 上。
+    // 但可以调用方法，因为方法绑定在 this.__proto__.__proto__。
+
+    // 为什么会这样呢？因为 js 中使用的原型模拟继承，原型是共享的。如果绑定在共享对象上，就会发生数据被其他对象修改了的情况。
+    // 例如 java 那样每个对象间的数据都不是共享的，就不会有这个问题。
+
+    // 3. super 关键字有两种使用方式：
+    //  1) 作为“函数调用”（super(...args)） > Class.method.call(this); 注意，super 关键字必须在对象中的简写方法中，否则会抛出异常。
+    //  2) 作为“属性查询”（super.prop 和 super[expr]）> this.prop this[expr];
+
+    {
+        class Person {
+            name;
+
+            constructor(name) {
+                this.name = name;
+                Person.nameCopy = name;
+            }
+
+            printName() {
+                console.log("person: ", this.name);
+            }
+        }
+
+        class Coder extends Person {
+            age;
+            constructor(name, age) {
+                super(name); // 等价于: this.name = name;
+                this.age = age;
+            }
+
+            printName() {
+                console.log(super.name); // 等价于：this.__proto__.__proto__.name > undefined
+                super.printName(); // 等价于：Person.printName.call(this);
+                console.log("coder: ", this.name);
+            }
+
+            // super 关键字必须在对象中的简写方法中。
+            // printName2 = function() {
+            //     super.printName(); // Uncaught SyntaxError: 'super' keyword unexpected here
+            // }
+        }
+
+        let coder = new Coder("cqq", 24);
+        console.log(coder);
+        coder.printName();
+    }
+</script>
+</body>
+</html>
