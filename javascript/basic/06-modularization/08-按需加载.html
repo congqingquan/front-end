@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+    <script type="module">
+        document.querySelector("button").addEventListener("click", function (event) {
+            // 1. import 关键字必须处于脚本的起始部分，无法通过编程的方式动态执行
+            // import * as M8 from "./js/08-module-1.js";
+            // console.log(M8);
+
+            // 2. 通过 import 函数可以解决这个问题
+            let promise = import("./js/08-module-1.js");
+            promise.then((module) => console.log(module));
+            promise.then(({var1, var2}) => console.log(var1, var2));
+        });
+    </script>
+
+    <body>
+        <button>Load module</button>
+    </body>
+</html>

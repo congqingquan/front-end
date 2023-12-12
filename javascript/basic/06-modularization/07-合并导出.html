@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+    <script type="module">
+        // 利用一个文件统一引入所有依赖模块，并将不同的模块进行分组，避免不同模块间出现相同名称变量，使得发生冲突。
+        import * as Merged from "./js/07-module-merge.js";
+
+        console.log(Merged);
+        console.log(Merged.M1.var1);
+        console.log(Merged.M2.var1);
+    </script>
+
+</html>

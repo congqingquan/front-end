@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+    <script type="module">
+        import * as M6 from "./js/06-module-1.js";
+
+        // 批量导入的缺点：打包时会将导入模块的所有导出内容都进行打包，而不是按需打包。
+
+        console.log(M6);
+        console.log(M6.default);
+        console.log(M6.var1);
+        console.log(M6.var2);
+    </script>
+
+</html>
