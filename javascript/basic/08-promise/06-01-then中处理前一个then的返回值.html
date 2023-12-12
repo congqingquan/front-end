@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+
+    // 前一个 then 的返回值：非 Promise 类型
+    // 此时的关注点是：前一个 then 的执行情况。根据前一个 then 的执行情况（正常执行，抛出异常）调用 onFulfilled / onRejected。
+
+    let promise1 = new Promise((resolve, reject) => {
+        // resolve("resolved");
+        reject("rejected");
+    })
+
+    let promise2 = promise1.then(
+        onFulfilled => {
+            console.log("Promise1: onFulfilled > ", onFulfilled)
+            throw new Error("Promise1 error");
+        },
+        onRejected => {
+            console.log("Promise1: onRejected > ", onRejected);
+            return "Returned by Promise1: onRejected";
+        }
+    );
+
+    // 1. 此时 promise2 的 then 表示要处理 promise1 的 then 执行情况。
+    // 注意，是针对于 promise1 的 then 的执行情况。
+    // 当 promise1 的 onFulfilled 或 onRejected 执行失败时，才会调用 promise2 的 onRejected。
+    // 当 promise1 的 onFulfilled 或 onRejected 正常执行结束时，会调用 promise2 的 onFulfilled。
+
+    // 2. promise2 的 onFulfilled 或 onRejected 的回调参数值，取决于 promise1 的 onFulfilled 或 onRejected 的回调返回值。
+    promise2.then(
+        onFulfilled => {
+            console.log("Promise2: onFulfilled > ", onFulfilled)
+        },
+        onRejected => {
+            console.log("Promise2: onRejected > ", onRejected)
+        }
+    )
+
+    // 等价于下面：
+    // promise1
+    //     .then(
+    //         onFulfilled => {
+    //             console.log("Promise1: onFulfilled > ", onFulfilled)
+    //             throw new Error("Promise1 error");
+    //         },
+    //         onRejected => {
+    //             console.log("Promise1: onRejected > ", onRejected);
+    //             return "Returned by Promise1: onRejected";
+    //         }
+    //     )
+    //     .then(
+    //         onFulfilled => {
+    //             console.log("Promise2: onFulfilled > ", onFulfilled)
+    //         },
+    //         onRejected => {
+    //             console.log("Promise2: onRejected > ", onRejected)
+    //         }
+    //     );
+</script>
+</body>
+</html>

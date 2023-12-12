@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+    let promise = new Promise((resolve, reject) => {
+        // resolve("resolved");
+        reject("rejected");
+    })
+        // 1. 若设置的 then 没有消费结果，那么会一直传递，直到被消费。
+        .then()
+        .then()
+        .then(
+            onFulfilled => {
+                console.log("onFulfilled-1", onFulfilled)
+            },
+            onRejected => {
+                console.log("onRejected-1", onRejected)
+            }
+        );
+</script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+
+    let promise1 = new Promise((resolve, reject) => {
+        resolve("resolved");
+    })
+
+    let promise2 = promise1.then(
+            onFulfilled => {
+                return new Promise((resolve, reject) => {
+                    // resolve("resolved by returned Promise");
+                    reject("rejected by returned Promise");
+                }).then(
+                    onFulfilled => {
+                        console.log("Returned promise: onFulfilled > ", onFulfilled)
+                        throw new Error("Promise1 error");
+                    },
+                    onRejected => {
+                        console.log("Returned promise: onRejected > ", onRejected);
+                        return "Returned by Promise1 inner Promise: onRejected";
+                    }
+                )
+            }
+        );
+
+    // 此时 promise2 的 then 要处理 promise1 返回的 promise 的 then 执行情况，逻辑同 > 处理前一个 then 的返回值：非 Promise 类型
+
+    promise2.then(
+            onFulfilled => {
+                console.log("Promise2: onFulfilled > ", onFulfilled)
+            },
+            onRejected => {
+                console.log("Promise2: onRejected > ", onRejected)
+            }
+        )
+</script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+
+    new Promise((resolve, reject) => {
+        // 这种情况下，微任务是依赖宏任务的执行入队的。所以无论 resolve 在 console.log("setTimeout") 的前后，都会先执行宏任务。
+        setTimeout(function () {
+            console.log("setTimeout")
+            resolve();
+        }, 0)
+        console.log("promise")
+    }).then(onFulfilled => console.log("resolve"));
+
+    console.log("main thread")
+</script>
+</body>
+</html>

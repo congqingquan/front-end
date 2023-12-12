@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+
+    new Promise((resolve, reject) => {
+        // 1. 单一状态：状态只可以改变一次，后面在改变也不会触发回调了。因为第一个修改时已经触发了微任务入队。
+        resolve("resolved");
+        reject("rejected")
+    })
+        .then(
+            onFulfilled => {
+                console.log("单一状态: onFulfilled", onFulfilled)
+            },
+            onRejected => {
+                console.log("单一状态: onRejected", onRejected)
+            });
+
+    // ================================================================
+
+    let p = new Promise((resolve, reject) => {
+        // resolve("resolved");
+        reject("rejected");
+    })
+
+    p.then(
+        onFulfilled => {
+            console.log("状态中转: P1 > onFulfilled", onFulfilled)
+        },
+        onRejected => {
+            console.log("状态中转: P1 > onRejected", onRejected)
+        });
+
+    new Promise((resolve, reject) => {
+        // 2. 状态中转：当 resolve 函数接收一个 Promise 时，回调 onFulfilled 还是 onRejected 就取决于 Promise 参数的状态了。
+        // 注意，reject 函数不会。
+        resolve(p);
+    })
+        .then(
+            onFulfilled => {
+                console.log("状态中转: P2 > onFulfilled", onFulfilled)
+            },
+            onRejected => {
+                console.log("状态中转: P2 > onRejected", onRejected)
+            });
+
+</script>
+</body>
+</html>

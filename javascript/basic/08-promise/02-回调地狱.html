@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+    // 主线程消费任务的顺序是顺序的，但是不同的异步组件放置任务的时机可能是随机的。
+    // 若异步任务的消费是有顺序要求的，就需要控制异步组件放置任务的顺序也是有序的。
+
+    // 举个发送 API 请求的例子，伪代码如下：
+
+    // ajax("http://localhost:8080/user/getByName?name=cortana", function (data) {
+    //     ajax("http://localhost:8080/userRole/getByUserId?userId=" + data.userId, function (data) {
+    //         ajax...
+    //     });
+    // });
+
+    // 当嵌套层数过深后，就会使得代码非常不便于维护和修改，也就产生了回调地狱。
+
+    // 后面说到的 Promise 就是来解决这个问题，帮助我们来优化代码。但是底层的任务放置与消费的逻辑依旧不变。
+</script>
+</body>
+</html>
