@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        div {
+            width: 100px;
+            height: 100px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            color: white;
+            background-color: black;
+        }
+    </style>
+</head>
+<body>
+
+<div id="loading">loading...</div>
+
+<script type="module">
+
+    // 与异常处理中的 finally 一个语义，无论 promise 执行成功与否，都会执行。
+
+    new Promise((resolve, reject) => {
+        fetchApiData();
+        resolve("resolved");
+    })
+        .then(onFulfilled => {
+            console.log("then.onFulfilled: ", onFulfilled);
+        })
+        .catch(onRejected => {
+            console.log("catch.onRejected: ", onRejected.message);
+        })
+        .finally(onFinally => {
+            console.log(onFinally);
+            loading.style.display = "none";
+        });
+
+    // 模拟
+    function fetchApiData() {
+        for (let i = 0; i < 50000; i++) {
+            console.log(i)
+        }
+    }
+
+</script>
+</body>
+</html>

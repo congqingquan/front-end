@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="module">
+
+    // 1. reject 或 运行时发生异常 都可以在 then 的 onReject 中处理
+    // new Promise((resolve, reject) => {
+    //     // reject("rejected");
+    //     throw new Error("thrown error");
+    // })
+    //     .then(null, onRejected => {
+    //         if (onRejected instanceof Error) {
+    //             console.log("then.onRejected: ", onRejected.message);
+    //         } else {
+    //             console.log("then.onRejected: ", onRejected);
+    //         }
+    //     });
+
+    // 2. catch 中统一处理 reject、运行时异常
+    // new Promise((resolve, reject) => {
+    //     // reject("rejected");
+    //     throw new Error("thrown error");
+    // })
+    //     .catch(onRejected => {
+    //         if (onRejected instanceof Error) {
+    //             console.log("catch.onRejected: ", onRejected.message);
+    //         } else {
+    //             console.log("catch.onRejected: ", onRejected);
+    //         }
+    //     });
+
+    // 3. 根据需求在特定 then 中处理 reject 与 运行时异常，catch 进行兜底处理 (最推荐的方式)
+    // new Promise((resolve, reject) => {
+    //     // reject("rejected");
+    //     throw new Error("thrown error");
+    // })
+    //     .then(null, onRejected => {
+    //         console.log("then.onRejected: ", onRejected.message);
+    //     })
+    //     .catch(onRejected => {
+    //         if (onRejected instanceof Error) {
+    //             console.log("catch.onRejected: ", onRejected.message);
+    //         } else {
+    //             console.log("catch.onRejected: ", onRejected);
+    //         }
+    //     });
+
+    // 4. catch 只会处理之前的 reject 与 运行时异常
+    // new Promise((resolve, reject) => {
+    //     resolve("resolved");
+    // })
+    //     .catch(onRejected => {
+    //         if (onRejected instanceof Error) {
+    //             console.log("catch.onRejected: ", onRejected.message);
+    //         } else {
+    //             console.log("catch.onRejected: ", onRejected);
+    //         }
+    //     })
+    //     .then(
+    //         onFulfilled => {
+    //             console.log("then.onFulfilled: ", onFulfilled);
+    //             return new Promise((resolve, reject) => {
+    //                 reject("rejected"); // Uncaught (in promise) rejected
+    //             });
+    //         });
+</script>
+</body>
+</html>

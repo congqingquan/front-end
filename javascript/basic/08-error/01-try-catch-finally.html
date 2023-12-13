@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+
+    class MyError extends Error {
+        constructor(message) {
+            super(message);
+        }
+    }
+
+    // 与 java 中的异常处理一毛一样
+
+    try {
+        console.log("try");
+        throw new MyError("my error");
+    } catch (error) {
+        console.log("catch:", error);
+    } finally {
+        console.log("finally");
+    }
+</script>
+</body>
+</html>
