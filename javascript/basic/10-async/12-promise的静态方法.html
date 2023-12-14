@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="module">
+    import Ajax from "./Ajax.js";
+
+    // console.dir(Promise);
+
+    // 1. resolve
+    // Promise.resolve("value");
+    // new Promise(resolve => resolve("value"));
+
+    // 2. reject
+    // Promise.reject("value");
+    // new Promise((resolve, reject) => reject("value"));
+    // Promise.reject("value").catch(onRejected => {});
+    // new Promise((resolve, reject) => reject("value")).catch(onRejected => {});
+    // 2.2) reject apply
+    // new Promise((resolve, reject) => resolve("resolved"))
+    //     .then(onFulfilled => {
+    //         if (onFulfilled !== 'success') {
+    //             // throw new Error("rejected");
+    //             return Promise.reject("rejected");
+    //         }
+    //     })
+    //     .catch(onRejected => {
+    //         console.log("catch.onRejected", onRejected);
+    //     });
+
+    // 3. all：所有成功则为成功。一个失败部分成功，则成功的部分也不会走 then 的 onFulfilled。
+    // Promise.all(
+    //     [
+    //         Promise.resolve("promise1 resolved"),
+    //         Promise.resolve("promise2 resolved"),
+    //         // Promise.reject("promise2 rejected")
+    //     ]
+    // ).then(onFulfilled => {
+    //     console.log(onFulfilled);
+    // }).catch(onRejected => {
+    //     console.log(onRejected);
+    // })
+    // 3.2) all apply
+    // function getUsers(...names) {
+    //     return Promise.all(
+    //         names.map(name => Ajax.get("http://localhost:8010/admin/user/getByName", {name}))
+    //     );
+    // }
+    // getUsers("cortana", "john", "qqc")
+    //     .then(responses => console.log(responses.map(response => response.data)))
+    //     .catch(error => console.log(error))
+
+    // 4. allSettled: 相比 all，allSettled 会保留所有 promise 的状态，并执行 then。
+    // Promise.allSettled(
+    //     [
+    //         Promise.resolve("promise1 resolved"),
+    //         Promise.reject("promise2 rejected")
+    //     ]
+    // ).then(onFulfilled => {
+    //     console.log(onFulfilled);
+    //     onFulfilled.forEach(curOnFulfilled => {
+    //         if (curOnFulfilled.status === 'fulfilled') {
+    //             console.log(curOnFulfilled.value);
+    //         }
+    //         else if (curOnFulfilled.status === 'rejected') {
+    //             console.log(curOnFulfilled.reason);
+    //         }
+    //     })
+    // });
+
+    // 5.race: 取执行最快的 promise
+    // Promise.race(
+    //     [
+    //         new Promise(resolve => {
+    //             setTimeout(() => resolve("promise1 resolved"), 2000)
+    //         }),
+    //         new Promise((resolve, reject) => {
+    //             setTimeout(() => reject("promise2 rejected"), 1000)
+    //         }),
+    //     ]
+    // ).then(onFulfilled => {
+    //     console.log("then.onFulfilled:", onFulfilled);
+    // }).catch(onRejected => {
+    //     console.log("then.onRejected:", onRejected);
+    // });
+    // 5.2) race apply
+    // function getUser(name, delay = 1000) {
+    //     return Promise.race([
+    //         Ajax.get("http://localhost:8010/admin/user/getByName", {name}),
+    //         new Promise(
+    //             (resolve, reject) => setTimeout(
+    //                 () => reject("Get user timeout"), delay
+    //             )
+    //         )
+    //     ])
+    // }
+    // getUser("cortana", 0)
+    //     .then(response => console.log(response))
+    //     .catch(error => console.log(error));
+</script>
+</body>
+</html>

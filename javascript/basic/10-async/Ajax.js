@@ -22,6 +22,7 @@ class Ajax {
             request.open("GET", url);
             request.send();
             request.onload = function () {
+                // 与服务器建立连接成功后的各种请求情况
                 switch (this.status) {
                     case 200:
                         resolve(JSON.parse(this.response));
@@ -36,8 +37,8 @@ class Ajax {
                         reject(this);
                 }
             }
+            // 未能与服务器建立连接
             request.onerror = function () {
-                console.log("onerror reject")
                 reject(this);
             }
         });

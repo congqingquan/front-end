@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="module">
+
+    // async 与 await 是 promise 的语法糖，await 必须在 async 修饰的函数中使用。实现：用同步方式写异步程序！！！
+
+    // 1) async 简化：将业务代码封装在 Promise 内
+    // 2) await 简化：可通过变量接收 promise.then 中的 onfulfilled 值 (当出现 onrejected 时，如果不 promise.catch 处理则会抛出异常，故也无法赋值到变量)
+
+    // 1. async 修饰的函数最终会默认返回一个 promise 实例
+    async function loadData() {
+        // 2. await 后的函数的返回值也需要是一个 promise，并且可以接收该 promise.then 中的 onfulfilled
+        //    如果 await 后的函数只是一个普通方法，就没有必要通过 await 修饰了
+        let number = await fetchRandomData(5);
+        // 3. 返回值会被封装到返回的 promise 实例中的 PromiseResult
+        return number;
+    }
+
+    // 测试第一点
+    let promise = loadData();
+    console.log(promise);
+    promise.then(onFulfilled => {
+        // 测试第三点
+        console.log(onFulfilled);
+    })
+
+    // 测试第二点
+    function fetchRandomData(n) {
+        return new Promise(resolve => {
+            resolve(Math.floor(Math.random() * ++n));
+        });
+    }
+    // fetchRandomData 可以利用 async 进行简写:
+    // async function fetchRandomData(n) {
+    //     return Math.floor(Math.random() * ++n);
+    // }
+</script>
+</body>
+</html>

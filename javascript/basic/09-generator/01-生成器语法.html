@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="text/javascript">
+
+    // function后追加 `*` : 定义一个 Generator 函数
+    function* gen() {
+        yield 1; // 每次 next 的返回值: {value: 1, done: false};
+        yield 2; // 每次 next 的返回值: {value: 2, done: false};
+        yield 3; // 每次 next 的返回值: {value: 3, done: false};
+                 // 最后一次 next 的返回值: {value: undefined, done: true};
+        // return 4;// 最后一次 next 的返回值: {value: 4, done: true};
+    }
+
+    let generator = gen();
+    console.log(generator);
+
+    logGen(generator, true);
+    function logGen(generator, logLast) {
+        let next = generator.next();
+        while (!next.done) {
+            console.log(next.value, next.done);
+            next = generator.next();
+        }
+        logLast && console.log(next.value);
+    }
+</script>
+</body>
+</html>

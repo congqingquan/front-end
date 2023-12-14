@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="module">
+    import Ajax from "./Ajax.js";
+
+    // promise 队列，将多个 promise 串行执行
+
+    // 1) for 实现
+    function queue(...promiseBuilders) {
+        let chain = Promise.resolve("start");
+        for (let promiseBuilder of promiseBuilders) {
+            chain = chain.then(_ => promiseBuilder());
+        }
+    }
+
+    // 2) reduce 实现
+    // function queue(...promiseBuilders) {
+    //     promiseBuilders
+    //         .reduce((preBuilder, curBuilder) => preBuilder.then(_ => curBuilder()), Promise.resolve("start"));
+    // }
+
+    // 3) 测试
+    // queue(
+    //     _ => new Promise((resolve) => {
+    //        setTimeout(_ => {
+    //            console.log("1");
+    //            resolve("1");
+    //        }, 1000)
+    //     }),
+    //     _ => new Promise((resolve) => {
+    //         setTimeout(_ => {
+    //             console.log("2");
+    //             resolve("2");
+    //         }, 1000)
+    //     }),
+    // );
+
+    // 案例：串行 fetch api data
+    queue(
+        _ => Ajax.get("http://localhost:8010/admin/user/getByName", {name: "cortana"}).then(response => console.log(response.data)),
+        _ => Ajax.get("http://localhost:8010/admin/user/getByName", {name: "john"}).then(response => console.log(response.data)),
+    );
+</script>
+</body>
+</html>

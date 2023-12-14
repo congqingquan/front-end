@@ -19,7 +19,7 @@
 
     new Promise((resolve, reject) => {
         resolve();
-        console.log("promise")
+        console.log("promise") // promise 的参数函数会被立即执行
     }).then(onFulfilled => console.log("resolve"));
 
     console.log("main thread")
