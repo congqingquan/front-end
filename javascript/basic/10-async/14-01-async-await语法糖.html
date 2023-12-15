@@ -10,10 +10,15 @@
 <body>
 <script type="module">
 
-    // async 与 await 是 promise 的语法糖，await 必须在 async 修饰的函数中使用。实现：用同步方式写异步程序！！！
+    // async 与 await 是 promise 的语法糖，await 必须在 async 修饰的函数中使用。
 
     // 1) async 简化：将业务代码封装在 Promise 内
-    // 2) await 简化：可通过变量接收 promise.then 中的 onfulfilled 值 (当出现 onrejected 时，如果不 promise.catch 处理则会抛出异常，故也无法赋值到变量)
+    // 2) await 简化：简化 then 语法，简化多个异步调用的串行化。> 优化 promise 的多层嵌套，例如在 promise.then 在返回(即调用)另一个 promise。
+    //               且可通过变量接收 promise.then 中的 onfulfilled 值 (当出现 onrejected 时，如果不 promise.catch 处理则会抛出异常，故也无法赋值到变量)
+
+    // 实现：用同步方式写异步代码！！！异步代码不再多层嵌套导致复杂化！！！
+
+    // ============================================================================================
 
     // 1. async 修饰的函数最终会默认返回一个 promise 实例
     async function loadData() {

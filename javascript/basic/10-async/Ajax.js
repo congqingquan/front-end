@@ -28,10 +28,10 @@ class Ajax {
                         resolve(JSON.parse(this.response));
                         break;
                     case 403:
-                        reject(new HttpForbiddenError());
+                        reject(new HttpForbiddenError("无权限"));
                         break;
                     case 404:
-                        reject(new HttpNotFoundError());
+                        reject(new HttpNotFoundError("资源未找到"));
                         break;
                     default:
                         reject(this);
