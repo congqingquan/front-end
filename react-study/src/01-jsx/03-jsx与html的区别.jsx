@@ -1,9 +1,9 @@
 import { Fragment } from 'react';
 
-const VAR_STR = 'string variable';
-const myJSX = <div>My JSX</div>;
-
 const App = () => {
+    const VAR_STR = 'string variable';
+    const myJSX = <div>My JSX</div>;
+
     return (
         // 1. 标签要小写
         // <Div>Hello React !</Div> // Unresolved component Div
@@ -13,30 +13,32 @@ const App = () => {
         // <input type="text" />
 
         // 3. class 与  for 是关键字
-        // <div class="cortana"></div> // Attribute class is not allowed here
-        // <label for="cortana"></div> // Attribute class is not allowed here
+        // <div class="cortana"></div> // Invalid DOM property `class`. Did you mean `className`?
+        // <label for="cortana"></label> // Invalid DOM property `for`. Did you mean `htmlFor`?
 
         // 需要做一个映射：class > className / for > htmlFor
         // <div className="cortana"></div>
-        // <label htmlFor="input"></label>
-        // <input id="input"/>
+        // <>
+        //     <label htmlFor="input"></label>
+        //     <input id="input" />
+        // </>
 
         // 4. html 中非驼峰命名的属性需要改为驼峰格式，但自定义属性不强制要求为驼峰格式
-        // <input onclick={ () => {} }/> // Attribute onclick is not allowed here
+        // <input onclick={() => {}} /> // Invalid event handler property `onclick`. Did you mean `onClick`?
         // <input my-attr="cortana" />
 
         // 5. 大括号内可以写带有返回值的 JS 代码
-        // <div title={VAR_STR}>
-        //     {1 + 1},
-        //     {
-        //         // 逻辑、循环等语句是不支持的
-        //         // if (true) {}
-        //     },
-        //     {VAR_STR}
-        // </div>
+        <div title={VAR_STR}>
+            {1 + 1},
+            {
+                // 逻辑、循环等语句是不支持的
+                // if (true) {}
+            }
+            ,{VAR_STR}
+        </div>
 
         // 6. 大括号内可以写 JSX
-        <>{myJSX}</>
+        // <>{myJSX}</>
 
         // 7. 只能有一个根节点
         // <div></div>
