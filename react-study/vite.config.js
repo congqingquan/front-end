@@ -10,8 +10,8 @@ export default defineConfig({
         react(),
         // 引入 eslint，使得在运行时自动进行代码检查
         // eslintPlugin({
-        //   include: ['src/*.jsx', 'src/**/*.jsx']
-        // })
+        //     include: ['src/*.jsx', 'src/**/*.jsx'],
+        // }),
     ],
 
     css: {

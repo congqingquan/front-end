@@ -44,22 +44,48 @@ let boxStyle = {
 // };
 
 // 2. 子父通信
-const ChildComponent = ({ callback }) => {
-    let data = 'child data';
+// const ChildComponent = ({ callback }) => {
+//     let data = 'child data';
+//     return (
+//         <div style={boxStyle} onClick={() => callback(data)}>
+//             Child component.
+//         </div>
+//     );
+// };
+//
+// const App = () => {
+//     let callback = (data) => {
+//         console.log(`Parent: Click by child, data: ${data}`);
+//     };
+//     return (
+//         <>
+//             <ChildComponent callback={callback} />
+//         </>
+//     );
+// };
+
+// 3. 可传的数据类型
+const ChildComponent = ({ data, func, jsx }) => {
+    console.log(data);
+    console.log(func);
+    console.log(jsx);
     return (
-        <div style={boxStyle} onClick={() => callback(data)}>
-            Child component.
+        <div style={boxStyle} onClick={() => func(data)}>
+            Child component. Data: {data}
+            {jsx}
         </div>
     );
 };
 
 const App = () => {
-    let callback = (data) => {
+    let data = 999;
+    let func = (data) => {
         console.log(`Parent: Click by child, data: ${data}`);
     };
+    let jsx = <div style={{ color: 'red' }}>Hello Child</div>;
     return (
         <>
-            <ChildComponent callback={callback} />
+            <ChildComponent data={data} func={func} jsx={jsx} />
         </>
     );
 };
