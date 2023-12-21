@@ -12,7 +12,8 @@ import ReactDOM from 'react-dom/client';
 // import App from './05-component/04-component间组合.jsx';
 // import App from './05-component/05-component通信数据的默认值.jsx';
 // import App from './05-component/06-component必须是一个纯函数.jsx';
-import App from './05-component/07-component的状态.jsx';
+// import App from './05-component/07-01-component的状态.jsx';
+import App from './05-component/07-02-component的状态.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>

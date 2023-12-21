@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { cloneDeep } from 'lodash';
+import { useImmer } from 'use-immer';
 
 let boxStyle = {
     width: 300,
@@ -84,7 +85,7 @@ let boxStyle = {
 // 也就是说，react 期望每次重新渲染组件时，必须所有 state 都被读取一次，可以不修改。若一旦进行修改，这样就保证了更新 state 不会错位。
 // 否则 react 抛出异常：Rendered fewer hooks than expected. This may be caused by an accidental early return statement.
 //
-// 解决方式：不要在逻辑中调用 useState
+// 解决方式：不要在逻辑中调用 useState，在组件的起始位置统一调用 useState。
 // let n = 0;
 // const Component = () => {
 //     let [count1, setCount1] = useState(0);
@@ -211,6 +212,54 @@ let boxStyle = {
 //             let clone = cloneDeep(prevState);
 //             clone.name.lastName = 'Big';
 //             return clone;
+//         });
+//     };
+//     console.log(data);
+//     return (
+//         <div style={boxStyle}>
+//             {JSON.stringify(data, null, 2)}
+//             <button onClick={change}>Change</button>
+//         </div>
+//     );
+// };
+// const App = () => {
+//     return (
+//         <>
+//             <Component />
+//         </>
+//     );
+// };
+
+// 3) 使用 use-immer 库简化复杂对象的操作: use-immer 相对于深拷贝，它的处理方式更加便宜，不需要复制数据未更改的部分
+// const Component = () => {
+//     // 1. 使用 useImmer 替换 useState
+//     let [data, setData] = useImmer({
+//         name: {
+//             firstName: 'Ming',
+//             lastName: 'Small',
+//         },
+//         age: 20,
+//     });
+//     let change = () => {
+//         setData((draft) => {
+//             // 解构：每次只能结构一层
+//             // return {
+//             //     ...prevState,
+//             //     name: {
+//             //         ...prevState.name,
+//             //         lastName: 'Big',
+//             //     },
+//             // };
+//
+//             // 深拷贝：对象深度过深时，效率低
+//             // let clone = cloneDeep(prevState);
+//             // clone.name.lastName = 'Big';
+//             // return clone;
+//
+//             // 2. 此时回调中的 prevState 已经是一个 proxy 了，可以理解为已经是一个副本对象了
+//             console.log(draft);
+//             draft.name.lastName = 'Big';
+//             return draft;
 //         });
 //     };
 //     console.log(data);
