@@ -56,23 +56,92 @@ let boxStyle = {
 // };
 
 // 2. 状态提升进而达到状态共享: 通过子父通信，使得父组件重新渲染，带动子组件也重新渲染。也就说父组件一旦重新渲染，子组件也会重新渲染。
-const Component = ({ count, onClick }) => {
-    return (
-        <div style={boxStyle}>
-            <div>{count}</div>
-            <button onClick={onClick}>Click me !!!</button>
-        </div>
-    );
-};
+// const Component = ({ count, onClick }) => {
+//     return (
+//         <div style={boxStyle}>
+//             <div>{count}</div>
+//             <button onClick={onClick}>Click me !!!</button>
+//         </div>
+//     );
+// };
+// const App = () => {
+//     let [count, setCount] = useState(0);
+//     let handleClick = () => {
+//         setCount((prevState) => prevState + 1);
+//     };
+//     return (
+//         <>
+//             <Component count={count} onClick={handleClick} />
+//             <Component count={count} onClick={handleClick} />
+//         </>
+//     );
+// };
+
+// 3. 状态重置 (diff 算法的检测)
+// 1) 当组件被销毁时，所对应的状态也会被重置。(display 测试组件销毁)
+// 2) 当组件被销毁，但新建的相同组件在相同位置再次出现时，状态是会被保留的 (changeStyle 测试位置不变)
+//      2.1) 重置状态: 对组件添加 key 属性
+//      2.2) 不同的结构体: 外包一层元素，使得结构发生改变
+// const Component = ({ style }) => {
+//     let [count, setCount] = useState(0);
+//     let handleClick = () => {
+//         setCount((prevState) => prevState + 1);
+//     };
+//     return (
+//         <div style={{ ...boxStyle, ...style }} onClick={handleClick}>
+//             <div>{count}</div>
+//         </div>
+//     );
+// };
+// const App = () => {
+//     let [display, setDisplay] = useState(true);
+//     let [changeStyle, setChangeStyle] = useState(true);
+//     let handleClickDisplay = () => {
+//         setDisplay(!display);
+//     };
+//     let handleChangeStyle = () => {
+//         setChangeStyle(!changeStyle);
+//     };
+//     return (
+//         <>
+//             <button onClick={handleChangeStyle}>Change style</button>
+//             {changeStyle ? <Component style={{ border: 'solid 5px red' }} /> : <Component />}
+//             {changeStyle ? (
+//                 <Component style={{ border: 'solid 5px red' }} />
+//             ) : (
+//                 <div>
+//                     {' '}
+//                     <Component />{' '}
+//                 </div>
+//             )}
+//             {changeStyle ? <Component key="c1" style={{ border: 'solid 5px red' }} /> : <Component key="c2" />}
+//
+//             {/* ================================================================================ */}
+//
+//             <button onClick={handleClickDisplay}>{display ? 'Display' : 'Hidden'}</button>
+//             {display && <Component />}
+//         </>
+//     );
+// };
+
+// 4. 受控组件与非受控组件
+// 1) 通过 state 控制的组件为非受控组件
+// 2) 通过 props 控制的组件为受控组件 (用的比较多)
+//  2.1) value + onChange
+//  2.2) checkbox + onChange
 const App = () => {
-    let [count, setCount] = useState(0);
-    let handleClick = () => {
-        setCount((prevState) => prevState + 1);
+    let [value, setValue] = useState('');
+    let [checked, setChecked] = useState(false);
+    let handleChange = (event) => {
+        setValue(event.target.value);
+    };
+    let handleClick = (event) => {
+        setChecked(event.target.checked);
     };
     return (
         <>
-            <Component count={count} onClick={handleClick} />
-            <Component count={count} onClick={handleClick} />
+            <input type="text" value={value} onChange={handleChange} />
+            <input type="checkbox" checked={checked} onChange={handleClick} />
         </>
     );
 };

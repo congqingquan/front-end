@@ -29,6 +29,13 @@ let boxStyle = {
 //         </div>
 //     );
 // };
+// const App = () => {
+//     return (
+//         <>
+//             <Component />
+//         </>
+//     );
+// };
 
 // 1. useState: 改变组件状态，触发组件函数重新执行，重新返回 JSX，达到重新渲染。并记忆指定的数据。
 // const Component = () => {

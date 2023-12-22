@@ -1,5 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+
+import App from './00-strict-mode/01-组件渲染被执行两次.jsx';
+// import App from './00-strict-mode/02-修改state函数会被执行两次.jsx';
 // import App from './01-jsx/03-jsx与html的区别.jsx';
 // import App from './02-style/01-行间-局部-全局样式.jsx';
 // import App from './02-style/02-使用sass样式.jsx';
@@ -13,7 +16,9 @@ import ReactDOM from 'react-dom/client';
 // import App from './05-component/05-component通信数据的默认值.jsx';
 // import App from './05-component/06-component必须是一个纯函数.jsx';
 // import App from './05-component/07-01-component的状态.jsx';
-import App from './05-component/07-02-component的状态.jsx';
+// import App from './05-component/07-02-component的状态.jsx';
+// import App from './practice/todo-1.jsx';
+// import App from './practice/todo-2.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
