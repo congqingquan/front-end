@@ -1,4 +1,4 @@
-import {useEffect, useRef, useState} from "react";
+import { useEffect, useRef, useState } from 'react';
 
 let boxStyle = {
     margin: 10,
@@ -7,7 +7,6 @@ let boxStyle = {
     justifyContent: 'center',
     alignItems: 'center',
 };
-
 
 // useEffect hook: 在组件渲染完毕回调调用，用于处理纯函数的副作用（操作函数外的外部数据）。
 
@@ -114,46 +113,238 @@ let boxStyle = {
 // };
 
 // 4. ESLint 会检查依赖项是否正确，包含：state、props、计算变量（依赖 state，所以当 state 改变时计算变量也必定改变，所以也需要监听）等。
-const Component = ( {parentCount} ) => {
+// const Component = ( {parentCount} ) => {
+//
+//     let [count, setCount] = useState(0);
+//     let computeCount = count << 1;
+//
+//     let handleClick = () => {
+//         setCount(prevState => prevState + 1);
+//     }
+//
+//     // 1) state
+//     useEffect(() => {
+//         console.log(`After render count [${count}]`);
+//     }, [count]);
+//
+//     // 2) props
+//     useEffect(() => {
+//         console.log(`After render parentCount props [${parentCount}]`);
+//     }, [parentCount]);
+//
+//     // 3) compute variable: 依赖 state，所以当 state 改变时计算变量也必定改变，所以也需要监听
+//     useEffect(() => {
+//         console.log(`After render compute count [${computeCount}]`);
+//     }, [computeCount]);
+//
+//     return (
+//         <button onClick={handleClick}>Child: Click me !!!</button>
+//     )
+// }
+// const App = () => {
+//
+//     let [count, setCount] = useState(0);
+//
+//     let handleClick = () => {
+//         setCount(prevState => prevState + 1);
+//     }
+//
+//     return (
+//         <div style={boxStyle}>
+//             <Component parentCount={count}/>
+//             <button onClick={handleClick}>Parent: Click me !!!</button>
+//         </div>
+//     );
+// };
 
-    let [count, setCount] = useState(0);
-    let computeCount = count << 1;
+// 5. 尽量在 effect 内定义计算函数
+// const App = () => {
+//     let [count, setCount] = useState(0);
+//
+//     let handleClick = () => {
+//         setCount((prevState) => prevState + 1);
+//     };
+//
+//     // 错误示范：
+//     // 1) 计算函数：内部依赖了 count state
+//     // function multiCount() {
+//     //     console.log(count << 1);
+//     // }
+//     // 2) 此时的依赖项为 Function Object，那么每次重新渲染都会产生一个新的 multiCount function object，都不是相等的
+//     // useEffect(() => {
+//     //     multiCount();
+//     // }, [multiCount]);
+//
+//     // 正确示范：
+//     useEffect(() => {
+//         // 1) 在 effect 内定义计算函数
+//         function multiCount() {
+//             console.log(count << 1);
+//         }
+//         multiCount();
+//         // 2) 监听 count
+//     }, [count]);
+//
+//     return (
+//         <div style={boxStyle}>
+//             {count}
+//             <button onClick={handleClick}>Click me !!!</button>
+//         </div>
+//     );
+// };
 
-    let handleClick = () => {
-        setCount(prevState => prevState + 1);
+// 6. effect 的清理操作
+// 6.1) 触发时机：
+//      1. 卸载组件时触发
+//      2. 更新组件时，重新渲染组件前触发 (其实可以理解为也是在卸载)
+// const Chat = ({ charRoom }) => {
+//     useEffect(() => {
+//         console.log('After render chat room: ' + charRoom);
+//
+//         return () => {
+//             console.log('Before destroy char room: ' + charRoom);
+//         };
+//     });
+//     return <div>Chat room: {charRoom}</div>;
+// };
+//
+// const App = () => {
+//     let [showChatRoom, setShowChatRoom] = useState(true);
+//     let [currentChatRoom, setCurrentChatRoom] = useState('娱乐聊天室');
+//
+//     let handleClick = () => {
+//         setShowChatRoom((prevState) => !prevState);
+//     };
+//
+//     let handleChangeCurrentRoom = (event) => {
+//         setCurrentChatRoom(event.target.value);
+//     };
+//
+//     return (
+//         <div style={boxStyle}>
+//             <button onClick={handleClick}>{showChatRoom ? 'Hidden chat room' : 'Show chat room'}</button>
+//
+//             <select value={currentChatRoom} onChange={handleChangeCurrentRoom}>
+//                 <option value="娱乐聊天室">娱乐聊天室</option>
+//                 <option value="交友聊天室">交友聊天室</option>
+//             </select>
+//
+//             {showChatRoom && <Chat charRoom={currentChatRoom} />}
+//         </div>
+//     );
+// };
+
+// 6.2) 清理操作的重要性
+const Chat = ({ charRoom }) => {
+    let [dataList, setDataList] = useState([]);
+
+    // 模拟拉取服务器数据: 娱乐聊天室阻塞两秒，其余瞬时
+    function fetchApiData(charRoom) {
+        return new Promise((resolve, reject) => {
+            let delay = charRoom === '娱乐聊天室' ? 2000 : 0;
+            setTimeout(() => {
+                let mockData = [];
+                if (charRoom === '娱乐聊天室') {
+                    mockData = [
+                        { id: 1, name: 'cortana' },
+                        { id: 2, name: 'john' },
+                    ];
+                } else {
+                    mockData = [{ id: 3, name: 'HALO' }];
+                }
+                resolve(mockData);
+            }, delay);
+        });
     }
 
-    // 1) state
-    useEffect(() => {
-        console.log(`After render count [${count}]`);
-    }, [count]);
+    // 错误示范：若在拉取娱乐聊天室数据期间，又切换到了交友聊天室，并且数据渲染完毕。当娱乐聊天室数据拉取完毕，会发生娱乐聊天室数据覆盖了交友聊天室数据的情况。
+    // useEffect(() => {
+    //     console.log(`进入：${charRoom}, 加载数据...`);
+    //
+    //     fetchApiData(charRoom).then((onFulfilled) => {
+    //         setDataList(onFulfilled);
+    //     });
+    //
+    //     return () => {
+    //         console.log(`退出：${charRoom}, 清理数据...`);
+    //         setDataList([]);
+    //     };
+    // }, [charRoom]);
 
-    // 2) props
-    useEffect(() => {
-        console.log(`After render parentCount props [${parentCount}]`);
-    }, [parentCount]);
+    // 正确示范：通过 nextRending 已触发下次渲染标记（当组件被更新卸载时，设置为 true），使本次异步加载数据完成准备渲染时，不再进行组件数据渲染，解决数据误覆盖问题。
+    // useEffect(() => {
+    //     console.log(`进入：${charRoom}, 加载数据...`);
+    //     let triggeredNextRending = false;
+    //     fetchApiData(charRoom).then((onFulfilled) => {
+    //         if (!triggeredNextRending) {
+    //             console.log(`聊天室：${charRoom}。当前未触发渲染，准备渲染数据，渲染标记：${triggeredNextRending}`);
+    //             setDataList(onFulfilled);
+    //         } else {
+    //             console.log(`聊天室：${charRoom}。当前正在被渲染，本次渲染被忽略，渲染标记：${triggeredNextRending}`);
+    //         }
+    //     });
+    //
+    //     return () => {
+    //         console.log(`退出：${charRoom}, 清理数据...`);
+    //         triggeredNextRending = true;
+    //     };
+    // }, [charRoom]);
 
-    // 3) compute variable: 依赖 state，所以当 state 改变时计算变量也必定改变，所以也需要监听
+    // 正确示范：改为异步方法的写法
     useEffect(() => {
-        console.log(`After render compute count [${computeCount}]`);
-    }, [computeCount]);
+        console.log(`进入：${charRoom}, 加载数据...`);
 
+        let triggeredNextRending = false;
+        async function fetch(charRoom) {
+            let data = await fetchApiData(charRoom);
+            if (!triggeredNextRending) {
+                console.log(`聊天室：${charRoom}。当前未触发渲染，准备渲染数据，渲染标记：${triggeredNextRending}`);
+                setDataList(data);
+            } else {
+                console.log(`聊天室：${charRoom}。当前正在被渲染，本次渲染被忽略，渲染标记：${triggeredNextRending}`);
+            }
+        }
+        fetch(charRoom).then((r) => {});
+
+        return () => {
+            console.log(`退出：${charRoom}, 清理数据...`);
+            triggeredNextRending = true;
+        };
+    }, [charRoom]);
     return (
-        <button onClick={handleClick}>Child: Click me !!!</button>
-    )
-}
-const App = () => {
+        <div>
+            Chat room: {charRoom}
+            <ul>
+                {dataList.map((data) => (
+                    <li key={data.id}>{data.name}</li>
+                ))}
+            </ul>
+        </div>
+    );
+};
 
-    let [count, setCount] = useState(0);
+const App = () => {
+    let [showChatRoom, setShowChatRoom] = useState(true);
+    let [currentChatRoom, setCurrentChatRoom] = useState('娱乐聊天室');
 
     let handleClick = () => {
-        setCount(prevState => prevState + 1);
-    }
+        setShowChatRoom((prevState) => !prevState);
+    };
+
+    let handleChangeCurrentRoom = (event) => {
+        setCurrentChatRoom(event.target.value);
+    };
 
     return (
         <div style={boxStyle}>
-            <Component parentCount={count}/>
-            <button onClick={handleClick}>Parent: Click me !!!</button>
+            <button onClick={handleClick}>{showChatRoom ? 'Hidden chat room' : 'Show chat room'}</button>
+
+            <select value={currentChatRoom} onChange={handleChangeCurrentRoom}>
+                <option value="娱乐聊天室">娱乐聊天室</option>
+                <option value="交友聊天室">交友聊天室</option>
+            </select>
+
+            {showChatRoom && <Chat charRoom={currentChatRoom} />}
         </div>
     );
 };

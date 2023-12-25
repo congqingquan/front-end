@@ -22,14 +22,18 @@ import ReactDOM from 'react-dom/client';
 // import App from './06-hooks/02-02-ref-hook-操作原生dom.jsx';
 // import App from './06-hooks/02-03-ref-hook-操作组件dom.jsx';
 // import App from './06-hooks/02-04-imperativeHandle-hook-封装暴露ref的行为.jsx';
-import App from './06-hooks/02-05-effect-hook.jsx';
+// import App from './06-hooks/02-05-effect-hook.jsx'; // 使用非严格模式测试，不然重复打印太多
+// import App from './06-hooks/02-06-layout-effect-hook'; // 使用非严格模式测试，不然重复打印太多
+import App from './06-hooks/02-07-insertion-effect-hook'; // 使用非严格模式测试，不然重复打印太多
 // import App from './practice/todo-1.jsx';
 // import App from './practice/todo-2.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-    <React.StrictMode>
-        <App />
-        {/*<div className="globalBox">Global box in main.jsx</div>*/}
-        {/*<div className="local-box">Local box in main.jsx</div>*/}
-    </React.StrictMode>
+    <App />,
+
+    // <React.StrictMode>
+    //     <App />
+    //     {/*<div className="globalBox">Global box in main.jsx</div>*/}
+    //     {/*<div className="local-box">Local box in main.jsx</div>*/}
+    // </React.StrictMode>,
 );
