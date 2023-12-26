@@ -145,10 +145,15 @@ let boxStyle = {
 // const Component = () => {
 //     let [count1, setCount1] = useState(0);
 //     let handleClick = () => {
+//         // 注意：第一种方式在严格模式下只会执行一次
 //         // setCount1(count1 + 1); // 等价于 setCount1((prevState) => count1 + 1);
 //         // setCount1(count1 + 1); // 等价于 setCount1((prevState) => count1 + 1);
-//         setCount1((prevState) => prevState + 1);
-//         setCount1((prevState) => prevState + 1);
+//
+//         // 注意：第二种写法在严格模式下会执行两次
+//         setCount1((prevState) => {
+//             console.log('handle click');
+//             return prevState + 1;
+//         });
 //     };
 //     return (
 //         <div style={boxStyle} onClick={handleClick}>
@@ -159,7 +164,7 @@ let boxStyle = {
 // const App = () => {
 //     return (
 //         <>
-//             <Component />
+//             <Component/>
 //         </>
 //     );
 // };

@@ -22,18 +22,22 @@ import ReactDOM from 'react-dom/client';
 // import App from './06-hooks/02-02-ref-hook-操作原生dom.jsx';
 // import App from './06-hooks/02-03-ref-hook-操作组件dom.jsx';
 // import App from './06-hooks/02-04-imperativeHandle-hook-封装暴露ref的行为.jsx';
-// import App from './06-hooks/02-05-effect-hook.jsx'; // 使用非严格模式测试，不然重复打印太多
-// import App from './06-hooks/02-06-layout-effect-hook'; // 使用非严格模式测试，不然重复打印太多
-import App from './06-hooks/02-07-insertion-effect-hook'; // 使用非严格模式测试，不然重复打印太多
+// import App from './06-hooks/03-effect-hook.jsx'; // 使用非严格模式测试，不然重复打印太多
+// import App from './06-hooks/04-layout-effect-hook'; // 使用非严格模式测试，不然重复打印太多
+// import App from './06-hooks/05-insertion-effect-hook'; // 使用非严格模式测试，不然重复打印太多
+// import App from './06-hooks/06-reducer-hook-优化state逻辑操作.jsx';
+// import App from './06-hooks/07-context-hook-组件上下文.jsx';
+// import App from './06-hooks/08-reducer配合context实现共享状态管理';
 // import App from './practice/todo-1.jsx';
 // import App from './practice/todo-2.jsx';
+import App from './practice/local-context-manager.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-    <App />,
+    // <App />,
 
-    // <React.StrictMode>
-    //     <App />
-    //     {/*<div className="globalBox">Global box in main.jsx</div>*/}
-    //     {/*<div className="local-box">Local box in main.jsx</div>*/}
-    // </React.StrictMode>,
+    <React.StrictMode>
+        <App />
+        {/*<div className="globalBox">Global box in main.jsx</div>*/}
+        {/*<div className="local-box">Local box in main.jsx</div>*/}
+    </React.StrictMode>,
 );

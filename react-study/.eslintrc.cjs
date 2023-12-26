@@ -18,7 +18,7 @@ module.exports = {
             {allowConstantExport: true},
         ],
         // off: 关闭
-        // "no-unused-vars": "off",
+        "no-unused-vars": "off",
         // 'no-constant-condition': "off",
         // 'no-empty': "off"
     },
