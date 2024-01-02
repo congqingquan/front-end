@@ -27,10 +27,15 @@ import ReactDOM from 'react-dom/client';
 // import App from './06-hooks/05-insertion-effect-hook'; // 使用非严格模式测试，不然重复打印太多
 // import App from './06-hooks/06-reducer-hook-优化state逻辑操作.jsx';
 // import App from './06-hooks/07-context-hook-组件上下文.jsx';
-// import App from './06-hooks/08-reducer配合context实现共享状态管理';
+// import App from './06-hooks/08-reducer配合context实现局部共享状态.jsx';
+// import App from './06-hooks/09-memo-hook.jsx';
+// import App from './06-hooks/10-callback-hook.jsx';
+// import App from './06-hooks/11-01-并发模式';
+// import App from './06-hooks/11-02-transition-hook.jsx';
+import App from './06-hooks/11-03-deferred-hook.jsx';
 // import App from './practice/todo-1.jsx';
 // import App from './practice/todo-2.jsx';
-import App from './practice/local-context-manager.jsx';
+// import App from './practice/local-context-manager.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     // <App />,
