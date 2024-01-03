@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 let boxStyle = {
     width: 200,
     height: 200,
@@ -30,7 +32,11 @@ Component.defaultProps = {
     name: 'cortana',
     age: 20,
 };
-
+// 3. React 的 defaultProps 的类型
+Component.propTypes = {
+    name: PropTypes.string,
+    age: PropTypes.number
+};
 const App = () => {
     return (
         <>

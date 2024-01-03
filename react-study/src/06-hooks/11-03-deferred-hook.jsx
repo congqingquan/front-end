@@ -43,7 +43,7 @@ const Search = ({ target }) => {
     return <ul>{dataList.map((data) => data.content)}</ul>;
 };
 
-const App = (value) => {
+const App = () => {
     let [searchContent, setSearchContent] = useState('');
 
     // useDeferredValue的作用是将一个值延迟更新。这个值可以是状态、属性或其他变量。

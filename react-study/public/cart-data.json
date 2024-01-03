@@ -1,0 +1,40 @@
+{
+  "code": 200,
+  "data": [
+    {
+      "id": 1,
+      "name": "西瓜",
+      "price": 10,
+      "quantity": 0,
+      "active": false
+    },
+    {
+      "id": 2,
+      "name": "草莓",
+      "price": 20,
+      "quantity": 0,
+      "active": false
+    },
+    {
+      "id": 3,
+      "name": "苹果",
+      "price": 30,
+      "quantity": 0,
+      "active": false
+    },
+    {
+      "id": 4,
+      "name": "香蕉",
+      "price": 40,
+      "quantity": 0,
+      "active": false
+    },
+    {
+      "id": 5,
+      "name": "荔枝",
+      "price": 50,
+      "quantity": 0,
+      "active": false
+    }
+  ]
+}

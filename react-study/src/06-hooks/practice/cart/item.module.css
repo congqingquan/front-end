@@ -1,0 +1,35 @@
+.cart {
+    width: 150px;
+    height: 150px;
+    border: dotted 2px red;
+    padding: 20px;
+
+    margin: 50px;
+}
+
+.cart .active-btn {
+    color: white;
+    background-color: lightskyblue;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.cart .no-active-btn {
+    color: white;
+    background-color: red;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.cart div {
+    margin: 10px;
+}
+
+.cart span {
+    cursor: pointer;
+    margin: 5px;
+}
