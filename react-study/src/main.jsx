@@ -18,7 +18,7 @@ import 'antd/dist/reset.css';
 // import App from './05-component/02-component分层.jsx';
 // import App from './05-component/03-component间通信.jsx';
 // import App from './05-component/04-component间组合.jsx';
-import App from './05-component/05-component通信数据的默认值.jsx';
+// import App from './05-component/05-component通信数据的默认值.jsx';
 // import App from './05-component/06-component必须是一个纯函数.jsx';
 // import App from './05-component/07-01-component的状态.jsx';
 // import App from './05-component/07-02-component的状态.jsx';
@@ -43,6 +43,7 @@ import App from './05-component/05-component通信数据的默认值.jsx';
 // import App from './06-hooks/practice/todo/todo-2.jsx';
 // import App from './06-hooks/practice/context-manager/local-context-manager.jsx';
 // import App from './06-hooks/practice/cart/cart.jsx';
+import App from './07-antd/01-手写antd按钮/01-手写antd按钮.jsx';
 
 ReactDOM.createRoot(document.getElementById('root'), {
     identifierPrefix: 'react-id-',

@@ -1,0 +1,63 @@
+/* 基类样式（需要写在最前，后面会进行部分样式的覆盖） */
+.my-btn {
+    font-size: 14px;
+    height: 32px;
+    padding: 4px 15px;
+    border-radius: 6px;
+
+    outline: none;
+    position: relative;
+    display: inline-block;
+    font-weight: 400;
+    white-space: nowrap;
+    text-align: center;
+    background: transparent none;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+    user-select: none;
+    touch-action: manipulation;
+    line-height: 1.5714285714285714;
+    color: rgba(0, 0, 0, 0.88);
+}
+
+/* 按钮的默认样式 */
+.my-btn-default {
+    background: #ffffff;
+    border-color: #d9d9d9;
+    color: rgba(0, 0, 0, 0.88);
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.02);
+}
+
+
+/* 大小 */
+.my-btn.my-btn-sm {
+    font-size: 14px;
+    height: 24px;
+    padding: 0 7px;
+    border-radius: 4px;
+}
+.my-btn.my-btn-lg {
+    font-size: 16px;
+    height: 40px;
+    padding: 6px 15px;
+    border-radius: 8px;
+}
+
+/* 不同按钮 */
+.my-btn-primary {
+    color: #fff;
+    background: #1677ff;
+    box-shadow: 0 2px 0 rgba(5, 145, 255, 0.1);
+}
+
+.my-btn-dangerous {
+    color: #ff4d4f;
+    border-color: #ff4d4f;
+}
+
+.my-btn-primary.my-btn-dangerous {
+    background: #ff4d4f;
+    box-shadow: 0 2px 0 rgba(255, 38, 5, 0.06);
+    color: #fff;
+}
