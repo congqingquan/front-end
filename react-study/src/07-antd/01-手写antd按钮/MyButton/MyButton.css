@@ -61,3 +61,8 @@
     box-shadow: 0 2px 0 rgba(255, 38, 5, 0.06);
     color: #fff;
 }
+
+/* icon */
+.my-btn-icon {
+    margin-inline-end: 8px;
+}

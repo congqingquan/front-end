@@ -16,10 +16,21 @@ const MyButton = ({ type, danger, size, icon, children }) => {
         'my-btn-dangerous': danger,
         [`my-btn-${SizeMap[size]}`]: true,
     });
-    return <button className={cns}>{children}</button>;
+    return (
+        <button className={cns}>
+            {icon ? <span className={'my-btn-icon'}>{icon}</span> : ''}
+            {children}
+        </button>
+    );
 };
 
 MyButton.defaultProps = {
+    type: 'default',
+    danger: false,
+    size: 'default',
+};
+
+MyButton.propTypes = {
     type: PropTypes.string,
     danger: PropTypes.bool,
     size: PropTypes.oneOf(['small', 'large']),
