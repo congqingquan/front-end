@@ -43,9 +43,17 @@ import 'antd/dist/reset.css';
 // import App from './06-hooks/practice/todo/todo-2.jsx';
 // import App from './06-hooks/practice/context-manager/local-context-manager.jsx';
 // import App from './06-hooks/practice/cart/cart.jsx';
-import App from './06-hooks/ahooks/01-自定义hook.jsx';
+// import App from './06-hooks/practice/tour/tour.jsx';
+// import App from './06-hooks/custom-hooks/01-自定义hook.jsx';
+// import App from './06-hooks/ahooks/01-01-useRequest-处理ajax请求的基本使用.jsx';
+// import App from './06-hooks/ahooks/01-02-useRequest-默认中断清理上一次的请求.jsx';
+// import App from './06-hooks/ahooks/01-03-useRequest-处理ajax请求的高级用法.jsx';
+// import App from './06-hooks/ahooks/02-useVirtualList-虚拟化列表.jsx';
+// import App from './06-hooks/ahooks/03-useWebSocket.jsx';
 // import App from './07-antd/01-手写antd按钮/01-手写antd按钮.jsx';
 // import App from './07-antd/02-表单/admin.jsx';
+// import App from './08-advance/01-flushSync.jsx';
+import App from './08-advance/02-errorboundary.jsx';
 
 ReactDOM.createRoot(document.getElementById('root'), {
     identifierPrefix: 'react-id-',

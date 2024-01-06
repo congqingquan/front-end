@@ -40,10 +40,12 @@ const Component = memo(({ data: { count } }) => {
 
 const App = () => {
     let [count, setCount] = useState(0);
-    // 2. 使用 memo 缓存数据：因为每次重新渲染父组件，都会新建一个 transferData 对象，所以引用类型数据即使内部变量是相同的，也会触发重新渲染。
+    // 2. 使用 memo 缓存数据：因为每次重新渲染父组件，都会新建一个 transferData 对象，所以会使得子组件也触发重新渲染。
     let transferData = { count: 99 };
     // 使用 useMemo hook 缓存数据，只要依赖的 count 不改变，就不会从 factory 中再获取一次数据
-    transferData = useMemo(() => transferData, [transferData.count]);
+    // transferData = useMemo(() => transferData, [transferData.count]);
+    // 或者不设置监听的依赖，那么永远都不会从 factory 重新获取数据
+    // transferData = useMemo(() => transferData, []);
 
     function handleClick() {
         setCount((prevState) => prevState + 1);

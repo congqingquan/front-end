@@ -25,3 +25,6 @@
 2. classnames
 3. lodash (类似 java 中 apache.common 系列类库集合体)
 4. use-immer: 不可变数据结构 (对于拷贝功能而言，相对于深拷贝，它的处理方式更加便宜，不需要复制数据未更改的部分)
+5. react-error-boundary: 错误边界是一种特殊组件，可让您显示一些后备 UI 而不是崩溃的部分，例如错误消息。
+6. axios: 网络请求库
+7. dayjs、moment: 日期库
