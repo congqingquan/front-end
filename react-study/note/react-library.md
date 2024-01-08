@@ -12,15 +12,22 @@
 2. Mobx
 3. Zustand
 
-### UI 库
-1. Ant design (https://ant-design.antgroup.com/index-cn / https://procomponents.ant.design/)
-2. Material UI
-
-### Hooks 库
+### Hooks
 1. ahooks (https://ahooks.gitee.io/zh-CN)
 2. react-use
 
-### 工具库
+### UI
+1. Ant design (https://ant-design.antgroup.com/index-cn / https://procomponents.ant.design/)
+2. Material UI
+
+### CSS (不如直接写纯 css)
+1. styled-components (https://styled-components.com/): CSS-IN-JS，JSX 中直接编写 CSS 样式
+2. tailwind (https://tailwindcss.com/): 不再自己写 css 样式，通过设置样式类名，简化 css 编写
+3. react-spring (https://www.react-spring.dev/): 动画
+4. ant-design-charts (https://ant-design-charts.antgroup.com/): 图表，注意版本，项目中使用的 2.x
+5. react-bmapgl (https://lbsyun.baidu.com/solutions/reactBmapDoc): 地图库
+
+### 工具
 1. sass
 2. classnames
 3. lodash (类似 java 中 apache.common 系列类库集合体)

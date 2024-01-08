@@ -1,9 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-// 自定义全局样式重置
+
+// 重置样式：
+// 1) 自定义全局样式重置
 // import './02-style/04-global-reset.css';
-// antd 的全局样式重置
+// 2) antd 的全局样式重置
 import 'antd/dist/reset.css';
+
+// tailwind：
+import './index.css';
 
 // import App from './00-strict-mode/01-组件渲染被执行两次.jsx';
 // import App from './00-strict-mode/02-修改state函数会被执行两次.jsx';
@@ -12,6 +17,8 @@ import 'antd/dist/reset.css';
 // import App from './02-style/02-使用sass样式.jsx';
 // import App from './02-style/03-classnames库.jsx';
 // import App from './02-style/04-全局样式重置.jsx';
+// import App from './02-style/05-sytled-componets.jsx';
+// import App from './02-style/06-tailwind.jsx';
 // import App from './03-event/01-事件监听.jsx';
 // import App from './04-render/01-react渲染特性.jsx';
 // import App from './05-component/01-component.jsx';
@@ -52,8 +59,14 @@ import 'antd/dist/reset.css';
 // import App from './06-hooks/ahooks/03-useWebSocket.jsx';
 // import App from './07-antd/01-手写antd按钮/01-手写antd按钮.jsx';
 // import App from './07-antd/02-表单/admin.jsx';
+// import App from './07-antd/03-chart/01-柱状图.jsx';
 // import App from './08-advance/01-flushSync.jsx';
-import App from './08-advance/02-errorboundary.jsx';
+// import App from './08-advance/02-errorboundary.jsx';
+// import App from './08-advance/03-lazy-load.jsx';
+// import App from './08-advance/04-portal-渲染到dom的指定位置.jsx';
+// import App from './08-advance/05-profiler-性能分析器.jsx';
+// import App from './09-library/01-react-spring动画库.jsx';
+import App from './09-library/02-react-BMapGL地图库.jsx';
 
 ReactDOM.createRoot(document.getElementById('root'), {
     identifierPrefix: 'react-id-',
