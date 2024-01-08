@@ -5,7 +5,7 @@
 4. Remix
 
 ### 路由
-1. react-route-dom
+1. react-route-dom (https://reactrouter.com/en/main)
 
 ### 状态管理
 1. Redux
@@ -35,3 +35,6 @@
 5. react-error-boundary: 错误边界是一种特殊组件，可让您显示一些后备 UI 而不是崩溃的部分，例如错误消息。
 6. axios: 网络请求库
 7. dayjs、moment: 日期库
+8. localForage (https://github.com/localForage/localForage): 强大灵活的 JavaScript 存储库 
+9. match-sorter (https://github.com/kentcdodds/match-sorter): 用于 JavaScript 中数组的简单、预期和确定性的最佳匹配排序。
+10. sort-by (https://github.com/kvnneff/sort-by): 排序插件
