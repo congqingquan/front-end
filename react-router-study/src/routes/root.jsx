@@ -1,5 +1,15 @@
 import { useEffect } from 'react';
-import { Form, NavLink, Link, Outlet, redirect, useLoaderData, useNavigation, useSubmit } from 'react-router-dom';
+import {
+    Form,
+    NavLink,
+    Link,
+    Outlet,
+    redirect,
+    useLoaderData,
+    useNavigation,
+    useSubmit,
+    useNavigate,
+} from 'react-router-dom';
 import { createContact, getContacts } from '../contacts';
 
 export async function loader({ request }) {
@@ -9,7 +19,8 @@ export async function loader({ request }) {
     return { contacts, q };
 }
 
-export async function action() {
+export async function action(e) {
+    console.log('new action', e);
     const contact = await createContact();
     return redirect(`/contacts/${contact.id}/edit`);
 }
@@ -17,6 +28,7 @@ export async function action() {
 export default function Root() {
     const { contacts, q } = useLoaderData();
     const navigation = useNavigation();
+    const navigate = useNavigate();
     const submit = useSubmit();
 
     // The navigation.location will show up when the app is navigating to a new URL and loading the data for it. It then goes away when there is no pending navigation anymore.
@@ -62,6 +74,19 @@ export default function Root() {
                         <button type="submit">New</button>
                     </Form>
                 </div>
+
+                <div>
+                    <button type="button" onClick={() => navigate('/non-nested-page')}>
+                        Go to non-nested-page
+                    </button>
+
+                    <NavLink
+                        to={`/non-nested-page`}
+                        className={({ isActive, isPending }) => (isActive ? 'active' : isPending ? 'pending' : '')}>
+                        Go to non-nested-page
+                    </NavLink>
+                </div>
+
                 <nav>
                     {/*<ul>*/}
                     {/*    <li>*/}

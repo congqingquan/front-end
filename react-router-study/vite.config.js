@@ -3,6 +3,7 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 import eslintPlugin from 'vite-plugin-eslint';
+import { join } from 'node:path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -18,6 +19,12 @@ export default defineConfig({
         modules: {
             // 局部样式配置：可通过驼峰的形式声明选择值
             localsConvention: 'camelCase',
+        },
+    },
+
+    resolve: {
+        alias: {
+            '@': join(__dirname, './src/'),
         },
     },
 });
