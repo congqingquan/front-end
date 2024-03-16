@@ -51,3 +51,13 @@ class CQQ extends Person {
 }
 
 let person = new Person("CQQ", 24);
+
+// ======================= private constructor =======================
+
+class Builder {
+  private constructor() {}
+
+  public static create(): Builder {
+    return new Builder();
+  }
+}

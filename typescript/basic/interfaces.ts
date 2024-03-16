@@ -24,3 +24,7 @@ const instance: MyObject = {
     color: Color.BLACK,
   },
 };
+
+// ===================================
+
+const obj: { name: string; age: number } = { name: "CQQ", age: 24 };
