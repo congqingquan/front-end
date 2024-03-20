@@ -47,3 +47,5 @@ class SingletonBean implements Bean, CreateBean {
     return this;
   }
 }
+
+export {};

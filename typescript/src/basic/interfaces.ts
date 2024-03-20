@@ -28,3 +28,5 @@ const instance: MyObject = {
 // ===================================
 
 const obj: { name: string; age: number } = { name: "CQQ", age: 24 };
+
+export {};

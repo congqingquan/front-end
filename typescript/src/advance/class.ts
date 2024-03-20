@@ -20,7 +20,7 @@ class Person {
     return this._privateField;
   }
 
-  set privateField(value: string): void {
+  set privateField(value: string) {
     this._privateField = value;
   }
 
@@ -32,25 +32,29 @@ class Person {
   public static readonly staticField: string = "StaticFieldValue";
 
   constructor(
-    name,
-    age,
+    name: string,
+    age: number,
     // ============== 构造器中声明字段(虽然可以，但是很不直观，不如直接在类的字段声明部分写) ==============
-    public fieldDeclaredInConstructor,
+    public fieldDeclaredInConstructor: string,
   ) {
     this.name = name;
     this.age = age;
+    this.publicField = "publicFieldValue";
+    this.publicField2 = "publicField2Value";
+    this.protectedField = "protectedFieldValue";
+    this._privateField = "_privateFieldValue";
   }
 }
 
 class CQQ extends Person {
-  constructor(name, age) {
-    super(name, age);
+  constructor(name: string, age: number, fieldDeclaredInConstructor: string) {
+    super(name, age, fieldDeclaredInConstructor);
 
-    console.log(super.protectedField);
+    console.log(this.protectedField);
   }
 }
 
-let person = new Person("CQQ", 24);
+let person = new Person("CQQ", 24, "fieldDeclaredInConstructorValue");
 
 // ======================= private constructor =======================
 
@@ -61,3 +65,5 @@ class Builder {
     return new Builder();
   }
 }
+
+export {};

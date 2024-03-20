@@ -10,9 +10,18 @@ abstract class Animal {
 }
 
 class Cat extends Animal {
-  public name: string = "Tomcat";
+  public name: string;
+
+  constructor(name: string) {
+    super();
+    this.name = name;
+  }
 
   makeSound(): void {
     super.printName();
   }
 }
+
+new Cat("Tomcat").makeSound();
+
+export {};

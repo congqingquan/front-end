@@ -34,7 +34,6 @@ const enum Week {
 }
 
 console.log(Week.FRIDAY);
-console.log(Week[0]);
 
 // 自定义值枚举
 enum Status {
@@ -63,6 +62,13 @@ let foo: any = "string";
 foo = 100;
 foo.bar();
 
+// ==================== void ====================
+// void 空值用来表示没有任何返回值的函数
+function voidFunc(): void {}
+
+// 只有 undefined 可以赋值给 void 类型
+let v: void = undefined;
+
 // ==================== 类型断言 ====================
 // as: 告诉编译器，结果数据的类型一定为特定类型（实际运行结果需要开发人员保证）
 let findValue = [1, 2, 3].find((val) => val >= 3) as number;
@@ -84,7 +90,18 @@ unionF3 = null;
 // unionF3 = "B"
 
 // ==================== type ====================
+// 1. 类型别名
 type MyType = number | string;
 let mt: MyType = 1;
 mt = "A";
 // mt = true
+
+// 2. 字面量类型别名
+type LiteralType = "A" | "B" | 1;
+let slt: LiteralType = "A";
+slt = "B";
+slt = 1;
+// slt = "C";
+// slt = 2;
+
+export {};

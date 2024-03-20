@@ -4,3 +4,5 @@ function myFunc<T>(a: T, b: T): T[] {
 
 myFunc(1, 2);
 // myFunc(1, "A")
+
+export {};
