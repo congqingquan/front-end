@@ -69,7 +69,7 @@ function voidFunc(): void {}
 // 只有 undefined 可以赋值给 void 类型
 let v: void = undefined;
 
-// ==================== 类型断言 ====================
+// ==================== as (类型断言) ====================
 // as: 告诉编译器，结果数据的类型一定为特定类型（实际运行结果需要开发人员保证）
 let findValue = [1, 2, 3].find((val) => val >= 3) as number;
 console.log(findValue * findValue);
