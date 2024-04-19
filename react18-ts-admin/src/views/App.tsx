@@ -3,8 +3,10 @@ import { Outlet } from 'react-router-dom';
 const App = () => {
     return (
         <div className="App">
-            This is App page
-            <hr />
+            {/*<Link to="/home">Home</Link>*/}
+            {/*<Link to="/about">About</Link>*/}
+            {/*<hr />*/}
+
             {/* children */}
             <Outlet></Outlet>
         </div>
