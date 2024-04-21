@@ -1,8 +1,8 @@
-import React, { lazy } from 'react';
-import { createBrowserRouter, Navigate } from 'react-router-dom';
-import App from '@/views/App';
+import React, {lazy} from 'react';
+import {createBrowserRouter} from 'react-router-dom';
 
 import Home from '@/views/Home';
+import Welcome from "@/views/Welcome";
 // 懒加载
 const About = lazy(() => import('@/views/About'));
 
@@ -12,31 +12,28 @@ const lazyLoad: (component: React.JSX.Element) => React.ReactNode = (component: 
 );
 
 const Router = createBrowserRouter([
+    // redirect: 设置访问 '/' 时重定向到指定路径
+    // {
+    //     path: '/',
+    //     element: <Navigate to="/xxx"/>,
+    // },
+
     {
         path: '/',
-        element: <App />,
+        element: <Home/>,
         children: [
-            // 1. index page: 设置 '/' 路径默认页
-            // {
-            //     index: true,
-            //     element: <Welcome />,
-            // },
-
-            // 2. redirect: 设置访问 '/' 时重定向到指定路径
+            // index page: 设置 '/' 路径默认页
             {
-                path: '/',
-                element: <Navigate to="/home" />,
-            },
-            {
-                path: '/home',
-                element: <Home />,
+                index: true,
+                element: <Welcome/>,
             },
             {
                 path: '/about',
-                element: lazyLoad(<About />),
-            },
-        ],
+                element: lazyLoad(<About/>),
+            }
+        ]
     },
+
 ]);
 
 export default Router;
