@@ -15,7 +15,7 @@ const lazyLoad: (component: React.JSX.Element) => React.ReactNode = (component: 
 );
 
 const Router = createBrowserRouter([
-    // redirect: 设置访问 '/xxx' 时重定向到指定路径
+    // 1. redirect: 设置访问 '/xxx' 时重定向到指定路径
     // {
     //     path: '/xxx',
     //     element: <Navigate to="/xxx" />,
@@ -23,10 +23,10 @@ const Router = createBrowserRouter([
     {
         path: '/',
         element: <Home />,
-        // errorElement: 设置路由错误时的访问元素
-        errorElement: <Navigate to="/" />,
+        // 2. errorElement: 设置路由错误时的访问元素
+        // errorElement: <Navigate to="/" />,
         children: [
-            // index page: 设置 '/' 路径默认页
+            // 3. index page: 设置 '/' 路径默认页
             {
                 index: true,
                 element: <Welcome />,
@@ -49,6 +49,12 @@ const Router = createBrowserRouter([
             },
         ]
     },
+
+    // 2. 通过 * 通配符的方式，设置路由错误时的访问元素。与配置 '/' 路径的 errorElement 的方式效果相同。
+    {
+        path: "*",
+        element: <Navigate to="/" />,
+    }
 ]);
 
 export default Router;

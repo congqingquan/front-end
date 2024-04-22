@@ -1,10 +1,14 @@
 import { DesktopOutlined, PieChartOutlined } from '@ant-design/icons';
-import { Menu, type MenuProps } from 'antd';
+import {Menu, type MenuProps, MenuTheme} from 'antd';
 import { ItemType } from 'antd/es/menu/hooks/useItems';
-import { useState } from 'react';
+import React, {useState} from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-const HomeMenu: React.FC = () => {
+type HomeMenuProps = {
+    theme: MenuTheme
+}
+
+const HomeMenu: React.FC<HomeMenuProps> = (props: HomeMenuProps) => {
 
     // 表示：MenuItem 为 MenuProps 类型的 items 数组属性中的元素的类型
     type MenuItem = Required<MenuProps>['items'][number];
@@ -56,16 +60,10 @@ const HomeMenu: React.FC = () => {
         },
     ];
 
-    // 菜单主题
-    // const [theme, setTheme] = useState<MenuTheme>('light');
-    // const changeTheme = (value: boolean) => {
-    //     setTheme(value ? 'dark' : 'light');
-    // };
-
     // 根据路由选中菜单
-    const localtion = useLocation();
+    const location = useLocation();
     // 根据路由展开菜单
-    let pathname: string = localtion.pathname;
+    let pathname: string = location.pathname;
     let defaultOpenKey: string = '';
     itemsLoop: for (let i = 0; i < items.length; i++) {
         const root: ItemType = items[i];
@@ -89,7 +87,6 @@ const HomeMenu: React.FC = () => {
         }
     }
     console.log("defaultOpenKey: " + defaultOpenKey);
-    // setOpenKeysArr(prev => [...prev, defaultOpenKey]);
 
     // 菜单点击 (点击没有子菜单的菜单会触发)
     const navigate = useNavigate();
@@ -104,11 +101,10 @@ const HomeMenu: React.FC = () => {
     };
     return (
         <Menu
-            theme="dark"
+            theme={props.theme}
             mode="inline"
             items={items}
             defaultSelectedKeys={[pathname]}
-            defaultOpenKeys={['/page1']}
             openKeys={openKeysArr}
             onClick={(event) => handleClickMenu(event)}
             onOpenChange={(openKeys) => handleOnOpenChange(openKeys)}
