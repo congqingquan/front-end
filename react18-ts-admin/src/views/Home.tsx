@@ -1,38 +1,17 @@
 import React, { useState } from 'react';
-import { DesktopOutlined, FileOutlined, PieChartOutlined, TeamOutlined, UserOutlined } from '@ant-design/icons';
-import type { MenuProps } from 'antd';
-import { Breadcrumb, Layout, Menu, theme } from 'antd';
+import { Breadcrumb, Layout, MenuTheme, theme } from 'antd';
+import { Location, Outlet, useLocation } from 'react-router-dom';
+import HomeMenu from '@/component/HomeMenu';
 
 const { Header, Content, Footer, Sider } = Layout;
-
-type MenuItem = Required<MenuProps>['items'][number];
-
-function getItem(label: React.ReactNode, key: React.Key, icon?: React.ReactNode, children?: MenuItem[]): MenuItem {
-    return {
-        key,
-        icon,
-        children,
-        label,
-    } as MenuItem;
-}
-
-const items: MenuItem[] = [
-    getItem('Option 1', '1', <PieChartOutlined />),
-    getItem('Option 2', '2', <DesktopOutlined />),
-    getItem('User', 'sub1', <UserOutlined />, [getItem('Tom', '3'), getItem('Bill', '4'), getItem('Alex', '5')]),
-    getItem('Team', 'sub2', <TeamOutlined />, [getItem('Team 1', '6'), getItem('Team 2', '8')]),
-    getItem('Files', '9', <FileOutlined />),
-];
 
 const Home: React.FC = () => {
     const [collapsed, setCollapsed] = useState(false);
     const {
         token: { colorBgContainer, borderRadiusLG },
     } = theme.useToken();
-
-    const handleClickMenu: (e: { key: string }) => void = (event: { key: string }) => {
-        console.log(event.key);
-    };
+    
+    const [breadCrumbItems, setBreadCrumbItems] = useState([{ title: 'User' }, { title: 'Bill' }])
 
     return (
         <Layout style={{ minHeight: '100vh' }}>
@@ -41,13 +20,7 @@ const Home: React.FC = () => {
                 {/* 左侧logo */}
                 <div className="demo-logo-vertical" style={{ height: 50 }} />
                 {/* 左侧菜单 */}
-                <Menu
-                    theme="dark"
-                    defaultSelectedKeys={['1']}
-                    mode="inline"
-                    items={items}
-                    onClick={(event) => handleClickMenu(event)}
-                />
+                <HomeMenu></HomeMenu>
             </Sider>
             {/* 右边内容 */}
             <Layout>
@@ -56,10 +29,7 @@ const Home: React.FC = () => {
                 {/* 右边内容 */}
                 <Content style={{ margin: '0 16px' }}>
                     {/* 面包屑 */}
-                    <Breadcrumb style={{ margin: '16px 0' }}>
-                        <Breadcrumb.Item>User</Breadcrumb.Item>
-                        <Breadcrumb.Item>Bill</Breadcrumb.Item>
-                    </Breadcrumb>
+                    <Breadcrumb style={{margin: '16px 0'}} items={breadCrumbItems}></Breadcrumb>
                     <div
                         style={{
                             padding: 24,
@@ -68,7 +38,7 @@ const Home: React.FC = () => {
                             background: colorBgContainer,
                             borderRadius: borderRadiusLG,
                         }}>
-                        Bill is a cat.
+                        <Outlet />
                     </div>
                 </Content>
                 {/* 右边底部 */}
