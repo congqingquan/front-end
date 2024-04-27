@@ -12,7 +12,7 @@ const Home: React.FC = () => {
         token: {colorBgContainer, borderRadiusLG},
     } = andTheme.useToken();
     // 面包屑
-    const [breadCrumbItems, setBreadCrumbItems] = useState([{title: 'User'}, {title: 'Bill'}])
+    const [breadCrumbItems,] = useState([{title: 'User'}, {title: 'Bill'}])
     // 主题
     const [theme, setTheme] = useState<MenuTheme>('light');
     const changeTheme = (checked: boolean) => {
