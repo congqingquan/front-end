@@ -1,0 +1,1 @@
+export declare const JS_DATA: number;

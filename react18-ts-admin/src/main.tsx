@@ -8,9 +8,13 @@ import 'reset-css';
 import '@/assets/styles/global.scss';
 import Router from '@/router';
 import { RouterProvider } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import store from '@/store';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-    <React.StrictMode>
-        <RouterProvider router={Router}></RouterProvider>
-    </React.StrictMode>,
+    <Provider store={store}>
+        <React.StrictMode>
+            <RouterProvider router={Router}></RouterProvider>
+        </React.StrictMode>
+    </Provider>,
 );
