@@ -77,25 +77,3 @@ intersectionGen({
     return 24;
   },
 });
-
-console.log(
-  "==================================== 3.2 keyof ====================================",
-);
-
-// keyof: 该操作符可以用于获取某种类型的所有键，其返回类型是：字符串联合类型(union) (返回的类型数据不会写在最终的 js 文件中，所以无法打印)
-
-interface KeyofInterface {
-  name: string;
-  age: number;
-}
-
-type KeyNames = keyof KeyofInterface; // "name" | "age"
-
-function getProperty<T, K extends keyof T>(t: T, k: K): T[K] {
-  return t[k];
-}
-
-console.log(getProperty({ name: "CQQ" }, "name"));
-// console.log(getProperty({ name: "CQQ" }, "age")); // compile error
-
-export {};

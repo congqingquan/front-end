@@ -42,6 +42,8 @@ enum Status {
   DONE = 3,
   FINISHED = "OVER",
 }
+// 打印枚举的名称，而非枚举值
+console.log(Status[Status.TODO]);
 
 // ==================== any ====================
 

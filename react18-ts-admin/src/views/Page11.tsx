@@ -1,11 +1,10 @@
-import { ReducerActionTypeEnum } from '@/store/reducer';
-import { useDispatch, useSelector } from 'react-redux';
+import { ReducerActionTypeEnum } from '@/store/NumberStatus/reducer';
+import { DefaultRootState, useDispatch, useSelector } from 'react-redux';
 
 const Page11 = () => {
-
     // 解构时不能进行类型标注
     // let { value } = useSelector((state: ReducerState) => ({ key: state.value }));
-    const { value } = useSelector((state: ReducerState) => state);
+    const { num } = useSelector((state: ReducerState) => state.NumberStatusReducer);
 
     const dispatch = useDispatch();
 
@@ -13,7 +12,7 @@ const Page11 = () => {
 
     return (
         <div>
-            state value: {value}
+            num state: {num}
             <br></br>
             <button onClick={handleClick}>Click</button>
         </div>

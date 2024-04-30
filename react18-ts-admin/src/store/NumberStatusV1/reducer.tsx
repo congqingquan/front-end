@@ -1,3 +1,5 @@
+import NumberStatus from ".";
+
 // reducer
 enum ReducerActionTypeEnum {
     ADD,
@@ -9,10 +11,16 @@ interface ReducerAction {
     value: any
 }
 
-// init state function
-const init: () => ReducerState = () => ({value: 0})
+interface ReducerHandler {
 
-const reducer = (state: ReducerState = init(), action: ReducerAction) => {
+    state: {}
+        
+    add: (state: ReducerState, newState: ReducerState, value: any) => void;
+
+    delete: (state: ReducerState, newState: ReducerState, value: any) => void;
+}
+
+const reducer = (state: ReducerState = { ...NumberStatus.state }, action: ReducerAction) => {
 
     // 1. Returns a new state that has been deeply cloned
     const newState: ReducerState = JSON.parse(JSON.stringify(state));
@@ -20,12 +28,11 @@ const reducer = (state: ReducerState = init(), action: ReducerAction) => {
     // 2. Handle business by action type
     switch (action.type) {
         case ReducerActionTypeEnum.ADD: {
-            newState.value = state.value + 1;
-            console.log("reducer -> add");
+            NumberStatus.add(state, newState, action.value);
             break;
         }
         case ReducerActionTypeEnum.DELETE: {
-            console.log("reducer -> delete");
+            NumberStatus.delete(state, newState, action.value);
             break;
         }
         default: {
@@ -36,4 +43,4 @@ const reducer = (state: ReducerState = init(), action: ReducerAction) => {
 };
 
 
-export { reducer as default, ReducerActionTypeEnum, type ReducerAction };
+export { reducer as default, ReducerActionTypeEnum, type ReducerAction , type ReducerHandler};
