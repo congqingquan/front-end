@@ -12,10 +12,18 @@ console.log(str2)
 type T = string
 // type TT = typeof T; // 'T' only refers to a type, but is being used as a value here.ts(2693)
 
-
 // 所以，typeof 可以做到将数据值的类型传递到类型系统中，typeof 是二者间的桥梁
 
-// 3. ReturnType 是一个类型，可以获取到`函数type`的返回值类型
+// 3. typeof 应用在没有明确声明类型的值上，会使得获取的是具体的值，而不是值的类型
+const n = 10
+type NType = typeof n
+// const n2: NType = 101 // Type '101' is not assignable to type '10'.ts(2322)
+
+const n3: number = 10
+type N3Type = typeof n3
+const n4: N3Type = 101
+
+// 4. ReturnType 是一个类型，可以获取到`函数type`的返回值类型
 type Predicate = (x: number) => void
 type RT1 = ReturnType<Predicate>;
 type RT2 = ReturnType<(x: number) => string>
