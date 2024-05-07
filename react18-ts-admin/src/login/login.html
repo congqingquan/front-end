@@ -6,10 +6,39 @@
     <link rel="stylesheet" href="./login.css">
 </head>
 <body>
+    <script>
+        let isToLogin = false;
+
+        function handleTopCardClick(isToLoginFlag) {
+            if (isToLoginFlag) {
+                document.getElementsByClassName('top-card-button')[0].innerHTML = '登陆'
+                document.getElementsByClassName('top-card')[0].style.borderRadius = '50px 120px 120px 50px'
+                document.getElementsByClassName('top-card')[0].style.transform = 'translateX(-100%)'
+                // document.getElementsByClassName('top-card')[0].style.animationName = 'toLogin'
+            } else {
+                document.getElementsByClassName('top-card-button')[0].textContent = '注册'
+                document.getElementsByClassName('top-card')[0].style.borderRadius = '120px 50px 50px 120px'
+                document.getElementsByClassName('top-card')[0].style.transform = 'translateX(0)'
+                // document.getElementsByClassName('top-card')[0].style.animationName = 'toRegister'
+            }
+            isToLogin = isToLoginFlag;
+        }
+    </script>
     <div class="container">
-        <div class="left">
-            <img src="../assets/picture/login_wallpaper.jpg">
+        <div class="top-card">
+            <div class="top-card-title">你好，新朋友</div>
+            <div class="top-card-content">注册你的个人详细信息，以使用网站的所有功能</div>
+            <button class="top-card-button" onclick="handleTopCardClick(!isToLogin)">注册</button>
         </div>
+
+        <div class="left">
+            <div class="left-title">登陆</div>
+            <div class="left-tip">请输入登陆信息</div>
+            <input type="text" placeholder="Username" />
+            <input type="password" placeholder="Password" />
+            <button>登陆</button>
+        </div>
+
         <div class="right">
             <div class="form">
                 <form>

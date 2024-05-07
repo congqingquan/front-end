@@ -36,7 +36,7 @@
     let obj3 = {...obj1, ...obj2};
     console.log(obj3);
 
-    console.log("================== 应用在方法形参上(使用数组存储多个形参) ==================")
+    console.log("================== 应用在方法的展开形参上 ==================")
     sum(1, 2, 3)
     function sum(...args) {
         // 拓展语法，本质是使用数组存储数据。与 java 中的可变参数一毛一样。
@@ -54,6 +54,14 @@
 
     // 所以，需要想要把一个数组正确地传递进取，也需要使用拓展语法：将单个数组打散为多个数组元素值
     sum(...[1, 2, 3])
+
+    console.log("================== 应用在方法的非展开形参上 ==================")
+
+    // 当形参不是展开参数时，也可以将数组展开后传递给多个单一类型的形参
+    function multipleArgSum(x, y) {
+        return x + y;
+    }
+    console.log(multipleArgSum(...[1, 2]));
 
     console.log("================== 应用在 iterable 对象上(将 iterable 对象转为数组) ==================")
     let nodes = document.querySelectorAll("div");

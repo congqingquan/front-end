@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<main>
+</main>
+<script type="text/javascript">
+    // bigint的取值范围为从-2^63 (-9223372036854775808) 到 2^63-1 (9223372036854775807)的整型数据（所有数字）。
+    // 无符号的范围是0到18446744073709551615。
+    // bigint是64位整型数据，占用8个字节的存储空间，同 java 中的 long。
+
+    let bi1 = BigInt(9223372036854775807)
+    console.log(`bi1 ${bi1} 类型: ${typeof bi1}`);
+
+    let bi2 = 9223372036854775807n + 1n;
+    console.log(`bi2 ${bi2} 类型: ${typeof bi2}`);
+</script>
+</body>
+</html>
