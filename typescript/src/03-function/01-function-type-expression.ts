@@ -16,6 +16,8 @@ function callPrint(fn: PrintFuncType, message: any): void {
 
 callPrint(printFunc, "CQQ");
 
+// ====================== 声明可以接受任意个参数的函数类型: 展开参数函数 ======================
+type SpreadFunctionType = (...args: any[]) => void
 
 // ====================== 函数的类型的对象表达式：调用签名 > 在对象中描述函数的格式，以及自定义属性。 ======================
 

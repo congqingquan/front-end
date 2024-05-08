@@ -72,6 +72,9 @@ interface Animal {
 // 1. 定义一个不可能存在的类型
 type NerverType = string & number; // type NerverType = never
 
+// 1. 定义一个 never 类型变量
+let n: never = "str" as never
+
 // 2. 经过 case 分支的判断守卫，使得 default 中的代码永远不会被执行。根据流程控制分析，default 中的类型无法被推断出，所以只能通过 never 来描述 s 当前的类型
 interface Circle {
     kind: "Circle",

@@ -4,6 +4,7 @@ let strArr: string[] = ["A", "B"];
 strArr.push("C");
 // strArr.push(1)
 
+// 联合类型数组
 let myArr: (string | number)[] = ["A", 1]
 // myArr.push(true); // Argument of type 'boolean' is not assignable to parameter of type 'string | number'.ts(2345)
 
