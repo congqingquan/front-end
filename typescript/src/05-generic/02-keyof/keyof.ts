@@ -1,5 +1,4 @@
 // 1. keyof: 该操作符可以用于获取对象或接口上的所有键，其返回类型是：字符串联合类型(union) (返回的类型数据不会写在最终的 js 文件中，所以无法打印)
-
 interface KeyofInterface {
     name: string;
     age: number;
@@ -41,5 +40,7 @@ function getProperty<T, K extends keyof T>(t: T, k: K): T[K] {
 
 console.log(getProperty({ name: "CQQ" }, "name"));
 // console.log(getProperty({ name: "CQQ" }, "age")); // compile error
+
+// 4. 类型映射：详细见 06-mapped-type
 
 export { };

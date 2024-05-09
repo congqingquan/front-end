@@ -38,3 +38,4 @@
 5. never：
     1. 不应存在的类型，不是用来声明的，而是用来推断的。在类型定义中，当类型不符合条件时，使用 never 作为返回类型。
     2. 如何声明一个 never 类型的变量并赋值？`let n: never = "str" as never`
+    3. never 可以正确的被类型约束进行检查。`type T<T extends string> = T / let t: T<never> = "" as never`

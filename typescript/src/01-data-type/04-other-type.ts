@@ -72,10 +72,14 @@ interface Animal {
 // 1. 定义一个不可能存在的类型
 type NerverType = string & number; // type NerverType = never
 
-// 1. 定义一个 never 类型变量
+// 2. 定义一个 never 类型变量
 let n: never = "str" as never
 
-// 2. 经过 case 分支的判断守卫，使得 default 中的代码永远不会被执行。根据流程控制分析，default 中的类型无法被推断出，所以只能通过 never 来描述 s 当前的类型
+// 3. never 可以正确的被类型约束进行检查
+type T<T extends string> = T
+let t: T<never> = "" as never
+
+// 4. 经过 case 分支的判断守卫，使得 default 中的代码永远不会被执行。根据流程控制分析，default 中的类型无法被推断出，所以只能通过 never 来描述 s 当前的类型
 interface Circle {
     kind: "Circle",
     radius: number
@@ -101,7 +105,7 @@ function getArea(s: Shape) {
 let area = getArea({ kind: "Square", sideLength: 5.0} as Shape);
 console.log(area);
 
-// 3. 流程控制分析数据的类型
+// 5. 流程控制分析数据的类型
 function controlFlow() {
     let s: string | number = "str" as any;
     if (typeof s === 'string') {

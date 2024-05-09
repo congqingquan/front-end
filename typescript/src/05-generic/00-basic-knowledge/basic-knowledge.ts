@@ -26,5 +26,13 @@ interface DefaultGenTypeInterface<T = string> {}
 
 const dt1: DefaultGenTypeInterface = { t: "CQQ" };
 const dt2: DefaultGenTypeInterface<number> = { t: 24 };
+console.log(
+  "==================================== 3. 类型参数展开 ===================================",
+);
+
+type VariaticTuple<T extends unknown[]> = [...T]
+
+let variaticTuple1: VariaticTuple<[string, number, boolean, bigint]> = ["CQQ", 24, true, 18n]
+// let variaticTuple2: VariaticTuple<[string, number, boolean, bigint]> = [] // let variaticTuple11: [string, number, boolean, bigint]
 
 export {};

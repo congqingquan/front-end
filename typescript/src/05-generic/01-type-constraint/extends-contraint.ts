@@ -50,6 +50,36 @@ let cct: ConditionalContraintType<string> = ["A", "B"]
 
 // ================ 2. 类型交集约束 ================
 
+// 2.1 非对象类型交叉运算
+type N0 = string & number
+type N1 = any & 1
+type N2 = any & never
+
+// 2.2 对象类型交叉运算
+type O1 = { kind: "A", foo: string }
+type O2 = { kind: "B", foo: number }
+type O3 = { kind: "C", foo: number }
+
+type O12 = O1 & O2 // O12 = never. kind 与 foo 属性交叉后都是 never 故 O12 也就直接是 never 类型了
+type O23 = O2 & O3 // 
+
+// let o12: O12 = {
+//     kind: "" as never,
+//     foo: "" as never
+// }
+
+// let o23: O23 = {
+//     kind: "" as never,
+//     foo: "" as never
+// }
+
+// 2.3 函数类型交叉运算
+type F1 = (a: string, b: string) => void
+type F2 = (a: number, b: number) => void
+
+type F12 = F1 & F2
+
+// 
 interface Name {
     getName(): string;
 }

@@ -1,7 +1,8 @@
 // ==================== interface 与 类型别名的区别 ====================
 
-// 如果为了类型结构合并，使用 interface 重复定义的特性来实现。注意：属性同名但不同类型会报错。
-// 如果为了避免类型冲突，并合并 type，使用 type TypeA & TyepB 这样的交集类型来实现。注意：不同于 interface，属性同名但不同类型，会对类型取 & 后作为属性的最终类型。
+// 1. 如果为了类型结构合并，使用 interface 重复定义的特性来实现。注意：属性同名但不同类型会报错。
+// 2. 如果为了避免类型冲突，并合并 type，使用 type TypeA & TyepB 这样的交集类型来实现。注意：不同于 interface，属性同名但不同类型，会对类型取 & 后作为属性的最终类型。
+// 3. interface 与 type 之间可以结合
 
 // 1) interface: extends 或 重复定义
 interface Name {
@@ -31,6 +32,30 @@ type BMW = {
 let bmw: BMW = {
   name: "A6",
   color: "Black"
+}
+
+// 3) interface 与 type 之间可以结合
+interface MergeInterface {
+  interface: string
+}
+
+type MergeType = {
+  type: string
+}
+
+// 3.1) type & interface
+type MergeInterfaceResult = MergeType & MergeInterface
+let mir: MergeInterfaceResult = {
+  type: "",
+  interface: ""
+}
+
+// 3.2) interface extends type
+interface MergeInterface extends MergeType {
+}
+let mtr: MergeInterface = {
+  type: "",
+  interface: ""
 }
 
 export {}

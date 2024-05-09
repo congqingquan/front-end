@@ -16,6 +16,7 @@ type ToSingleTypeArray<T> = T extends any ? T[] : never
 let toSingleTypeArr1: ToSingleTypeArray<string | number> = ["CQQ1", "CQQ2"] // let toSingleTypeArr1: string[] | number[]
 
 // 2.2 联合类型数组
+// type ToUnionTypeArray<T extends any> = T[]
 type ToUnionTypeArray<T> = [T] extends [any] ? T[] : never
 let toUnionTypeArr1: ToUnionTypeArray<string | number> = ["CQQ", 24] // let toUnionTypeArr1: (string | number)[]
 let toUnionTypeArr2: ToUnionTypeArray<string | number> = ["CQQ", 24]
