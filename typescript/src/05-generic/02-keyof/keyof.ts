@@ -20,7 +20,7 @@ type ArrayishType = keyof Arrayish
 const p4: ArrayishType = 0
 // const p5:ArrayishType = "A" // Type 'string' is not assignable to type 'number'.ts(2322)
 
-// 2.2 定义对象的 key 只能为 string | number 的联合类型
+// 2.2 定义对象的 key 只能为 string | number 的联合类型。 之所以会返回 string | number 的联合类型，这是因为 js 最终会将 number 转为 string 作为对象的键，ts 也保留了这个机制
 type Mapish = {
     [props: string]: boolean
 }

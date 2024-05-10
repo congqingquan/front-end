@@ -67,7 +67,7 @@ interface Animal {
 
 // ==================== never ====================
 
-// never 不是用来声明的，而是用来推断的。never：不应存在的类型
+// never 表示的类型集合为：{}，空集。在类型定义中，当类型不符合条件时，使用 never 作为返回类型。
 
 // 1. 定义一个不可能存在的类型
 type NerverType = string & number; // type NerverType = never

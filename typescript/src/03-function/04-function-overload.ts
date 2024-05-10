@@ -11,14 +11,15 @@ function func(): void {} // 不报错正是因为实现方法不对外暴露
 // 3. 最终的实现方法中需要兼容所有的参数情况以及返回值类型
 
 // 案例一：
-function myFunc(a: number): void;
-function myFunc(a: string): void;
-function myFunc(a: number | string): void {
+function myFunc(a: number): number;
+function myFunc(a: string): string;
+function myFunc(a: number | string): number | string {
   if (typeof a === "number") {
     console.log(`The number is ${a}`);
   } else {
     console.log(`The string is ${a}`);
   }
+  return a;
 }
 
 // 案例二：

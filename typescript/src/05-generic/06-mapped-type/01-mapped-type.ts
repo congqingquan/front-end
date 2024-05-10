@@ -78,9 +78,13 @@ let getterFuncs: Getters<User> = {
 }
 
 // 3.2) keyof 结合索引签名时的 as 子句中使用 Exclude：排除特定名称的属性
-type RemoveProp<T, ExcludeProp extends keyof T> = {
-    [P in keyof T as Exclude<P, ExcludeProp>]: T[P]
+type RemoveProp<T, ExcludedProp extends keyof T> = {
+    [P in keyof T as Exclude<P, ExcludedProp>]: T[P] // 键重映射时，若 as 子句返回 never 类型，该键会被删除. Exclude: T extends U ? never : T
 }
+// 不使用 as 子句的方式
+// type RemoveProp<T, ExcludedProp extends keyof T> = {
+//     [P in keyof (Pick<T, Exclude<keyof T, ExcludedProp>>)]: T[P]
+// }
 interface ExcludePropEntity {
     name: string
     age: number
