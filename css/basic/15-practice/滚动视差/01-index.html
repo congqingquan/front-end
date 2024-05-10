@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        /*body {*/
+        /*    width: 100vw;*/
+        /*    height: 100vh;*/
+        /*    background-color: #95a5a6;*/
+
+        /*    display: flex;*/
+        /*    justify-content: center;*/
+        /*    align-items: center;*/
+        /*}*/
+
+        section {
+            height: 100vh;
+        }
+
+        .g-word {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            font-size: 50px;
+            font-weight: bold;
+        }
+
+        .g-img {
+            background-size: cover;
+            background-position: center center;
+            /* 核心的一条属性：背景图片固定在视口的特定位置（目前是一整屏幕），不随滚动条而上下移动，但其余元素随滚动条而移动。 */
+            background-attachment: fixed;
+
+            /* 设置背景图随滚动条而移动 */
+            /*background-attachment: local;*/
+        }
+
+        .g-img:nth-of-type(2) {
+            background-image: url("./img/1.jpg");
+        }
+        .g-img:nth-of-type(4) {
+            background-image: url("./img/2.jpg");
+        }
+        .g-img:nth-of-type(6) {
+            background-image: url("./img/3.jpg");
+        }
+        .g-img:nth-of-type(8) {
+            background-image: url("./img/4.jpg");
+        }
+        .g-img:nth-of-type(10) {
+            background-image: url("./img/5.jpg");
+        }
+    </style>
+</head>
+<body>
+<main>
+    <section class="g-word">HTML</section>
+    <section class="g-img"></section>
+
+    <section class="g-word">CSS</section>
+    <section class="g-img"></section>
+
+    <section class="g-word">Javascript</section>
+    <section class="g-img"></section>
+
+    <section class="g-word">Typescript</section>
+    <section class="g-img"></section>
+
+    <section class="g-word">React</section>
+    <section class="g-img"></section>
+</main>
+</body>
+</html>
