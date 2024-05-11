@@ -24,4 +24,13 @@ console.log(Status.TODO);
 console.log(Status.FINISHED);
 console.log(Status[Status.DOING]);
 
+// keyof 应用在枚举上: 获取所有枚举项的名称
+enum HttpMethod {
+  GET,
+  POST,
+  PUT
+}
+
+let hme: keyof typeof HttpMethod // let hme: "GET" | "POST" | "PUT"
+
 export {}

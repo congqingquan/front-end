@@ -15,7 +15,13 @@ let toNum2: number = toNumUnkonwnVal as number
 let asValue2: number = ('any' as any) as number;
 let asValue3: number = ('any' as unknown) as number;
 
-// ==================== as (转为常量) ====================
+// ==================== as (常量断言，使得可以获取到更精确的类型) ====================
+
+// 0. 常量断言，使得可以获取到更精确的类型
+let strVar = "string var"
+let strConst = "string const" as const
+let asConstTest1: typeof strVar // let asConstTest1: string
+let asConstTest2: typeof strConst // let asConstTest2: "string const"
 
 // 1. 基本数据类型
 let asStrConstant = "string cnstant" as const

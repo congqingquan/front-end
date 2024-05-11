@@ -26,6 +26,7 @@ interface DefaultGenTypeInterface<T = string> {}
 
 const dt1: DefaultGenTypeInterface = { t: "CQQ" };
 const dt2: DefaultGenTypeInterface<number> = { t: 24 };
+
 console.log(
   "==================================== 3. 类型参数展开 ===================================",
 );
@@ -34,5 +35,18 @@ type VariaticTuple<T extends unknown[]> = [...T]
 
 let variaticTuple1: VariaticTuple<[string, number, boolean, bigint]> = ["CQQ", 24, true, 18n]
 // let variaticTuple2: VariaticTuple<[string, number, boolean, bigint]> = [] // let variaticTuple11: [string, number, boolean, bigint]
+
+console.log(
+  "==================================== 4. 获取接口所有属性的类型：索引访问类型集合 keyof 关键字: Type[kyeof Type] 的方式获取所有属性的类型，不会获取到 never 类型。但是单独获取 never 类型的属性类型，可以正确的获取到  ===================================",
+);
+
+interface NeverTest {
+  name: never,
+  age: number,
+  bool: boolean
+}
+let nt1: NeverTest[keyof NeverTest] // let aT: number | boolean
+// 但是单独获取 never 类型的属性类型，可以正确的获取到
+let nt2: NeverTest['name'] // let nt2: never
 
 export {};

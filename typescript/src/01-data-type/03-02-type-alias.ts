@@ -1,5 +1,9 @@
 // ==================== type 类型别名 ====================
 
+// 0. 类型声明对比函数声明
+type T<T extends any, U extends any> = T
+function T(t: any, U: any) { return t }
+
 // 1. 类型别名
 type MyType = number | string;
 let mt: MyType = 1;

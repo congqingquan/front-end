@@ -23,11 +23,12 @@ const n3: number = 10
 type N3Type = typeof n3
 const n4: N3Type = 101
 
-// 4. ReturnType 是一个类型，可以获取到`函数type`的返回值类型
+// ========================================== 应用在函数上 ========================================== 
+
+// 1. ReturnType 是一个类型，可以获取到`函数type`的返回值类型
 type Predicate = (x: number) => void
-type RT1 = ReturnType<Predicate>;
-type RT2 = ReturnType<(x: number) => string>
-const p1: RT2 = "str"
+type RT1 = ReturnType<Predicate>; // type RT1 = void
+type RT2 = ReturnType<(x: number) => string> // type RT2 = string
 
 // 那么当我们想要获取一个函数的返回值类型该怎么办？
 const FN = (): number => 0
@@ -36,10 +37,25 @@ const FN = (): number => 0
 type FNType = ReturnType<typeof FN>
 const p2: FNType = 0
 
-// 4. typeof 无法先调用函数后获取返回值的类型
+// 2. typeof 无法先调用函数后获取返回值的类型
 const FNReturnValue = FN()
 // type FNActualReturnType = typeof FN(); // ';' expected.ts(1005)
 // 但可以将返回值赋值给一个变量后，在获取变量的类型
 type FNActualReturnType = typeof FNReturnValue;
+
+// 3. 使用案例
+class Point {
+    x: number;
+    y: number;
+    constructor(x: number, y: number) {
+        this.x = x;
+        this.y = y;
+    }
+}
+
+// constructor 是一个构造函数，需要保证类型为 Point 类的构造函数类型
+function createPoint(constructor: typeof Point, x: number, y: number): Point {
+    return new constructor(x, y);
+}
 
 export {}

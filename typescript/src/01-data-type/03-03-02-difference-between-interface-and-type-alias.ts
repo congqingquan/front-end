@@ -2,9 +2,21 @@
 
 // ================ 交叉、并集类型更多内容见：00-operation.type-intersection.ts / 00-operation.type-union.ts ================
 
-// 1. 如果为了类型结构合并，使用 interface 重复定义的特性来实现。注意：属性同名但不同类型会报错。
-// 2. 如果为了避免类型冲突，并合并 type，使用 type TypeA & TyepB 这样的交叉类型来实现。注意：不同于 interface，属性同名但不同类型，会对类型取 & 后作为属性的最终类型。
-// 3. interface 与 type 之间可以结合
+/**
+  使用类型别名的场景：
+  - 定义基本类型的别名时，使用type
+  - 定义元组类型时，使用type
+  - 定义函数类型时，使用type
+  - 定义联合类型时，使用type
+  - 定义映射类型时，使用type
+
+  使用接口的场景：
+  - 需要利用接口自动合并特性的时候，使用interface
+  - 定义对象类型且无需使用type的时候，使用interface
+ */
+
+
+// interface 与 type 之间的结合操作
 
 // 1) interface: extends 或 重复定义
 interface Name {

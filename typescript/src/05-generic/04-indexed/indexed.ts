@@ -35,7 +35,6 @@ interface Person {
     isRich: boolean,
     [props: string]: string | number | boolean | null
 }
-
 // case 1: 获取接口属性的类型
 type NameFieldType = Person['name'] // type NameFieldType = string
 
@@ -48,6 +47,16 @@ type PersonNameAgeTypes = Person[NameOrAgeType] // type PersonNameAgeTypes = str
 
 // case 2: 获取接口所有属性的类型
 type PersonTypes = Person[keyof Person] // type PersonTypes = string | number | boolean | null
+
+// case 2. 获取接口所有属性的类型：索引访问类型集合 keyof 关键字: Type[kyeof Type] 的方式获取所有属性的类型，不会获取到 never 类型。但是单独获取 never 类型的属性类型，可以正确的获取到
+interface NeverTest {
+    name: never,
+    age: number,
+    bool: boolean
+}
+let nt1: NeverTest[keyof NeverTest] // let aT: number | boolean
+// 但是单独获取 never 类型的属性类型，可以正确的获取到
+let nt2: NeverTest['name'] // let nt2: never
 
 // case 3: 获取索引签名的类型
 type PersonIndexSignatureTypes = Person[string]
@@ -63,7 +72,10 @@ type IndexSignatureType = typeof obj[string] // type IndexSignatureType = string
 // case 5: 获取对象属性的类型
 type NamePropType = typeof obj.name; // type NamePropType = string
 
-// case 6: 获取数组元素的类型
+// case 6: 根据对象获取获取对象所有属性的类型 (由于有索引访问类型，所以最终返回的是并不是接口的所有字段名的联合类型，而是 string | number)
+let pap: keyof typeof obj
+
+// case 7: 获取数组元素的类型
 const personArr = [
     {
         name: "CQQ1",

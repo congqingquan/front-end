@@ -11,8 +11,10 @@
 
 // 必写部分：
 // 1. [P in K] 类似 js 中的 forin，将 K 中所有的 keynames 作为属性声明到映射对象中
-// 2. P 的类型：string | number | symbol，即对象属性名支持的类型
-// 3. T 每个属性的类型
+// 2. P 的类型：string | number | symbol，即对象属性名支持的类型.
+// 3. K 的类型：string | number | symbol | literal type，即对象属性名支持的类型. 相比索引访问类型，还支持字面量类型.
+// let s: { [props: ""]: string } // An index signature parameter type cannot be a literal type or generic type. Consider using a mapped object type instead.ts(1337)
+// 4. T 每个属性的类型
 
 type Item = { a: string, b: number, c: boolean }
 
@@ -27,6 +29,9 @@ let m3: M3 = { a: "CQQ", b: 24} // { a: string; b: number; }
 
 type M4 = { [P in keyof Item]: Item[P] } 
 let m4: M4 = { a: "CQQ", b: 24, c: false } // { a: string; b: number; c: boolean; }
+
+type M5 = { [P in keyof Item as Item[P] extends string ? P : never ]: Item[P] } // { a: string; }
+let m5: M5 = { a: "CQQ" }
 
 // 2. 映射对象的所有属性语法：
 // type Mapped<T> = { +readonly [P in keyof T]+?: T[P]}
@@ -91,6 +96,36 @@ interface ExcludePropEntity {
 }
 let excludePropEntityRes: RemoveProp<ExcludePropEntity, "name"> = {
     age: 0
+}
+
+// 3.3) 排除特定类型的属性
+
+// 不使用 as 子句的实现方式
+type RemovePropByTypes1<T, PropType> = {
+    // 3. 获取 T 中非移除类型的所有属性及其类型
+    [P in 
+        // 1. [P in keyof T] : T[P] extends PropType ? never : P } : 利用 extends 将符合移除类型的属性的属性值类型改为 never，非移除类型的属性的类型改为字面量类型，值为属性名
+        // 2. {...}[keyof T] : 获取所有非 never 类型的属性，由于前一步已经将属性类型转为了字面量类型，所以此时正确获取到了排除了移除类型属性的属性名
+        { [P in keyof T]: T[P] extends PropType ? never : P }[keyof T]
+    ]: T[P]
+}
+
+// 使用 as 子句的优化方式
+type RemovePropByTypes2<T, PropType> = {
+    // 利用 as 子句返回 never 不计入收集的特性，排除特定类型的属性
+    [P in keyof T as T[P] extends PropType ? never : P]: T[P]
+}
+
+let a: RemovePropByTypes1<{ name: string, gender: string, age: number }, string> = {
+    age: 0
+}
+
+// 4. 实现特定类型的任意属性名的对象结构类型
+type MyRecord<T, K extends keyof any> = { [P in K ]: T }
+// K 触发了分配条件类型
+let r1: MyRecord<string, "name" | "gender"> = {
+    name: "",
+    gender: ""
 }
 
 export {}

@@ -41,6 +41,23 @@ function getProperty<T, K extends keyof T>(t: T, k: K): T[K] {
 console.log(getProperty({ name: "CQQ" }, "name"));
 // console.log(getProperty({ name: "CQQ" }, "age")); // compile error
 
-// 4. 类型映射：详细见 06-mapped-type
+// 4. extends keyof any 实现限定类型参数的类型为 string | number | symbol，这是因为 keyof 表示获取对象的 key
+// 所以限定的类型集合范围为 string | number | symbol 类型下的所有值
+type AnyKey1<K extends keyof any> = K
+type AnyKey2<K extends string | number | symbol> = K
+let ak1: AnyKey1<"">
+let ak2: AnyKey2<1>
+// let ak3: AnyKey1<true> // Type 'boolean' does not satisfy the constraint 'string | number | symbol'.ts(2344)
+
+// 5. keyof 应用在枚举上: 获取所有枚举项的名称
+enum HttpMethod {
+    GET,
+    POST,
+    PUT
+}
+
+let hme: keyof typeof HttpMethod // let hme: "GET" | "POST" | "PUT"
+
+// 5. 类型映射：详细见 06-mapped-type
 
 export { };

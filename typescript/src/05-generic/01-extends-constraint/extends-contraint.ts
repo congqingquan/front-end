@@ -32,15 +32,20 @@ let lengthType1: { length: number } = []
 let lengthType2: LengthType<number[] | string> = []
 let lengthType3: LengthType<number[] | string> = "CQQ"
 
-// 1.3) 联合类型纬度约束类型范围: 联合类型在 extends 检查时，与结构类型的比较关系正好相反：窄类型是宽类型的子类型，因为多个值的联合中一定包含了单个值，单个值肯定包含不了多个值。
-// 1.3.1) 反向匹配
+// 1.3) 联合类型、数据类型纬度约束类型范围:
+// 1.3.1 联合类型: 联合类型在 extends 检查时，与结构类型的比较关系正好相反：窄类型是宽类型的子类型，因为多个值的联合中一定包含了单个值，单个值肯定包含不了多个值。
+// 1) 反向匹配
 type UnionTypeConstraint = "A" | "B" extends "A" ? string : number // type UnionTypeConstraint = number
-// 1.3.2) 触发为分配条件类型，正向匹配
+// 2) 触发为分配条件类型，正向匹配
 type UnionTypeConstraint2<T> = T extends "A" | "B" ? T : never
 let unionTypeConstraint2L: UnionTypeConstraint2<"A" | "C"> // let unionTypeConstraint2L: "A"
 // 流程：
 // 'A'  extends 'A' | 'B' ? 'A' : never      >   'A' 
 // 'C'  extends 'A' | 'B' ? 'B' : never      >   never
+// 1.3.2 数据类型: 数据类型在 extends 检查时，与结构类型的比较关系正好相反：具体的单个、多个数值是数据类型的子类型，因为数据类型的类型集合范围，就是包含所有该类型的值
+type NumberDataType<T extends number> = T
+let ndt1: NumberDataType<1>
+let ndt2: NumberDataType<1 | 2>
 
 // 1.4) 函数维度约束类型范围
 // 1.4.1
