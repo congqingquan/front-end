@@ -4,7 +4,7 @@
 type ToString<T> = T extends string | number | bigint | boolean | null | undefined ? `${T}` : never
 let tv: ToString<"CQQ" | 24 | true | 100n | null | undefined> = "CQQ" // let tv: "undefined" | "CQQ" | "null" | "true" | "24" | "100"
 
-// 2. 联合类型在模板字面量中的生成逻辑: 叉积
+// 2. 联合类型在模板字面量中的生成逻辑: 叉积（与 分配条件类型 处理裸类型参数逻辑一致）
 type ConcatString<S1 extends string, S2 extends string> = `${S1}-${S2}`
 let cs1: ConcatString<"top" | "bottom", "left" | "right"> = "top-left" // let cs1: "top-left" | "top-right" | "bottom-left" | "bottom-right"
 

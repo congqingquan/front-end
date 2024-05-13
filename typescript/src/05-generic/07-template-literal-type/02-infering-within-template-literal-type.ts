@@ -1,5 +1,9 @@
 // 条件类型 + infer 推断在字面量类型中的应用
 
+// 0. 匹配规则：当模版字符串中包含了参数变量 + 匹配文本，那么可以过 infer 语句提取出完整的类型参数中的参数变量部分的字面量。
+type T<T extends string | number | bigint | boolean | null | undefined> = T extends `${infer T}RestStr` ? T : never;
+let t: T<"CqqRestStr"> // let t: "Cqq"
+
 // 1. 第二个字符大写
 type SecondUppercase<T extends string> = T extends `${infer First}${infer Second}${infer Rest}` ? `${First}${Uppercase<Second>}${Rest}`: never
 let secondUppercase: SecondUppercase<"abc"> = "aBc" // let secondUppercase: "aBc"
@@ -27,6 +31,9 @@ let getterFuncs: Getters<User> = {
     }
 }
 
-// 3. 
+// 3. 字面量规则校验
+type Direction = "top" | "bottom" | "left" | "right"
+type InferDirection<T extends string | number | bigint | boolean | null | undefined> = T extends `${T}${Capitalize<Direction>}` ? T : never
+let id1: InferDirection<"marginTop">
 
 export {}

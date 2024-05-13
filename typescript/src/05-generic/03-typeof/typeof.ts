@@ -43,7 +43,9 @@ const FNReturnValue = FN()
 // 但可以将返回值赋值给一个变量后，在获取变量的类型
 type FNActualReturnType = typeof FNReturnValue;
 
-// 3. 使用案例
+// 3. typeof 应用在重载函数上，获取的时最终实现函数的类型
+
+// 4. 使用案例
 class Point {
     x: number;
     y: number;
