@@ -1,5 +1,5 @@
-const About = () => {
+const Dashboard = () => {
     return <div>This is dashboard page</div>;
 };
 
-export default About;
+export default Dashboard;

@@ -6,7 +6,8 @@ import Home from '@/views/Home';
 import Dashboard from '@/views/Dashboard';
 import Page11 from '@/views/Page11';
 import Page12 from '@/views/Page12';
-// 懒加载
+import Login from "@/views/Login.tsx";
+// 懒加载: 只有进入 About 路由时，才会加载 About 组件
 const About = lazy(() => import('@/views/About'));
 
 // 提取懒加载函数: 懒加载的函数必须被包装在 Suspense 组件内
@@ -49,8 +50,12 @@ const Router = createBrowserRouter([
             },
         ]
     },
+    {
+        path: '/login',
+        element: lazyLoad(<Login />),
+    },
 
-    // 2. 通过 * 通配符的方式，设置路由错误时的访问元素。与配置 '/' 路径的 errorElement 的方式效果相同。
+    // 2. 通过 * 通配符的方式，设置路由错误时的访问元素(重定向到 '/' 路由)。与配置 '/' 路径的 errorElement 的方式效果相同。
     {
         path: "*",
         element: <Navigate to="/" />,

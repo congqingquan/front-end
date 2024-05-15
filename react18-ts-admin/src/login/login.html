@@ -6,70 +6,69 @@
     <link rel="stylesheet" href="./login.css">
 </head>
 <body>
-    <script>
-        let isToLogin = true;
+<script>
+    let isToLogin = true;
 
-        function handleTopCardClick(isToLoginFlag) {
-            let btnElement = document.getElementsByClassName('top-card-button')[0];
-            let topCardElement = document.getElementsByClassName('top-card')[0];
-            topCardElement.classList.remove("top-card-2-login", "top-card-2-register");
+    function handleTopCardClick(isToLoginFlag) {
+        let btnElement = document.getElementsByClassName('top-card-button')[0];
+        let topCardElement = document.getElementsByClassName('top-card')[0];
+        topCardElement.classList.remove("top-card-2-login", "top-card-2-register");
 
-            let leftCardElement = document.getElementsByClassName('left-card')[0];
-            leftCardElement.classList.remove("left-card-hidden", "left-card-show");
+        let leftCardElement = document.getElementsByClassName('left-card')[0];
+        leftCardElement.classList.remove("left-card-hidden", "left-card-show");
 
-            let rightCardElement = document.getElementsByClassName('right-card')[0];
-            rightCardElement.classList.remove("right-card-hidden", "right-card-show");
+        let rightCardElement = document.getElementsByClassName('right-card')[0];
+        rightCardElement.classList.remove("right-card-hidden", "right-card-show");
 
-            console.log(isToLoginFlag)
+        console.log(isToLoginFlag)
 
-            if (isToLoginFlag) {
-                btnElement.innerHTML = "注册"
-                topCardElement.classList.add("top-card-2-login")
-                leftCardElement.classList.add("left-card-show")
-                rightCardElement.classList.add("right-card-hidden")
-                // document.getElementsByClassName('top-card')[0].style.animationName = 'toLogin'
-            } else {
-                btnElement.innerHTML = "登录"
-                topCardElement.classList.add("top-card-2-register")
-                leftCardElement.classList.add("left-card-hidden")
-                rightCardElement.classList.add("right-card-show")
-                // document.getElementsByClassName('top-card')[0].style.animationName = 'toRegister'
-            }
-            isToLogin = isToLoginFlag;
+        if (isToLoginFlag) {
+            btnElement.innerHTML = "注册"
+            topCardElement.classList.add("top-card-2-login")
+            leftCardElement.classList.add("left-card-show")
+            rightCardElement.classList.add("right-card-hidden")
+            // document.getElementsByClassName('top-card')[0].style.animationName = 'toLogin'
+        } else {
+            btnElement.innerHTML = "登录"
+            topCardElement.classList.add("top-card-2-register")
+            leftCardElement.classList.add("left-card-hidden")
+            rightCardElement.classList.add("right-card-show")
+            // document.getElementsByClassName('top-card')[0].style.animationName = 'toRegister'
         }
-    </script>
-    <div class="container">
-        <div class="top-card">
-            <div class="top-card-title">你好~</div>
-            <div class="top-card-content">请登录或注册新账号，以使用网站的所有功能</div>
-            <button class="top-card-button" onclick="handleTopCardClick(!isToLogin)">注册</button>
-        </div>
+        isToLogin = isToLoginFlag;
+    }
+</script>
+<div class="container">
+    <div class="top-card">
+        <div class="top-card-title">你好~</div>
+        <div class="top-card-content">请登录或注册新账号，以使用网站的所有功能</div>
+        <button class="top-card-button" onclick="handleTopCardClick(!isToLogin)">注册</button>
+    </div>
 
-        <div class="left-card">
+    <div class="left-card">
+        <form>
             <div class="title">登陆</div>
-            <div class="left-tip">请输入登陆信息</div>
+            <div class="tip">请输入登陆信息</div>
 
-            <input type="text" placeholder="Username" />
-            <input type="password" placeholder="Password" />
+            <input type="text" placeholder="Username"/>
+            <input type="password" placeholder="Password"/>
 
             <button>登陆</button>
-        </div>
-
-        <div class="right-card">
-            <div class="form">
-                <form>
-                    <div class="title">注册账户</div>
-                    <div class="left-tip">请输入注册信息</div>
-
-                    <input type="text" placeholder="Username" />
-                    <input type="email" placeholder="Email" />
-                    <input type="password" placeholder="Password" />
-
-                    <button>注册</button>
-                    <div>Don't Have An Account? Signup</div>
-                </form>
-            </div>
-        </div>
+        </form>
     </div>
+
+    <div class="right-card">
+        <form>
+            <div class="title">注册账户</div>
+            <div class="tip">请输入注册信息</div>
+
+            <input type="text" placeholder="Username"/>
+            <input type="email" placeholder="Email"/>
+            <input type="password" placeholder="Password"/>
+
+            <button>注册</button>
+        </form>
+    </div>
+</div>
 </body>
 </html>

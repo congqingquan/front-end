@@ -1,5 +1,4 @@
 img {
-  // 禁止图片拖动
   -webkit-user-drag: none;
 }
 
@@ -7,8 +6,9 @@ img {
   font-family: "alimama-font";
   src: url("@/assets/font/alimama/AlimamaShuHeiTi-Bold.ttf") format("opentype");
 }
-
 * {
   margin: 0;
   padding: 0;
 }
+
+/*# sourceMappingURL=global.css.map */

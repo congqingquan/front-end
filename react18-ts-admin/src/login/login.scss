@@ -66,10 +66,7 @@ input {
 }
 
 .title {
-  position: absolute;
-  top: 15%;
-
-  font-size: 40px;
+  font-size: 30px;
   font-weight: bold;
 }
 
@@ -188,16 +185,18 @@ input {
     position: relative;
     z-index: 2;
 
-    .left-title {
-      position: absolute;
-      top: 15%;
+    form {
+      width: 80%;
+      height: 90%;
 
-      font-size: 40px;
-      font-weight: bold;
-    }
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
 
-    > * {
-      margin: 15px;
+      > * {
+        margin: 10px;
+      }
     }
   }
 
@@ -214,33 +213,17 @@ input {
     opacity: 0;
     transform: translateX(-100%);
 
-    .form {
+    form {
       width: 80%;
       height: 90%;
 
-      border: 1px solid green;
-
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
 
-      .input {
-        margin: 10px 0;
-
-        input {
-          border: 0;
-          width: 230px;
-          height: 25px;
-        }
-      }
-
-      .title {
-        margin: 5px;
-      }
-
-      .login {
-        text-align: center;
-        font-size: 30px;
+      > * {
+        margin: 10px;
       }
     }
   }

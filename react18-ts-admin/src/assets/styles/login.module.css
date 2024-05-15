@@ -1,47 +1,13 @@
-@font-face {
-  font-family: "alimama-font";
-  src: url("../assets/font/alimama/AlimamaShuHeiTi-Bold.ttf") format("opentype");
-}
-* {
-  margin: 0;
-  padding: 0;
-  font-family: alimama-font, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", Segoe UI Symbol, "Noto Color Emoji";
-}
-
-body {
+.login-page {
   height: 100vh;
   width: 100vw;
   background: linear-gradient(135deg, #c850c0, #4158d0);
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: alimama-font, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", Segoe UI Symbol, "Noto Color Emoji" !important;
 }
-
-button {
-  width: 25%;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  padding: 8px 20px;
-  background-color: #7514ce;
-  cursor: pointer;
-}
-
-input {
-  width: 60%;
-  height: 5%;
-  border: 1px solid gray;
-  border-radius: 50px;
-  padding: 5px 20px;
-  background: #ffffff;
-}
-
-.title {
-  font-size: 30px;
-  font-weight: bold;
-}
-
-.container {
+.login-page .container {
   width: 60vw;
   height: 70vh;
   display: flex;
@@ -50,15 +16,36 @@ input {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   position: absolute;
 }
-.container .top-card-2-login {
+.login-page .container button {
+  width: 25%;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 8px 20px;
+  background-color: #7514ce;
+  cursor: pointer;
+}
+.login-page .container input {
+  width: 60%;
+  height: 5%;
+  border: 1px solid gray;
+  border-radius: 50px;
+  padding: 5px 20px;
+  background: #ffffff;
+}
+.login-page .container .title {
+  font-size: 30px;
+  font-weight: bold;
+}
+.login-page .container .top-card-2-login {
   border-radius: 120px 30px 30px 120px !important;
   transform: translateX(2%) !important;
 }
-.container .top-card-2-register {
+.login-page .container .top-card-2-register {
   border-radius: 30px 120px 120px 30px !important;
   transform: translateX(-102%) !important;
 }
-.container .top-card {
+.login-page .container .top-card {
   width: 50%;
   height: 100%;
   display: flex;
@@ -76,15 +63,15 @@ input {
   transition: 0.5s;
   transition-property: transform, border-radius;
 }
-.container .top-card > * {
+.login-page .container .top-card > * {
   margin: 15px;
 }
-.container .top-card .top-card-title {
+.login-page .container .top-card .top-card-title {
   font-weight: bolder;
   font-size: 40px;
   letter-spacing: 3px;
 }
-.container .top-card .top-card-button {
+.login-page .container .top-card .top-card-button {
   width: 30%;
   cursor: pointer;
   font-weight: bolder;
@@ -94,28 +81,28 @@ input {
   border: 1px solid white;
   border-radius: 50px;
 }
-.container .left-card-hidden {
+.login-page .container .left-card-hidden {
   transition: opacity 0.2s, transform 0.5s;
   opacity: 0;
   transform: translateX(100%);
   z-index: 0 !important;
 }
-.container .left-card-show {
+.login-page .container .left-card-show {
   transition: opacity 0s 0.2s, transform 0.5s;
   opacity: 1;
   transform: translateX(0);
 }
-.container .right-card-hidden {
+.login-page .container .right-card-hidden {
   transition: opacity 0.2s, transform 0.5s;
   opacity: 0;
   transform: translateX(-100%) !important;
 }
-.container .right-card-show {
+.login-page .container .right-card-show {
   transition: opacity 0s 0.2s, transform 0.5s;
   opacity: 1 !important;
   transform: translateX(0) !important;
 }
-.container .left-card {
+.login-page .container .left-card {
   width: 50%;
   height: 100%;
   border-radius: 50px;
@@ -126,7 +113,7 @@ input {
   position: relative;
   z-index: 2;
 }
-.container .left-card form {
+.login-page .container .left-card form {
   width: 80%;
   height: 90%;
   display: flex;
@@ -134,10 +121,10 @@ input {
   justify-content: center;
   align-items: center;
 }
-.container .left-card form > * {
+.login-page .container .left-card form > * {
   margin: 10px;
 }
-.container .right-card {
+.login-page .container .right-card {
   width: 50%;
   height: 100%;
   display: flex;
@@ -147,7 +134,7 @@ input {
   opacity: 0;
   transform: translateX(-100%);
 }
-.container .right-card form {
+.login-page .container .right-card form {
   width: 80%;
   height: 90%;
   display: flex;
@@ -155,8 +142,8 @@ input {
   justify-content: center;
   align-items: center;
 }
-.container .right-card form > * {
+.login-page .container .right-card form > * {
   margin: 10px;
 }
 
-/*# sourceMappingURL=login.css.map */
+/*# sourceMappingURL=login.module.css.map */
