@@ -7,18 +7,32 @@
 </head>
 <body>
     <script>
-        let isToLogin = false;
+        let isToLogin = true;
 
         function handleTopCardClick(isToLoginFlag) {
+            let btnElement = document.getElementsByClassName('top-card-button')[0];
+            let topCardElement = document.getElementsByClassName('top-card')[0];
+            topCardElement.classList.remove("top-card-2-login", "top-card-2-register");
+
+            let leftCardElement = document.getElementsByClassName('left-card')[0];
+            leftCardElement.classList.remove("left-card-hidden", "left-card-show");
+
+            let rightCardElement = document.getElementsByClassName('right-card')[0];
+            rightCardElement.classList.remove("right-card-hidden", "right-card-show");
+
+            console.log(isToLoginFlag)
+
             if (isToLoginFlag) {
-                document.getElementsByClassName('top-card-button')[0].innerHTML = '登陆'
-                document.getElementsByClassName('top-card')[0].style.borderRadius = '50px 120px 120px 50px'
-                document.getElementsByClassName('top-card')[0].style.transform = 'translateX(-100%)'
+                btnElement.innerHTML = "注册"
+                topCardElement.classList.add("top-card-2-login")
+                leftCardElement.classList.add("left-card-show")
+                rightCardElement.classList.add("right-card-hidden")
                 // document.getElementsByClassName('top-card')[0].style.animationName = 'toLogin'
             } else {
-                document.getElementsByClassName('top-card-button')[0].textContent = '注册'
-                document.getElementsByClassName('top-card')[0].style.borderRadius = '120px 50px 50px 120px'
-                document.getElementsByClassName('top-card')[0].style.transform = 'translateX(0)'
+                btnElement.innerHTML = "登录"
+                topCardElement.classList.add("top-card-2-register")
+                leftCardElement.classList.add("left-card-hidden")
+                rightCardElement.classList.add("right-card-show")
                 // document.getElementsByClassName('top-card')[0].style.animationName = 'toRegister'
             }
             isToLogin = isToLoginFlag;
@@ -26,38 +40,32 @@
     </script>
     <div class="container">
         <div class="top-card">
-            <div class="top-card-title">你好，新朋友</div>
-            <div class="top-card-content">注册你的个人详细信息，以使用网站的所有功能</div>
+            <div class="top-card-title">你好~</div>
+            <div class="top-card-content">请登录或注册新账号，以使用网站的所有功能</div>
             <button class="top-card-button" onclick="handleTopCardClick(!isToLogin)">注册</button>
         </div>
 
-        <div class="left">
-            <div class="left-title">登陆</div>
+        <div class="left-card">
+            <div class="title">登陆</div>
             <div class="left-tip">请输入登陆信息</div>
+
             <input type="text" placeholder="Username" />
             <input type="password" placeholder="Password" />
+
             <button>登陆</button>
         </div>
 
-        <div class="right">
+        <div class="right-card">
             <div class="form">
                 <form>
-                    <div class="login">Log in</div>
-                    <div class="input email-input">
-                        <div class="title">Email address</div>
-                        <label>
-                            <input type="text" />
-                        </label>
-                    </div>
-                    <div class="input password-input">
-                        <div class="title">Password</div>
-                        <label>
-                            <input type="text" />
-                        </label>
-                    </div>
+                    <div class="title">注册账户</div>
+                    <div class="left-tip">请输入注册信息</div>
 
-                    <button>Log in</button>
+                    <input type="text" placeholder="Username" />
+                    <input type="email" placeholder="Email" />
+                    <input type="password" placeholder="Password" />
 
+                    <button>注册</button>
                     <div>Don't Have An Account? Signup</div>
                 </form>
             </div>

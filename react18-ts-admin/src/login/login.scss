@@ -24,25 +24,61 @@ body {
   align-items: center;
 }
 
-@keyframes toLogin {
-  0% {
-    border-radius: 120px 50px 50px 120px;
-  }
-  100% {
-    border-radius: 50px 120px 120px 50px;
-    transform: translateX(-100%);
-  }
+//@keyframes toLogin {
+//  0% {
+//    border-radius: 120px 50px 50px 120px;
+//  }
+//  100% {
+//    border-radius: 50px 120px 120px 50px;
+//    transform: translateX(-100%);
+//  }
+//}
+//
+//@keyframes toRegister {
+//  0% {
+//    border-radius: 50px 120px 120px 50px;
+//  }
+//  100% {
+//    border-radius: 120px 50px 50px 120px;
+//    transform: translateX(0);
+//  }
+//}
+
+// common start
+
+button {
+  width: 25%;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 8px 20px;
+  background-color: #7514ce;
+  cursor: pointer;
 }
 
-@keyframes toRegister {
-  0% {
-    border-radius: 50px 120px 120px 50px;
-  }
-  100% {
-    border-radius: 120px 50px 50px 120px;
-    transform: translateX(0);
-  }
+input {
+  width: 60%;
+  height: 5%;
+  border: 1px solid gray;
+  border-radius: 50px;
+  padding: 5px 20px;
+  background: #ffffff;
 }
+
+.title {
+  position: absolute;
+  top: 15%;
+
+  font-size: 40px;
+  font-weight: bold;
+}
+
+//input::placeholder {
+//  position: relative;
+//  left: 10px;
+//}
+
+// common end
 
 .container {
   width: 60vw;
@@ -50,10 +86,20 @@ body {
   display: flex;
 
   background: #ffffff;
-  border-radius: 50px;
+  border-radius: 30px;
   box-shadow: 0 0 10px rgba(0, 0, 0, .5);
 
   position: absolute;
+
+  .top-card-2-login {
+    border-radius: 120px 30px 30px 120px !important;
+    transform: translateX(2%) !important;
+  }
+
+  .top-card-2-register {
+    border-radius: 30px 120px 120px 30px !important;
+    transform: translateX(-102%) !important;
+  }
 
   .top-card {
     width: 50%;
@@ -65,17 +111,19 @@ body {
     align-items: center;
     position: absolute;
     right: 0;
+    transform: translateX(2%);
 
     color: white;
-    border-radius: 120px 50px 50px 120px;
+    border-radius: 120px 30px 30px 120px;
     box-shadow: 0 0 10px rgba(0, 0, 0, .5);
     background: linear-gradient(135deg, #c850c0, #4158d0);
 
-    z-index: 2;
+    z-index: 3;
 
+    //animation-name: toRegister;
     //animation-duration: 1s;
     //animation-fill-mode: forwards;
-    transition: 1s;
+    transition: .5s;
     transition-property: transform, border-radius;
 
     > * {
@@ -101,7 +149,32 @@ body {
     }
   }
 
-  .left {
+  .left-card-hidden {
+    transition: opacity .2s, transform .5s;
+    opacity: 0;
+    transform: translateX(100%);
+    z-index: 0 !important;
+  }
+
+  .left-card-show {
+    transition: opacity 0s .2s, transform .5s;
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .right-card-hidden {
+    transition: opacity .2s, transform .5s;
+    opacity: 0;
+    transform: translateX(-100%) !important;
+  }
+
+  .right-card-show {
+    transition: opacity 0s .2s, transform .5s;
+    opacity: 1 !important;
+    transform: translateX(0) !important;
+  }
+
+  .left-card {
     width: 50%;
     height: 100%;
 
@@ -113,6 +186,7 @@ body {
     align-items: center;
 
     position: relative;
+    z-index: 2;
 
     .left-title {
       position: absolute;
@@ -123,41 +197,22 @@ body {
     }
 
     > * {
-      margin: 10px;
-    }
-
-    button {
-      width: 25%;
-      color: white;
-      border: none;
-      border-radius: 10px;
-      padding: 8px 20px;
-      background-color: #7514ce;
-      cursor: pointer;
-    }
-
-    input {
-      width: 60%;
-      height: 5%;
-      border: 1px solid gray;
-      border-radius: 50px;
-      padding: 5px 20px;
-      background: #ffffff;
-    }
-
-    input::placeholder {
-      //position: relative;
-      //left: 10px;
+      margin: 15px;
     }
   }
 
-  .right {
+  .right-card {
     width: 50%;
     height: 100%;
 
     display: flex;
     justify-content: center;
     align-items: center;
+
+    z-index: 1;
+
+    opacity: 0;
+    transform: translateX(-100%);
 
     .form {
       width: 80%;
