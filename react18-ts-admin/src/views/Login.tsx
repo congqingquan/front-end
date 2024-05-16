@@ -3,6 +3,8 @@ import LoginStyle from "@/assets/styles/login.module.scss";
 
 const Login: React.FC = () => {
 
+    // ==================================== 绑定数据 ====================================
+
     let [isToLogin, setIsToLogin] = useState(true);
     let topCardBtn = useRef<HTMLButtonElement | null>(null);
     let topCardBox = useRef<HTMLDivElement | null>(null);
@@ -10,6 +12,9 @@ const Login: React.FC = () => {
     let leftCardBox = useRef<HTMLDivElement | null>(null);
     let rightCardBox = useRef<HTMLDivElement | null>(null);
 
+    // ==================================== 函数 ====================================
+
+    // 处理点击切换登录、注册页
     const handleTopCardClick: (isToLogin: boolean) => void = (isToLoginFlag) => {
         topCardBox.current!.classList.remove(LoginStyle.topCard2Login, LoginStyle.topCard2Register);
         leftCardBox.current!.classList.remove(LoginStyle.leftCardShow, LoginStyle.leftCardHidden);

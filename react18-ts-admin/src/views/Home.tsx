@@ -21,7 +21,7 @@ const Home: React.FC = () => {
 
     return (
         <>
-            <Switch onChange={(checked) => changeTheme(checked)}/>
+            {/* <Switch onChange={(checked) => changeTheme(checked)}/> */}
 
             <Layout style={{minHeight: '100vh'}}>
                 {/* 左侧边栏 */}
