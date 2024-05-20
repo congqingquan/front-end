@@ -1,12 +1,12 @@
 import React, { lazy } from 'react';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 
-import Welcome from '@/views/Welcome';
 import Home from '@/views/Home';
+import Login from "@/views/Login";
+import Welcome from '@/views/Welcome';
 import Dashboard from '@/views/Dashboard';
 import Page11 from '@/views/Page11';
 import Page12 from '@/views/Page12';
-import Login from "@/views/Login.tsx";
 // 懒加载: 只有进入 About 路由时，才会加载 About 组件
 const About = lazy(() => import('@/views/About'));
 

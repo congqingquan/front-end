@@ -1,5 +1,5 @@
 import React, {useRef, useState} from "react";
-import LoginStyle from "@/assets/styles/login.module.scss";
+import LoginStyle from "./login.module.scss";
 
 const Login: React.FC = () => {
 
