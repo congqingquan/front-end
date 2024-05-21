@@ -5,6 +5,10 @@ function identity<T>(arg: T): T {
   return arg;
 }
 
+interface Func {
+  identity<T>(t: T): T;
+}
+
 // 1. 函数类型定义中添加泛型
 let genFn1: <T>(arg: T) => T = identity;
 

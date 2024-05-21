@@ -1,5 +1,10 @@
-import React, {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import LoginStyle from "./login.module.scss";
+import * as API from "@/api/Admin/API";
+import AdminAxiosExt, { R } from "@/api/Admin/Axios";
+import Router from "@/router";
+import { useLocation } from "react-router-dom";
+import { message } from "antd";
 
 const Login: React.FC = () => {
 
@@ -11,6 +16,11 @@ const Login: React.FC = () => {
 
     let leftCardBox = useRef<HTMLDivElement | null>(null);
     let rightCardBox = useRef<HTMLDivElement | null>(null);
+
+    let [loginFormData, setLoginFormData] = useState<API.SysUserLoginDTO>({
+        username: '',
+        password: ''
+    })
 
     // ==================================== 函数 ====================================
 
@@ -35,6 +45,32 @@ const Login: React.FC = () => {
         setIsToLogin(isToLoginFlag);
     }
 
+    // 监听登录表单字段值改变
+    const handleLoginFormChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        let {name, value} = event.target;
+        setLoginFormData(prevState => ({...prevState, [name]: value}))
+    }
+
+    // 登录表单点击提交
+    const handleSubmitLoginForm = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        AdminAxiosExt.postJSON<R>(API.SYS_USER_LOGIN, loginFormData).then(response => {
+            if (response.data.code === 200) {
+                localStorage.setItem("AdminToken", JSON.stringify(response.data.data))
+                Router.navigate("/")
+            }
+        })
+    }
+
+    // ==================================== 登录提示 ====================================
+
+    let tip = new URLSearchParams(useLocation().search).get("tip");
+    useEffect(() => {
+        if (tip === 'y') {
+            message.error('前端拦截：登录过期，请先登录');
+        }
+    }, [tip]);
+
     return (
         <div className={LoginStyle.loginPage}>
             <div className={LoginStyle.container}>
@@ -45,12 +81,24 @@ const Login: React.FC = () => {
                 </div>
 
                 <div ref={leftCardBox} className={LoginStyle.leftCard}>
-                    <form>
+                    <form onSubmit={(event) => handleSubmitLoginForm(event)}>
                         <div className={LoginStyle.title}>登陆</div>
                         <div className="tip">请输入登陆信息</div>
 
-                        <input type="text" placeholder="Username"/>
-                        <input type="password" placeholder="Password"/>
+                        <input 
+                            type="text" 
+                            placeholder="Username"
+                            name="username"
+                            value={loginFormData.username}
+                            onChange={(event) => handleLoginFormChange(event)}
+                        />
+                        <input 
+                            type="password" 
+                            placeholder="Password"
+                            name="password"
+                            value={loginFormData.password}
+                            onChange={(event) => handleLoginFormChange(event)}
+                        />
 
                         <button>登陆</button>
                     </form>

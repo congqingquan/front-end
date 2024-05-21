@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script type="module">
+    // 每次通过 import 时，会获取首次初始化的对象。而不是每次 import 都会创建一个新对象
+    import Time1 from './js/11-module-1.js';
+    import Time2 from './js/11-module-1.js';
+    console.log(Time1);
+    console.log(Time2);
+</script>
+</body>
+</html>

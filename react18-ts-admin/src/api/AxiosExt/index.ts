@@ -1,0 +1,20 @@
+import { Axios, AxiosResponse, AxiosRequestConfig } from "axios";
+
+interface AxiosInstanceExt extends Axios {
+    postJSON: <T = any, R = AxiosResponse<T>, D = any>(url: string, data?: D) => Promise<R>;
+}
+
+class AxiosExt extends Axios implements AxiosInstanceExt {
+    constructor(config?: AxiosRequestConfig) {
+        super(config);
+    }
+    postJSON: <T = any, R = AxiosResponse<T, any>, D = any>(url: string, data?: D | undefined) => Promise<R> = (url, data) => {
+        return this.post(url, JSON.stringify(data), {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+    }
+}
+
+export default AxiosExt;

@@ -1,8 +1,8 @@
 import React, { lazy } from 'react';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 
-import Home from '@/views/Home';
-import Login from "@/views/Login";
+import Home from '@/views/Admin/Home';
+import Login from "@/views/Admin/Login";
 import Welcome from '@/views/Welcome';
 import Dashboard from '@/views/Dashboard';
 import Page11 from '@/views/Page11';
@@ -52,7 +52,7 @@ const Router = createBrowserRouter([
     },
     {
         path: '/login',
-        element: lazyLoad(<Login />),
+        element: <Login />
     },
 
     // 2. 通过 * 通配符的方式，设置路由错误时的访问元素(重定向到 '/' 路由)。与配置 '/' 路径的 errorElement 的方式效果相同。

@@ -10,11 +10,14 @@ import Router from '@/router';
 import { RouterProvider } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from '@/store';
+import RouterAuth from './router/RouterAuth';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <Provider store={store}>
         <React.StrictMode>
-            <RouterProvider router={Router}></RouterProvider>
+            <RouterAuth>
+                <RouterProvider router={Router}></RouterProvider>
+            </RouterAuth>
         </React.StrictMode>
     </Provider>,
 );
