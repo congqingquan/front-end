@@ -3,9 +3,9 @@ import { message } from "antd";
 import AxiosExt from "../AxiosExt";
 import Router from '@/router';
 
-export interface R {
+export interface ApiResult<D> {
     code: number,
-    data: string,
+    data: D,
     message: string
 }
 

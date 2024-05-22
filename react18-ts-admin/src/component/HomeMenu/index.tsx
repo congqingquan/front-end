@@ -1,117 +1,90 @@
-import AdminAxiosExt, { R } from '@/api/Admin/Axios';
+import AdminAxiosExt, { ApiResult } from '@/api/Admin/Axios';
 import * as API from '@/api/Admin/API';
-import { DesktopOutlined, PieChartOutlined } from '@ant-design/icons';
-import { Menu, type MenuProps, MenuTheme } from 'antd';
+import { Menu, MenuTheme } from 'antd';
 import { ItemType } from 'antd/es/menu/hooks/useItems';
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { convertNode } from '@/util/TreeUtils';
 
-// 表示：MenuItem 为 MenuProps 类型的 items 数组属性中的元素的类型
-type MenuItem = Required<MenuProps>['items'][number];
+interface MenuItem {
+    label: string,
+    key: string,
+    icon: string,
+    children?: MenuItem[]
+}
 
-interface HomeMenuProps {
-    theme: MenuTheme;
-};
+const HomeMenu: React.FC<{ theme: MenuTheme }> = (props: { theme: MenuTheme }) => {
 
-const items2: MenuItem[] = [
-    {
-        label: 'About',
-        key: '/about',
-        icon: <PieChartOutlined />,
-    },
-    {
-        label: 'Dashboard',
-        key: '/dashboard',
-        icon: <PieChartOutlined />,
-    },
-    {
-        label: 'Page1',
-        key: '/page1',
-        icon: <DesktopOutlined />,
-        children: [
-            {
-                label: 'Page1-1',
-                key: '/page1/page11',
-                icon: <DesktopOutlined />,
-            },
-            {
-                label: 'Page1-2',
-                key: '/page1/page12',
-                icon: <DesktopOutlined />,
-            },
-        ],
-    },
-    {
-        label: 'Page2',
-        key: '/page2',
-        icon: <DesktopOutlined />,
-        children: [
-            {
-                label: 'Page2-1',
-                key: '/page2/page21',
-                icon: <DesktopOutlined />,
-            },
-            {
-                label: 'Page2-2',
-                key: '/page2/page22',
-                icon: <DesktopOutlined />,
-            },
-        ],
-    },
-];
+    const location = useLocation();
+    const pathname: string = location.pathname;
 
-const HomeMenu: React.FC<HomeMenuProps> = (props: HomeMenuProps) => {
-
-    // TODO: 完成菜单渲染
-    const [items, setItems] = useState<MenuItem[]>([]);
-    useEffect(() => {
-        AdminAxiosExt.postJSON<R>(API.SYS_MENU_TREE, {})
-                     .then(response => {
-                        console.log(response);
-                        // setItems(response.data.data)
-                     });
-    }, [])
-
+    // 菜单展开 (点击有子菜单的菜单会触发，将已打开的所有菜单节点的 key 传递进来，且被点击的节点在元素的最后一位)
+    const [openKeysArr, setOpenKeysArr] = useState<string[]>([pathname]);
+    const handleOnOpenChange = (openKeys: string[]) => {
+        setOpenKeysArr([openKeys[openKeys.length - 1]]);
+    };
 
     // 根据路由选中菜单
-    const location = useLocation();
-    // 根据路由展开菜单
-    const pathname: string = location.pathname;
-    let defaultOpenKey: string = '';
-    itemsLoop: for (let i = 0; i < items.length; i++) {
-        const root: ItemType = items[i];
-        if (!root) {
-            continue;
+    const expendMenuByLocation = (): string | undefined => {
+
+        itemsLoop: for (let i = 0; i < items.length; i++) {
+            const root: ItemType = items[i];
+            if (!root) {
+                continue;
+            }
+
+            const stack: ItemType[] = [root];
+
+            while (stack.length > 0) {
+                const item: ItemType | undefined = stack.pop();
+                if (!item || !item['children'] || item['children'].length <= 0) {
+                    continue itemsLoop;
+                }
+                const children: MenuItem[] = item['children'];
+                if (children.find((mi) => mi?.key === pathname)) {
+                    return item.key as string;
+                }
+                children.forEach((c) => stack.push(c));
+            }
         }
 
-        const stack: Array<ItemType> = [root];
-
-        while (stack.length > 0) {
-            const item: ItemType | undefined = stack.pop();
-            if (!item || !Object.prototype.hasOwnProperty.call(item, 'children') || item['children'].length <= 0) {
-                continue itemsLoop;
-            }
-            const children: MenuItem[] = item['children'] as MenuItem[];
-            if (children.find((mi) => mi?.key === pathname)) {
-                defaultOpenKey = item.key as string;
-                break itemsLoop;
-            }
-            children.forEach((c) => stack.push(c));
-        }
+        // console.log('defaultOpenKey: ' + defaultOpenKey);
     }
-    // console.log('defaultOpenKey: ' + defaultOpenKey);
 
-    // 菜单点击 (点击没有子菜单的菜单会触发)
+    // 菜单点击 (点击有路由(key)的菜单会触发)
     const navigate = useNavigate();
     const handleClickMenu: (event: { key: string }) => void = (event: { key: string }) => {
         navigate(event.key);
     };
 
-    // 菜单展开 (点击有子菜单的菜单会触发)
-    const [openKeysArr, setOpenKeysArr] = useState([defaultOpenKey]);
-    const handleOnOpenChange = (openKeys: string[]) => {
-        setOpenKeysArr([openKeys[openKeys.length - 1]]);
-    };
+    // 渲染菜单
+    const [items, setItems] = useState<MenuItem[]>([]);
+    useEffect(() => {
+        AdminAxiosExt.postJSON<ApiResult<API.SysMenuTreeVO[]>>(API.SYS_MENU_TREE, {})
+            .then(response => {
+                // 1. 组装数据
+                const sysMenuTreeVos: API.SysMenuTreeVO[] = response.data.data;
+                const sysMenuTree: MenuItem[] = convertNode(
+                    sysMenuTreeVos,
+                    sourceNode => (
+                        {
+                            label: sourceNode.name,
+                            key: sourceNode.url,
+                            icon: sourceNode.icon
+                        } as MenuItem
+                    ),
+                    sourceNode => sourceNode.children,
+                    targetNode => {
+                        targetNode.children = [];
+                        return targetNode.children;
+                    }
+                );
+                // console.log(sysMenuTree);
+                setItems(sysMenuTree);
+                // 2. 根据路由展开菜单                
+            });
+    }, [])
+
     return (
         <Menu
             theme={props.theme}

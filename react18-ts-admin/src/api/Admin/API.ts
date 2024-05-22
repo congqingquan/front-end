@@ -4,6 +4,9 @@ export interface SysUserLoginDTO {
     username: string
     password: string   
 }
+export interface SysUserLoginVO {
+    token: string  
+}
 
 // 左侧菜单
 export const SYS_MENU_TREE = "/admin/b/sysMenu/tree"
@@ -25,6 +28,10 @@ export interface SysMenuTreeVO {
     updateUser: string
     updateTime: Date
     children: (SysMenuTreeVO)[]
+
+    // 适配 antd menu
+    lable: string // name
+    key: string // url
 }
 
 // export const MENU_TREE = ""

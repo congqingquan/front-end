@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from "react";
 import LoginStyle from "./login.module.scss";
 import * as API from "@/api/Admin/API";
-import AdminAxiosExt, { R } from "@/api/Admin/Axios";
+import AdminAxiosExt, { ApiResult } from "@/api/Admin/Axios";
 import Router from "@/router";
 import { useLocation } from "react-router-dom";
 import { message } from "antd";
@@ -54,7 +54,7 @@ const Login: React.FC = () => {
     // 登录表单点击提交
     const handleSubmitLoginForm = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        AdminAxiosExt.postJSON<R>(API.SYS_USER_LOGIN, loginFormData).then(response => {
+        AdminAxiosExt.postJSON<ApiResult<API.SysUserLoginVO>>(API.SYS_USER_LOGIN, loginFormData).then(response => {
             if (response.data.code === 200) {
                 localStorage.setItem("AdminToken", JSON.stringify(response.data.data))
                 Router.navigate("/")

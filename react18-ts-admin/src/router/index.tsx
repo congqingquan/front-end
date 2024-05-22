@@ -4,11 +4,8 @@ import { createBrowserRouter, Navigate } from 'react-router-dom';
 import Home from '@/views/Admin/Home';
 import Login from "@/views/Admin/Login";
 import Welcome from '@/views/Welcome';
-import Dashboard from '@/views/Dashboard';
-import Page11 from '@/views/Page11';
-import Page12 from '@/views/Page12';
-// 懒加载: 只有进入 About 路由时，才会加载 About 组件
-const About = lazy(() => import('@/views/About'));
+import SysUser from '@/views/SysUser';
+import SysRole from '@/views/SysRole';
 
 // 提取懒加载函数: 懒加载的函数必须被包装在 Suspense 组件内
 const lazyLoad: (component: React.JSX.Element) => React.ReactNode = (component: React.JSX.Element) => (
@@ -33,20 +30,12 @@ const Router = createBrowserRouter([
                 element: <Welcome />,
             },
             {
-                path: '/about',
-                element: lazyLoad(<About />),
+                path: '/system/users',
+                element: lazyLoad(<SysUser />),
             },
             {
-                path: '/dashboard',
-                element: lazyLoad(<Dashboard />),
-            },
-            {
-                path: '/page1/page11',
-                element: lazyLoad(<Page11 />),
-            },
-            {
-                path: '/page1/page12',
-                element: lazyLoad(<Page12 />),
+                path: '/system/roles',
+                element: lazyLoad(<SysRole />),
             },
         ]
     },
