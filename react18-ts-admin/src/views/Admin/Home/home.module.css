@@ -1,0 +1,50 @@
+.logo-box {
+  height: 64px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: alimama-font, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", Segoe UI Symbol, "Noto Color Emoji" !important;
+  color: white;
+  font-size: 18px;
+  transition: 0.2s;
+  transition-property: transform;
+}
+
+.logo-box-show {
+  transition-delay: 0.2s;
+  transform: translateX(0);
+}
+
+.logo-box-hidden {
+  transition-delay: 0.1s;
+  transform: translateX(-100%);
+}
+
+.logo-icon-box {
+  width: 100%;
+  height: 64px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  opacity: 0;
+  transition: 0.2s;
+  transition-property: opacity;
+}
+
+.logo-icon-box img {
+  width: 55%;
+  height: 70%;
+}
+
+.logo-icon-box-show {
+  transition-delay: 0.3s;
+  opacity: 1;
+}
+
+.logo-icon-box-hidden {
+  transition-delay: 0.1s;
+  opacity: 0;
+}
+
+/*# sourceMappingURL=home.module.css.map */

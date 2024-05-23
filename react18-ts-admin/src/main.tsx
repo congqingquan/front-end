@@ -14,10 +14,10 @@ import RouterAuth from './router/RouterAuth';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <Provider store={store}>
-        <React.StrictMode>
+        {/* <React.StrictMode> */}
             <RouterAuth>
                 <RouterProvider router={Router}></RouterProvider>
             </RouterAuth>
-        </React.StrictMode>
+        {/* </React.StrictMode> */}
     </Provider>,
 );

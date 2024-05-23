@@ -1,11 +1,11 @@
-import React, { lazy } from 'react';
+import React from 'react';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 
 import Home from '@/views/Admin/Home';
 import Login from "@/views/Admin/Login";
-import Welcome from '@/views/Welcome';
-import SysUser from '@/views/SysUser';
-import SysRole from '@/views/SysRole';
+import Index from '@/views/Admin';
+import User from '@/views/Admin/User';
+import Role from '@/views/Admin/Role';
 
 // 提取懒加载函数: 懒加载的函数必须被包装在 Suspense 组件内
 const lazyLoad: (component: React.JSX.Element) => React.ReactNode = (component: React.JSX.Element) => (
@@ -27,15 +27,15 @@ const Router = createBrowserRouter([
             // 3. index page: 设置 '/' 路径默认页
             {
                 index: true,
-                element: <Welcome />,
+                element: <Index />,
             },
             {
                 path: '/system/users',
-                element: lazyLoad(<SysUser />),
+                element: lazyLoad(<User />),
             },
             {
                 path: '/system/roles',
-                element: lazyLoad(<SysRole />),
+                element: lazyLoad(<Role />),
             },
         ]
     },

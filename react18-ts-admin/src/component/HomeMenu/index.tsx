@@ -1,64 +1,47 @@
 import AdminAxiosExt, { ApiResult } from '@/api/Admin/Axios';
 import * as API from '@/api/Admin/API';
 import { Menu, MenuTheme } from 'antd';
-import { ItemType } from 'antd/es/menu/hooks/useItems';
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { convertNode } from '@/util/TreeUtils';
+import { breakableForeach, convertNode } from '@/util/TreeUtils';
+import AntdIcon from '@/component/Icon/AntdIcon';
 
 interface MenuItem {
     label: string,
     key: string,
-    icon: string,
+    icon?: React.ReactNode,
     children?: MenuItem[]
 }
 
 const HomeMenu: React.FC<{ theme: MenuTheme }> = (props: { theme: MenuTheme }) => {
 
+    const navigate = useNavigate();
+    const [openMenuKeysArr, setOpenMenuKeysArr] = useState<string[]>([]);
+    const [items, setItems] = useState<MenuItem[]>([]);
     const location = useLocation();
     const pathname: string = location.pathname;
 
-    // 菜单展开 (点击有子菜单的菜单会触发，将已打开的所有菜单节点的 key 传递进来，且被点击的节点在元素的最后一位)
-    const [openKeysArr, setOpenKeysArr] = useState<string[]>([pathname]);
+    // 菜单展开
+    
+    // 选中菜单项时触发
+    const handleOnSelect = (keyPath: string[]) => {
+        console.log("keyPath ======== " + keyPath);
+    };
+
+    // 展开菜单时触发: 思考如何监听到取消折叠，并解析当前路径
+    // 1. 点击有子菜单的菜单会触发，将已打开的所有菜单节点的 key 传递进来
+    // 2. 存储的是一个 MenuDictionary 节点的 key
     const handleOnOpenChange = (openKeys: string[]) => {
-        setOpenKeysArr([openKeys[openKeys.length - 1]]);
-    };
-
-    // 根据路由选中菜单
-    const expendMenuByLocation = (): string | undefined => {
-
-        itemsLoop: for (let i = 0; i < items.length; i++) {
-            const root: ItemType = items[i];
-            if (!root) {
-                continue;
-            }
-
-            const stack: ItemType[] = [root];
-
-            while (stack.length > 0) {
-                const item: ItemType | undefined = stack.pop();
-                if (!item || !item['children'] || item['children'].length <= 0) {
-                    continue itemsLoop;
-                }
-                const children: MenuItem[] = item['children'];
-                if (children.find((mi) => mi?.key === pathname)) {
-                    return item.key as string;
-                }
-                children.forEach((c) => stack.push(c));
-            }
-        }
-
-        // console.log('defaultOpenKey: ' + defaultOpenKey);
+        // if (openKeys.length == 0) {
+        //     setOpenMenuKeysArr([]);
+        // } else {
+        //     setOpenMenuKeysArr(openKeys);
+        // }
+        setOpenMenuKeysArr(openKeys);
+        console.log("openKeys ======== " + JSON.stringify(openKeys));
     }
-
-    // 菜单点击 (点击有路由(key)的菜单会触发)
-    const navigate = useNavigate();
-    const handleClickMenu: (event: { key: string }) => void = (event: { key: string }) => {
-        navigate(event.key);
-    };
-
+    
     // 渲染菜单
-    const [items, setItems] = useState<MenuItem[]>([]);
     useEffect(() => {
         AdminAxiosExt.postJSON<ApiResult<API.SysMenuTreeVO[]>>(API.SYS_MENU_TREE, {})
             .then(response => {
@@ -70,7 +53,7 @@ const HomeMenu: React.FC<{ theme: MenuTheme }> = (props: { theme: MenuTheme }) =
                         {
                             label: sourceNode.name,
                             key: sourceNode.url,
-                            icon: sourceNode.icon
+                            icon: sourceNode.icon ? <AntdIcon name={sourceNode.icon}/>: null,
                         } as MenuItem
                     ),
                     sourceNode => sourceNode.children,
@@ -79,11 +62,36 @@ const HomeMenu: React.FC<{ theme: MenuTheme }> = (props: { theme: MenuTheme }) =
                         return targetNode.children;
                     }
                 );
-                // console.log(sysMenuTree);
                 setItems(sysMenuTree);
-                // 2. 根据路由展开菜单                
+
+                // console.log("effect: " + JSON.stringify(items.map(node => node.key)));
+                
+                // 2. 根据路由展开菜单
+                setOpenMenuKeysArr(getOpenMenyKyesArrByLocation(sysMenuTree));
             });
-    }, [])
+        // 菜单折叠
+    }, []);
+
+    // 根据路由选中菜单
+    const getOpenMenyKyesArrByLocation = (items: MenuItem[]): string[] => {
+        const nodeLink: string[] = [];
+        breakableForeach(items, item => item.children || [], (pathNodes, item) => {
+            const match = item.key === pathname;
+            if (match) {
+                nodeLink.push(...pathNodes.map(node => node.key));
+            }
+            return match;
+        });
+        return nodeLink;
+    }
+
+    // console.log("items: " + JSON.stringify(items.map(node => node.key)) + "\t open: " + JSON.stringify(openMenuKeysArr));
+    
+
+    // 菜单点击 (点击有路由(key)的菜单会触发)
+    const handleClickMenu: (event: { key: string }) => void = (event: { key: string }) => {
+        navigate(event.key);
+    };
 
     return (
         <Menu
@@ -91,8 +99,9 @@ const HomeMenu: React.FC<{ theme: MenuTheme }> = (props: { theme: MenuTheme }) =
             mode="inline"
             items={items}
             defaultSelectedKeys={[pathname]}
-            openKeys={openKeysArr}
+            openKeys={openMenuKeysArr}
             onClick={(event) => handleClickMenu(event)}
+            onSelect={({keyPath}) => handleOnSelect(keyPath)}
             onOpenChange={(openKeys) => handleOnOpenChange(openKeys)}
         />
     );
