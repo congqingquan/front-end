@@ -5,6 +5,7 @@ import AdminAxiosExt, { ApiResult } from "@/api/Admin/Axios";
 import Router from "@/router";
 import { useLocation } from "react-router-dom";
 import { message } from "antd";
+import Constants from "@/constants";
 
 const Login: React.FC = () => {
 
@@ -56,7 +57,7 @@ const Login: React.FC = () => {
         event.preventDefault();
         AdminAxiosExt.postJSON<ApiResult<API.SysUserLoginVO>>(API.SYS_USER_LOGIN, loginFormData).then(response => {
             if (response.data.code === 200) {
-                localStorage.setItem("AdminToken", JSON.stringify(response.data.data))
+                localStorage.setItem(Constants.LOGINED_USER_INFO_KEY, JSON.stringify(response.data.data))
                 Router.navigate("/")
             }
         })

@@ -1,10 +1,11 @@
 import React, { useRef, useState } from 'react';
-import { Breadcrumb, Layout, MenuTheme, Switch, theme as andTheme } from 'antd';
+import { Breadcrumb, Layout, MenuTheme, theme as andTheme } from 'antd';
 import { Outlet } from 'react-router-dom';
-import HomeMenu from '@/component/HomeMenu';
+import HomeMenu, { HomeMenuRef } from '@/component/HomeMenu';
 import IndexStyle from './home.module.scss';
 import ReactLogo from '@/assets/picture/react192.png';
 import classNames from 'classnames';
+import HomeAvatar from '@/component/HomeAvatar';
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -27,9 +28,9 @@ const Home: React.FC = () => {
         [IndexStyle.logoIconBoxShow]: false,
         [IndexStyle.logoIconBoxHidden]: false,
     });
+    let homeMenuRef = useRef<HomeMenuRef>(null);
     const [collapsed, setCollapsed] = useState(false);
-    const handleCollapsed = (collapsed: boolean) => {
-        setCollapsed(collapsed);
+    const toggleCollapsed = (collapsed: boolean) => {
         setLogBoxClassNames(prev => ({
             ...prev,
             [IndexStyle.logoBoxShow]: !collapsed,
@@ -40,10 +41,18 @@ const Home: React.FC = () => {
             [IndexStyle.logoIconBoxShow]: collapsed,
             [IndexStyle.logoIconBoxHidden]: !collapsed
         }));
+
+        setCollapsed(collapsed);
+
+        // 测试父组件调用子组件
+        if (!collapsed) {
+            homeMenuRef.current?.toggleCollapsedCallback();
+        }
     }
 
     // 面包屑
     const [breadCrumbItems,] = useState([{ title: 'User' }, { title: 'Bill' }])
+
     // 主题
     const [theme, setTheme] = useState<MenuTheme>('dark');
     const changeTheme = (checked: boolean) => {
@@ -56,7 +65,7 @@ const Home: React.FC = () => {
 
             <Layout style={{ minHeight: '100vh' }}>
                 {/* 左侧边栏 */}
-                <Sider collapsible collapsed={collapsed} onCollapse={(value) => handleCollapsed(value)} theme={theme}>
+                <Sider collapsible collapsed={collapsed} theme={theme} onCollapse={() => toggleCollapsed(!collapsed)}>
                     {/* 左侧logo */}
                     <div ref={logoIconBox} className={classNames(logIconBoxClassNames)}>
                         <img src={ReactLogo} />
@@ -65,12 +74,14 @@ const Home: React.FC = () => {
                         Cortana Admin
                     </div>
                     {/* 左侧菜单 */}
-                    <HomeMenu theme={theme}></HomeMenu>
+                    <HomeMenu theme={theme} ref={homeMenuRef} collasped={collapsed}></HomeMenu>
                 </Sider>
                 {/* 右边内容 */}
                 <Layout>
                     {/* 右边顶部 */}
-                    <Header style={{ padding: 0, background: colorBgContainer }} />
+                    <Header style={{ padding: 0, background: colorBgContainer }}>
+                        <HomeAvatar></HomeAvatar>
+                    </Header>
                     {/* 右边内容 */}
                     <Content style={{ margin: '0 16px' }}>
                         {/* 面包屑 */}
@@ -97,4 +108,3 @@ const Home: React.FC = () => {
 };
 
 export default Home;
-
