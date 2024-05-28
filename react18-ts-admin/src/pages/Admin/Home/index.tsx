@@ -1,11 +1,12 @@
-import React, { useRef, useState } from 'react';
-import { Breadcrumb, Layout, MenuTheme, theme as andTheme } from 'antd';
+import React, { useEffect, useRef, useState } from 'react';
+import { Breadcrumb, Layout, MenuTheme, Spin, theme as andTheme } from 'antd';
 import { Outlet } from 'react-router-dom';
 import HomeMenu, { HomeMenuRef } from '@/component/HomeMenu';
 import IndexStyle from './home.module.scss';
 import ReactLogo from '@/assets/picture/react192.png';
 import classNames from 'classnames';
 import HomeAvatar from '@/component/HomeAvatar';
+import { ExpandOutlined } from '@ant-design/icons';
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -59,6 +60,10 @@ const Home: React.FC = () => {
         setTheme(checked ? 'dark' : 'light');
     };
 
+    // 加载页面
+    // let [loading, setLoading] = useState(false);
+    // <Spin spinning={loading} fullscreen></Spin>
+
     return (
         <>
             {/* <Switch onChange={(checked) => changeTheme(checked)}/> */}
@@ -80,6 +85,9 @@ const Home: React.FC = () => {
                 <Layout>
                     {/* 右边顶部 */}
                     <Header style={{ padding: 0, background: colorBgContainer }}>
+                    {/* <div className={HomeAvatarStyle.}>
+                        <ExpandOutlined />
+                    </div> */}
                         <HomeAvatar></HomeAvatar>
                     </Header>
                     {/* 右边内容 */}

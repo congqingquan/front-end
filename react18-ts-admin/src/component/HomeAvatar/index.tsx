@@ -1,23 +1,38 @@
-import { AntDesignOutlined } from "@ant-design/icons";
-import { Row, Col, Space, Avatar } from "antd";
-import React from "react";
-import Constants from "@/constants";
-import UserUtils, { User } from "@/util/UserUtils";
+import { AntDesignOutlined, ExpandOutlined } from '@ant-design/icons';
+import { Space, Avatar, Dropdown, MenuProps, Button } from 'antd';
+import React from 'react';
+import UserUtils, { User } from '@/util/UserUtils';
+import HomeAvatarStyle from './home-avatar.module.scss';
+import Router from "@/router";
 
 const HomeAvatar: React.FC = () => {
-    
     let user: User | null = UserUtils.getUser();
 
+
+    const dropdownItems: MenuProps['items'] = [
+        {
+            key: 'logout',
+            label: "登出",
+            onClick: _ => {
+                UserUtils.logout();
+                Router.navigate("/login");
+            }
+        },
+    ];
+
     return (
-        <Row >
-            <Col span={24} offset={22}>
-                <Space>
-                    <Avatar icon={<AntDesignOutlined />} />
-                    {user?.name}
-                </Space>
-            </Col>
-        </Row>
+        <Dropdown
+                menu={{ items: dropdownItems }}
+                placement="bottom"
+                arrow={{ pointAtCenter: true }}
+                overlayStyle={{ textAlign: 'center' }}
+            >
+                <div className={HomeAvatarStyle.avatarBox}>
+                    <Avatar icon={<AntDesignOutlined />} shape="square" />
+                    <div>{user?.name}</div>
+                </div>
+            </Dropdown>
     );
-}
+};
 
 export default HomeAvatar;

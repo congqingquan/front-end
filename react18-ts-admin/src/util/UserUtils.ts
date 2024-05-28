@@ -26,6 +26,10 @@ const UserUtils = {
             return null;
         }
         return JSON.parse(userInfoJson).info;
+    },
+
+    logout(): void {
+        localStorage.removeItem(Constants.LOGINED_USER_INFO_KEY);
     }
 }
 

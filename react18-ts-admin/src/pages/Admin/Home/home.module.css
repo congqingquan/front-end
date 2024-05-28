@@ -47,4 +47,11 @@
   opacity: 0;
 }
 
+.header-box {
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
 /*# sourceMappingURL=home.module.css.map */

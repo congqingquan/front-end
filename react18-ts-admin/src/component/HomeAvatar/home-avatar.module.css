@@ -1,0 +1,19 @@
+.avatar-box {
+  height: 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px 5px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.4s;
+  transition-property: background-color;
+}
+.avatar-box:hover {
+  background-color: rgb(245, 241, 241);
+}
+.avatar-box * {
+  margin: 4px;
+}
+
+/*# sourceMappingURL=home-avatar.module.css.map */

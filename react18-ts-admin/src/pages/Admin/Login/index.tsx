@@ -1,10 +1,10 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import LoginStyle from "./login.module.scss";
 import * as API from "@/api/Admin/API";
 import AdminAxiosExt, { ApiResult } from "@/api/Admin/Axios";
 import Router from "@/router";
 import { useLocation } from "react-router-dom";
-import { message } from "antd";
+import { Spin, message } from "antd";
 import Constants from "@/constants";
 
 const Login: React.FC = () => {
@@ -48,8 +48,8 @@ const Login: React.FC = () => {
 
     // 监听登录表单字段值改变
     const handleLoginFormChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        let {name, value} = event.target;
-        setLoginFormData(prevState => ({...prevState, [name]: value}))
+        let { name, value } = event.target;
+        setLoginFormData(prevState => ({ ...prevState, [name]: value }))
     }
 
     // 登录表单点击提交
@@ -63,6 +63,12 @@ const Login: React.FC = () => {
         })
     }
 
+    // 加载页面
+    let [loading, setLoading] = useState(true);
+    useEffect(() => {
+        setTimeout(() => setLoading(false), 500);
+    });
+
     // ==================================== 登录提示 ====================================
 
     let tip = new URLSearchParams(useLocation().search).get("tip");
@@ -73,52 +79,55 @@ const Login: React.FC = () => {
     }, [tip]);
 
     return (
-        <div className={LoginStyle.loginPage}>
-            <div className={LoginStyle.container}>
-                <div ref={topCardBox} className={LoginStyle.topCard}>
-                    <div className={LoginStyle.topCardTitle}>你好~</div>
-                    <div className="top-card-content">请登录或注册新账号，以使用网站的所有功能</div>
-                    <button ref={topCardBtn} className={LoginStyle.topCardButton} onClick={() => handleTopCardClick(!isToLogin)}>注册</button>
-                </div>
+        <>
+            <Spin spinning={loading} fullscreen />
+            <div className={LoginStyle.loginPage}>
+                <div className={LoginStyle.container}>
+                    <div ref={topCardBox} className={LoginStyle.topCard}>
+                        <div className={LoginStyle.topCardTitle}>你好~</div>
+                        <div className="top-card-content">请登录或注册新账号，以使用网站的所有功能</div>
+                        <button ref={topCardBtn} className={LoginStyle.topCardButton} onClick={() => handleTopCardClick(!isToLogin)}>注册</button>
+                    </div>
 
-                <div ref={leftCardBox} className={LoginStyle.leftCard}>
-                    <form onSubmit={(event) => handleSubmitLoginForm(event)}>
-                        <div className={LoginStyle.title}>登陆</div>
-                        <div className="tip">请输入登陆信息</div>
+                    <div ref={leftCardBox} className={LoginStyle.leftCard}>
+                        <form onSubmit={(event) => handleSubmitLoginForm(event)}>
+                            <div className={LoginStyle.title}>登陆</div>
+                            <div className="tip">请输入登陆信息</div>
 
-                        <input 
-                            type="text" 
-                            placeholder="Username"
-                            name="username"
-                            value={loginFormData.username}
-                            onChange={(event) => handleLoginFormChange(event)}
-                        />
-                        <input 
-                            type="password" 
-                            placeholder="Password"
-                            name="password"
-                            value={loginFormData.password}
-                            onChange={(event) => handleLoginFormChange(event)}
-                        />
+                            <input
+                                type="text"
+                                placeholder="Username"
+                                name="username"
+                                value={loginFormData.username}
+                                onChange={(event) => handleLoginFormChange(event)}
+                            />
+                            <input
+                                type="password"
+                                placeholder="Password"
+                                name="password"
+                                value={loginFormData.password}
+                                onChange={(event) => handleLoginFormChange(event)}
+                            />
 
-                        <button>登陆</button>
-                    </form>
-                </div>
+                            <button>登陆</button>
+                        </form>
+                    </div>
 
-                <div ref={rightCardBox} className={LoginStyle.rightCard}>
-                    <form>
-                        <div className={LoginStyle.title}>注册账户</div>
-                        <div className="tip">请输入注册信息</div>
+                    <div ref={rightCardBox} className={LoginStyle.rightCard}>
+                        <form>
+                            <div className={LoginStyle.title}>注册账户</div>
+                            <div className="tip">请输入注册信息</div>
 
-                        <input type="text" placeholder="Username"/>
-                        <input type="email" placeholder="Email"/>
-                        <input type="password" placeholder="Password"/>
+                            <input type="text" placeholder="Username" />
+                            <input type="email" placeholder="Email" />
+                            <input type="password" placeholder="Password" />
 
-                        <button>注册</button>
-                    </form>
+                            <button>注册</button>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
+        </>
     )
 }
 
