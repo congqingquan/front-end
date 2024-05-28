@@ -36,7 +36,7 @@
     //         }
     //     });
 
-    // 3. 根据需求在特定 then 中处理 reject 与 运行时异常，catch 进行兜底处理 (最推荐的方式)
+    // 3. 若同时存在 then.onRejected 回调与 catch.onRejected，只会执行一次处理。一般推荐 catch 进行兜底处理 (最推荐的方式)
     // new Promise((resolve, reject) => {
     //     // reject("rejected");
     //     throw new Error("thrown error");

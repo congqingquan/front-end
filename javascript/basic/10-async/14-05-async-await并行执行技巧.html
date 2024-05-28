@@ -34,20 +34,20 @@
     // 而不是等待前面的任务执行完毕后，在向微任务队列中注册下一个任务。
 
     // 1. 利用 await 等个每个任务的完成
-    // async function call() {
-    //     let promise1 = func1();
-    //     let promise2 = func2();
-    //     let func1Ret = await promise1;
-    //     let func2Ret = await promise2;
-    //     console.log(promise1, promise2);
-    //     console.log(func1Ret, func2Ret);
-    // }
+    async function call() {
+        let promise1 = func1();
+        let promise2 = func2();
+        let func1Ret = await promise1;
+        let func2Ret = await promise2;
+        console.log(promise1, promise2);
+        console.log(func1Ret, func2Ret);
+    }
 
     // 2. 利用 Promise.all 静态函数
-    async function call() {
-        let res = await Promise.all([func1(), func2()]);
-        console.log(res);
-    }
+    // async function call() {
+    //     let res = await Promise.all([func1(), func2()]);
+    //     console.log(res);
+    // }
     call();
 </script>
 </body>

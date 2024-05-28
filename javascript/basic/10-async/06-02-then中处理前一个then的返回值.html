@@ -10,8 +10,7 @@
 <body>
 <script type="text/javascript">
 
-    // 前一个 then 的返回值：Promise 类型
-    // 此时的关注点是：前一个 then 的返回的 Promise 的状态。根据前一个 then 返回的 Promise 的状态调用 onFulfilled / onRejected。
+    // 前一个 then 的返回值为 Promise 类型：根据前一个 then 返回的 Promise 的状态调用 onFulfilled / onRejected。
 
     let promise1 = new Promise((resolve, reject) => {
         resolve("resolved");
@@ -27,8 +26,7 @@
         }
     );
 
-    // 此时 promise2 的 then 就是内部返回的 Promise 的 then。
-    // 执行 onFulfilled 还是 onRejected 取决于内部返回的 Promise 的状态。
+    // 此时 promise2 的 then 就是内部返回的 Promise 的 then。执行 onFulfilled 还是 onRejected 取决于内部返回的 Promise 的状态。
 
     promise2.then(
         onFulfilled => {

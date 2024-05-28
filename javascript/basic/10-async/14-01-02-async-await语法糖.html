@@ -18,35 +18,34 @@
 
     // 实现：用同步方式写异步代码！！！异步代码不再多层嵌套导致复杂化！！！
 
-    // ============================================================================================
-
     // 1. async 修饰的函数最终会默认返回一个 promise 实例
     async function loadData() {
-        // 2. await 后的函数的返回值也需要是一个 promise，并且可以接收该 promise.then 中的 onfulfilled
+        // 2. await 后的函数的返回值也需要是一个 promise，并且可以接收该 promise.then 中的 onfulfilled 的参数，即 resolve 传递的参数
         //    如果 await 后的函数只是一个普通方法，就没有必要通过 await 修饰了
-        let number = await fetchRandomData(5);
+        let data = await fetchData();
         // 3. 返回值会被封装到返回的 promise 实例中的 PromiseResult
-        return number;
+        return data;
     }
 
     // 测试第一点
     let promise = loadData();
-    console.log(promise);
     promise.then(onFulfilled => {
         // 测试第三点
         console.log(onFulfilled);
     })
 
     // 测试第二点
-    function fetchRandomData(n) {
+    function fetchData() {
         return new Promise(resolve => {
-            resolve(Math.floor(Math.random() * ++n));
+            resolve("fetchData promise resolve param");
+            return "fetchData promise return value";
         });
     }
-    // fetchRandomData 可以利用 async 进行简写:
-    // async function fetchRandomData(n) {
-    //     return Math.floor(Math.random() * ++n);
+    // fetchData 可以利用 async 进行简写:
+    // async function fetchData() {
+    //     return "async fetchData func resolve param";
     // }
+
 </script>
 </body>
 </html>

@@ -17,16 +17,16 @@
     let promise2 = promise1.then(
             onFulfilled => {
                 return new Promise((resolve, reject) => {
-                    // resolve("resolved by returned Promise");
-                    reject("rejected by returned Promise");
+                    // resolve();
+                    reject();
                 }).then(
                     onFulfilled => {
-                        console.log("Returned promise: onFulfilled > ", onFulfilled)
+                        console.log("Returned promise: onFulfilled")
                         throw new Error("Promise1 error");
                     },
                     onRejected => {
-                        console.log("Returned promise: onRejected > ", onRejected);
-                        return "Returned by Promise1 inner Promise: onRejected";
+                        console.log("Returned promise: onRejected");
+                        return "Promise1 inner onRejected promise";
                     }
                 )
             }

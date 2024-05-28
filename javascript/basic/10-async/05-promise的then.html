@@ -9,19 +9,31 @@
 </head>
 <body>
 <script type="text/javascript">
+    // 1. 若设置的 then 没有消费结果，那么会一直传递，直到被消费
+    // 2. 重复消费时的回调参数，取决于前一个 then 的返回值
+    // 3. then 的返回值可分为：Promise 类型 & 非 Promise 类型，具体区别与执行流程后面有详细描述。
     let promise = new Promise((resolve, reject) => {
         // resolve("resolved");
         reject("rejected");
     })
-        // 1. 若设置的 then 没有消费结果，那么会一直传递，直到被消费。
         .then()
         .then()
         .then(
             onFulfilled => {
-                console.log("onFulfilled-1", onFulfilled)
+                console.log("onFulfilled-1 > ", onFulfilled)
+                return "Returned by onFulfilled-1"
             },
             onRejected => {
-                console.log("onRejected-1", onRejected)
+                console.log("onRejected-1 > ", onRejected)
+                return "Returned by onRejected-1"
+            }
+        )
+        .then(
+            onFulfilled => {
+                console.log("onFulfilled-2 > ", onFulfilled)
+            },
+            onRejected => {
+                console.log("onRejected-2 > ", onRejected)
             }
         );
 </script>
