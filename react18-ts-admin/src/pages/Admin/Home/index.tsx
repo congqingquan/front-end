@@ -1,12 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Breadcrumb, Layout, MenuTheme, Spin, theme as andTheme } from 'antd';
+import { Avatar, Breadcrumb, Button, Drawer, Dropdown, FloatButton, Layout, MenuProps, MenuTheme, Space, Spin, Switch, theme as andTheme } from 'antd';
 import { Outlet } from 'react-router-dom';
 import HomeMenu, { HomeMenuRef } from '@/component/HomeMenu';
 import IndexStyle from './home.module.scss';
 import ReactLogo from '@/assets/picture/react192.png';
 import classNames from 'classnames';
-import HomeAvatar from '@/component/HomeAvatar';
-import { ExpandOutlined } from '@ant-design/icons';
+import HomeStyle from "./home.module.scss";
+import { AntDesignOutlined, ExpandOutlined, FullscreenExitOutlined, FullscreenOutlined } from '@ant-design/icons';
+import UserUtils, { User } from '@/util/UserUtils';
+import Router from '@/router';
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -58,7 +60,45 @@ const Home: React.FC = () => {
     const [theme, setTheme] = useState<MenuTheme>('dark');
     const changeTheme = (checked: boolean) => {
         setTheme(checked ? 'dark' : 'light');
+        if (checked) {
+            logoBox.current!.style.color = 'white'
+        } else {
+            logoBox.current!.style.color = 'rgba(0, 0, 0, 0.75)'
+        }
     };
+
+    // 抽屉
+    const [open, setOpen] = useState(false);
+    const showDrawer = () => {
+        setOpen(true);
+    };
+    const onClose = () => {
+        setOpen(false);
+    };
+
+    // 头像
+    let user: User | null = UserUtils.getUser();
+    const dropdownItems: MenuProps['items'] = [
+        {
+            key: 'logout',
+            label: "退出登录",
+            onClick: _ => {
+                UserUtils.logout();
+                Router.navigate("/login");
+            }
+        }, {
+            key: 'changeTheme',
+            label: "切换主题",
+            onClick: _ => showDrawer()
+        },
+    ];
+
+    // 全屏
+    const [fullscreen, setFullscreen] = useState(false);
+    function handleFullscreen(state: boolean): void {
+        // TODO: 设置全屏
+        setFullscreen(state);
+    }
 
     // 加载页面
     // let [loading, setLoading] = useState(false);
@@ -66,8 +106,6 @@ const Home: React.FC = () => {
 
     return (
         <>
-            {/* <Switch onChange={(checked) => changeTheme(checked)}/> */}
-
             <Layout style={{ minHeight: '100vh' }}>
                 {/* 左侧边栏 */}
                 <Sider collapsible collapsed={collapsed} theme={theme} onCollapse={() => toggleCollapsed(!collapsed)}>
@@ -84,11 +122,32 @@ const Home: React.FC = () => {
                 {/* 右边内容 */}
                 <Layout>
                     {/* 右边顶部 */}
-                    <Header style={{ padding: 0, background: colorBgContainer }}>
-                    {/* <div className={HomeAvatarStyle.}>
-                        <ExpandOutlined />
-                    </div> */}
-                        <HomeAvatar></HomeAvatar>
+                    <Header className={HomeStyle.headerBox} style={{ padding: 0, background: colorBgContainer }}>
+                        <div className={HomeStyle.headerFullscreanBtnBox}>
+                            {
+                                fullscreen ?
+                                    <FullscreenOutlined style={{ fontSize: '28px' }} onClick={() => handleFullscreen(!fullscreen)} />
+                                    :
+                                    <FullscreenExitOutlined style={{ fontSize: '28px' }} onClick={() => handleFullscreen(!fullscreen)} />
+                            }
+                        </div>
+                        <Drawer onClose={onClose} open={open}>
+                            <Space>
+                                <p>主题风格</p>
+                                <Switch onChange={(checked) => changeTheme(!checked)} />
+                            </Space>
+                        </Drawer>
+                        <Dropdown
+                            menu={{ items: dropdownItems }}
+                            placement="bottom"
+                            arrow={{ pointAtCenter: true }}
+                            overlayStyle={{ textAlign: 'center' }}
+                        >
+                            <div className={HomeStyle.avatarBox}>
+                                <Avatar icon={<AntDesignOutlined />} shape="square" />
+                                <div>{user?.name}</div>
+                            </div>
+                        </Dropdown>
                     </Header>
                     {/* 右边内容 */}
                     <Content style={{ margin: '0 16px' }}>

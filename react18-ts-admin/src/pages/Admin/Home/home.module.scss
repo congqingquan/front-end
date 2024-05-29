@@ -15,16 +15,18 @@
   font-size: 18px;
 
   transition: .1s;
-  transition-property: transform;
+  transition-property: opacity, transform;
 }
 
 .logo-box-show {
   transition-delay: .2s;
+  opacity: 1;
   transform: translateX(0);
 }
 
 .logo-box-hidden {
   transition-delay: .1s;
+  opacity: 0;
   transform: translateX(100%);
 }
 
@@ -62,10 +64,43 @@
 // =============================================== Header box ===============================================
 
 .header-box {
-    height: 100%;
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    // position: relative;
-    // right: 3%;
+
+    * {
+      margin-right: 20px;
+    }
+    .header-fullscrean-btn-box {
+      margin-right: -25px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      cursor: pointer;
+    }
+}
+
+// =============================================== Avatar box ===============================================
+
+.avatar-box {
+  height: 75%;
+  width: auto;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 15px 5px;
+  border-radius: 10px;
+  cursor: pointer;
+  &:hover {
+      background-color: rgb(245, 241, 241);
+  }
+  transition: .4s;
+  transition-property: background-color;
+
+  * {
+      margin: 4px;
+  }
 }
