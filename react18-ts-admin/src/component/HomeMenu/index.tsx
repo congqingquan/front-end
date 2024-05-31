@@ -1,12 +1,16 @@
-import AdminAxiosExt, { ApiResult } from '@/api/Admin/Axios';
-import * as API from '@/api/Admin/API';
 import { Menu, MenuTheme } from 'antd';
 import React, { ForwardedRef, forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { breakableForeach, convertNode } from '@/util/TreeUtils';
-import AntdIcon from '@/component/Icon/AntdIcon';
+import { breakableForeach } from '@/util/TreeUtils';
+import * as TreeUtils from '@/util/TreeUtils';
+import { SelectInfo } from 'rc-menu/lib/interface';
+import * as API from '@/api/Admin/API'
+import Cache from '@/util/Cache';
+import Constants from '@/constants';
+import AdminAxiosExt, { ApiResult } from '@/api/Admin/Axios';
+import AntdIcon from '../Icon/AntdIcon';
 
-interface MenuItem {
+export interface MenuItem {
     label: string,
     key: string,
     icon?: React.ReactNode,
@@ -17,7 +21,11 @@ export interface HomeMenuRef {
     toggleCollapsedCallback: () => void
 }
 
-const HomeMenu = forwardRef((props: { theme: MenuTheme, collasped: boolean }, ref: ForwardedRef<HomeMenuRef>) => {
+const HomeMenu = forwardRef((props: {
+    theme: MenuTheme,
+    collasped: boolean,
+    selectMenuItemCallback: (item: MenuItem) => void
+}, ref: ForwardedRef<HomeMenuRef>) => {
 
     useImperativeHandle(ref, () => ({
         toggleCollapsedCallback() {
@@ -32,47 +40,50 @@ const HomeMenu = forwardRef((props: { theme: MenuTheme, collasped: boolean }, re
     const pathname: string = location.pathname;
     const [openMenuKeysArr, setOpenMenuKeysArr] = useState<string[]>([]);
     const [items, setItems] = useState<MenuItem[]>([]);
+    const [itemsMap, setItemsMap] = useState<Map<string, MenuItem>>(new Map());
 
     // 渲染菜单
     useEffect(() => {
-        async function fetchData() {
-            return await AdminAxiosExt.postJSON<ApiResult<API.SysMenuTreeVO[]>>(API.SYS_MENU_TREE, {})
-                .then(response => {
-                    // 1. 组装数据
-                    const sysMenuTreeVos: API.SysMenuTreeVO[] = response.data.data;
-                    const sysMenuTree: MenuItem[] = convertNode(
-                        sysMenuTreeVos,
-                        sourceNode => (
-                            {
-                                label: sourceNode.name,
-                                key: sourceNode.url,
-                                icon: sourceNode.icon ? <AntdIcon name={sourceNode.icon} /> : null
-                            } as MenuItem
-                        ),
-                        sourceNode => sourceNode.children,
-                        targetNode => {
-                            targetNode.children = [];
-                            return targetNode.children;
-                        }
-                    );
-                    setItems(sysMenuTree);
-
-                    // console.log("effect: " + JSON.stringify(items.map(node => node.key)));
-
-                    // 2. 根据路由展开菜单
-                    setOpenMenuKeysArr(getOpenMenyKyesArrByLocation(sysMenuTree));
+        AdminAxiosExt.postJSON<ApiResult<API.SysMenuTreeVO[]>>(API.SYS_MENU_TREE, {})
+            .then(response => {
+                const sysMenuTreeVos: API.SysMenuTreeVO[] = response.data.data;
+                const sysMenuTree: MenuItem[] = TreeUtils.convertNode(
+                    sysMenuTreeVos,
+                    sourceNode => (
+                        {
+                            label: sourceNode.name,
+                            key: sourceNode.url,
+                            icon: sourceNode.icon ? <AntdIcon name={sourceNode.icon} /> : null
+                        } as MenuItem
+                    ),
+                    sourceNode => sourceNode.children,
+                    targetNode => {
+                        targetNode.children = [];
+                        return targetNode.children;
+                    }
+                );
+                // TODO 1. 缓存数据
+                Cache.set(Constants.CACHE_KEY_MENU_ITEMS_TREE, sysMenuTree);
+                Cache.set(Constants.CACHE_KEY_MENU_ITEMS_MAP, null);
+                // 2. 设置 items/itemsMap state
+                setItems(sysMenuTree);
+                const itemsMap = new Map<string, MenuItem>();
+                TreeUtils.foreach(sysMenuTree, node => node.children ? node.children : [], (_, node) => {
+                    itemsMap.set(node.key, node);
                 });
-        }
-        fetchData();
+                setItemsMap(itemsMap);
+                // 3. 根据路由展开菜单
+                setOpenMenuKeysArr(getOpenMenyKyesArrByLocation(sysMenuTree));
+            });
     }, []);
-
+    // 折叠菜单时触发根据路由展开默认菜单
     useEffect(() => {
         setOpenMenuKeysArr(getOpenMenyKyesArrByLocation(items));
     }, [props.collasped]);
 
     // 选中菜单项时触发
-    const handleOnSelect = (keyPath: string[]) => {
-        // console.log("keyPath ======== " + keyPath);
+    const handleOnSelect = (info: SelectInfo) => {
+        props.selectMenuItemCallback(itemsMap.get(info.key) as MenuItem);
     };
 
     // 展开菜单时触发
@@ -80,7 +91,6 @@ const HomeMenu = forwardRef((props: { theme: MenuTheme, collasped: boolean }, re
     // 2. 存储的是一个 MenuDictionary 节点的 key
     const handleOnOpenChange = (openKeys: string[]) => {
         setOpenMenuKeysArr(openKeys);
-        // console.log("openKeys ======== " + JSON.stringify(openKeys));
     }
 
     // 根据路由选中菜单
@@ -113,7 +123,8 @@ const HomeMenu = forwardRef((props: { theme: MenuTheme, collasped: boolean }, re
                     defaultSelectedKeys={[pathname]}
                     openKeys={openMenuKeysArr}
                     onClick={(event) => handleClickMenu(event)}
-                    onSelect={({ keyPath }) => handleOnSelect(keyPath)}
+                    // onSelect={({ key, keyPath }) => handleOnSelect(key, keyPath)}
+                    onSelect={(event) => handleOnSelect(event)}
                     onOpenChange={(openKeys) => handleOnOpenChange(openKeys)}
                 />
             }

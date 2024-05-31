@@ -31,7 +31,7 @@ const Router = createBrowserRouter([
             },
             {
                 path: '/system/users',
-                element: lazyLoad(<User />),
+                element: <User />,
             },
             {
                 path: '/system/roles',

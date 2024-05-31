@@ -3,6 +3,7 @@
 export type Consumer<T> = (t: T) => void;
 export type Function<T, U> = (t: T) => U;
 export type Predicate<T> = (t: T) => boolean;
+export type Supplier<T> = () => T;
 
 // ================= Binary ===================
 

@@ -1,16 +1,22 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Avatar, Breadcrumb, Button, Drawer, Dropdown, FloatButton, Layout, MenuProps, MenuTheme, Space, Spin, Switch, theme as andTheme } from 'antd';
-import { Outlet } from 'react-router-dom';
-import HomeMenu, { HomeMenuRef } from '@/component/HomeMenu';
+import { Avatar, Breadcrumb, Drawer, Dropdown, Layout, MenuProps, MenuTheme, Space, Switch, theme as andTheme } from 'antd';
+import { Outlet, useLocation } from 'react-router-dom';
+import HomeMenu, { HomeMenuRef, MenuItem } from '@/component/HomeMenu';
 import IndexStyle from './home.module.scss';
 import ReactLogo from '@/assets/picture/react192.png';
 import classNames from 'classnames';
 import HomeStyle from "./home.module.scss";
-import { AntDesignOutlined, ExpandOutlined, FullscreenExitOutlined, FullscreenOutlined } from '@ant-design/icons';
+import { AntDesignOutlined, FullscreenExitOutlined, FullscreenOutlined, LogoutOutlined, SwapOutlined } from '@ant-design/icons';
 import UserUtils, { User } from '@/util/UserUtils';
 import Router from '@/router';
+import Cache from '@/util/Cache';
+import Constants from '@/constants';
 
 const { Header, Content, Footer, Sider } = Layout;
+
+export interface BreadcrumbItem {
+    title: React.ReactNode
+}
 
 const Home: React.FC = () => {
     const {
@@ -53,9 +59,6 @@ const Home: React.FC = () => {
         }
     }
 
-    // 面包屑
-    const [breadCrumbItems,] = useState([{ title: 'User' }, { title: 'Bill' }])
-
     // 主题
     const [theme, setTheme] = useState<MenuTheme>('dark');
     const changeTheme = (checked: boolean) => {
@@ -85,24 +88,57 @@ const Home: React.FC = () => {
             onClick: _ => {
                 UserUtils.logout();
                 Router.navigate("/login");
-            }
+            },
+            icon: <LogoutOutlined />
         }, {
-            key: 'changeTheme',
-            label: "切换主题",
-            onClick: _ => showDrawer()
+            key: 'styleConfig',
+            label: "样式配置",
+            onClick: _ => showDrawer(),
+            icon: <SwapOutlined />
         },
     ];
 
     // 全屏
     const [fullscreen, setFullscreen] = useState(false);
-    function handleFullscreen(state: boolean): void {
-        // TODO: 设置全屏
-        setFullscreen(state);
+
+    const openFullScreen = () => {
+        setFullscreen(true);
+        const full = document.documentElement;
+        if (full?.requestFullscreen) {
+            full.requestFullscreen();
+        } else if (full['mozRequestFullScreen']) {
+            full['mozRequestFullScreen']();
+        } else if (full['webkitRequestFullScreen']) {
+            full['webkitRequestFullScreen']();
+        } else if (full['msRequestFullscreen']) {
+            full['msRequestFullscreen']();
+        }
     }
 
-    // 加载页面
-    // let [loading, setLoading] = useState(false);
-    // <Spin spinning={loading} fullscreen></Spin>
+    const exitFullScreen = () => {
+        setFullscreen(false);
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document['mozCancelFullScreen']) {
+            document['mozCancelFullScreen']();
+        } else if (document['webkitExitFullscreen']) {
+            document['webkitExitFullscreen']();
+        }
+        window.close();
+    }
+
+    // TODO: 面包屑
+    const location = useLocation();
+    const pathname: string = location.pathname;
+    const [breadCrumbItems, setBreadCrumbItems] = useState<BreadcrumbItem[]>([]);
+    const selectMenuItemCallback: (item: MenuItem) => void = (item) => {
+        // 搜索整个链路的节点并赋值
+        // setBreadCrumbItems([...breadCrumbItems, { title: <a href={item.key}>{item.label}</a> }]);
+    }
+    // 搜索路径对应节点的整个链路的节点并赋值
+    useEffect(() => {
+        // Cache.get(Constants.CACHE_KEY_MENU_ITEMS)
+    }, []);
 
     return (
         <>
@@ -117,7 +153,11 @@ const Home: React.FC = () => {
                         Cortana Admin
                     </div>
                     {/* 左侧菜单 */}
-                    <HomeMenu theme={theme} ref={homeMenuRef} collasped={collapsed}></HomeMenu>
+                    <HomeMenu theme={theme}
+                        ref={homeMenuRef}
+                        collasped={collapsed}
+                        selectMenuItemCallback={selectMenuItemCallback}>
+                    </HomeMenu>
                 </Sider>
                 {/* 右边内容 */}
                 <Layout>
@@ -126,9 +166,10 @@ const Home: React.FC = () => {
                         <div className={HomeStyle.headerFullscreanBtnBox}>
                             {
                                 fullscreen ?
-                                    <FullscreenOutlined style={{ fontSize: '28px' }} onClick={() => handleFullscreen(!fullscreen)} />
+                                    <FullscreenExitOutlined style={{ fontSize: '23px' }} onClick={() => exitFullScreen()} />
                                     :
-                                    <FullscreenExitOutlined style={{ fontSize: '28px' }} onClick={() => handleFullscreen(!fullscreen)} />
+                                    <FullscreenOutlined style={{ fontSize: '23px' }} onClick={() => openFullScreen()} />
+
                             }
                         </div>
                         <Drawer onClose={onClose} open={open}>

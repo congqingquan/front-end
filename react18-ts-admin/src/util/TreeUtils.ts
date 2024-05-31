@@ -1,4 +1,4 @@
-import { Consumer, Function, BiPredicate, BiConsumer } from "./Functions";
+import { Function, BiPredicate, BiConsumer } from "./Functions";
 import * as ArrayUtils from "./ArrayUtils";
 
 // ====================================== Generate ======================================
@@ -56,9 +56,7 @@ function convertNodeRecursion<T, U>(
     return targetNode;
 }
 
-
 // ====================================== Search ======================================
-
 
 /**
  * 搜索节点

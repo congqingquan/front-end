@@ -8,16 +8,23 @@ import 'reset-css';
 import '@/assets/styles/global.scss';
 import Router from '@/router';
 import { RouterProvider } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import store from '@/store';
+// 4. 垃圾
+// import { Provider } from 'react-redux';
+// import store from '@/store';
 import RouterAuth from './router/RouterAuth';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-    <Provider store={store}>
-        {/* <React.StrictMode> */}
-            <RouterAuth>
-                <RouterProvider router={Router}></RouterProvider>
-            </RouterAuth>
-        {/* </React.StrictMode> */}
-    </Provider>,
+    // <Provider store={store}>
+    //     <React.StrictMode>
+    //         <RouterAuth>
+    //             <RouterProvider router={Router}></RouterProvider>
+    //         </RouterAuth>
+    //     </React.StrictMode>
+    // </Provider>,
+
+    // <React.StrictMode>
+        <RouterAuth>
+            <RouterProvider router={Router}></RouterProvider>
+        </RouterAuth>
+    // </React.StrictMode>
 );
