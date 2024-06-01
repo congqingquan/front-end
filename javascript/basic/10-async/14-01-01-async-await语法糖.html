@@ -1,48 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
+
 <body>
-<script type="module">
+    <script type="module">
 
-    // async 与 await 是 promise 的语法糖，await 必须在 async 修饰的函数中使用。
+        // async 与 await 是 promise 的语法糖，await 必须在 async 修饰的函数中使用。
 
-    // 1) async 简化：将业务代码封装在 Promise 内
-    // 2) await 简化：简化 then 语法，简化多个异步调用的串行化。> 优化 promise 的多层嵌套，例如在 promise.then 在返回(即调用)另一个 promise。
-    //               且可通过变量接收 promise.then 中的 onfulfilled 值 (当出现 onrejected 时，如果不 promise.catch 处理则会抛出异常，故也无法赋值到变量)
+        // 1) async 简化：将业务代码封装在 Promise 内
+        // 2) await 简化：简化 then 语法，简化多个异步调用的串行化。> 优化 promise 的多层嵌套，例如在 promise.then 在返回(即调用)另一个 promise。
+        //               且可通过变量接收 promise.then 中的 onfulfilled 值 (当出现 onrejected 时，如果不 promise.catch 处理则会抛出异常，故也无法赋值到变量)
 
-    // 实现：用同步方式写异步代码！！！异步代码不再多层嵌套导致复杂化！！！
+        // 实现：用同步方式写异步代码！！！异步代码不再多层嵌套导致复杂化！！！
 
-    // async function test() {
-    //     console.log("test begin")
-    //     await call1()
-    //     console.log("test end")
-    // }
-    // async function call1() {
-    //     console.log("call-1");
-    // }
-    //
-    // test();
-    // console.log("main thread end")
+        // async function test() {
+        //     console.log("test begin")
+        //     let call1Ret = await call1()     // await 到使用异步函数返回值行前的代码，为 executor 代码
+        //     console.log(call1Ret)            // 使用异步函数返回值行的代码，为最近的前一个 promise 的 then 回调函数中的代码。返回值即 then 函数中的 onfulfilled 型参
+        //     let call1Ret2 = await call2()    // await 到使用异步函数返回值行前的代码，为 executor 代码
+        //     console.log("test end")
+        //     console.log(call1Ret2)           // 使用异步函数返回值行的代码，为最近的前一个 promise 的 then 回调函数中的代码。返回值即 then 函数中的 onfulfilled 型参
+        // }
+        // async function call1() {
+        //     console.log("call-1");
+        //     return "call1-return";
+        // }
 
-    // 等价于下面
-    // new Promise(resolve => {
-    //     console.log("test begin")
-    //
-    //     new Promise(resolve => {
-    //         console.log("call-1")
-    //         resolve()
-    //     })
-    //
-    //     console.log("test end")
-    //     resolve()
-    // })
-    // console.log("main thread end")
-</script>
+        // async function call2() {
+        //     console.log("call-2");
+        //     return "call2-return";
+        // }
+
+        // test();
+        // console.log("main thread end")
+
+        // 等价于下面
+        
+        // new Promise(resolve => {
+        //     console.log("test begin")
+
+        //     new Promise(resolve => {
+        //         console.log("call-1")
+        //         resolve("call1-return")
+        //     }).then(onfulfilled => {
+        //         console.log(onfulfilled);
+
+        //         new Promise(resolve => {
+        //             console.log("call-2")
+        //             console.log("test end")
+        //             resolve("call2-return")
+        //         }).then(onfulfilled => {
+        //             console.log(onfulfilled);
+        //         });
+        //     });
+        //     resolve();
+        // })
+        // console.log("main thread end")
+    </script>
 </body>
+
 </html>
