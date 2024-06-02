@@ -1,6 +1,6 @@
 import { AxiosResponse, InternalAxiosRequestConfig } from "axios";
 import { message } from "antd";
-import AxiosExt from "../AxiosExt";
+import AxiosExt from ".";
 import Router from '@/router';
 import Constants from "@/constants";
 
@@ -62,10 +62,10 @@ const responseOnRejected: (error: any) => any = (error) => {
     return Promise.reject(error);
 }
 
-const AdminAxiosExt = new AxiosExt({
+const AdminAxios = new AxiosExt({
     baseURL: "http://localhost:9090"
 });
-AdminAxiosExt.interceptors.request.use(requestOnFulfilled, requestOnRejected);
-AdminAxiosExt.interceptors.response.use(responseOnFulfilled, responseOnRejected);
+AdminAxios.interceptors.request.use(requestOnFulfilled, requestOnRejected);
+AdminAxios.interceptors.response.use(responseOnFulfilled, responseOnRejected);
 
-export default AdminAxiosExt;
+export default AdminAxios;

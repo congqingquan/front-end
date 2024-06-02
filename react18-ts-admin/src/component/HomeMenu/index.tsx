@@ -1,21 +1,14 @@
 import { Menu, MenuTheme } from 'antd';
 import React, { ForwardedRef, forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { breakableForeach } from '@/util/TreeUtils';
-import * as TreeUtils from '@/util/TreeUtils';
+import TreeUtils from '@/util/TreeUtils';
 import { SelectInfo } from 'rc-menu/lib/interface';
-import * as API from '@/api/Admin/API'
+import API from '@/api'
 import Cache from '@/util/Cache';
 import Constants from '@/constants';
-import AdminAxiosExt, { ApiResult } from '@/api/Admin/Axios';
-import AntdIcon from '../Icon/AntdIcon';
-
-export interface MenuItem {
-    label: string,
-    key: string,
-    icon?: React.ReactNode,
-    children?: MenuItem[]
-}
+import Icon from '../Icon';
+import SysMenuTreeVO from '@/domain/vo/SysMenuTreeVO';
+import MenuItem from '@/domain/model/MenuItem';
 
 export interface HomeMenuRef {
     toggleCollapsedCallback: () => void
@@ -24,7 +17,8 @@ export interface HomeMenuRef {
 const HomeMenu = forwardRef((props: {
     theme: MenuTheme,
     collasped: boolean,
-    selectMenuItemCallback: (item: MenuItem) => void
+    selectMenuItemCallback: (item: MenuItem) => void,
+    fetchMenuItemsCompleteCallback: (items: MenuItem[]) => void
 }, ref: ForwardedRef<HomeMenuRef>) => {
 
     useImperativeHandle(ref, () => ({
@@ -40,20 +34,24 @@ const HomeMenu = forwardRef((props: {
     const pathname: string = location.pathname;
     const [openMenuKeysArr, setOpenMenuKeysArr] = useState<string[]>([]);
     const [items, setItems] = useState<MenuItem[]>([]);
-    const [itemsMap, setItemsMap] = useState<Map<string, MenuItem>>(new Map());
+    // const [itemsMap, setItemsMap] = useState<Map<string, MenuItem>>(new Map());
 
     // 渲染菜单
     useEffect(() => {
-        AdminAxiosExt.postJSON<ApiResult<API.SysMenuTreeVO[]>>(API.SYS_MENU_TREE, {})
+        API.sysMenyTree()
             .then(response => {
-                const sysMenuTreeVos: API.SysMenuTreeVO[] = response.data.data;
-                const sysMenuTree: MenuItem[] = TreeUtils.convertNode(
+                const sysMenuTreeVos: SysMenuTreeVO[] = response.data.data;
+                const menuItems: MenuItem[] = TreeUtils.convertNode(
                     sysMenuTreeVos,
                     sourceNode => (
                         {
+                            menuid: sourceNode.menuId,
+                            parentid: sourceNode.parentId,
+                            parentpath: sourceNode.parentPath,
                             label: sourceNode.name,
                             key: sourceNode.url,
-                            icon: sourceNode.icon ? <AntdIcon name={sourceNode.icon} /> : null
+                            type: sourceNode.type,
+                            icon: sourceNode.icon ? <Icon name={sourceNode.icon} /> : null
                         } as MenuItem
                     ),
                     sourceNode => sourceNode.children,
@@ -62,20 +60,22 @@ const HomeMenu = forwardRef((props: {
                         return targetNode.children;
                     }
                 );
-                // TODO 1. 缓存数据
-                Cache.set(Constants.CACHE_KEY_MENU_ITEMS_TREE, sysMenuTree);
-                Cache.set(Constants.CACHE_KEY_MENU_ITEMS_MAP, null);
-                // 2. 设置 items/itemsMap state
-                setItems(sysMenuTree);
                 const itemsMap = new Map<string, MenuItem>();
-                TreeUtils.foreach(sysMenuTree, node => node.children ? node.children : [], (_, node) => {
+                TreeUtils.foreach(menuItems, node => node.children ? node.children : [], (_, node) => {
                     itemsMap.set(node.key, node);
                 });
-                setItemsMap(itemsMap);
+                // 1. 缓存数据
+                Cache.set(Constants.CACHE_KEY_MENU_ITEMS_TREE, menuItems);
+                Cache.set(Constants.CACHE_KEY_MENU_ITEMS_MAP, itemsMap);
+                // 2. 设置 items/itemsMap state
+                setItems(menuItems);
                 // 3. 根据路由展开菜单
-                setOpenMenuKeysArr(getOpenMenyKyesArrByLocation(sysMenuTree));
+                setOpenMenuKeysArr(getOpenMenyKyesArrByLocation(menuItems));
+                // 4. 回调
+                props.fetchMenuItemsCompleteCallback(menuItems);
             });
     }, []);
+
     // 折叠菜单时触发根据路由展开默认菜单
     useEffect(() => {
         setOpenMenuKeysArr(getOpenMenyKyesArrByLocation(items));
@@ -83,7 +83,10 @@ const HomeMenu = forwardRef((props: {
 
     // 选中菜单项时触发
     const handleOnSelect = (info: SelectInfo) => {
-        props.selectMenuItemCallback(itemsMap.get(info.key) as MenuItem);
+        let menuItem = Cache.get<Map<string, MenuItem>>(Constants.CACHE_KEY_MENU_ITEMS_MAP)?.get(info.key);
+        if (menuItem) {
+            props.selectMenuItemCallback(menuItem);
+        }
     };
 
     // 展开菜单时触发
@@ -96,7 +99,7 @@ const HomeMenu = forwardRef((props: {
     // 根据路由选中菜单
     function getOpenMenyKyesArrByLocation(items: MenuItem[]): string[] {
         const nodeLink: string[] = [];
-        breakableForeach(items, item => item.children || [], (pathNodes, item) => {
+        TreeUtils.breakableForeach(items, item => item.children || [], (pathNodes, item) => {
             const match = item.key === pathname;
             if (match) {
                 nodeLink.push(...pathNodes.map(node => node.key));

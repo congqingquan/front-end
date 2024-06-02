@@ -1,4 +1,3 @@
-import React from 'react';
 import ReactDOM from 'react-dom/client';
 // css 引入顺序
 // 1. 重置样式

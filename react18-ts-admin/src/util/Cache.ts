@@ -8,7 +8,7 @@ class Cache {
         this.cacheMap.set(key, value);
     }
 
-    public static get<V>(key: any): V | undefined{
+    public static get<V>(key: any): V | undefined {
         return this.cacheMap.get(key);
     }
 

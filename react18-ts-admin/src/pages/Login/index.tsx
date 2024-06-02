@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import LoginStyle from "./login.module.scss";
-import * as API from "@/api/Admin/API";
-import AdminAxiosExt, { ApiResult } from "@/api/Admin/Axios";
+import API from "@/api";
 import Router from "@/router";
 import { useLocation } from "react-router-dom";
 import { Spin, message } from "antd";
 import Constants from "@/constants";
+import SysUserLoginDTO from "@/domain/dto/SysUserLoginDTO";
 
 const Login: React.FC = () => {
 
@@ -18,7 +18,7 @@ const Login: React.FC = () => {
     let leftCardBox = useRef<HTMLDivElement | null>(null);
     let rightCardBox = useRef<HTMLDivElement | null>(null);
 
-    let [loginFormData, setLoginFormData] = useState<API.SysUserLoginDTO>({
+    let [loginFormData, setLoginFormData] = useState<SysUserLoginDTO>({
         username: '',
         password: ''
     })
@@ -55,7 +55,7 @@ const Login: React.FC = () => {
     // 登录表单点击提交
     const handleSubmitLoginForm = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        AdminAxiosExt.postJSON<ApiResult<API.SysUserLoginVO>>(API.SYS_USER_LOGIN, loginFormData).then(response => {
+        API.sysUserLogin(loginFormData).then(response => {
             if (response.data.code === 200) {
                 localStorage.setItem(Constants.LOGINED_USER_INFO_KEY, JSON.stringify(response.data.data))
                 Router.navigate("/")

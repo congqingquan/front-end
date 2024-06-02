@@ -1,9 +1,9 @@
-import AdminAxiosExt, { ApiResult } from "@/api/Admin/Axios";
+import AdminAxiosExt, { ApiResult } from "@/api/AxiosExt/AdminAxios";
 import { convertNode } from "@/util/TreeUtils";
-import * as API from "@/api/Admin/API";
+import * as API from "@/api";
 import { MenuItemStateHandler, MenuItemStateHolder } from "./MenuItemStateReducer";
 import { MenuItem } from "@/component/HomeMenu";
-import AntdIcon from "@/component/Icon/AntdIcon";
+import AntdIcon from "@/component/Icon";
 import store from '@/store';
 
 enum MenuItemStateActionTypeEnum {

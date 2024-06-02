@@ -1,7 +1,12 @@
-export function isEmpty(arr: any[]) {
-    return !arr || arr.length <= 0;
+class ArrayUtils {
+
+    public static isEmpty(arr: any[]) {
+        return !arr || arr.length <= 0;
+    }
+    
+    public isNotEmpty(arr: any[]) {
+        return !ArrayUtils.isEmpty(arr);
+    }
 }
 
-export function isNotEmpty(arr: any[]) {
-    return !isEmpty(arr);
-}
+export default ArrayUtils;

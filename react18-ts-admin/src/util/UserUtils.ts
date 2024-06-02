@@ -10,25 +10,25 @@ export interface User {
     status: string
 }
 
-const UserUtils = {
+class UserUtils {
 
-    getToken(): string | null {
+    public static getToken(): string | null {
         let userInfoJson = localStorage.getItem(Constants.LOGINED_USER_INFO_KEY);
         if (!userInfoJson) {
             return null;
         }
         return JSON.parse(userInfoJson).token;
-    },
+    }
 
-    getUser(): User | null {
+    public static getUser(): User | null {
         let userInfoJson = localStorage.getItem(Constants.LOGINED_USER_INFO_KEY);
         if (!userInfoJson) {
             return null;
         }
         return JSON.parse(userInfoJson).info;
-    },
+    }
 
-    logout(): void {
+    public static logout(): void {
         localStorage.removeItem(Constants.LOGINED_USER_INFO_KEY);
     }
 }

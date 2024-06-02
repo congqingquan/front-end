@@ -1,5 +1,5 @@
 const Index = () => {
-    return <div>Cortana</div>;
+    return <div>Cortana Admin</div>;
 };
 
 export default Index;

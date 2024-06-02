@@ -1,16 +1,4 @@
-// 登录鉴权
-export const SYS_USER_LOGIN = "/admin/b/sysUser/login";
-export interface SysUserLoginDTO {
-    username: string
-    password: string   
-}
-export interface SysUserLoginVO {
-    token: string  
-}
-
-// 左侧菜单
-export const SYS_MENU_TREE = "/admin/b/sysMenu/tree"
-export interface SysMenuTreeVO {
+export default interface SysMenuTreeVO {
     menuId: string
     resourceId: string
     parentId: string
@@ -33,5 +21,3 @@ export interface SysMenuTreeVO {
     lable: string // name
     key: string // url
 }
-
-// export const MENU_TREE = ""

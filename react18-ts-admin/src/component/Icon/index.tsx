@@ -1,6 +1,6 @@
 import React from 'react';
 
-const AntdIcon: React.FC<{ name: string }> = ({ name }) => {
+const Icon: React.FC<{ name: string }> = ({ name }) => {
     return <React.Suspense fallback={<></>}>
         {
             React.createElement(
@@ -14,4 +14,4 @@ const AntdIcon: React.FC<{ name: string }> = ({ name }) => {
     </React.Suspense>
 }
 
-export default AntdIcon;
+export default Icon;

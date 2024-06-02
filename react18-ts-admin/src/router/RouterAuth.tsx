@@ -8,4 +8,5 @@ const RouterAuth: React.FC<{ children: React.ReactElement }> = ({ children }) =>
     }
     return <>{children}</>
 }
+
 export default RouterAuth;
