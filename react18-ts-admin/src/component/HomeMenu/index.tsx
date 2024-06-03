@@ -50,7 +50,7 @@ const HomeMenu = forwardRef((props: {
                             parentpath: sourceNode.parentPath,
                             label: sourceNode.name,
                             key: sourceNode.url,
-                            menuType: sourceNode.type,
+                            menutype: sourceNode.type,
                             icon: sourceNode.icon ? <Icon name={sourceNode.icon} /> : null
                         } as MenuItem
                     ),

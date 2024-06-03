@@ -26,12 +26,8 @@
   cursor: pointer;
 }
 .login-page .container input {
-  width: 60%;
-  height: 5%;
-  border: 1px solid gray;
   border-radius: 50px;
-  padding: 5px 20px;
-  background: #ffffff;
+  padding: 5px;
 }
 .login-page .container .title {
   font-size: 30px;
