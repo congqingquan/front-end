@@ -153,7 +153,7 @@ const Home: React.FC = () => {
             return false;
         });
         return parentNodes.map(parentNode => {
-            return { title: parentNode.type === 'MENU' ? <NavLink to={parentNode.key}>{parentNode.label}</NavLink> : parentNode.label };
+            return { title: parentNode.menuType === 'MENU' ? <NavLink to={parentNode.key}>{parentNode.label}</NavLink> : parentNode.label };
         });
     }
 

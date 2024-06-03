@@ -12,7 +12,7 @@ const NumberStateHandlerImpl: NumberStateHandler = {
     },
 
     DELETE: (state: NumberStateHolder, newState: NumberStateHolder): void => {
-        console.log(`delete num`);
+        console.log(`delete num, state ${state} newState ${newState}`);
     }
 }
 

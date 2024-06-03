@@ -15,4 +15,4 @@ output
 *.gz
 *.css.map
 package-lock.json
-.vscode/
+.vscode

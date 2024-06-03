@@ -4,7 +4,7 @@ export default interface MenuItem {
     parentpath: string,
     label: string,
     key: string,
-    type: "MENU" | "MENU_DIC"
+    menuType: "MENU" | "MENU_DIC",
     icon?: React.ReactNode,
     children?: MenuItem[]
 }

@@ -47,12 +47,12 @@
     }
 
     input {
-      width: 60%;
-      height: 5%;
-      border: 1px solid gray;
+      // width: 60%;
+      // height: 5%;
+      // border: 1px solid gray;
       border-radius: 50px;
-      padding: 5px 20px;
-      background: #ffffff;
+      padding: 5px;
+      // background: #ffffff;
     }
 
     .title {
@@ -214,6 +214,8 @@
         > * {
           margin: 10px;
         }
+
+        // font-weight: bold;
       }
     }
   }

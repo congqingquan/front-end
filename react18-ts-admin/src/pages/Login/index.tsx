@@ -3,9 +3,10 @@ import LoginStyle from "./login.module.scss";
 import API from "@/api";
 import Router from "@/router";
 import { useLocation } from "react-router-dom";
-import { Spin, message } from "antd";
+import { Form, Input, Spin, message } from "antd";
 import Constants from "@/constants";
 import SysUserLoginDTO from "@/domain/dto/SysUserLoginDTO";
+import { UserOutlined, LockOutlined, MailOutlined } from "@ant-design/icons";
 
 const Login: React.FC = () => {
 
@@ -17,11 +18,6 @@ const Login: React.FC = () => {
 
     let leftCardBox = useRef<HTMLDivElement | null>(null);
     let rightCardBox = useRef<HTMLDivElement | null>(null);
-
-    let [loginFormData, setLoginFormData] = useState<SysUserLoginDTO>({
-        username: '',
-        password: ''
-    })
 
     // ==================================== 函数 ====================================
 
@@ -46,16 +42,10 @@ const Login: React.FC = () => {
         setIsToLogin(isToLoginFlag);
     }
 
-    // 监听登录表单字段值改变
-    const handleLoginFormChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        let { name, value } = event.target;
-        setLoginFormData(prevState => ({ ...prevState, [name]: value }))
-    }
-
     // 登录表单点击提交
-    const handleSubmitLoginForm = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        API.sysUserLogin(loginFormData).then(response => {
+    const handleSubmitLoginForm = (formValues: SysUserLoginDTO) => {
+        // event.preventDefault();
+        API.sysUserLogin(formValues).then(response => {
             if (response.data.code === 200) {
                 localStorage.setItem(Constants.LOGINED_USER_INFO_KEY, JSON.stringify(response.data.data))
                 Router.navigate("/")
@@ -90,7 +80,7 @@ const Login: React.FC = () => {
                     </div>
 
                     <div ref={leftCardBox} className={LoginStyle.leftCard}>
-                        <form onSubmit={(event) => handleSubmitLoginForm(event)}>
+                        {/* <form onSubmit={(event) => handleSubmitLoginForm(event)}>
                             <div className={LoginStyle.title}>登陆</div>
                             <div className="tip">请输入登陆信息</div>
 
@@ -110,11 +100,39 @@ const Login: React.FC = () => {
                             />
 
                             <button>登陆</button>
-                        </form>
+                        </form> */}
+                        <Form
+                            name="normal_login"
+                            className="login-form"
+                            initialValues={{ remember: true }}
+                            onFinish={handleSubmitLoginForm}
+                        >
+                            <div className={LoginStyle.title}>登陆</div>
+                            <Form.Item
+                                name="username"
+                                rules={[{ required: true, message: 'Please input your Username!' }]}
+                            >
+                                <Input
+                                    prefix={<UserOutlined className="site-form-item-icon" />}
+                                    placeholder="Username" 
+                                />
+                            </Form.Item>
+                            <Form.Item
+                                name="password"
+                                rules={[{ required: true, message: 'Please input your Password!' }]}
+                            >
+                                <Input
+                                    prefix={<LockOutlined className="site-form-item-icon" />}
+                                    type="password"
+                                    placeholder="Password"
+                                />
+                            </Form.Item>
+                            <button>登陆</button>
+                        </Form>
                     </div>
 
                     <div ref={rightCardBox} className={LoginStyle.rightCard}>
-                        <form>
+                        {/* <form>
                             <div className={LoginStyle.title}>注册账户</div>
                             <div className="tip">请输入注册信息</div>
 
@@ -123,7 +141,46 @@ const Login: React.FC = () => {
                             <input type="password" placeholder="Password" />
 
                             <button>注册</button>
-                        </form>
+                        </form> */}
+
+                        <Form
+                            name="normal_register"
+                            className="register-form"
+                            initialValues={{ remember: true }}
+                            onFinish={handleSubmitLoginForm}
+                        >
+                            <div className={LoginStyle.title}>注册账户</div>
+                            <Form.Item
+                                name="username"
+                                rules={[{ required: true, message: 'Please input your Username!' }]}
+                            >
+                                <Input
+                                    prefix={<UserOutlined className="site-form-item-icon" />}
+                                    placeholder="Username" 
+                                />
+                            </Form.Item>
+                            <Form.Item
+                                name="password"
+                                rules={[{ required: true, message: 'Please input your Password!' }]}
+                            >
+                                <Input
+                                    prefix={<LockOutlined className="site-form-item-icon" />}
+                                    type="password"
+                                    placeholder="Password"
+                                />
+                            </Form.Item>
+                            <Form.Item
+                                name="email"
+                                rules={[{ required: true, message: 'Please input your Email!' }]}
+                            >
+                                <Input
+                                    prefix={<MailOutlined className="site-form-item-icon" />}
+                                    type="email"
+                                    placeholder="email"
+                                />
+                            </Form.Item>
+                            <button>注册</button>
+                        </Form>
                     </div>
                 </div>
             </div>

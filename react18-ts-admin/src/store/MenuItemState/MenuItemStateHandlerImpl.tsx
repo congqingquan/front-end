@@ -1,10 +1,10 @@
-import AdminAxiosExt, { ApiResult } from "@/api/AxiosExt/AdminAxios";
-import { convertNode } from "@/util/TreeUtils";
-import * as API from "@/api";
+import TreeUtils from "@/util/TreeUtils";
+import API from "@/api";
 import { MenuItemStateHandler, MenuItemStateHolder } from "./MenuItemStateReducer";
-import { MenuItem } from "@/component/HomeMenu";
 import AntdIcon from "@/component/Icon";
 import store from '@/store';
+import MenuItem from "@/domain/model/MenuItem";
+import SysMenuTreeVO from "@/domain/vo/SysMenuTreeVO";
 
 enum MenuItemStateActionTypeEnum {
     INIT = "INIT"
@@ -20,10 +20,11 @@ const MenuItemStateHandlerImpl: MenuItemStateHandler = {
 }
 
 async function initState(): Promise<void> {
-    await AdminAxiosExt.postJSON<ApiResult<API.SysMenuTreeVO[]>>(API.SYS_MENU_TREE, {})
+    
+    await API.sysMenyTree()
         .then(response => {
-            const sysMenuTreeVos: API.SysMenuTreeVO[] = response.data.data;
-            const sysMenuTree: MenuItem[] = convertNode(
+            const sysMenuTreeVos: SysMenuTreeVO[] = response.data.data;
+            const sysMenuTree: MenuItem[] = TreeUtils.convertNode(
                 sysMenuTreeVos,
                 sourceNode => (
                     {

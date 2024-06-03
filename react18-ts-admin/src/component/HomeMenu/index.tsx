@@ -1,5 +1,5 @@
 import { Menu, MenuTheme } from 'antd';
-import React, { ForwardedRef, forwardRef, useEffect, useImperativeHandle, useState } from 'react';
+import { ForwardedRef, forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import TreeUtils from '@/util/TreeUtils';
 import { SelectInfo } from 'rc-menu/lib/interface';
@@ -50,7 +50,7 @@ const HomeMenu = forwardRef((props: {
                             parentpath: sourceNode.parentPath,
                             label: sourceNode.name,
                             key: sourceNode.url,
-                            type: sourceNode.type,
+                            menuType: sourceNode.type,
                             icon: sourceNode.icon ? <Icon name={sourceNode.icon} /> : null
                         } as MenuItem
                     ),
