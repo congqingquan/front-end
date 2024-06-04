@@ -4,12 +4,6 @@ import AxiosExt from ".";
 import Router from '@/router';
 import Constants from "@/constants";
 
-export interface ApiResult<D> {
-    code: number,
-    data: D,
-    message: string
-}
-
 // 1. request
 // before request
 const requestOnFulfilled: (config: InternalAxiosRequestConfig<any>) => InternalAxiosRequestConfig<any> | Promise<InternalAxiosRequestConfig<any>> = (config) => {

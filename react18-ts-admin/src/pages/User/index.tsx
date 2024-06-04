@@ -1,146 +1,216 @@
-import React, { useState } from 'react';
-import { Button, Form, Space, Table, Tag } from 'antd';
-import type { TableProps } from 'antd';
+import React, { useEffect, useRef, useState } from 'react';
+import { Button, Flex, Form, Input, Select, Space, Table, Tag, Tooltip } from 'antd';
+import type { TablePaginationConfig, TableProps } from 'antd';
 import UserTableRow from '@/domain/model/UserTableRow';
 import moment from 'moment';
-import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import UserAddModal from './UserAddModal';
+import { DeleteOutlined, EditOutlined, RedoOutlined, SearchOutlined } from '@ant-design/icons';
+import UserAddModal from './UserModal';
+import API from '@/api';
+import SysUserPageDTO from '@/domain/dto/SysUserPageDTO';
 
 const User: React.FC = () => {
-  const columns: TableProps['columns'] = [
-    {
-      title: '主键',
-      dataIndex: 'userId',
-      key: 'userId'
-    },
-    {
-      title: '姓名',
-      dataIndex: 'name',
-      key: 'name'
-    },
-    {
-      title: '性别',
-      dataIndex: 'gender',
-      key: 'gender',
-      render: (text) => <>
+    const columns: TableProps['columns'] = [
         {
-          text === 'MAN'
-            ? <Tag color={'green'} key={'MAN'}>男</Tag>
-            : text === 'WOMAN'
-              ? <Tag color={'volcano'} key={'WOMAN'}>女</Tag>
-              : <Tag color={'blue'} key={'OTHER'}>其他</Tag>
-        }
-      </>,
-    },
-    {
-      title: '邮箱',
-      dataIndex: 'email',
-      key: 'email'
-    },
-    {
-      title: '状态',
-      key: 'status',
-      dataIndex: 'status',
-      render: (text) => <>
+            title: '主键',
+            dataIndex: 'userId',
+            key: 'userId'
+        },
         {
-          text === 'NORMAL' ? <Tag color={'green'} key={'NORMAL'}>正常</Tag> :
-            text === 'DISABLED' ? <Tag color={'red'} key={'DISABLED'}>禁用</Tag> : <Tag color={'red'} key={'UNKNOWN'}>未知</Tag>
+            title: '姓名',
+            dataIndex: 'name',
+            key: 'name'
+        },
+        {
+            title: '性别',
+            dataIndex: 'gender',
+            key: 'gender',
+            render: (text) => <>
+                {
+                    text === 'MAN'
+                        ? <Tag color={'green'} key={'MAN'}>男</Tag>
+                        : text === 'WOMAN'
+                            ? <Tag color={'volcano'} key={'WOMAN'}>女</Tag>
+                            : <Tag color={'blue'} key={'OTHER'}>其他</Tag>
+                }
+            </>,
+        },
+        {
+            title: '邮箱',
+            dataIndex: 'email',
+            key: 'email'
+        },
+        {
+            title: '状态',
+            key: 'status',
+            dataIndex: 'status',
+            render: (text) => <>
+                {
+                    text === 'NORMAL' ? <Tag color={'green'} key={'NORMAL'}>正常</Tag> :
+                        text === 'DISABLED' ? <Tag color={'red'} key={'DISABLED'}>禁用</Tag> : <Tag color={'red'} key={'UNKNOWN'}>未知</Tag>
+                }
+            </>
+        },
+        {
+            title: '创建时间',
+            dataIndex: 'createTime',
+            key: 'createTime'
+        },
+        {
+            title: '操作',
+            key: 'action',
+            render: (_, record) => (
+                <Space size="middle">
+                    <a onClick={() => popupEditUserModal(record)}>
+                        {<EditOutlined />} 修改
+                    </a>
+                    <a onClick={() => handleDelete(record)}>
+                        {<DeleteOutlined />} 删除
+                    </a>
+                </Space>
+            ),
+        },
+    ];
+
+    // 新增
+    const popupAddUserModal = () => {
+        editRow.current = undefined;
+        modalType.current = 'ADD';
+        showUserModal();
+    }
+
+    // 编辑
+    const editRow = useRef<UserTableRow | undefined>();
+    const modalType = useRef<'ADD' | 'UPDATE'>('ADD');
+
+    const [open, setOpen] = useState(false);
+    const showUserModal = () => {
+        setOpen(true);
+    };
+    const hideUserModal = () => {
+        setOpen(false);
+    };
+
+    const popupEditUserModal = (record: UserTableRow) => {
+        editRow.current = record;
+        modalType.current = 'UPDATE';
+        showUserModal();
+    }
+
+    // 删除
+    const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+    const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
+        setSelectedRowKeys(newSelectedRowKeys);
+    };
+    const rowSelection = {
+        selectedRowKeys,
+        onChange: onSelectChange,
+    };
+
+    const handleDelete = (record: UserTableRow) => {
+        console.log(record);
+    }
+    const handleBatchDelete = () => {
+        console.log(selectedRowKeys);
+    }
+
+    // TODO 搜索
+    // TODO 处理表格大小固定，翻页不抖动
+    const [searchForm] = Form.useForm<SysUserPageDTO>();
+    const handleSubmitSearchForm = () => {
+        // API.sysUserPage(searchForm.getFieldsValue()).then(response => {
+        //     setData(
+        //         response.data.data?.map(user => ({...user, key: user.userId.toString()}))
+        //     );
+        // });
+    };
+
+    // 加载数据
+
+    // 1) 分页配置
+    const [paginationConfig, setPaginationConfig] = useState<TablePaginationConfig>({
+        current: 1,
+        pageSize: 1,
+        position: ['bottomRight'],
+        onChange(pageNo, pageSize) {
+            setPaginationConfig({...paginationConfig, current: pageNo, pageSize: pageSize});
         }
-      </>
-    },
-    {
-      title: '创建时间',
-      dataIndex: 'createTime',
-      key: 'createTime'
-    },
-    {
-      title: '操作',
-      key: 'action',
-      render: (_, record) => (
-        <Space size="middle">
-          <a onClick={(event) => handleEdit(record)}>
-            {<EditOutlined />} 修改
-          </a>
-          <a onClick={(event) => handleDelete(record)}>
-            {<DeleteOutlined />} 删除
-          </a>
-        </Space>
-      ),
-    },
-  ];
+    });
 
-  const data: UserTableRow[] = [
-    {
-      //主键
-      key: "1",
-      //业务主键
-      userId: 1,
-      //账户名
-      username: "admin",
-      //密码
-      password: "admin",
-      //名称
-      name: "admin",
-      //性别(MAN / WOMAN / UNKNOWN)
-      gender: "MAN",
-      //邮箱
-      email: "12345678@163.com",
-      //头像
-      avatar: "https://www.baidu.com",
-      //状态(NORMAL / DISABLED)
-      status: "NORMAL",
-      //创建人
-      createUser: 1,
-      //创建时间
-      createTime: moment().format('YYYY-MM-DD HH:mm:ss'),
-      //更新人
-      updateUser: 1,
-      //更新时间
-      updateTime: moment().format('YYYY-MM-DD HH:mm:ss'),
-    },
-  ];
+    // 2) 加载
+    const [data, setData] = useState<UserTableRow[]>([]);
+    useEffect(() => {
+        API.sysUserPage({ pageNo: paginationConfig.current, pageSize: paginationConfig.pageSize }).then(response => {
+            const pageData = response.data.data;
+            setData(
+                pageData?.records.map(user => ({ ...user, key: user.userId.toString() }))
+            );
+            setPaginationConfig({...paginationConfig, current: pageData.current, pageSize: pageData.size, total: pageData.total });
+        });
+    }, [paginationConfig.current, paginationConfig.pageSize]);
 
-  // 编辑
-  const [open, setOpen] = useState(false);
+    return (<>
+        <Form
+            layout={'inline'}
+            form={searchForm}
+            style={{ marginBottom: "15px" }}
+            onFinish={() => handleSubmitSearchForm()}
+        >
+            <Form.Item label="姓名" name="name">
+                <Input />
+            </Form.Item>
 
-  const showUserModal = () => {
-    setOpen(true);
-  };
+            <Form.Item label="邮箱" name="email">
+                <Input />
+            </Form.Item>
 
-  const hideUserModal = () => {
-    setOpen(false);
-  };
+            <Form.Item label="状态" name="status">
+                <Select
+                    style={{ minWidth: 90 }}
+                    allowClear
+                    options={[
+                        { value: 'NORMAL', label: '正常' },
+                        { value: 'DISABLED', label: '禁用' }
+                    ]}
+                />
+            </Form.Item>
 
-  const handleEdit = (record: UserTableRow) => {
-    console.log(record);
-  }
+            <Form.Item>
+                <Space>
+                    <Tooltip title="搜索">
+                        <Button type="primary" htmlType="submit" icon={<SearchOutlined />} />
+                    </Tooltip>
+                    <Tooltip title="重置">
+                        <Button icon={<RedoOutlined />} onClick={() => searchForm.resetFields()} />
+                    </Tooltip>
+                </Space>
+            </Form.Item>
+        </Form>
 
-  // 删除
-  const handleDelete = (record: UserTableRow) => {
-    console.log(record);
-  }
+        <div style={{ marginBottom: "15px" }}>
+            <Space>
+                <Button type="primary" onClick={() => popupAddUserModal()}>新增</Button>
+                <Button danger onClick={() => handleBatchDelete()}>删除</Button>
+            </Space>
+        </div>
+        <Form.Provider
+            // onFormFinish={(name, { values, forms }) => {
+            //     if (name === 'userForm') {
+            //         const { basicForm } = forms;
+            //         console.log(forms, basicForm, values);
+            //         hideUserModal();
+            //     }
+            // }}
+            onFormFinish={(name) => {
+                if (name === 'userForm') {
+                    hideUserModal();
+                }
+            }}
+        >
+            <UserAddModal type={modalType.current} initData={editRow.current} open={open} onCancel={hideUserModal} />
+            <Table rowSelection={rowSelection} columns={columns} dataSource={data} pagination={ paginationConfig } />
+        </Form.Provider>
 
-
-  return <>
-    <Form.Provider
-      onFormFinish={(name, { values, forms }) => {
-        if (name === 'userForm') {
-          // const { basicForm } = forms;
-          // const users = basicForm.getFieldValue('users') || [];
-          console.log(values, forms);
-          setOpen(false);
-        }
-      }}
-    >
-      <Button htmlType="button" style={{ margin: '0 8px' }} onClick={showUserModal}>
-        Add User
-      </Button>
-      <UserAddModal open={open} onCancel={hideUserModal} />
-    </Form.Provider>
-
-    <Table columns={columns} dataSource={data} />
-  </>
-    ;
+    </>);
 }
 
 export default User;
