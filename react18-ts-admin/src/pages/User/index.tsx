@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Button, Flex, Form, Input, Select, Space, Table, Tag, Tooltip } from 'antd';
+import { Button, Form, Input, Popconfirm, Select, Space, Table, Tag, Tooltip } from 'antd';
 import type { TablePaginationConfig, TableProps } from 'antd';
 import UserTableRow from '@/domain/model/UserTableRow';
-import moment from 'moment';
 import { DeleteOutlined, EditOutlined, RedoOutlined, SearchOutlined } from '@ant-design/icons';
 import UserAddModal from './UserModal';
 import API from '@/api';
@@ -13,17 +12,20 @@ const User: React.FC = () => {
         {
             title: '主键',
             dataIndex: 'userId',
-            key: 'userId'
+            key: 'userId',
+            width: 90
         },
         {
             title: '姓名',
             dataIndex: 'name',
-            key: 'name'
+            key: 'name',
+            width: 50,
         },
         {
             title: '性别',
             dataIndex: 'gender',
             key: 'gender',
+            width: 50,
             render: (text) => <>
                 {
                     text === 'MAN'
@@ -37,12 +39,14 @@ const User: React.FC = () => {
         {
             title: '邮箱',
             dataIndex: 'email',
-            key: 'email'
+            key: 'email',
+            width: 50
         },
         {
             title: '状态',
             key: 'status',
             dataIndex: 'status',
+            width: 50,
             render: (text) => <>
                 {
                     text === 'NORMAL' ? <Tag color={'green'} key={'NORMAL'}>正常</Tag> :
@@ -53,19 +57,25 @@ const User: React.FC = () => {
         {
             title: '创建时间',
             dataIndex: 'createTime',
-            key: 'createTime'
+            key: 'createTime',
+            width: 80,
         },
         {
             title: '操作',
             key: 'action',
+            width: 100,
             render: (_, record) => (
-                <Space size="middle">
-                    <a onClick={() => popupEditUserModal(record)}>
-                        {<EditOutlined />} 修改
-                    </a>
-                    <a onClick={() => handleDelete(record)}>
-                        {<DeleteOutlined />} 删除
-                    </a>
+                <Space size="small">
+                    <Button type="link" icon={<EditOutlined />} onClick={() => popupEditUserModal(record)}>修改</Button>
+                    <Popconfirm
+                        title    
+                        description="确定是否要删除?"
+                        onConfirm={() => handleDelete(record)}
+                        okText="确认"
+                        cancelText="取消"
+                    >
+                        <Button type='link' icon={<DeleteOutlined />} danger>删除</Button>
+                    </Popconfirm>
                 </Space>
             ),
         },
@@ -91,7 +101,7 @@ const User: React.FC = () => {
     };
 
     const popupEditUserModal = (record: UserTableRow) => {
-        editRow.current = record;
+        editRow.current = {...record};
         modalType.current = 'UPDATE';
         showUserModal();
     }
@@ -106,47 +116,56 @@ const User: React.FC = () => {
         onChange: onSelectChange,
     };
 
-    const handleDelete = (record: UserTableRow) => {
-        console.log(record);
+    const handleDelete = async (record: UserTableRow) => {
+        return API.deleteSysUser([record.userId.toString()]).then(_ => loadPageData());
     }
-    const handleBatchDelete = () => {
-        console.log(selectedRowKeys);
+    const handleBatchDelete = async () => {
+        return API.deleteSysUser([...selectedRowKeys.map(key => key.toString())]).then(_ => loadPageData());
     }
 
-    // TODO 搜索
-    // TODO 处理表格大小固定，翻页不抖动
-    const [searchForm] = Form.useForm<SysUserPageDTO>();
-    const handleSubmitSearchForm = () => {
-        // API.sysUserPage(searchForm.getFieldsValue()).then(response => {
-        //     setData(
-        //         response.data.data?.map(user => ({...user, key: user.userId.toString()}))
-        //     );
-        // });
-    };
-
-    // 加载数据
-
-    // 1) 分页配置
+    // 分页配置
     const [paginationConfig, setPaginationConfig] = useState<TablePaginationConfig>({
         current: 1,
-        pageSize: 1,
+        pageSize: 10,
         position: ['bottomRight'],
+        // 分页改变携带查询条件
         onChange(pageNo, pageSize) {
-            setPaginationConfig({...paginationConfig, current: pageNo, pageSize: pageSize});
+            setPaginationConfig(prev => ({ ...prev, current: pageNo, pageSize: pageSize }));
         }
     });
 
-    // 2) 加载
+    // 搜索: 查询条件不依赖分页条件
+    const [searchFormLading, setSearchFormLading] = useState<boolean>(false);
+    const [searchForm] = Form.useForm<SysUserPageDTO>();
+    const handleSubmitSearchForm = () => {
+        setSearchFormLading(true);
+        API.sysUserPage({ ...searchForm.getFieldsValue(), pageNo: paginationConfig.current, pageSize: paginationConfig.pageSize })
+            .then(response => {
+                const pageData = response.data.data;
+                setData(
+                    pageData?.records.map(user => ({ ...user, key: user.userId.toString() }))
+                );
+                setPaginationConfig(prev => ({ ...prev, current: pageData.current, pageSize: pageData.size, total: pageData.total }));
+                setSearchFormLading(false);
+            });
+    };
+
+    // 加载数据
     const [data, setData] = useState<UserTableRow[]>([]);
     useEffect(() => {
-        API.sysUserPage({ pageNo: paginationConfig.current, pageSize: paginationConfig.pageSize }).then(response => {
-            const pageData = response.data.data;
-            setData(
-                pageData?.records.map(user => ({ ...user, key: user.userId.toString() }))
-            );
-            setPaginationConfig({...paginationConfig, current: pageData.current, pageSize: pageData.size, total: pageData.total });
-        });
+        loadPageData();
     }, [paginationConfig.current, paginationConfig.pageSize]);
+
+    const loadPageData = () => {
+        API.sysUserPage({ ...searchForm.getFieldsValue(), pageNo: paginationConfig.current, pageSize: paginationConfig.pageSize })
+            .then(response => {
+                const pageData = response.data.data;
+                setData(
+                    pageData?.records.map(user => ({ ...user, key: user.userId.toString() }))
+                );
+                setPaginationConfig({ ...paginationConfig, current: pageData.current, pageSize: pageData.size, total: pageData.total });
+            });
+    }
 
     return (<>
         <Form
@@ -177,7 +196,7 @@ const User: React.FC = () => {
             <Form.Item>
                 <Space>
                     <Tooltip title="搜索">
-                        <Button type="primary" htmlType="submit" icon={<SearchOutlined />} />
+                        <Button type="primary" loading={searchFormLading} htmlType="submit" icon={<SearchOutlined />}/>
                     </Tooltip>
                     <Tooltip title="重置">
                         <Button icon={<RedoOutlined />} onClick={() => searchForm.resetFields()} />
@@ -189,9 +208,21 @@ const User: React.FC = () => {
         <div style={{ marginBottom: "15px" }}>
             <Space>
                 <Button type="primary" onClick={() => popupAddUserModal()}>新增</Button>
-                <Button danger onClick={() => handleBatchDelete()}>删除</Button>
+                <Popconfirm
+                    title    
+                    description="确定是否要删除?"
+                    onConfirm={() => handleBatchDelete()}
+                    okText="确认"
+                    cancelText="取消"
+                >
+                    <Button danger>删除</Button>
+                </Popconfirm>
             </Space>
         </div>
+
+        {/* 
+            使用 Form.Provider 来监听 Modal 中的表单提交，进而触发父组件重新加载分页数据
+        */}
         <Form.Provider
             // onFormFinish={(name, { values, forms }) => {
             //     if (name === 'userForm') {
@@ -202,15 +233,23 @@ const User: React.FC = () => {
             // }}
             onFormFinish={(name) => {
                 if (name === 'userForm') {
-                    hideUserModal();
+                    loadPageData();
                 }
             }}
         >
             <UserAddModal type={modalType.current} initData={editRow.current} open={open} onCancel={hideUserModal} />
-            <Table rowSelection={rowSelection} columns={columns} dataSource={data} pagination={ paginationConfig } />
         </Form.Provider>
-
+        <Table
+                rowSelection={rowSelection}
+                columns={columns}
+                dataSource={data}
+                pagination={paginationConfig}
+                scroll={{ x: 1000, y: 300 }}
+        />
     </>);
 }
 
+// TODO1: 后台校验用户名、姓名唯一
+// TODO2: 状态开关支持在表格中直接修改
+// TODO3: 新增角色字段
 export default User;
