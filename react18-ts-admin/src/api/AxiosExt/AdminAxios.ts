@@ -25,13 +25,13 @@ const requestOnRejected: (error: any) => any = (error: any): any => {
 const responseOnFulfilled: ((response: AxiosResponse<any, any>) => AxiosResponse<any, any> | Promise<AxiosResponse<any, any>>) = (response: AxiosResponse<any, any>) => {
     const responseStatusCode = response.status;
 
-    // convert response.data(string) => data(object)
     response.data = JSON.parse(response.data);
 
     switch (responseStatusCode) {
         case 200: {
             if (response.data.code !== 200) {
                 message.error(response.data.message);
+                return Promise.reject(response.data.message);
             }
             break;
         }
@@ -60,6 +60,6 @@ const AdminAxios = new AxiosExt({
     baseURL: "http://localhost:9090"
 });
 AdminAxios.interceptors.request.use(requestOnFulfilled, requestOnRejected);
-AdminAxios.interceptors.response.use(responseOnFulfilled, responseOnRejected);
+AdminAxios.interceptors.response.use(responseOnFulfilled, responseOnRejected, );
 
 export default AdminAxios;

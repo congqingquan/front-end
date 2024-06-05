@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Form, Input, Modal, Radio, Switch, Upload } from 'antd';
+import { Form, Input, Modal, Radio, Select, Switch, Upload } from 'antd';
 import UserTableRow from '@/domain/model/UserTableRow';
 import { EyeInvisibleOutlined, EyeTwoTone, PlusOutlined } from '@ant-design/icons';
 import API from '@/api';
@@ -8,33 +8,36 @@ interface ModalFormProps {
   type: 'ADD' | 'UPDATE',
   initData?: UserTableRow,
   open: boolean;
+  onConfirm: () => void;
   onCancel: () => void;
 }
 
-const UserModal: React.FC<ModalFormProps> = ({ type, initData, open, onCancel }) => {
+const UserModal: React.FC<ModalFormProps> = ({ type, initData, open, onConfirm, onCancel }) => {
   const [form] = Form.useForm();
 
-  // 根据新增、编辑初始化表单项的默认值
+  // 回显：根据新增、编辑初始化表单项的默认值
   // 注意！必须在 useEffect 中初始化表单项，不然会提示：Cannot update during an existing state transition (such as within `render`).
   // 可以推测 form.setFieldValue 内部会修改自己的 useState，那么就会出现在 render 期间触发了 state 改变，故提示以上的渲染时更新警告。
   useEffect(() => {
     if (initData) {
-      form.setFieldsValue({ ...initData, status: status2Boolean(initData.status)});
+      form.setFieldsValue({ ...initData, status: status2Boolean(initData.status) });
     }
   }, [initData]);
 
   const onFinish = () => {
+
+    console.log(form.getFieldsValue());
+    
+
     setModalConfirmLading(true);
     if (type === 'ADD') {
-      API.addSysUser({...form.getFieldsValue(), status: status2String(form.getFieldValue("status"))}).then(_ => {
-        setModalConfirmLading(false);
-        onCancel();
-      });
+      API.addSysUser({ ...form.getFieldsValue(), status: status2String(form.getFieldValue("status")) })
+        .then(() => onConfirm())
+        .finally(() => setModalConfirmLading(false));
     } else {
-      API.eidtSysUser({...form.getFieldsValue(), status: status2String(form.getFieldValue("status"))}).then(_ => {
-        setModalConfirmLading(false);
-        onCancel();
-      });
+      API.eidtSysUser({ ...form.getFieldsValue(), status: status2String(form.getFieldValue("status")) })
+        .then(() => onConfirm())
+        .finally(() => setModalConfirmLading(false));
     }
   };
 
@@ -55,9 +58,8 @@ const UserModal: React.FC<ModalFormProps> = ({ type, initData, open, onCancel })
       onCancel={onCancel}
       okText={type === 'ADD' ? '新增' : '修改'}
       cancelText='取消'
-      okButtonProps={{ autoFocus: true, htmlType: 'submit'}}
+      okButtonProps={{ autoFocus: true, htmlType: 'submit' }}
       confirmLoading={modalConfirmLading}
-      onOk={() => onFinish()}
       destroyOnClose
       modalRender={(dom) => (
         <Form
@@ -68,7 +70,7 @@ const UserModal: React.FC<ModalFormProps> = ({ type, initData, open, onCancel })
           labelCol={{ span: 4 }}
           wrapperCol={{ span: 15 }}
           size={'middle'}
-          // onFinish={() => onFinish()}
+          onFinish={() => onFinish()}
           clearOnDestroy
         >
           {dom}
@@ -98,16 +100,28 @@ const UserModal: React.FC<ModalFormProps> = ({ type, initData, open, onCancel })
           placeholder="请输入姓名"
         />
       </Form.Item>
-      <Form.Item name='gender' label='性别' rules={[{ required: true, message: '请选择性别' }]}>
+      <Form.Item name='email' label='邮箱'>
+        <Input />
+      </Form.Item>
+      <Form.Item name='gender' label='性别'>
         <Radio.Group>
           <Radio value="MAN">男</Radio>
           <Radio value="WOMAN">女</Radio>
           <Radio value="UNKNOWN">其他</Radio>
         </Radio.Group>
       </Form.Item>
-      <Form.Item name='email' label='邮箱'>
-        <Input />
+
+      <Form.Item name='roles' label='角色'>
+        <Select
+          mode="multiple"
+          allowClear
+          style={{ width: '100%' }}
+          defaultValue={['a10', 'c12']}
+          options={[{title: 'A', value: 'A'}, {title: 'B', value: 'B'}]}
+          placeholder="Please select"
+        />
       </Form.Item>
+
       <Form.Item name='avatar' label='头像' valuePropName='file-list'>
         <Upload action="/upload.do" listType="picture-card">
           <button style={{ border: 0, background: 'none' }} type="button">

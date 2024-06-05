@@ -48,7 +48,7 @@ export default class API {
         return AdminAxios.postJSON<ApiResult<boolean>>("/admin/b/sysUser/add", param);
     }
     // 2. 修改
-    public static eidtSysUser(param: SysUserUpdateDTO): Promise<AxiosResponse<ApiResult<boolean[]>>> {
+    public static eidtSysUser(param: Partial<SysUserUpdateDTO>): Promise<AxiosResponse<ApiResult<boolean[]>>> {
         return AdminAxios.postJSON<ApiResult<boolean[]>>("/admin/b/sysUser/edit", param);
     }
     // 3. 删除

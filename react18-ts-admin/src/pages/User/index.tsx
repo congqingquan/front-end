@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Button, Form, Input, Popconfirm, Select, Space, Table, Tag, Tooltip } from 'antd';
+import { Button, Form, Input, Popconfirm, Select, Space, Switch, Table, Tag, Tooltip } from 'antd';
 import type { TablePaginationConfig, TableProps } from 'antd';
 import UserTableRow from '@/domain/model/UserTableRow';
 import { DeleteOutlined, EditOutlined, RedoOutlined, SearchOutlined } from '@ant-design/icons';
@@ -13,44 +13,41 @@ const User: React.FC = () => {
             title: '主键',
             dataIndex: 'userId',
             key: 'userId',
-            width: 90
+            width: 70
+        },
+        {
+            title: '用户名',
+            dataIndex: 'username',
+            key: 'username',
+            width: 70,
         },
         {
             title: '姓名',
             dataIndex: 'name',
             key: 'name',
-            width: 50,
+            width: 70,
         },
         {
             title: '性别',
             dataIndex: 'gender',
             key: 'gender',
-            width: 50,
-            render: (text) => <>
-                {
-                    text === 'MAN'
-                        ? <Tag color={'green'} key={'MAN'}>男</Tag>
-                        : text === 'WOMAN'
-                            ? <Tag color={'volcano'} key={'WOMAN'}>女</Tag>
-                            : <Tag color={'blue'} key={'OTHER'}>其他</Tag>
-                }
-            </>,
+            width: 70,
+            render: (text) => text === 'MAN' ? '男' : text === 'WOMAN' ? '女' : '未知',
         },
         {
             title: '邮箱',
             dataIndex: 'email',
             key: 'email',
-            width: 50
+            width: 70
         },
         {
             title: '状态',
             key: 'status',
             dataIndex: 'status',
-            width: 50,
-            render: (text) => <>
+            width: 70,
+            render: (text, record: UserTableRow) => <>
                 {
-                    text === 'NORMAL' ? <Tag color={'green'} key={'NORMAL'}>正常</Tag> :
-                        text === 'DISABLED' ? <Tag color={'red'} key={'DISABLED'}>禁用</Tag> : <Tag color={'red'} key={'UNKNOWN'}>未知</Tag>
+                    <Switch defaultChecked={text === 'NORMAL'} onChange={(checked: boolean) => API.eidtSysUser({ userId: record.userId, status: checked ? 'NORMAL' : 'DISABLED'})}></Switch>
                 }
             </>
         },
@@ -58,7 +55,7 @@ const User: React.FC = () => {
             title: '创建时间',
             dataIndex: 'createTime',
             key: 'createTime',
-            width: 80,
+            width: 70,
         },
         {
             title: '操作',
@@ -175,15 +172,16 @@ const User: React.FC = () => {
             onFinish={() => handleSubmitSearchForm()}
         >
             <Form.Item label="姓名" name="name">
-                <Input />
+                <Input placeholder='请输入搜索姓名' />
             </Form.Item>
 
             <Form.Item label="邮箱" name="email">
-                <Input />
+                <Input placeholder='请输入搜索邮箱'/>
             </Form.Item>
 
             <Form.Item label="状态" name="status">
                 <Select
+                    placeholder="请输入搜索状态"
                     style={{ minWidth: 90 }}
                     allowClear
                     options={[
@@ -221,8 +219,10 @@ const User: React.FC = () => {
         </div>
 
         {/* 
-            使用 Form.Provider 来监听 Modal 中的表单提交，进而触发父组件重新加载分页数据
+            错误示范：使用 Form.Provider 来监听 Modal 中的表单提交，进而触发父组件重新加载分页数据
+            因为 modal 中的修改请求是异步的，导致与 loadPageData 最终执行顺序不是严格先后的。
         */}
+        {/*         
         <Form.Provider
             // onFormFinish={(name, { values, forms }) => {
             //     if (name === 'userForm') {
@@ -232,13 +232,26 @@ const User: React.FC = () => {
             //     }
             // }}
             onFormFinish={(name) => {
+                console.log(name);
+                
                 if (name === 'userForm') {
                     loadPageData();
                 }
             }}
         >
             <UserAddModal type={modalType.current} initData={editRow.current} open={open} onCancel={hideUserModal} />
-        </Form.Provider>
+        </Form.Provider> 
+        */}
+        <UserAddModal 
+            type={modalType.current} 
+            initData={editRow.current} 
+            open={open} 
+            onConfirm={() => {
+                hideUserModal();
+                loadPageData();
+            }}
+            onCancel={hideUserModal}
+        />
         <Table
                 rowSelection={rowSelection}
                 columns={columns}
@@ -249,7 +262,5 @@ const User: React.FC = () => {
     </>);
 }
 
-// TODO1: 后台校验用户名、姓名唯一
-// TODO2: 状态开关支持在表格中直接修改
-// TODO3: 新增角色字段
+// TODO: 新增角色字段
 export default User;
