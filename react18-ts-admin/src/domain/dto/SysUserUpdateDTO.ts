@@ -1,3 +1,5 @@
+import SysRoleAddDTO from "./SysRoleAddDTO";
+
 export default interface SysUserUpdateDTO {
 	//主键
 	id: number,
@@ -17,14 +19,6 @@ export default interface SysUserUpdateDTO {
 	avatar: string,
 	//状态(NORMAL / DISABLED)
 	status: string,
-	//创建人
-	createUser: number,
-	//创建时间
-	createTime: Date,
-	//更新人
-	updateUser: number,
-	//更新时间
-	updateTime: Date,
-	//逻辑删除: 1Y 0N
-	isDeleted: number
+	// 角色列表
+	roles: SysRoleAddDTO[]
 }

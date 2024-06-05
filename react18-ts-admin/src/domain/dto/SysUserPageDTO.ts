@@ -1,8 +1,6 @@
-export default interface SysUserPageDTO {
-	//页码
-	pageNo: number,
-	//每页数量
-	pageSize: number,
+import { PageDTO } from "@/api";
+
+export default interface SysUserPageDTO extends PageDTO {
 	//业务主键
 	userId: number,
 	//账户名
@@ -27,6 +25,4 @@ export default interface SysUserPageDTO {
 	updateUser: number,
 	//更新时间
 	updateTime: Date,
-	//逻辑删除: 1Y 0N
-	isDeleted: number
 }

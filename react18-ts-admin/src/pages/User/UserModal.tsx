@@ -3,6 +3,7 @@ import { Form, Input, Modal, Radio, Select, Switch, Upload } from 'antd';
 import UserTableRow from '@/domain/model/UserTableRow';
 import { EyeInvisibleOutlined, EyeTwoTone, PlusOutlined } from '@ant-design/icons';
 import API from '@/api';
+import { DefaultOptionType } from 'antd/es/select';
 
 interface ModalFormProps {
   type: 'ADD' | 'UPDATE',
@@ -24,11 +25,8 @@ const UserModal: React.FC<ModalFormProps> = ({ type, initData, open, onConfirm, 
     }
   }, [initData]);
 
+  // 确认
   const onFinish = () => {
-
-    console.log(form.getFieldsValue());
-    
-
     setModalConfirmLading(true);
     if (type === 'ADD') {
       API.addSysUser({ ...form.getFieldsValue(), status: status2String(form.getFieldValue("status")) })
@@ -50,6 +48,18 @@ const UserModal: React.FC<ModalFormProps> = ({ type, initData, open, onConfirm, 
 
   // Modal 确认 loading
   const [modalConfirmLading, setModalConfirmLading] = useState<boolean>(false);
+
+  // 加载数据
+  const [roleData, setRoleData] = useState<DefaultOptionType[]>([]);
+  useEffect(() => {
+    API.sysRolePage({ pageNo: 2, pageSize: -1}).then(response => {
+      console.log(response.data.data.records.map(role => ({ value: role.roleId.toString(), title: role.name})));
+      
+      setRoleData(
+        response.data.data.records.map(role => ({ value: role.roleId.toString(), label: role.name}))
+      );
+    });
+  }, []);
 
   return (
     <Modal
@@ -116,8 +126,7 @@ const UserModal: React.FC<ModalFormProps> = ({ type, initData, open, onConfirm, 
           mode="multiple"
           allowClear
           style={{ width: '100%' }}
-          defaultValue={['a10', 'c12']}
-          options={[{title: 'A', value: 'A'}, {title: 'B', value: 'B'}]}
+          options={roleData}
           placeholder="Please select"
         />
       </Form.Item>
