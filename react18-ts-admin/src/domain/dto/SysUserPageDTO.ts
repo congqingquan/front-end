@@ -2,7 +2,7 @@ import { PageDTO } from "@/api";
 
 export default interface SysUserPageDTO extends PageDTO {
 	//业务主键
-	userId: number,
+	userId: string,
 	//账户名
 	username: string,
 	//密码
@@ -18,11 +18,11 @@ export default interface SysUserPageDTO extends PageDTO {
 	//状态(NORMAL / DISABLED)
 	status: string,
 	//创建人
-	createUser: number,
+	createUser: string,
 	//创建时间
 	createTime: Date,
 	//更新人
-	updateUser: number,
+	updateUser: string,
 	//更新时间
 	updateTime: Date,
 }

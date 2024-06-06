@@ -2,7 +2,7 @@ import SysRoleAddDTO from "./SysRoleAddDTO";
 
 export default interface SysUserAddDTO {
 	//业务主键
-	userId: number,
+	userId: string,
 	//账户名
 	username: string,
 	//密码

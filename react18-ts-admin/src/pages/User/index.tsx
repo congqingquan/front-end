@@ -6,6 +6,7 @@ import { DeleteOutlined, EditOutlined, RedoOutlined, SearchOutlined } from '@ant
 import UserAddModal from './UserModal';
 import API from '@/api';
 import SysUserPageDTO from '@/domain/dto/SysUserPageDTO';
+import SysRoleViewVO from '@/domain/vo/SysRoleViewVO';
 
 const User: React.FC = () => {
     const columns: TableProps['columns'] = [
@@ -33,6 +34,13 @@ const User: React.FC = () => {
             key: 'gender',
             width: 70,
             render: (text) => text === 'MAN' ? '男' : text === 'WOMAN' ? '女' : '未知',
+        },
+        {
+            title: '角色',
+            dataIndex: 'roles',
+            key: 'roles',
+            width: 70,
+            render: (roles: SysRoleViewVO[]) => roles.map(role => role.name).join(" / ")
         },
         {
             title: '邮箱',
@@ -114,7 +122,7 @@ const User: React.FC = () => {
     };
 
     const handleDelete = async (record: UserTableRow) => {
-        return API.deleteSysUser([record.userId.toString()]).then(_ => loadPageData());
+        return API.deleteSysUser([record.userId]).then(_ => loadPageData());
     }
     const handleBatchDelete = async () => {
         return API.deleteSysUser([...selectedRowKeys.map(key => key.toString())]).then(_ => loadPageData());
@@ -140,7 +148,7 @@ const User: React.FC = () => {
             .then(response => {
                 const pageData = response.data.data;
                 setData(
-                    pageData?.records.map(user => ({ ...user, key: user.userId.toString() }))
+                    pageData?.records.map(user => ({ ...user, key: user.userId }))
                 );
                 setPaginationConfig(prev => ({ ...prev, current: pageData.current, pageSize: pageData.size, total: pageData.total }));
                 setSearchFormLading(false);
@@ -158,7 +166,7 @@ const User: React.FC = () => {
             .then(response => {
                 const pageData = response.data.data;
                 setData(
-                    pageData?.records.map(user => ({ ...user, key: user.userId.toString() }))
+                    pageData?.records.map(user => ({ ...user, key: user.userId }))
                 );
                 setPaginationConfig({ ...paginationConfig, current: pageData.current, pageSize: pageData.size, total: pageData.total });
             });
@@ -257,11 +265,10 @@ const User: React.FC = () => {
                 columns={columns}
                 dataSource={data}
                 pagination={paginationConfig}
-                scroll={{ x: 1000, y: 300 }}
+                scroll={{ x: 1200, y: 500 }}
         />
     </>);
 }
 
-// TODO1: UserModal 的角色字段回显时设置默认值
-// TODO2: 用户列表页面新增角色字段，展示的同时也以便回显使用
+// TODO: 处理传递到后台的角色列表数据
 export default User;

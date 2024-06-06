@@ -1,4 +1,4 @@
-export default interface SysRolePageVO {
+export default interface SysRoleViewVO {
 	//业务主键
 	roleId: string,
 	//名称
@@ -14,5 +14,5 @@ export default interface SysRolePageVO {
 	//更新人
 	updateUser: number,
 	//更新时间
-	updateTime: Date
+	updateTime: Date,
 }

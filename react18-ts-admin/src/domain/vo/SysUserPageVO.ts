@@ -1,8 +1,8 @@
+import SysRoleViewVO from "./SysRoleViewVO";
+
 export default interface SysUserPageVO {
-	//主键
-	id: number,
 	//业务主键
-	userId: number,
+	userId: string,
 	//账户名
 	username: string,
 	//密码
@@ -25,4 +25,6 @@ export default interface SysUserPageVO {
 	updateUser: number,
 	//更新时间
 	updateTime: string,
+	// 角色列表
+	roles: SysRoleViewVO[]
 }
