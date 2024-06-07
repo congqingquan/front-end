@@ -1,4 +1,6 @@
-export default interface SysRoleAddDTO {
+export default interface SysRoleUpdateDTO {
+	//业务主键
+	roleId: string,
 	//名称
 	name: string,
 	//描述

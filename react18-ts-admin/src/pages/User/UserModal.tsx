@@ -15,31 +15,44 @@ interface ModalFormProps {
 
 const UserModal: React.FC<ModalFormProps> = ({ type, initData, open, onConfirm, onCancel }) => {
   const [form] = Form.useForm();
-  
+
   // 回显：根据新增、编辑初始化表单项的默认值
   // 注意！必须在 useEffect 中初始化表单项，不然会提示：Cannot update during an existing state transition (such as within `render`).
   // 可以推测 form.setFieldValue 内部会修改自己的 useState，那么就会出现在 render 期间触发了 state 改变，故提示以上的渲染时更新警告。
   useEffect(() => {
     if (initData) {
       form.setFieldsValue(
-        { 
-          ...initData, 
-          status: status2Boolean(initData.status), 
+        {
+          ...initData,
+          status: status2Boolean(initData.status),
           roles: initData.roles ? initData.roles.map(row => row.roleId) : []
         }
-    );
+      );
     }
   }, [initData]);
 
   // 确认
   const onFinish = () => {
+
     setModalConfirmLading(true);
     if (type === 'ADD') {
-      API.addSysUser({ ...form.getFieldsValue(), status: status2String(form.getFieldValue("status")) })
+      API.addSysUser(
+        {
+          ...form.getFieldsValue(),
+          status: status2String(form.getFieldValue("status")),
+          roles: form.getFieldValue("roles").map((roleId: string) => ({ roleId: roleId }))
+        }
+      )
         .then(() => onConfirm())
         .finally(() => setModalConfirmLading(false));
     } else {
-      API.eidtSysUser({ ...form.getFieldsValue(), status: status2String(form.getFieldValue("status")) })
+      API.eidtSysUser(
+        {
+          ...form.getFieldsValue(),
+          status: status2String(form.getFieldValue("status")),
+          roles: form.getFieldValue("roles").map((roleId: string) => ({ roleId: roleId }))
+        }
+      )
         .then(() => onConfirm())
         .finally(() => setModalConfirmLading(false));
     }
@@ -125,13 +138,11 @@ const UserModal: React.FC<ModalFormProps> = ({ type, initData, open, onConfirm, 
         </Radio.Group>
       </Form.Item>
 
-      {/* initialValue={initData?.roles?.map(row => ({ value: row.roleId }))} */}
       <Form.Item name='roles' label='角色' >
         <Select
           mode="multiple"
           allowClear
           style={{ width: '100%' }}
-          // defaultValue={initData?.roles?.map(row => row.roleId)}
           options={roleData}
           placeholder="请选择角色"
         />
@@ -146,7 +157,10 @@ const UserModal: React.FC<ModalFormProps> = ({ type, initData, open, onConfirm, 
         </Upload>
       </Form.Item>
       <Form.Item name='status' valuePropName='checked' label='状态'>
-        <Switch />
+        <Switch 
+          checkedChildren="启用"
+          unCheckedChildren="禁用"
+        />
       </Form.Item>
     </Modal >
   );

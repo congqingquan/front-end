@@ -1,4 +1,4 @@
-import SysRoleAddDTO from "./SysRoleAddDTO";
+import SysRoleViewVO from "../vo/SysRoleViewVO";
 
 export default interface SysUserAddDTO {
 	//业务主键
@@ -18,5 +18,5 @@ export default interface SysUserAddDTO {
 	//状态(NORMAL / DISABLED)
 	status: string,
 	// 角色列表
-	roles: SysRoleAddDTO[]
+	roles: SysRoleViewVO[]
 }

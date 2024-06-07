@@ -3,7 +3,7 @@ import { Button, Form, Input, Popconfirm, Select, Space, Switch, Table, Tooltip 
 import type { TablePaginationConfig, TableProps } from 'antd';
 import UserTableRow from '@/domain/model/UserTableRow';
 import { DeleteOutlined, EditOutlined, RedoOutlined, SearchOutlined } from '@ant-design/icons';
-import UserAddModal from './UserModal';
+import UserModal from './UserModal';
 import API from '@/api';
 import SysUserPageDTO from '@/domain/dto/SysUserPageDTO';
 import SysRoleViewVO from '@/domain/vo/SysRoleViewVO';
@@ -53,11 +53,23 @@ const User: React.FC = () => {
             key: 'status',
             dataIndex: 'status',
             width: 70,
-            render: (text, record: UserTableRow) => <>
-                {
-                    <Switch defaultChecked={text === 'NORMAL'} onChange={(checked: boolean) => API.eidtSysUser({ userId: record.userId, status: checked ? 'NORMAL' : 'DISABLED'})}></Switch>
-                }
-            </>
+            render: (text, record: UserTableRow) => (
+                <Switch
+                    // 通过 key 解决 defaultChecked 二次赋值不生效问题:
+                    // 原因: antd 中的多个组件的 default 值只接受一次赋值，后续对 default 进行了修改也不会生效.
+                    // 流程：第一次渲染由于没有初始化表格数据，表格行上的各个组件的 default 值为 undefined. 
+                    // 当在 useEffect 中抓取数据后，更新 state 触发二次渲染，但由于各个组件的 default 值已经为 undefined 了，所以修改了默认值也不会生效
+                    // 解决: 将 key 设置为 default 值，强行触发重新渲染
+                    key={text}
+                    checkedChildren="启用"
+                    unCheckedChildren="禁用"
+                    defaultChecked={text === 'NORMAL'}
+                    onChange={(checked: boolean) => {
+                        API.eidtSysUser({ userId: record.userId, status: checked ? 'NORMAL' : 'DISABLED'});
+                        record.status = checked ? 'NORMAL' : 'DISABLED';
+                    }}
+                />
+            )
         },
         {
             title: '创建时间',
@@ -71,7 +83,7 @@ const User: React.FC = () => {
             width: 100,
             render: (_, record) => (
                 <Space size="small">
-                    <Button type="link" icon={<EditOutlined />} onClick={() => popupEditUserModal(record)}>修改</Button>
+                    <Button type="link" icon={<EditOutlined />} onClick={() => popupEditModal(record)}>修改</Button>
                     <Popconfirm
                         title    
                         description="确定是否要删除?"
@@ -87,10 +99,10 @@ const User: React.FC = () => {
     ];
 
     // 新增
-    const popupAddUserModal = () => {
+    const popupAddModal = () => {
         editRow.current = undefined;
         modalType.current = 'ADD';
-        showUserModal();
+        showModal();
     }
 
     // 编辑
@@ -98,17 +110,17 @@ const User: React.FC = () => {
     const modalType = useRef<'ADD' | 'UPDATE'>('ADD');
 
     const [open, setOpen] = useState(false);
-    const showUserModal = () => {
+    const showModal = () => {
         setOpen(true);
     };
-    const hideUserModal = () => {
+    const hideModal = () => {
         setOpen(false);
     };
 
-    const popupEditUserModal = (record: UserTableRow) => {
+    const popupEditModal = (record: UserTableRow) => {
         editRow.current = {...record};
         modalType.current = 'UPDATE';
-        showUserModal();
+        showModal();
     }
 
     // 删除
@@ -213,7 +225,7 @@ const User: React.FC = () => {
 
         <div style={{ marginBottom: "15px" }}>
             <Space>
-                <Button type="primary" onClick={() => popupAddUserModal()}>新增</Button>
+                <Button type="primary" onClick={() => popupAddModal()}>新增</Button>
                 <Popconfirm
                     title    
                     description="确定是否要删除?"
@@ -236,7 +248,7 @@ const User: React.FC = () => {
             //     if (name === 'userForm') {
             //         const { basicForm } = forms;
             //         console.log(forms, basicForm, values);
-            //         hideUserModal();
+            //         hideModal();
             //     }
             // }}
             onFormFinish={(name) => {
@@ -247,18 +259,18 @@ const User: React.FC = () => {
                 }
             }}
         >
-            <UserAddModal type={modalType.current} initData={editRow.current} open={open} onCancel={hideUserModal} />
+            <UserModal type={modalType.current} initData={editRow.current} open={open} onCancel={hideModal} />
         </Form.Provider> 
         */}
-        <UserAddModal 
+        <UserModal 
             type={modalType.current} 
             initData={editRow.current} 
             open={open} 
             onConfirm={() => {
-                hideUserModal();
+                hideModal();
                 loadPageData();
             }}
-            onCancel={hideUserModal}
+            onCancel={hideModal}
         />
         <Table
                 rowSelection={rowSelection}
@@ -270,5 +282,4 @@ const User: React.FC = () => {
     </>);
 }
 
-// TODO: 处理传递到后台的角色列表数据
 export default User;

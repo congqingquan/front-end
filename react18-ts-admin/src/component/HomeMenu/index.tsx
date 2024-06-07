@@ -38,7 +38,7 @@ const HomeMenu = forwardRef((props: {
 
     // 渲染菜单
     useEffect(() => {
-        API.sysMenyTree()
+        API.sysMenuTree({})
             .then(response => {
                 const sysMenuTreeVos: SysMenuTreeVO[] = response.data.data;
                 const menuItems: MenuItem[] = TreeUtils.convertNode(

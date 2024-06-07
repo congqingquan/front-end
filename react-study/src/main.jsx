@@ -21,6 +21,7 @@ import './index.css';
 // import App from './02-style/06-tailwind.jsx';
 // import App from './03-event/01-事件监听.jsx';
 // import App from './04-render/01-react渲染特性.jsx';
+import App from './04-render/02-react.jsx';
 // import App from './05-component/01-component.jsx';
 // import App from './05-component/02-component分层.jsx';
 // import App from './05-component/03-component间通信.jsx';
@@ -66,7 +67,7 @@ import './index.css';
 // import App from './08-advance/04-portal-渲染到dom的指定位置.jsx';
 // import App from './08-advance/05-profiler-性能分析器.jsx';
 // import App from './09-library/01-react-spring动画库.jsx';
-import App from './09-library/02-react-BMapGL地图库.jsx';
+// import App from './09-library/02-react-BMapGL地图库.jsx';
 
 ReactDOM.createRoot(document.getElementById('root'), {
     identifierPrefix: 'react-id-',

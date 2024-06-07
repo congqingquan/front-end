@@ -63,6 +63,9 @@ class OpenApiDomainGenerator {
 
     public getPropType(prop: Prop): string | undefined {
         if (prop.type === 'integer') {
+            if (prop.format === 'int64') {
+                return 'string';
+            }
             return 'number'; 
         } 
         else if (prop.type === 'boolean') {
