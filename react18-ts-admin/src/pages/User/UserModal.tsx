@@ -73,7 +73,15 @@ const UserModal: React.FC<ModalFormProps> = ({ type, initData, open, onConfirm, 
   useEffect(() => {
     API.sysRolePage({ pageNo: 1, pageSize: -1 }).then(response => {
       setRoleData(
-        response.data.data.records.map(role => ({ key: role.roleId, value: role.roleId, label: role.name }))
+        response.data.data.records.map(role => (
+            { 
+                key: role.roleId, 
+                value: role.roleId, 
+                label: role.name, 
+                disabled: status2Boolean(role.status) 
+            }
+          )
+        )
       );
     });
   }, []);

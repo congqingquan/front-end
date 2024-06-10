@@ -1,7 +1,7 @@
 import TreeUtils from "@/util/TreeUtils";
 import API from "@/api";
 import { MenuItemStateHandler, MenuItemStateHolder } from "./MenuItemStateReducer";
-import AntdIcon from "@/component/Icon";
+import AntdIcon from "@/component/AsyncComponent";
 import store from '@/store';
 import MenuItem from "@/domain/model/MenuItem";
 import SysMenuTreeVO from "@/domain/vo/SysMenuTreeVO";

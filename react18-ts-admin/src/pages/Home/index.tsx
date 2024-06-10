@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Avatar, Breadcrumb, Drawer, Dropdown, Layout, MenuProps, MenuTheme, Space, Switch, theme as andTheme } from 'antd';
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import HomeMenu, { HomeMenuRef } from '@/component/HomeMenu';
@@ -8,12 +8,14 @@ import classNames from 'classnames';
 import HomeStyle from "./home.module.scss";
 import { AntDesignOutlined, FullscreenExitOutlined, FullscreenOutlined, LogoutOutlined, SwapOutlined } from '@ant-design/icons';
 import UserUtils, { User } from '@/util/UserUtils';
-import Router from '@/router';
+import { RouterTable } from '@/router';
 import Cache from '@/util/Cache';
-import Constants from '@/constants';
+import Constants from '@/common/Constants';
 import TreeUtils from '@/util/TreeUtils';
 import BreadcrumbItem from '@/domain/model/BreadcrumbItem';
 import MenuItem from '@/domain/model/MenuItem';
+import { MenuCache, MenuContextData } from '@/common/Type';
+import MenuContext from '@/context/MenuContext';
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -92,7 +94,7 @@ const Home: React.FC = () => {
             label: "退出登录",
             onClick: _ => {
                 UserUtils.logout();
-                Router.navigate("/login");
+                RouterTable.navigate("/login");
             },
             icon: <LogoutOutlined />
         }
@@ -131,6 +133,12 @@ const Home: React.FC = () => {
     const location = useLocation();
     const pathname: string = location.pathname;
     const [breadcrumbItems, setBreadcrumbItems] = useState<BreadcrumbItem[]>([]);
+    const menuContextData = useContext<MenuContextData>(MenuContext);
+    
+    useEffect(() => {
+        setBreadcrumbByLocation();
+    }, [menuContextData.tree]);
+
     const selectMenuItemCallback: (item: MenuItem) => void = (item) => {
         setBreadcrumbItems(searchBreadcrumnParentNodes(item.key));
     }
@@ -140,12 +148,8 @@ const Home: React.FC = () => {
     }
 
     const searchBreadcrumnParentNodes = (key: string): BreadcrumbItem[] => {
-        const treeNodes = Cache.get<MenuItem[]>(Constants.CACHE_KEY_MENU_ITEMS_TREE);
-        if (!treeNodes) {
-            return [];
-        }
         const parentNodes: MenuItem[] = []
-        TreeUtils.breakableForeach(treeNodes, node => node.children ? node.children : [], (paths, menuItem) => {
+        TreeUtils.breakableForeach(menuContextData.tree, node => node.children ? node.children : [], (paths, menuItem) => {
             if (menuItem.key === key) {
                 parentNodes.push(...paths, menuItem);
                 return true;
@@ -171,10 +175,10 @@ const Home: React.FC = () => {
                     </div>
                     {/* 左侧菜单 */}
                     <HomeMenu theme={theme}
+                        items={menuContextData.tree}
                         ref={homeMenuRef}
                         collasped={collapsed}
-                        selectMenuItemCallback={selectMenuItemCallback}
-                        fetchMenuItemsCompleteCallback={setBreadcrumbByLocation}>
+                        selectMenuItemCallback={selectMenuItemCallback}>
                     </HomeMenu>
                 </Sider>
                 {/* 右边内容 */}

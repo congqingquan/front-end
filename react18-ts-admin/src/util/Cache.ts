@@ -2,19 +2,39 @@ import { Supplier } from "./Functions";
 
 class Cache {
 
-    private static readonly cacheMap = new Map<any, any>();
+    private static readonly CACHE_MAP = new Map<any, any>();
 
-    public static set(key: any, value: any): void {
-        this.cacheMap.set(key, value);
+    // ==================== Sync ====================
+
+    public static set<V>(key: any, value: V): V {
+        Cache.CACHE_MAP.set(key, value);
+        return value;
     }
 
     public static get<V>(key: any): V | undefined {
-        return this.cacheMap.get(key);
+        return Cache.CACHE_MAP.get(key);
     }
 
     public static getAndSet<V>(key: any, defaultValue: Supplier<V>): V {
-        const value = this.cacheMap.get(key);
-        return value ? value : defaultValue();
+        const value = Cache.get<V>(key);
+        return value ? value : Cache.set(key, defaultValue());
+    }
+
+    public static delete(key: any): void {
+        Cache.CACHE_MAP.delete(key);
+    }
+
+    // ==================== Async ====================
+
+    public static async setAsync<V>(key: any, value: Promise<V>): Promise<V> {
+        const v = await value;
+        Cache.set(key, v);
+        return v;
+    }
+
+    public static async getAndSetAsync<V>(key: any, defaultValue: Supplier<Promise<V>>): Promise<V> {
+        const value = Cache.get<V>(key);
+        return value ? value : Cache.setAsync(key, defaultValue());
     }
 }
 

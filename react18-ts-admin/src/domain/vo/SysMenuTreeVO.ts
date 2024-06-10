@@ -5,6 +5,7 @@ export default interface SysMenuTreeVO {
     parentPath: string
     level: number
     name: string
+    component: string
     icon: string
     url: string
     sort: number

@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import LoginStyle from "./login.module.scss";
 import API from "@/api";
-import Router from "@/router";
+import { RouterTable } from "@/router";
 import { useLocation } from "react-router-dom";
 import { Form, Input, Spin, message } from "antd";
-import Constants from "@/constants";
+import Constants from "@/common/Constants";
 import SysUserLoginDTO from "@/domain/dto/SysUserLoginDTO";
 import { UserOutlined, LockOutlined, MailOutlined } from "@ant-design/icons";
 
@@ -43,14 +43,12 @@ const Login: React.FC = () => {
     }
 
     // 登录表单点击提交
-    const handleSubmitLoginForm = (formValues: SysUserLoginDTO) => {
-        // event.preventDefault();
-        API.sysUserLogin(formValues).then(response => {
-            if (response.data.code === 200) {
-                localStorage.setItem(Constants.LOGINED_USER_INFO_KEY, JSON.stringify(response.data.data))
-                Router.navigate("/")
-            }
-        })
+    const handleSubmitLoginForm = async (formValues: SysUserLoginDTO) => {
+        const response = await API.sysUserLogin(formValues);
+        if (response.data.code === 200) {
+            localStorage.setItem(Constants.LOGINED_USER_INFO_KEY, JSON.stringify(response.data.data));
+            RouterTable.navigate("/");
+        }
     }
 
     // 加载页面
@@ -63,8 +61,8 @@ const Login: React.FC = () => {
 
     let tip = new URLSearchParams(useLocation().search).get("tip");
     useEffect(() => {
-        if (tip === 'y') {
-            message.error('前端拦截：登录过期，请先登录');
+        if (tip) {
+            message.error(tip);
         }
     }, [tip]);
 

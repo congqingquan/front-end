@@ -1,4 +1,4 @@
-import Constants from "@/constants";
+import Constants from "@/common/Constants";
 
 export interface User {
     userId: string

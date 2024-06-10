@@ -1,14 +1,13 @@
 import { Menu, MenuTheme } from 'antd';
-import { ForwardedRef, forwardRef, useEffect, useImperativeHandle, useState } from 'react';
+import { ForwardedRef, forwardRef, useContext, useEffect, useImperativeHandle, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import TreeUtils from '@/util/TreeUtils';
 import { SelectInfo } from 'rc-menu/lib/interface';
-import API from '@/api'
 import Cache from '@/util/Cache';
-import Constants from '@/constants';
-import Icon from '../Icon';
-import SysMenuTreeVO from '@/domain/vo/SysMenuTreeVO';
+import Constants from '@/common/Constants';
 import MenuItem from '@/domain/model/MenuItem';
+import { MenuCache, MenuContextData } from '@/common/Type';
+import MenuContext from '@/context/MenuContext';
 
 export interface HomeMenuRef {
     toggleCollapsedCallback: () => void
@@ -16,10 +15,11 @@ export interface HomeMenuRef {
 
 const HomeMenu = forwardRef((props: {
     theme: MenuTheme,
+    items: MenuItem[],
     collasped: boolean,
-    selectMenuItemCallback: (item: MenuItem) => void,
-    fetchMenuItemsCompleteCallback: (items: MenuItem[]) => void
-}, ref: ForwardedRef<HomeMenuRef>) => {
+    selectMenuItemCallback: (item: MenuItem) => void
+}, ref: ForwardedRef<HomeMenuRef>
+) => {
 
     useImperativeHandle(ref, () => ({
         toggleCollapsedCallback() {
@@ -32,58 +32,23 @@ const HomeMenu = forwardRef((props: {
     const navigate = useNavigate();
     const location = useLocation();
     const pathname: string = location.pathname;
+    const menuContextData = useContext<MenuContextData>(MenuContext);
     const [openMenuKeysArr, setOpenMenuKeysArr] = useState<string[]>([]);
-    const [items, setItems] = useState<MenuItem[]>([]);
-    // const [itemsMap, setItemsMap] = useState<Map<string, MenuItem>>(new Map());
-
+    
     // 渲染菜单
     useEffect(() => {
-        API.sysMenuTree({})
-            .then(response => {
-                const sysMenuTreeVos: SysMenuTreeVO[] = response.data.data;
-                const menuItems: MenuItem[] = TreeUtils.convertNode(
-                    sysMenuTreeVos,
-                    sourceNode => (
-                        {
-                            menuid: sourceNode.menuId,
-                            parentid: sourceNode.parentId,
-                            parentpath: sourceNode.parentPath,
-                            label: sourceNode.name,
-                            key: sourceNode.url,
-                            menutype: sourceNode.type,
-                            icon: sourceNode.icon ? <Icon name={sourceNode.icon} /> : null
-                        } as MenuItem
-                    ),
-                    sourceNode => sourceNode.children,
-                    targetNode => {
-                        targetNode.children = [];
-                        return targetNode.children;
-                    }
-                );
-                const itemsMap = new Map<string, MenuItem>();
-                TreeUtils.foreach(menuItems, node => node.children ? node.children : [], (_, node) => {
-                    itemsMap.set(node.key, node);
-                });
-                // 1. 缓存数据
-                Cache.set(Constants.CACHE_KEY_MENU_ITEMS_TREE, menuItems);
-                Cache.set(Constants.CACHE_KEY_MENU_ITEMS_MAP, itemsMap);
-                // 2. 设置 items/itemsMap state
-                setItems(menuItems);
-                // 3. 根据路由展开菜单
-                setOpenMenuKeysArr(getOpenMenyKyesArrByLocation(menuItems));
-                // 4. 回调
-                props.fetchMenuItemsCompleteCallback(menuItems);
-            });
-    }, []);
+        // 根据路由展开菜单
+        setOpenMenuKeysArr(getOpenMenyKyesArrByLocation(props.items));
+    }, [menuContextData.itemMap]);
 
     // 折叠菜单时触发根据路由展开默认菜单
     useEffect(() => {
-        setOpenMenuKeysArr(getOpenMenyKyesArrByLocation(items));
+        setOpenMenuKeysArr(getOpenMenyKyesArrByLocation(props.items));
     }, [props.collasped]);
 
     // 选中菜单项时触发
     const handleOnSelect = (info: SelectInfo) => {
-        let menuItem = Cache.get<Map<string, MenuItem>>(Constants.CACHE_KEY_MENU_ITEMS_MAP)?.get(info.key);
+        const menuItem = menuContextData.itemMap.get(info.key);
         if (menuItem) {
             props.selectMenuItemCallback(menuItem);
         }
@@ -122,7 +87,7 @@ const HomeMenu = forwardRef((props: {
                 <Menu
                     theme={props.theme}
                     mode="inline"
-                    items={items}
+                    items={props.items}
                     defaultSelectedKeys={[pathname]}
                     openKeys={openMenuKeysArr}
                     onClick={(event) => handleClickMenu(event)}

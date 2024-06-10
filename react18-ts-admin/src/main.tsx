@@ -6,11 +6,11 @@ import 'reset-css';
 // 3. 组件样式
 import '@/assets/styles/global.scss';
 import Router from '@/router';
-import { RouterProvider } from 'react-router-dom';
 // 4. 垃圾
 // import { Provider } from 'react-redux';
 // import store from '@/store';
 import RouterAuth from './router/RouterAuth';
+import App from './app';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     // <Provider store={store}>
@@ -22,8 +22,6 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     // </Provider>,
 
     // <React.StrictMode>
-        <RouterAuth>
-            <RouterProvider router={Router}></RouterProvider>
-        </RouterAuth>
+        <App/>
     // </React.StrictMode>
 );

@@ -1,8 +1,8 @@
 import { AxiosResponse, InternalAxiosRequestConfig } from "axios";
 import { message } from "antd";
 import AxiosExt from ".";
-import Router from '@/router';
-import Constants from "@/constants";
+import { RouterTable } from '@/router';
+import Constants from "@/common/Constants";
 
 // 1. request
 // before request
@@ -37,8 +37,11 @@ const responseOnFulfilled: ((response: AxiosResponse<any, any>) => AxiosResponse
         }
 
         case 401:
-            message.error("后端拦截：登录过期，请先登录");
-            Router.navigate("/login")
+            RouterTable.navigate("/login?tip=后端拦截：登录过期，请重新登录");
+            break;
+
+        case 403:
+            RouterTable.navigate("/403");
             break;
 
         case 500:
