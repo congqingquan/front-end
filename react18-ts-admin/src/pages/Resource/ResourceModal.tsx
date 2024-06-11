@@ -1,17 +1,38 @@
 import React, { useEffect, useState } from 'react';
-import { Form, Input, Modal, Switch } from 'antd';
+import { Form, Input, Modal, Select, Switch } from 'antd';
 import API from '@/api';
-import RoleTableRow from '@/domain/model/RoleTableRow';
+import ResourceTableRow from '@/domain/model/ResourceTableRow';
+import { DefaultOptionType } from 'antd/es/select';
 
 interface ModalFormProps {
   type: 'ADD' | 'UPDATE',
-  initData?: RoleTableRow,
+  initData?: ResourceTableRow,
   open: boolean;
   onConfirm: () => void;
   onCancel: () => void;
 }
 
-const RoleModal: React.FC<ModalFormProps> = ({ type, initData, open, onConfirm, onCancel }) => {
+const resourceTypes: DefaultOptionType[] = [
+  { 
+    key: 'MENU_DIC', 
+    value: 'MENU_DIC', 
+    label: '菜单目录'
+  },{ 
+    key: 'MENU', 
+    value: 'MENU', 
+    label: '菜单'
+  },{ 
+    key: 'MENU_BUTTON', 
+    value: 'MENU_BUTTON', 
+    label: '菜单按钮'
+  },{ 
+    key: 'API', 
+    value: 'API', 
+    label: '接口'
+  }
+];
+
+const ResourceModal: React.FC<ModalFormProps> = ({ type, initData, open, onConfirm, onCancel }) => {
   const [form] = Form.useForm();
 
   // 回显：根据新增、编辑初始化表单项的默认值
@@ -31,7 +52,7 @@ const RoleModal: React.FC<ModalFormProps> = ({ type, initData, open, onConfirm, 
 
     setModalConfirmLading(true);
     if (type === 'ADD') {
-      API.addSysRole(
+      API.addSysResource(
         {
           ...form.getFieldsValue(),
           status: status2String(form.getFieldValue("status"))
@@ -40,7 +61,7 @@ const RoleModal: React.FC<ModalFormProps> = ({ type, initData, open, onConfirm, 
         .then(() => onConfirm())
         .finally(() => setModalConfirmLading(false));
     } else {
-      API.eidtSysRole(
+      API.eidtSysResource(
         {
           ...form.getFieldsValue(),
           status: status2String(form.getFieldValue("status"))
@@ -63,7 +84,7 @@ const RoleModal: React.FC<ModalFormProps> = ({ type, initData, open, onConfirm, 
 
   return (
     <Modal
-      title={type === 'ADD' ? '新增角色' : '修改角色'}
+      title={type === 'ADD' ? '新增资源' : '修改资源'}
       open={open}
       onCancel={onCancel}
       okText={type === 'ADD' ? '新增' : '修改'}
@@ -86,17 +107,35 @@ const RoleModal: React.FC<ModalFormProps> = ({ type, initData, open, onConfirm, 
           {dom}
         </Form>
       )}>
-      <Form.Item name='roleId' label='用户主键' hidden>
+      <Form.Item name='resourceId' label='资源主键' hidden>
         <Input></Input>
       </Form.Item>
-      <Form.Item name='name' label='角色名称' rules={[{ required: true, message: '' }]}>
+      <Form.Item name='identifier' label='标识符' rules={[{ required: true, message: '' }]}>
         <Input
-          placeholder="请输入角色名称"
+          placeholder="请输入标识符"
+        />
+      </Form.Item>
+      <Form.Item name='name' label='资源名称' rules={[{ required: true, message: '' }]}>
+        <Input
+          placeholder="请输入资源名称"
+        />
+      </Form.Item>
+      <Form.Item name='value' label='值'>
+        <Input
+          placeholder="请输入值"
         />
       </Form.Item>
       <Form.Item name='description' label='描述'>
         <Input
           placeholder="请输入描述"
+        />
+      </Form.Item>
+      <Form.Item name='roles' label='类型' >
+        <Select
+          style={{ width: '100%' }}
+          defaultValue={initData?.type}
+          options={resourceTypes}
+          placeholder="请选择类型"
         />
       </Form.Item>
       <Form.Item name='status' valuePropName='checked' label='状态'>
@@ -109,4 +148,4 @@ const RoleModal: React.FC<ModalFormProps> = ({ type, initData, open, onConfirm, 
   );
 };
 
-export default RoleModal;
+export default ResourceModal;

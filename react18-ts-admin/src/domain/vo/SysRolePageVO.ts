@@ -1,3 +1,5 @@
+import SysResourceViewVO from "./SysResourceViewVO";
+
 export default interface SysRolePageVO {
 	//业务主键
 	roleId: string,
@@ -14,5 +16,7 @@ export default interface SysRolePageVO {
 	//更新人
 	updateUser: number,
 	//更新时间
-	updateTime: Date
+	updateTime: Date,
+	// 资源列表
+	resources: SysResourceViewVO[]
 }

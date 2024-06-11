@@ -14,6 +14,10 @@ import SysRoleUpdateDTO from "@/domain/dto/SysRoleUpdateDTO";
 import SysMenuAddDTO from "@/domain/dto/SysMenuAddDTO";
 import SysMenuUpdateDTO from "@/domain/dto/SysMenuUpdateDTO";
 import SysMenuTreeDTO from "@/util/services/SysMenuTreeDTO";
+import SysResourcePageDTO from "@/domain/dto/SysResourcePageDTO";
+import SysResourcePageVO from "@/domain/vo/SysResourcePageVO";
+import SysResourceAddDTO from "@/domain/dto/SysResourceAddDTO";
+import SysResourceUpdateDTO from "@/domain/dto/SysResourceUpdateDTO";
 
 // 接口入、出参通用结构类型
 export type PageVO<D> = {
@@ -81,13 +85,29 @@ export default class API {
         return AdminAxios.postJSON<ApiResult<boolean[]>>("/admin/b/sysRole/delete", param);
     }
 
+    // 资源管理
+    // 1.分页
+    public static sysResourcePage(param: Partial<SysResourcePageDTO>): Promise<AxiosResponse<ApiPageResult<SysResourcePageVO>>> {
+        return AdminAxios.postJSON<ApiPageResult<SysResourcePageVO>>("/admin/b/sysResource/page", param);
+    }
+     // 2. 新增
+     public static addSysResource(param: SysResourceAddDTO): Promise<AxiosResponse<ApiResult<boolean>>> {
+        return AdminAxios.postJSON<ApiResult<boolean>>("/admin/b/sysResource/add", param);
+    }
+    // 3. 修改
+    public static eidtSysResource(param: Partial<SysResourceUpdateDTO>): Promise<AxiosResponse<ApiResult<boolean[]>>> {
+        return AdminAxios.postJSON<ApiResult<boolean[]>>("/admin/b/sysResource/edit", param);
+    }
+    // 4. 删除
+    public static deleteSysResource(param: string[]): Promise<AxiosResponse<ApiResult<boolean[]>>> {
+        return AdminAxios.postJSON<ApiResult<boolean[]>>("/admin/b/sysResource/delete", param);
+    }
+
     // 菜单管理
-    // TODO 后端树菜单接口兼容权限过滤
     // 1. 菜单管理树查询 & 主页左侧菜单
     public static sysMenuTree(param: Partial<SysMenuTreeDTO>): Promise<AxiosResponse<ApiResult<SysMenuTreeVO[]>>> {
         return AdminAxios.postJSON<ApiResult<SysMenuTreeVO[]>>("/admin/b/sysMenu/tree", param);
     }
-    
      // 2. 新增
      public static addSysMenu(param: SysMenuAddDTO): Promise<AxiosResponse<ApiResult<boolean>>> {
         return AdminAxios.postJSON<ApiResult<boolean>>("/admin/b/sysRole/add", param);

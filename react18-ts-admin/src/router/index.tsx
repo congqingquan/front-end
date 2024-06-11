@@ -86,12 +86,9 @@ const Router: React.FC = () => {
                 return targetNode.children;
             }
         );
-        RouterTable.routes[0].children?.push(...dynamicRouterTable);
+        RouterTable.routes[0].children?.push(...dynamicRouterTable);        
     }, [menuContextData.tree]);
     
-    console.log(RouterTable.routes);
-    
-
     return (
         <React.Suspense fallback={<> <Spin fullscreen></Spin> </>}>
             <RouterProvider router={RouterTable} />

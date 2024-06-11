@@ -78,7 +78,7 @@ const UserModal: React.FC<ModalFormProps> = ({ type, initData, open, onConfirm, 
                 key: role.roleId, 
                 value: role.roleId, 
                 label: role.name, 
-                disabled: status2Boolean(role.status) 
+                disabled: role.status === 'DISABLED'
             }
           )
         )

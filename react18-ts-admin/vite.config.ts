@@ -6,6 +6,8 @@ import react from '@vitejs/plugin-react-swc';
 export default defineConfig({
     plugins: [react()],
 
+    // base: './',
+
     css: {
         modules: {
             // 局部样式配置：可通过驼峰的形式声明选择值
@@ -17,5 +19,5 @@ export default defineConfig({
         alias: {
             '@': join(__dirname, './src/'),
         },
-    },
+    }
 });

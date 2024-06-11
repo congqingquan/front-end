@@ -1,24 +1,36 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Button, Form, Input, Popconfirm, Select, Space, Switch, Table, Tag, Tooltip } from 'antd';
+import { Button, Form, Input, Popconfirm, Select, Space, Switch, Table, Tooltip } from 'antd';
 import type { TablePaginationConfig, TableProps } from 'antd';
 import { DeleteOutlined, EditOutlined, RedoOutlined, SearchOutlined } from '@ant-design/icons';
 import API from '@/api';
-import RoleTableRow from '@/domain/model/RoleTableRow';
-import RoleModal from './RoleModal';
-import SysRolePageDTO from '@/domain/dto/SysRolePageDTO';
+import ResourceModal from './ResourceModal';
+import SysResourcePageDTO from '@/domain/dto/SysResourcePageDTO';
+import ResourceTableRow from '@/domain/model/ResourceTableRow';
 
-const Role: React.FC = () => {
+const Resource: React.FC = () => {
     const columns: TableProps['columns'] = [
         {
             title: '主键',
-            dataIndex: 'roleId',
-            key: 'roleId',
+            dataIndex: 'resourceId',
+            key: 'resourceId',
             width: 70
         },
         {
-            title: '角色名',
+            title: '标识符',
+            dataIndex: 'identifier',
+            key: 'identifier',
+            width: 70,
+        },
+        {
+            title: '名称',
             dataIndex: 'name',
             key: 'name',
+            width: 70,
+        },
+        {
+            title: '值',
+            dataIndex: 'value',
+            key: 'value',
             width: 70,
         },
         {
@@ -28,29 +40,25 @@ const Role: React.FC = () => {
             width: 70,
         },
         {
-            title: '资源',
-            dataIndex: 'resource',
-            key: 'resource',
+            title: '类型',
+            dataIndex: 'type',
+            key: 'type',
             width: 70,
-            render: (_, record: RoleTableRow) => {
-                const res = (record.resources || []).map(resource => <Tag color="processing">{resource.name}</Tag>);
-                console.log(res);
-                return res;
-            }
+            render: (text) => type2text(text)
         },
         {
             title: '状态',
             key: 'status',
             dataIndex: 'status',
             width: 70,
-            render: (text, record: RoleTableRow) => (
+            render: (text, record: ResourceTableRow) => (
                 <Switch
                     key={text}
                     checkedChildren="启用"
                     unCheckedChildren="禁用"
                     defaultChecked={text === 'NORMAL'}
                     onChange={(checked: boolean) => {
-                        API.eidtSysRole({ roleId: record.roleId, status: checked ? 'NORMAL' : 'DISABLED' });
+                        API.eidtSysResource({ resourceId: record.resourceId, status: checked ? 'NORMAL' : 'DISABLED' });
                         record.status = checked ? 'NORMAL' : 'DISABLED';
                     }}
                 />
@@ -83,6 +91,23 @@ const Role: React.FC = () => {
         },
     ];
 
+    const type2text = (type: string): string => {
+        if (type === 'MENU_DIC') {
+            return '菜单目录';
+        }
+        else if (type === 'MENU') {
+            return '菜单';
+        }
+        else if (type === 'MENU_BUTTON') {
+            return '菜单按钮';
+        }
+        else if (type === 'API') {
+            return '接口';
+        } else {
+            return '未知';
+        }
+    }
+
     // 新增
     const popupAddModal = () => {
         editRow.current = undefined;
@@ -91,7 +116,7 @@ const Role: React.FC = () => {
     }
 
     // 编辑
-    const editRow = useRef<RoleTableRow | undefined>();
+    const editRow = useRef<ResourceTableRow | undefined>();
     const modalType = useRef<'ADD' | 'UPDATE'>('ADD');
 
     const [open, setOpen] = useState(false);
@@ -102,7 +127,7 @@ const Role: React.FC = () => {
         setOpen(false);
     };
 
-    const popupEditModal = (record: RoleTableRow) => {
+    const popupEditModal = (record: ResourceTableRow) => {
         editRow.current = { ...record };
         modalType.current = 'UPDATE';
         showModal();
@@ -118,11 +143,11 @@ const Role: React.FC = () => {
         onChange: onSelectChange,
     };
 
-    const handleDelete = async (record: RoleTableRow) => {
-        return API.deleteSysRole([record.roleId]).then(_ => loadPageData());
+    const handleDelete = async (record: ResourceTableRow) => {
+        return API.deleteSysResource([record.resourceId]).then(_ => loadPageData());
     }
     const handleBatchDelete = async () => {
-        return API.deleteSysRole([...selectedRowKeys.map(key => key.toString())]).then(_ => loadPageData());
+        return API.deleteSysResource([...selectedRowKeys.map(key => key.toString())]).then(_ => loadPageData());
     }
 
     // 分页配置
@@ -135,17 +160,18 @@ const Role: React.FC = () => {
             setPaginationConfig(prev => ({ ...prev, current: pageNo, pageSize: pageSize }));
         }
     });
+    
 
     // 搜索: 查询条件不依赖分页条件
     const [searchFormLading, setSearchFormLading] = useState<boolean>(false);
-    const [searchForm] = Form.useForm<SysRolePageDTO>();
+    const [searchForm] = Form.useForm<SysResourcePageDTO>();
     const handleSubmitSearchForm = () => {
         setSearchFormLading(true);
-        API.sysRolePage({ ...searchForm.getFieldsValue(), pageNo: paginationConfig.current, pageSize: paginationConfig.pageSize })
+        API.sysResourcePage({ ...searchForm.getFieldsValue(), pageNo: paginationConfig.current, pageSize: paginationConfig.pageSize })
             .then(response => {
                 const pageData = response.data.data;
                 setData(
-                    pageData?.records.map(role => ({ ...role, key: role.roleId }))
+                    pageData?.records.map(resource => ({ ...resource, key: resource.resourceId }))
                 );
                 setPaginationConfig(prev => ({ ...prev, current: pageData.current, pageSize: pageData.size, total: pageData.total }));
                 setSearchFormLading(false);
@@ -153,17 +179,17 @@ const Role: React.FC = () => {
     };
 
     // 加载数据
-    const [data, setData] = useState<RoleTableRow[]>([]);
+    const [data, setData] = useState<ResourceTableRow[]>([]);
     useEffect(() => {
         loadPageData();
     }, [paginationConfig.current, paginationConfig.pageSize]);
 
     const loadPageData = () => {
-        API.sysRolePage({ ...searchForm.getFieldsValue(), pageNo: paginationConfig.current, pageSize: paginationConfig.pageSize })
+        API.sysResourcePage({ ...searchForm.getFieldsValue(), pageNo: paginationConfig.current, pageSize: paginationConfig.pageSize })
             .then(response => {
                 const pageData = response.data.data;
                 setData(
-                    pageData?.records.map(role => ({ ...role, key: role.roleId }))
+                    pageData?.records.map(resource => ({ ...resource, key: resource.resourceId }))
                 );
                 setPaginationConfig({ ...paginationConfig, current: pageData.current, pageSize: pageData.size, total: pageData.total });
             });
@@ -176,8 +202,8 @@ const Role: React.FC = () => {
             style={{ marginBottom: "15px" }}
             onFinish={() => handleSubmitSearchForm()}
         >
-            <Form.Item label="角色名称" name="name">
-                <Input placeholder='请输入搜索角色名称' />
+            <Form.Item label="资源名称" name="name">
+                <Input placeholder='请输入搜索资源名称' />
             </Form.Item>
 
             <Form.Item label="状态" name="status">
@@ -219,7 +245,7 @@ const Role: React.FC = () => {
             </Space>
         </div>
 
-        <RoleModal
+        <ResourceModal
             type={modalType.current}
             initData={editRow.current}
             open={open}
@@ -239,4 +265,4 @@ const Role: React.FC = () => {
     </>);
 }
 
-export default Role;
+export default Resource;
