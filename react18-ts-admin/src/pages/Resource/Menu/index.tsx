@@ -1,6 +1,5 @@
 import API from "@/api";
 import { ResourceOptions } from "@/domain/model/ResourceOption";
-import ResourceTableRow from "@/domain/model/ResourceTableRow";
 import { DeleteOutlined, EditOutlined, RedoOutlined, SearchOutlined } from "@ant-design/icons";
 import { TableProps, Switch, Space, Button, Popconfirm, Form, Input, Select, Table, Tooltip } from "antd";
 import { useRef, useState, useEffect } from "react";
@@ -8,17 +7,22 @@ import MenuTableRow from "@/domain/model/MenuTableRow";
 import SysMenuTreeDTO from "@/domain/dto/SysMenuTreeDTO";
 import TreeUtils from "@/util/TreeUtils";
 import AsyncComponent from "@/component/AsyncComponent";
-import IconSelect from "@/component/IconSelect";
 import MenuModal from "./MenuModal";
 
-const Menu: React.FC = () => {
-
+const Menu: React.FC = () => {    
     const columns: TableProps['columns'] = [
         {
             title: '主键',
             dataIndex: 'menuId',
             key: 'menuId',
             width: 70
+        },
+        {
+            title: '父主键',
+            dataIndex: 'parentId',
+            key: 'parentId',
+            width: 70,
+            hidden: true
         },
         {
             title: '名称',
@@ -32,8 +36,6 @@ const Menu: React.FC = () => {
             key: 'type',
             width: 70,
             render: (text) => {
-                console.log(text);
-                
                 return ResourceOptions.find(op => op.key === text)?.label
             }
         },
@@ -216,8 +218,6 @@ const Menu: React.FC = () => {
                 </Popconfirm>
             </Space>
         </div>
-
-        {/* <IconSelect></IconSelect> */}
         <MenuModal
             type={modalType.current}
             initData={editRow.current}
@@ -237,7 +237,9 @@ const Menu: React.FC = () => {
 };
 
 // TODO1: 后端：菜单删除接口
-// TODO2: 前端：对接菜单新增、修改接口
+// TODO2: 前端：
+//        1. 表单内支持选择父节点
+//        2. 行数据上添加新增按钮
 
 // TODO3: 前端在页面组件中通过按钮权限展示不同的按钮
 // TODO4: 后端在权限拦截器中添加权限拦截
