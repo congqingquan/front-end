@@ -16,7 +16,7 @@ const Role: React.FC = () => {
             width: 70
         },
         {
-            title: '角色名',
+            title: '名称',
             dataIndex: 'name',
             key: 'name',
             width: 70,
@@ -29,14 +29,17 @@ const Role: React.FC = () => {
         },
         {
             title: '资源',
-            dataIndex: 'resource',
-            key: 'resource',
+            dataIndex: 'resources',
+            key: 'resources',
             width: 70,
-            render: (_, record: RoleTableRow) => {
-                const res = (record.resources || []).map(resource => <Tag color="processing">{resource.name}</Tag>);
-                console.log(res);
-                return res;
-            }
+            ellipsis: {
+                showTitle: false
+            },
+            render: (_, record: RoleTableRow) => (
+                <Tooltip placement="topLeft" title={(record.resources || []).map(resource => resource.name).join(" / ")}>
+                    {(record.resources || []).map(resource => resource.name).join(" / ")}
+                </Tooltip>
+            )
         },
         {
             title: '状态',
@@ -176,8 +179,8 @@ const Role: React.FC = () => {
             style={{ marginBottom: "15px" }}
             onFinish={() => handleSubmitSearchForm()}
         >
-            <Form.Item label="角色名称" name="name">
-                <Input placeholder='请输入搜索角色名称' />
+            <Form.Item label="名称" name="name">
+                <Input placeholder='请输入搜索名称' />
             </Form.Item>
 
             <Form.Item label="状态" name="status">

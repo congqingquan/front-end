@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Form, Input, Modal, Select, Switch } from 'antd';
 import API from '@/api';
-import ResourceTableRow from '@/domain/model/ResourceTableRow';
 import { ResourceOptions } from '@/domain/model/ResourceOption';
 import ModalFormProps from '@/domain/model/ModalFormProps';
+import MenuTableRow from '@/domain/model/MenuTableRow';
 
-const ResourceModal: React.FC<ModalFormProps<ResourceTableRow>> = ({ type, initData, open, onConfirm, onCancel }) => {
+const MenuModal: React.FC<ModalFormProps<MenuTableRow>> = ({ type, initData, open, onConfirm, onCancel }) => {
   const [form] = Form.useForm();
 
   // 回显：根据新增、编辑初始化表单项的默认值
@@ -57,7 +57,7 @@ const ResourceModal: React.FC<ModalFormProps<ResourceTableRow>> = ({ type, initD
 
   return (
     <Modal
-      title={type === 'ADD' ? '新增资源' : '修改资源'}
+      title={type === 'ADD' ? '新增菜单' : '修改菜单'}
       open={open}
       onCancel={onCancel}
       okText={type === 'ADD' ? '新增' : '修改'}
@@ -80,6 +80,22 @@ const ResourceModal: React.FC<ModalFormProps<ResourceTableRow>> = ({ type, initD
           {dom}
         </Form>
       )}>
+
+
+      {/*
+      `parent_id` bigint(20) unsigned DEFAULT NULL COMMENT '父节点主键',
+      `parent_path` varchar(500) DEFAULT NULL COMMENT '父级路径',
+      `level` int(11) unsigned DEFAULT NULL COMMENT '等级',
+      
+      `name` varchar(100) DEFAULT NULL COMMENT '名称',
+      `component` varchar(100) DEFAULT NULL COMMENT '组件',
+      `icon` varchar(100) DEFAULT NULL COMMENT 'icon',
+      `url` varchar(100) DEFAULT NULL COMMENT '路径',
+      `sort` int(11) DEFAULT '0' COMMENT '排序',
+      `target_type` varchar(20) DEFAULT NULL COMMENT '打开方式类型(页签TAB / 新窗口BLANK)',
+      `type` varchar(20) DEFAULT NULL COMMENT '菜单类型(不能跳转的菜单MENU_DIC / MENU / MENU_BUTTON)',
+      */}
+
       <Form.Item name='resourceId' label='主键' hidden>
         <Input></Input>
       </Form.Item>
@@ -121,4 +137,4 @@ const ResourceModal: React.FC<ModalFormProps<ResourceTableRow>> = ({ type, initD
   );
 };
 
-export default ResourceModal;
+export default MenuModal;

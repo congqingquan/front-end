@@ -1,4 +1,6 @@
-export default interface SysMenuTreeVO {
+import KeyModel from "../model/KeyModel"
+
+export default interface SysMenuTreeVO extends KeyModel<string> {
     menuId: string
     resourceId: string
     parentId: string
@@ -9,7 +11,6 @@ export default interface SysMenuTreeVO {
     icon: string
     url: string
     sort: number
-    status: string
     targetType: string
     type: string
     createUser: string
@@ -18,7 +19,9 @@ export default interface SysMenuTreeVO {
     updateTime: Date
     children: (SysMenuTreeVO)[]
 
+    // sys_resource
+    status: string
+
     // 适配 antd menu
     lable: string // name
-    key: string // url
 }

@@ -4,16 +4,9 @@ import UserTableRow from '@/domain/model/UserTableRow';
 import { EyeInvisibleOutlined, EyeTwoTone, PlusOutlined } from '@ant-design/icons';
 import API from '@/api';
 import { DefaultOptionType } from 'antd/es/select';
+import ModalFormProps from '@/domain/model/ModalFormProps';
 
-interface ModalFormProps {
-  type: 'ADD' | 'UPDATE',
-  initData?: UserTableRow,
-  open: boolean;
-  onConfirm: () => void;
-  onCancel: () => void;
-}
-
-const UserModal: React.FC<ModalFormProps> = ({ type, initData, open, onConfirm, onCancel }) => {
+const UserModal: React.FC<ModalFormProps<UserTableRow>> = ({ type, initData, open, onConfirm, onCancel }) => {
   const [form] = Form.useForm();
 
   // 回显：根据新增、编辑初始化表单项的默认值

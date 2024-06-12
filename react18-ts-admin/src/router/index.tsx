@@ -86,7 +86,7 @@ const Router: React.FC = () => {
                 return targetNode.children;
             }
         );
-        RouterTable.routes[0].children?.push(...dynamicRouterTable);        
+        RouterTable.routes[0].children?.push(...dynamicRouterTable);
     }, [menuContextData.tree]);
     
     return (

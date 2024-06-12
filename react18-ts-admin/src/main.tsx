@@ -5,11 +5,9 @@ import 'reset-css';
 // 2. UI 框架样式
 // 3. 组件样式
 import '@/assets/styles/global.scss';
-import Router from '@/router';
 // 4. 垃圾
 // import { Provider } from 'react-redux';
 // import store from '@/store';
-import RouterAuth from './router/RouterAuth';
 import App from './app';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

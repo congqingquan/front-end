@@ -1,26 +1,24 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Button, Form, Input, Popconfirm, Select, Space, Switch, Table, Tooltip } from 'antd';
-import type { TablePaginationConfig, TableProps } from 'antd';
-import { DeleteOutlined, EditOutlined, RedoOutlined, SearchOutlined } from '@ant-design/icons';
-import API from '@/api';
-import ResourceModal from './ResourceModal';
-import SysResourcePageDTO from '@/domain/dto/SysResourcePageDTO';
-import ResourceTableRow from '@/domain/model/ResourceTableRow';
+import API from "@/api";
+import { ResourceOptions } from "@/domain/model/ResourceOption";
+import ResourceTableRow from "@/domain/model/ResourceTableRow";
+import { DeleteOutlined, EditOutlined, RedoOutlined, SearchOutlined } from "@ant-design/icons";
+import { TableProps, Switch, Space, Button, Popconfirm, Form, Input, Select, Table, Tooltip } from "antd";
+import { useRef, useState, useEffect } from "react";
+import MenuTableRow from "@/domain/model/MenuTableRow";
+import SysMenuTreeDTO from "@/domain/dto/SysMenuTreeDTO";
+import TreeUtils from "@/util/TreeUtils";
+import AsyncComponent from "@/component/AsyncComponent";
+import IconSelect from "@/component/IconSelect";
+import MenuModal from "./MenuModal";
 
-const Resource: React.FC = () => {
+const Menu: React.FC = () => {
+
     const columns: TableProps['columns'] = [
         {
             title: '主键',
-            dataIndex: 'resourceId',
-            key: 'resourceId',
+            dataIndex: 'menuId',
+            key: 'menuId',
             width: 70
-        },
-        {
-            title: '类型',
-            dataIndex: 'type',
-            key: 'type',
-            width: 70,
-            render: (text) => type2text(text)
         },
         {
             title: '名称',
@@ -29,25 +27,61 @@ const Resource: React.FC = () => {
             width: 70,
         },
         {
-            title: '描述',
-            dataIndex: 'description',
-            key: 'description',
+            title: '类型',
+            dataIndex: 'type',
+            key: 'type',
+            width: 70,
+            render: (text) => {
+                console.log(text);
+                
+                return ResourceOptions.find(op => op.key === text)?.label
+            }
+        },
+        {
+            title: '图标组件',
+            dataIndex: 'icon',
+            key: 'icon',
+            width: 70,
+            align: 'center',
+            render: (text) => <AsyncComponent module="antdIcon" name={text}></AsyncComponent>
+        },
+        {
+            title: '页面组件',
+            dataIndex: 'component',
+            key: 'component',
             width: 70,
         },
-       
+        {
+            title: '等级',
+            dataIndex: 'level',
+            key: 'level',
+            width: 70,
+        },
+        {
+            title: '路径',
+            dataIndex: 'url',
+            key: 'url',
+            width: 70,
+        },
+        {
+            title: '排序',
+            dataIndex: 'sort',
+            key: 'sort',
+            width: 70,
+        },
         {
             title: '状态',
             key: 'status',
             dataIndex: 'status',
             width: 70,
-            render: (text, record: ResourceTableRow) => (
+            render: (text, record: MenuTableRow) => (
                 <Switch
                     key={text}
                     checkedChildren="启用"
                     unCheckedChildren="禁用"
                     defaultChecked={text === 'NORMAL'}
                     onChange={(checked: boolean) => {
-                        API.eidtSysResource({ resourceId: record.resourceId, status: checked ? 'NORMAL' : 'DISABLED' });
+                        API.updateSysMenuStatus({ menuId: record.menuId, status: checked ? 'NORMAL' : 'DISABLED' });
                         record.status = checked ? 'NORMAL' : 'DISABLED';
                     }}
                 />
@@ -80,23 +114,6 @@ const Resource: React.FC = () => {
         },
     ];
 
-    const type2text = (type: string): string => {
-        if (type === 'MENU_DIC') {
-            return '菜单目录';
-        }
-        else if (type === 'MENU') {
-            return '菜单';
-        }
-        else if (type === 'MENU_BUTTON') {
-            return '菜单按钮';
-        }
-        else if (type === 'API') {
-            return '接口';
-        } else {
-            return '未知';
-        }
-    }
-
     // 新增
     const popupAddModal = () => {
         editRow.current = undefined;
@@ -105,7 +122,7 @@ const Resource: React.FC = () => {
     }
 
     // 编辑
-    const editRow = useRef<ResourceTableRow | undefined>();
+    const editRow = useRef<MenuTableRow | undefined>();
     const modalType = useRef<'ADD' | 'UPDATE'>('ADD');
 
     const [open, setOpen] = useState(false);
@@ -116,72 +133,38 @@ const Resource: React.FC = () => {
         setOpen(false);
     };
 
-    const popupEditModal = (record: ResourceTableRow) => {
+    const popupEditModal = (record: MenuTableRow) => {
         editRow.current = { ...record };
         modalType.current = 'UPDATE';
         showModal();
     }
 
     // 删除
-    const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-    const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
-        setSelectedRowKeys(newSelectedRowKeys);
-    };
-    const rowSelection = {
-        selectedRowKeys,
-        onChange: onSelectChange,
-    };
-
-    const handleDelete = async (record: ResourceTableRow) => {
-        return API.deleteSysResource([record.resourceId]).then(_ => loadPageData());
-    }
-    const handleBatchDelete = async () => {
-        return API.deleteSysResource([...selectedRowKeys.map(key => key.toString())]).then(_ => loadPageData());
+    const handleDelete = async (record: MenuTableRow) => {
+        // return API.deleteSysResource([record.resourceId]).then(_ => loadPageData());
     }
 
-    // 分页配置
-    const [paginationConfig, setPaginationConfig] = useState<TablePaginationConfig>({
-        current: 1,
-        pageSize: 10,
-        position: ['bottomRight'],
-        // 分页改变携带查询条件
-        onChange(pageNo, pageSize) {
-            setPaginationConfig(prev => ({ ...prev, current: pageNo, pageSize: pageSize }));
-        }
-    });
-    
 
     // 搜索: 查询条件不依赖分页条件
     const [searchFormLading, setSearchFormLading] = useState<boolean>(false);
-    const [searchForm] = Form.useForm<SysResourcePageDTO>();
+    const [searchForm] = Form.useForm<SysMenuTreeDTO>();
     const handleSubmitSearchForm = () => {
         setSearchFormLading(true);
-        API.sysResourcePage({ ...searchForm.getFieldsValue(), pageNo: paginationConfig.current, pageSize: paginationConfig.pageSize })
-            .then(response => {
-                const pageData = response.data.data;
-                setData(
-                    pageData?.records.map(resource => ({ ...resource, key: resource.resourceId }))
-                );
-                setPaginationConfig(prev => ({ ...prev, current: pageData.current, pageSize: pageData.size, total: pageData.total }));
-                setSearchFormLading(false);
-            });
+        loadMenuTreeData({ ...searchForm.getFieldsValue(), type: 'ALL' }).then(_ => setSearchFormLading(false));
     };
 
     // 加载数据
-    const [data, setData] = useState<ResourceTableRow[]>([]);
+    const [menuTree, setMenuTree] = useState<MenuTableRow[]>([]);
     useEffect(() => {
-        loadPageData();
-    }, [paginationConfig.current, paginationConfig.pageSize]);
+        loadMenuTreeData({ type: 'ALL' });
+    }, []);
 
-    const loadPageData = () => {
-        API.sysResourcePage({ ...searchForm.getFieldsValue(), pageNo: paginationConfig.current, pageSize: paginationConfig.pageSize })
-            .then(response => {
-                const pageData = response.data.data;
-                setData(
-                    pageData?.records.map(resource => ({ ...resource, key: resource.resourceId }))
-                );
-                setPaginationConfig({ ...paginationConfig, current: pageData.current, pageSize: pageData.size, total: pageData.total });
-            });
+    const loadMenuTreeData = (param: Partial<SysMenuTreeDTO>) => {
+        return API.sysMenuTree(param).then(response => {
+            const data = response.data.data;
+            TreeUtils.foreach(data, node => node.children, (_, node) => node.key = node.menuId);
+            setMenuTree(data);
+        });
     }
 
     return (<>
@@ -191,8 +174,8 @@ const Resource: React.FC = () => {
             style={{ marginBottom: "15px" }}
             onFinish={() => handleSubmitSearchForm()}
         >
-            <Form.Item label="名称" name="name">
-                <Input placeholder='请输入搜索名称' />
+            <Form.Item label="关键字" name="keyword">
+                <Input placeholder='请输入搜索关键字' />
             </Form.Item>
 
             <Form.Item label="状态" name="status">
@@ -225,7 +208,7 @@ const Resource: React.FC = () => {
                 <Popconfirm
                     title
                     description="确定是否要删除?"
-                    onConfirm={() => handleBatchDelete()}
+                    onConfirm={() => { }}
                     okText="确认"
                     cancelText="取消"
                 >
@@ -234,24 +217,29 @@ const Resource: React.FC = () => {
             </Space>
         </div>
 
-        <ResourceModal
+        {/* <IconSelect></IconSelect> */}
+        <MenuModal
             type={modalType.current}
             initData={editRow.current}
             open={open}
             onConfirm={() => {
                 hideModal();
-                loadPageData();
+                loadMenuTreeData({ type: 'ALL' });
             }}
             onCancel={hideModal}
         />
         <Table
-            rowSelection={rowSelection}
             columns={columns}
-            dataSource={data}
-            pagination={paginationConfig}
+            dataSource={menuTree}
             scroll={{ x: 1200, y: 500 }}
         />
     </>);
-}
+};
 
-export default Resource;
+// TODO1: 后端：菜单删除接口
+// TODO2: 前端：对接菜单新增、修改接口
+
+// TODO3: 前端在页面组件中通过按钮权限展示不同的按钮
+// TODO4: 后端在权限拦截器中添加权限拦截
+
+export default Menu;

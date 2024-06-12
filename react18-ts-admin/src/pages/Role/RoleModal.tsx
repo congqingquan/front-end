@@ -2,16 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Form, Input, Modal, Switch } from 'antd';
 import API from '@/api';
 import RoleTableRow from '@/domain/model/RoleTableRow';
+import ModalFormProps from '@/domain/model/ModalFormProps';
 
-interface ModalFormProps {
-  type: 'ADD' | 'UPDATE',
-  initData?: RoleTableRow,
-  open: boolean;
-  onConfirm: () => void;
-  onCancel: () => void;
-}
-
-const RoleModal: React.FC<ModalFormProps> = ({ type, initData, open, onConfirm, onCancel }) => {
+const RoleModal: React.FC<ModalFormProps<RoleTableRow>> = ({ type, initData, open, onConfirm, onCancel }) => {
   const [form] = Form.useForm();
 
   // 回显：根据新增、编辑初始化表单项的默认值
@@ -86,12 +79,12 @@ const RoleModal: React.FC<ModalFormProps> = ({ type, initData, open, onConfirm, 
           {dom}
         </Form>
       )}>
-      <Form.Item name='roleId' label='用户主键' hidden>
+      <Form.Item name='roleId' label='主键' hidden>
         <Input></Input>
       </Form.Item>
-      <Form.Item name='name' label='角色名称' rules={[{ required: true, message: '' }]}>
+      <Form.Item name='name' label='名称' rules={[{ required: true, message: '' }]}>
         <Input
-          placeholder="请输入角色名称"
+          placeholder="请输入名称"
         />
       </Form.Item>
       <Form.Item name='description' label='描述'>
