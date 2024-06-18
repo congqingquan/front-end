@@ -3,10 +3,8 @@ import { ForwardedRef, forwardRef, useContext, useEffect, useImperativeHandle, u
 import { useLocation, useNavigate } from 'react-router-dom';
 import TreeUtils from '@/util/TreeUtils';
 import { SelectInfo } from 'rc-menu/lib/interface';
-import Cache from '@/util/Cache';
-import Constants from '@/common/Constants';
 import MenuItem from '@/domain/model/MenuItem';
-import { MenuCache, MenuContextData } from '@/common/Type';
+import { MenuContextData } from '@/common/Type';
 import MenuContext from '@/context/MenuContext';
 
 export interface HomeMenuRef {
@@ -39,7 +37,7 @@ const HomeMenu = forwardRef((props: {
     useEffect(() => {
         // 根据路由展开菜单
         setOpenMenuKeysArr(getOpenMenyKyesArrByLocation(props.items));
-    }, [menuContextData.itemMap]);
+    }, [menuContextData.userMenuItemMap]);
 
     // 折叠菜单时触发根据路由展开默认菜单
     useEffect(() => {
@@ -48,7 +46,7 @@ const HomeMenu = forwardRef((props: {
 
     // 选中菜单项时触发
     const handleOnSelect = (info: SelectInfo) => {
-        const menuItem = menuContextData.itemMap.get(info.key);
+        const menuItem = menuContextData.userMenuItemMap.get(info.key);
         if (menuItem) {
             props.selectMenuItemCallback(menuItem);
         }
@@ -91,7 +89,6 @@ const HomeMenu = forwardRef((props: {
                     defaultSelectedKeys={[pathname]}
                     openKeys={openMenuKeysArr}
                     onClick={(event) => handleClickMenu(event)}
-                    // onSelect={({ key, keyPath }) => handleOnSelect(key, keyPath)}
                     onSelect={(event) => handleOnSelect(event)}
                     onOpenChange={(openKeys) => handleOnOpenChange(openKeys)}
                 />

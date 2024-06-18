@@ -2,12 +2,14 @@ import API from "@/api";
 import { ResourceOptions } from "@/domain/model/ResourceOption";
 import { DeleteOutlined, EditOutlined, RedoOutlined, SearchOutlined } from "@ant-design/icons";
 import { TableProps, Switch, Space, Button, Popconfirm, Form, Input, Select, Table, Tooltip } from "antd";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useContext } from "react";
 import MenuTableRow from "@/domain/model/MenuTableRow";
 import SysMenuTreeDTO from "@/domain/dto/SysMenuTreeDTO";
 import TreeUtils from "@/util/TreeUtils";
 import AsyncComponent from "@/component/AsyncComponent";
 import MenuModal from "./MenuModal";
+import { MenuContextData, ModalType } from "@/common/Type";
+import MenuContext from "@/context/MenuContext";
 
 const Menu: React.FC = () => {    
     const columns: TableProps['columns'] = [
@@ -83,7 +85,9 @@ const Menu: React.FC = () => {
                     unCheckedChildren="禁用"
                     defaultChecked={text === 'NORMAL'}
                     onChange={(checked: boolean) => {
-                        API.updateSysMenuStatus({ menuId: record.menuId, status: checked ? 'NORMAL' : 'DISABLED' });
+                        API.updateSysMenuStatus({ menuId: record.menuId, status: checked ? 'NORMAL' : 'DISABLED' })
+                            .then(() => menuContextData.reload())
+                            .then(() => loadMenuTreeData({ type: "ALL" }));
                         record.status = checked ? 'NORMAL' : 'DISABLED';
                     }}
                 />
@@ -101,7 +105,8 @@ const Menu: React.FC = () => {
             width: 100,
             render: (_, record) => (
                 <Space size="small">
-                    <Button type="link" icon={<EditOutlined />} onClick={() => popupEditModal(record)}>修改</Button>
+                    <Button type="link" icon={<EditOutlined />} onClick={() => popupModal('ADD', { parentId: record.menuId })}>新增</Button>
+                    <Button type="link" icon={<EditOutlined />} onClick={() => popupModal('UPDATE', record)}>修改</Button>
                     <Popconfirm
                         title
                         description="确定是否要删除?"
@@ -116,15 +121,16 @@ const Menu: React.FC = () => {
         },
     ];
 
-    // 新增
-    const popupAddModal = () => {
-        editRow.current = undefined;
-        modalType.current = 'ADD';
+    // 唤起 modal 页
+    const popupModal = (type: ModalType, record: Partial<MenuTableRow>) => {
+        editRow.current = { ...record };
+        modalType.current = type;
         showModal();
     }
 
+
     // 编辑
-    const editRow = useRef<MenuTableRow | undefined>();
+    const editRow = useRef<Partial<MenuTableRow> | undefined>();
     const modalType = useRef<'ADD' | 'UPDATE'>('ADD');
 
     const [open, setOpen] = useState(false);
@@ -135,17 +141,13 @@ const Menu: React.FC = () => {
         setOpen(false);
     };
 
-    const popupEditModal = (record: MenuTableRow) => {
-        editRow.current = { ...record };
-        modalType.current = 'UPDATE';
-        showModal();
-    }
-
     // 删除
+    const menuContextData = useContext<MenuContextData>(MenuContext);
     const handleDelete = async (record: MenuTableRow) => {
-        // return API.deleteSysResource([record.resourceId]).then(_ => loadPageData());
+        API.deleteSysMenu(record.menuId)
+            .then(() => menuContextData.reload())
+            .then(_ => loadMenuTreeData({ type: "ALL" }));
     }
-
 
     // 搜索: 查询条件不依赖分页条件
     const [searchFormLading, setSearchFormLading] = useState<boolean>(false);
@@ -156,16 +158,19 @@ const Menu: React.FC = () => {
     };
 
     // 加载数据
+    const [tableLading, setTableLading] = useState<boolean>(false);
     const [menuTree, setMenuTree] = useState<MenuTableRow[]>([]);
     useEffect(() => {
-        loadMenuTreeData({ type: 'ALL' });
+        loadMenuTreeData({ type: "ALL" });
     }, []);
 
     const loadMenuTreeData = (param: Partial<SysMenuTreeDTO>) => {
+        setTableLading(true);
         return API.sysMenuTree(param).then(response => {
             const data = response.data.data;
             TreeUtils.foreach(data, node => node.children, (_, node) => node.key = node.menuId);
             setMenuTree(data);
+            setTableLading(false);
         });
     }
 
@@ -206,16 +211,7 @@ const Menu: React.FC = () => {
 
         <div style={{ marginBottom: "15px" }}>
             <Space>
-                <Button type="primary" onClick={() => popupAddModal()}>新增</Button>
-                <Popconfirm
-                    title
-                    description="确定是否要删除?"
-                    onConfirm={() => { }}
-                    okText="确认"
-                    cancelText="取消"
-                >
-                    <Button danger>删除</Button>
-                </Popconfirm>
+                <Button type="primary" onClick={() => popupModal('ADD', {})}>新增</Button>
             </Space>
         </div>
         <MenuModal
@@ -229,19 +225,13 @@ const Menu: React.FC = () => {
             onCancel={hideModal}
         />
         <Table
+            loading={tableLading}
             columns={columns}
             dataSource={menuTree}
             scroll={{ x: 1200, y: 500 }}
+            pagination={false}
         />
     </>);
 };
-
-// TODO1: 后端：菜单删除接口
-// TODO2: 前端：
-//        1. 表单内支持选择父节点
-//        2. 行数据上添加新增按钮
-
-// TODO3: 前端在页面组件中通过按钮权限展示不同的按钮
-// TODO4: 后端在权限拦截器中添加权限拦截
 
 export default Menu;

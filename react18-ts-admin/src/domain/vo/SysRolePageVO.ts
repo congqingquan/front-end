@@ -17,6 +17,8 @@ export default interface SysRolePageVO {
 	updateUser: number,
 	//更新时间
 	updateTime: Date,
-	// 资源列表
-	resources: SysResourceViewVO[]
+	// 菜单资源列表
+	menuResources: SysResourceViewVO[],
+	// 接口资源列表
+	apiResources: SysResourceViewVO[]
 }

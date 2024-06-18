@@ -1,9 +1,72 @@
-import { Function, BiPredicate, BiConsumer } from "./Functions";
+import { Function, BiPredicate, BiConsumer, Predicate, Consumer } from "./Functions";
 import ArrayUtils from "./ArrayUtils";
+import { c } from "node_modules/vite/dist/node/types.d-aGj9QkWt";
 
 class TreeUtils {
 
     // ====================================== Generate ======================================
+
+    /**
+     * 树化
+     * 1. id data type === parent id data type
+     * 2. 默认的，root node: pidExtractor.apply(node) == null & child node: pidExtractor.apply(node) != null
+     * 
+     * @param nodes             节点集合
+     * @param idExtractor       id 提取器 (id & pid同类型)
+     * @param pidExtractor      pid 提取器 (id & pid同类型)
+     * @param isRoot            根节点断言
+     * @param childrenExtractor children 提取器
+     * @param initChildren      初始化 children(当 !node.children 时调用)
+     * @param comparator        节点排序比较器
+     */
+    public toTree<T, ID>(
+        nodes: T[],
+        idExtractor: Function<T, ID>,
+        pidExtractor: Function<T, ID>,
+        isRoot: Predicate<T>,
+        childrenExtractor: Function<T, T[] | undefined>,
+        initChildren: Function<T, T[]>,
+        comparator?: (a: T, b: T) => number
+    ) { 
+        const roots: T[] = [];
+        const childrenMapping = new Map<ID, T[]>();
+        for (const node of nodes) {
+            if (isRoot(node)) {
+                roots.push(node);
+                continue;
+            }
+            const cm = childrenMapping.get(pidExtractor(node));
+            if (cm) {
+                cm.push(node);
+            } else {
+                childrenMapping.set(pidExtractor(node), [node]);
+            }
+        }
+        roots.sort(comparator);
+
+        const stack: T[] = [];
+        for (const root of roots) {
+            stack.push(root);
+            while (stack.length > 0) {
+                const currentNode: T = stack.pop() as T;
+                const currentNodeID: ID = idExtractor(currentNode);
+                const currentNodeChildren: T[] | undefined = childrenMapping.get(currentNodeID);
+                if (!currentNodeChildren || ArrayUtils.isEmpty(currentNodeChildren)) {
+                    continue;
+                }
+                
+                let existsChildren: T[] | undefined = childrenExtractor(currentNode);
+                if (!existsChildren) {
+                    existsChildren = initChildren(currentNode);
+                }
+                existsChildren.push(...currentNodeChildren);
+                
+                stack.push(...currentNodeChildren);
+            }
+        }
+
+        return roots;
+    }
 
     /**
      * 树节点类型转换
@@ -17,7 +80,7 @@ class TreeUtils {
     public convertNode<T, U>(
         sourceNodes: T[],
         mapping: Function<T, U>,
-        sourceNodeChildrenExtractor: Function<T, T[]>,
+        sourceNodeChildrenExtractor: Function<T, T[] | undefined>,
         initTargetNodeChildren: Function<U, U[]>
     ): U[] {
 
@@ -38,7 +101,7 @@ class TreeUtils {
     private convertNodeRecursion<T, U>(
         sourceNode: T,
         mapping: Function<T, U>,
-        sourceNodeChildrenExtractor: Function<T, T[]>,
+        sourceNodeChildrenExtractor: Function<T, T[] | undefined>,
         initTargetNodeChildren: Function<U, U[]>
     ): U {
 
@@ -149,4 +212,4 @@ class TreeUtils {
     }
 }
 
-export default new TreeUtils();
+export default new TreeUtils(); 

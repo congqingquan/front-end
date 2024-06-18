@@ -43,6 +43,9 @@ var OpenApiDomainGenerator = /** @class */ (function () {
     OpenApiDomainGenerator.prototype.getPropType = function (prop) {
         var _a;
         if (prop.type === 'integer') {
+            if (prop.format === 'int64') {
+                return 'string';
+            }
             return 'number';
         }
         else if (prop.type === 'boolean') {

@@ -1,6 +1,6 @@
 export default interface SysResourceViewVO {
 	//业务主键
-	resourceId: number,
+	resourceId: string,
 	//标识符
 	identifier: string,
 	//名称
@@ -14,13 +14,11 @@ export default interface SysResourceViewVO {
 	//状态: NORMAL/DISABLED
 	status: string,
 	//创建人
-	createUser: number,
+	createUser: string,
 	//创建时间
 	createTime: Date,
 	//更新人
-	updateUser: number,
+	updateUser: string,
 	//更新时间
-	updateTime: Date,
-	//逻辑删除: 1Y 0N
-	isDeleted: number
+	updateTime: Date
 }

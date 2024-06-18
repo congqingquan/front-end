@@ -71,7 +71,7 @@ const Router: React.FC = () => {
     useEffect(() => {
         // 生成动态路由对象
         const dynamicRouterTable = TreeUtils.convertNode<MenuItem, RouterItem>(
-            menuContextData.tree,
+            menuContextData.userMenuTree,
             sourceNode => {
                 const component = pageComponentMap.get(sourceNode.component);
                 return {
@@ -87,7 +87,7 @@ const Router: React.FC = () => {
             }
         );
         RouterTable.routes[0].children?.push(...dynamicRouterTable);
-    }, [menuContextData.tree]);
+    }, [menuContextData.userMenuTree]);
     
     return (
         <React.Suspense fallback={<> <Spin fullscreen></Spin> </>}>

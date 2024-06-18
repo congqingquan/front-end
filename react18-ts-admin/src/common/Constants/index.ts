@@ -10,4 +10,22 @@ export default class Constants {
 
     // 缓存数据的 key
     public static readonly CACHE_KEY_MENUS = "MENUS";
+
+    // HTTP 请求方式
+    public static readonly HTTP_METHOD = [
+        'GET',
+        'POST',
+        'PUT',
+        'DELETE',
+        'PATCH',
+        'OPTIONS',
+        'HEAD',
+        'TRACE'
+    ]
+    
+    // 默认的分页配置
+    public static readonly DEFAULT_PAGINATION_CONFIG = {
+        current: 1,
+        pageSize: 10,
+    }
 };

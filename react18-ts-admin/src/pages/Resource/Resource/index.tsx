@@ -6,6 +6,7 @@ import API from '@/api';
 import ResourceModal from './ResourceModal';
 import SysResourcePageDTO from '@/domain/dto/SysResourcePageDTO';
 import ResourceTableRow from '@/domain/model/ResourceTableRow';
+import Constants from '@/common/Constants';
 
 const Resource: React.FC = () => {
     const columns: TableProps['columns'] = [
@@ -133,10 +134,16 @@ const Resource: React.FC = () => {
     };
 
     const handleDelete = async (record: ResourceTableRow) => {
-        return API.deleteSysResource([record.resourceId]).then(_ => loadPageData());
+        return API.deleteSysResource([record.resourceId]).then(_ => {
+            loadPageData();
+            setPaginationConfig(prev => ({ ...prev, ...Constants.DEFAULT_PAGINATION_CONFIG }));
+        });
     }
     const handleBatchDelete = async () => {
-        return API.deleteSysResource([...selectedRowKeys.map(key => key.toString())]).then(_ => loadPageData());
+        return API.deleteSysResource([...selectedRowKeys.map(key => key.toString())]).then(_ => {
+            loadPageData();
+            setPaginationConfig(prev => ({ ...prev, ...Constants.DEFAULT_PAGINATION_CONFIG }));
+        });
     }
 
     // 分页配置
@@ -156,13 +163,15 @@ const Resource: React.FC = () => {
     const [searchForm] = Form.useForm<SysResourcePageDTO>();
     const handleSubmitSearchForm = () => {
         setSearchFormLading(true);
-        API.sysResourcePage({ ...searchForm.getFieldsValue(), pageNo: paginationConfig.current, pageSize: paginationConfig.pageSize })
+        API.sysResourcePage({ ...searchForm.getFieldsValue(), pageNo: Constants.DEFAULT_PAGINATION_CONFIG.current, pageSize: Constants.DEFAULT_PAGINATION_CONFIG.pageSize })
             .then(response => {
                 const pageData = response.data.data;
-                setData(
-                    pageData?.records.map(resource => ({ ...resource, key: resource.resourceId }))
-                );
-                setPaginationConfig(prev => ({ ...prev, current: pageData.current, pageSize: pageData.size, total: pageData.total }));
+                if (pageData) {
+                    setData(
+                        pageData.records.map(resource => ({ ...resource, key: resource.resourceId }))
+                    );
+                    setPaginationConfig(prev => ({ ...prev, current: pageData.current, pageSize: pageData.size, total: pageData.total }));
+                }
                 setSearchFormLading(false);
             });
     };

@@ -20,6 +20,7 @@ export default interface SysMenuTreeVO extends KeyModel<string> {
     children: (SysMenuTreeVO)[]
 
     // sys_resource
+    identifier: string,
     status: string
 
     // 适配 antd menu

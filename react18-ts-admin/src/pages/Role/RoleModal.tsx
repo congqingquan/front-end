@@ -1,24 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { Form, Input, Modal, Switch } from 'antd';
+import React, { useContext, useEffect, useState } from 'react';
+import { Form, Input, Modal, Select, Switch, TreeSelect } from 'antd';
 import API from '@/api';
 import RoleTableRow from '@/domain/model/RoleTableRow';
 import ModalFormProps from '@/domain/model/ModalFormProps';
+import { MenuContextData } from '@/common/Type';
+import TreeUtils from '@/util/TreeUtils';
+import MenuContext from '@/context/MenuContext';
+import MenuItem from '@/domain/model/MenuItem';
 
 const RoleModal: React.FC<ModalFormProps<RoleTableRow>> = ({ type, initData, open, onConfirm, onCancel }) => {
+  
+  const menuContextData = useContext<MenuContextData>(MenuContext);
   const [form] = Form.useForm();
-
-  // 回显：根据新增、编辑初始化表单项的默认值
-  useEffect(() => {
-    if (initData) {
-      form.setFieldsValue(
-        {
-          ...initData,
-          status: status2Boolean(initData.status)
-        }
-      );
-    }
-  }, [initData]);
-
   // 确认
   const onFinish = () => {
 
@@ -54,6 +47,44 @@ const RoleModal: React.FC<ModalFormProps<RoleTableRow>> = ({ type, initData, ope
   // Modal 确认 loading
   const [modalConfirmLading, setModalConfirmLading] = useState<boolean>(false);
 
+  // 菜单资源下拉框
+  const [treeData, setTreeData] = useState<{ title: string, value: string, children?: []}[]>();
+  useEffect(() => {
+    const treeData = TreeUtils.convertNode<MenuItem, { title: string, value: string, children?: []}>(
+      menuContextData.allMenuTree, 
+      node => ({ title: node.label, value: node.resourceid }), 
+      node => node.children,
+      node => {
+        node.children = [];
+        return node.children;
+      }
+    );
+    setTreeData(treeData);
+  }, [menuContextData.allMenuTree]);
+
+  // 接口资源下拉框
+  interface ApiOptionItem { key: string, label: React.ReactNode, value: string}
+  interface ApiOption { key: string, label: React.ReactNode, title: string, options?: ApiOptionItem[]}
+  const [apiOptions, setApiOpntions] = useState<ApiOption[]>();
+  useEffect(() => {
+    API.sysApiGroupByType().then(response => {
+      const data = response.data.data;
+      if (data) {
+        const apiOptions: ApiOption[] = data.map(data => ({
+          key: data.type,
+          label: <span>{data.type}</span>,
+          title: data.type,
+          options: data.items.map(item => ({
+            key: item.resourceId,
+            label: <span>{item.name}</span>,
+            value: item.resourceId
+          }))
+        }));        
+        setApiOpntions(apiOptions);
+      }
+    });
+  }, []);
+
   return (
     <Modal
       title={type === 'ADD' ? '新增角色' : '修改角色'}
@@ -75,6 +106,16 @@ const RoleModal: React.FC<ModalFormProps<RoleTableRow>> = ({ type, initData, ope
           size={'middle'}
           onFinish={() => onFinish()}
           clearOnDestroy
+          // 回显
+          initialValues={
+            initData &&
+            {
+              ...initData,
+              status: status2Boolean(initData.status),
+              menuResources: (initData.menuResources || []).map(r => r.resourceId),
+              apiResources: (initData.apiResources || []).map(r => r.resourceId)
+            }
+          }
         >
           {dom}
         </Form>
@@ -92,6 +133,28 @@ const RoleModal: React.FC<ModalFormProps<RoleTableRow>> = ({ type, initData, ope
           placeholder="请输入描述"
         />
       </Form.Item>
+
+      <Form.Item name='menuResources' label='菜单资源'>
+        <TreeSelect
+            showSearch
+            style={{ width: '100%' }}
+            dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+            placeholder="请选择父级节点"
+            allowClear
+            multiple
+            treeDefaultExpandAll
+            treeData={treeData}
+        />
+      </Form.Item>
+
+      <Form.Item name='apiResources' label='接口资源'>
+          <Select
+            mode="multiple"
+            style={{ width: 200 }}
+            options={apiOptions}
+          />
+      </Form.Item>
+
       <Form.Item name='status' valuePropName='checked' label='状态'>
         <Switch 
           checkedChildren="启用"

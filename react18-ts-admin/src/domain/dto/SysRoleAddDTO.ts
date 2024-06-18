@@ -4,5 +4,9 @@ export default interface SysRoleAddDTO {
 	//描述
 	description: string,
 	//状态(NORMAL / DISABLED)
-	status: string
+	status: string,
+	// 菜单资源列表
+	menuResources: number[],
+	// 接口资源列表
+	apiResources: number[]
 }

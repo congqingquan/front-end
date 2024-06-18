@@ -6,6 +6,7 @@ import API from '@/api';
 import RoleTableRow from '@/domain/model/RoleTableRow';
 import RoleModal from './RoleModal';
 import SysRolePageDTO from '@/domain/dto/SysRolePageDTO';
+import Constants from '@/common/Constants';
 
 const Role: React.FC = () => {
     const columns: TableProps['columns'] = [
@@ -28,16 +29,30 @@ const Role: React.FC = () => {
             width: 70,
         },
         {
-            title: '资源',
-            dataIndex: 'resources',
-            key: 'resources',
+            title: '菜单资源',
+            dataIndex: 'menuResources',
+            key: 'menuResources',
             width: 70,
             ellipsis: {
                 showTitle: false
             },
             render: (_, record: RoleTableRow) => (
-                <Tooltip placement="topLeft" title={(record.resources || []).map(resource => resource.name).join(" / ")}>
-                    {(record.resources || []).map(resource => resource.name).join(" / ")}
+                <Tooltip placement="topLeft" title={(record.menuResources || []).map(resource => resource.name).join(" / ")}>
+                    {(record.menuResources || []).map(resource => resource.name).join(" / ")}
+                </Tooltip>
+            )
+        },
+        {
+            title: '接口资源',
+            dataIndex: 'apiResources',
+            key: 'apiResources',
+            width: 70,
+            ellipsis: {
+                showTitle: false
+            },
+            render: (_, record: RoleTableRow) => (
+                <Tooltip placement="topLeft" title={(record.apiResources || []).map(resource => resource.name).join(" / ")}>
+                    {(record.apiResources || []).map(resource => resource.name).join(" / ")}
                 </Tooltip>
             )
         },
@@ -122,10 +137,16 @@ const Role: React.FC = () => {
     };
 
     const handleDelete = async (record: RoleTableRow) => {
-        return API.deleteSysRole([record.roleId]).then(_ => loadPageData());
+        return API.deleteSysRole([record.roleId]).then(_ => {
+            loadPageData();
+            setPaginationConfig(prev => ({ ...prev, ...Constants.DEFAULT_PAGINATION_CONFIG }));
+        });
     }
     const handleBatchDelete = async () => {
-        return API.deleteSysRole([...selectedRowKeys.map(key => key.toString())]).then(_ => loadPageData());
+        return API.deleteSysRole([...selectedRowKeys.map(key => key.toString())]).then(_ => {
+            loadPageData();
+            setPaginationConfig(prev => ({ ...prev, ...Constants.DEFAULT_PAGINATION_CONFIG }));
+        });
     }
 
     // 分页配置
@@ -144,13 +165,15 @@ const Role: React.FC = () => {
     const [searchForm] = Form.useForm<SysRolePageDTO>();
     const handleSubmitSearchForm = () => {
         setSearchFormLading(true);
-        API.sysRolePage({ ...searchForm.getFieldsValue(), pageNo: paginationConfig.current, pageSize: paginationConfig.pageSize })
+        API.sysRolePage({ ...searchForm.getFieldsValue(), pageNo: Constants.DEFAULT_PAGINATION_CONFIG.current, pageSize: Constants.DEFAULT_PAGINATION_CONFIG.pageSize })
             .then(response => {
                 const pageData = response.data.data;
-                setData(
-                    pageData?.records.map(role => ({ ...role, key: role.roleId }))
-                );
-                setPaginationConfig(prev => ({ ...prev, current: pageData.current, pageSize: pageData.size, total: pageData.total }));
+                if (pageData) {
+                    setData(
+                        pageData.records.map(role => ({ ...role, key: role.roleId }))
+                    );
+                    setPaginationConfig(prev => ({ ...prev, current: pageData.current, pageSize: pageData.size, total: pageData.total }));
+                }
                 setSearchFormLading(false);
             });
     };

@@ -4,6 +4,32 @@ export default interface ResourceOptionType {
   label: string
 }
 
+// 接口资源 - 类别
+export const ApiOptions = [
+  {
+    key: 'USER',
+    value: 'USER',
+    label: '用户管理'
+  },
+  {
+    key: 'ROLE',
+    value: 'ROLE',
+    label: '角色管理'
+  },
+  {
+    key: 'MENU',
+    value: 'MENU',
+    label: '菜单管理'
+  },
+  {
+    key: 'API',
+    value: 'API',
+    label: '接口管理'
+  }
+]
+
+// ================================================
+
 // 菜单资源
 export const MenuOptions: ResourceOptionType[] = [
   {

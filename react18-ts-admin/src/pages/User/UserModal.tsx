@@ -8,22 +8,6 @@ import ModalFormProps from '@/domain/model/ModalFormProps';
 
 const UserModal: React.FC<ModalFormProps<UserTableRow>> = ({ type, initData, open, onConfirm, onCancel }) => {
   const [form] = Form.useForm();
-
-  // 回显：根据新增、编辑初始化表单项的默认值
-  // 注意！必须在 useEffect 中初始化表单项，不然会提示：Cannot update during an existing state transition (such as within `render`).
-  // 可以推测 form.setFieldValue 内部会修改自己的 useState，那么就会出现在 render 期间触发了 state 改变，故提示以上的渲染时更新警告。
-  useEffect(() => {
-    if (initData) {
-      form.setFieldsValue(
-        {
-          ...initData,
-          status: status2Boolean(initData.status),
-          roles: initData.roles ? initData.roles.map(row => row.roleId) : []
-        }
-      );
-    }
-  }, [initData]);
-
   // 确认
   const onFinish = () => {
 
@@ -100,6 +84,15 @@ const UserModal: React.FC<ModalFormProps<UserTableRow>> = ({ type, initData, ope
           size={'middle'}
           onFinish={() => onFinish()}
           clearOnDestroy
+          // 回显
+          initialValues={
+            initData &&
+            {
+              ...initData,
+              status: status2Boolean(initData.status),
+              roles: initData.roles ? initData.roles.map(row => row.roleId) : []
+            }
+          }
         >
           {dom}
         </Form>

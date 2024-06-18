@@ -9,17 +9,22 @@ import HomeStyle from "./home.module.scss";
 import { AntDesignOutlined, FullscreenExitOutlined, FullscreenOutlined, LogoutOutlined, SwapOutlined } from '@ant-design/icons';
 import UserUtils, { User } from '@/util/UserUtils';
 import { RouterTable } from '@/router';
-import Cache from '@/util/Cache';
-import Constants from '@/common/Constants';
 import TreeUtils from '@/util/TreeUtils';
 import BreadcrumbItem from '@/domain/model/BreadcrumbItem';
 import MenuItem from '@/domain/model/MenuItem';
-import { MenuCache, MenuContextData } from '@/common/Type';
+import { MenuContextData } from '@/common/Type';
 import MenuContext from '@/context/MenuContext';
 
 const { Header, Content, Footer, Sider } = Layout;
 
 const Home: React.FC = () => {
+
+    // Layout 组件加载则触发数据 menu 数据 reload
+    const menuContextData = useContext<MenuContextData>(MenuContext);
+    useEffect(() => {
+        menuContextData.reload();
+    } ,[])
+
     const {
         token: { colorBgContainer, borderRadiusLG },
     } = andTheme.useToken();
@@ -94,6 +99,7 @@ const Home: React.FC = () => {
             label: "退出登录",
             onClick: _ => {
                 UserUtils.logout();
+                menuContextData.clear();
                 RouterTable.navigate("/login");
             },
             icon: <LogoutOutlined />
@@ -133,11 +139,10 @@ const Home: React.FC = () => {
     const location = useLocation();
     const pathname: string = location.pathname;
     const [breadcrumbItems, setBreadcrumbItems] = useState<BreadcrumbItem[]>([]);
-    const menuContextData = useContext<MenuContextData>(MenuContext);
     
     useEffect(() => {
         setBreadcrumbByLocation();
-    }, [menuContextData.tree]);
+    }, [menuContextData.userMenuTree]);
 
     const selectMenuItemCallback: (item: MenuItem) => void = (item) => {
         setBreadcrumbItems(searchBreadcrumnParentNodes(item.key));
@@ -149,7 +154,7 @@ const Home: React.FC = () => {
 
     const searchBreadcrumnParentNodes = (key: string): BreadcrumbItem[] => {
         const parentNodes: MenuItem[] = []
-        TreeUtils.breakableForeach(menuContextData.tree, node => node.children ? node.children : [], (paths, menuItem) => {
+        TreeUtils.breakableForeach(menuContextData.userMenuTree, node => node.children ? node.children : [], (paths, menuItem) => {
             if (menuItem.key === key) {
                 parentNodes.push(...paths, menuItem);
                 return true;
@@ -175,7 +180,7 @@ const Home: React.FC = () => {
                     </div>
                     {/* 左侧菜单 */}
                     <HomeMenu theme={theme}
-                        items={menuContextData.tree}
+                        items={menuContextData.userMenuTree}
                         ref={homeMenuRef}
                         collasped={collapsed}
                         selectMenuItemCallback={selectMenuItemCallback}>

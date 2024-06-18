@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Button, Form, Input, Popconfirm, Select, Space, Switch, Table, Tooltip } from 'antd';
 import type { TablePaginationConfig, TableProps } from 'antd';
 import UserTableRow from '@/domain/model/UserTableRow';
@@ -7,8 +7,17 @@ import UserModal from './UserModal';
 import API from '@/api';
 import SysUserPageDTO from '@/domain/dto/SysUserPageDTO';
 import SysRoleViewVO from '@/domain/vo/SysRoleViewVO';
+import Constants from '@/common/Constants';
+import MenuButtonIdentifiers from '@/common/Constants/ResourceIdentifiers';
+import MenuContext from '@/context/MenuContext';
+import { MenuContextData } from '@/common/Type';
+import ResourceController from '@/component/ResourceController';
+import ResourceIdentifiers from '@/common/Constants/ResourceIdentifiers';
 
 const User: React.FC = () => {
+
+    const menuContextData = useContext<MenuContextData>(MenuContext);
+
     const columns: TableProps['columns'] = [
         {
             title: '主键',
@@ -54,21 +63,19 @@ const User: React.FC = () => {
             dataIndex: 'status',
             width: 70,
             render: (text, record: UserTableRow) => (
-                <Switch
-                    // 通过 key 解决 defaultChecked 二次赋值不生效问题:
-                    // 原因: antd 中的多个组件的 default 值只接受一次赋值，后续对 default 进行了修改也不会生效.
-                    // 流程：第一次渲染由于没有初始化表格数据，表格行上的各个组件的 default 值为 undefined. 
-                    // 当在 useEffect 中抓取数据后，更新 state 触发二次渲染，但由于各个组件的 default 值已经为 undefined 了，所以修改了默认值也不会生效
-                    // 解决: 将 key 设置为 default 值，强行触发重新渲染
-                    key={text}
-                    checkedChildren="启用"
-                    unCheckedChildren="禁用"
-                    defaultChecked={text === 'NORMAL'}
-                    onChange={(checked: boolean) => {
-                        API.eidtSysUser({ userId: record.userId, status: checked ? 'NORMAL' : 'DISABLED'});
-                        record.status = checked ? 'NORMAL' : 'DISABLED';
-                    }}
-                />
+                <ResourceController identifier={MenuButtonIdentifiers.USER_EDIT}>
+                    <Switch
+                        // 通过 key 解决 defaultChecked 二次赋值不生效问题, 默认值会被视为 useState 的默认值，只有第一次修改才会生效
+                        key={text}
+                        checkedChildren="启用"
+                        unCheckedChildren="禁用"
+                        defaultChecked={text === 'NORMAL'}
+                        onChange={(checked: boolean) => {
+                            API.eidtSysUser({ userId: record.userId, status: checked ? 'NORMAL' : 'DISABLED' });
+                            record.status = checked ? 'NORMAL' : 'DISABLED';
+                        }}
+                    />
+                </ResourceController>
             )
         },
         {
@@ -83,16 +90,20 @@ const User: React.FC = () => {
             width: 100,
             render: (_, record) => (
                 <Space size="small">
-                    <Button type="link" icon={<EditOutlined />} onClick={() => popupEditModal(record)}>修改</Button>
-                    <Popconfirm
-                        title    
-                        description="确定是否要删除?"
-                        onConfirm={() => handleDelete(record)}
-                        okText="确认"
-                        cancelText="取消"
-                    >
-                        <Button type='link' icon={<DeleteOutlined />} danger>删除</Button>
-                    </Popconfirm>
+                    <ResourceController identifier={MenuButtonIdentifiers.USER_EDIT}>
+                        <Button type="link" icon={<EditOutlined />} onClick={() => popupEditModal(record)}>修改</Button>
+                    </ResourceController>
+                    <ResourceController identifier={MenuButtonIdentifiers.USER_DELETE}>
+                        <Popconfirm
+                            title
+                            description="确定是否要删除?"
+                            onConfirm={() => handleDelete(record)}
+                            okText="确认"
+                            cancelText="取消"
+                        >
+                            <Button type='link' icon={<DeleteOutlined />} danger>删除</Button>
+                        </Popconfirm>
+                    </ResourceController>
                 </Space>
             ),
         },
@@ -118,7 +129,7 @@ const User: React.FC = () => {
     };
 
     const popupEditModal = (record: UserTableRow) => {
-        editRow.current = {...record};
+        editRow.current = { ...record };
         modalType.current = 'UPDATE';
         showModal();
     }
@@ -134,10 +145,16 @@ const User: React.FC = () => {
     };
 
     const handleDelete = async (record: UserTableRow) => {
-        return API.deleteSysUser([record.userId]).then(_ => loadPageData());
+        return API.deleteSysUser([record.userId]).then(_ => {
+            loadPageData();
+            setPaginationConfig(prev => ({ ...prev, ...Constants.DEFAULT_PAGINATION_CONFIG }));
+        });
     }
     const handleBatchDelete = async () => {
-        return API.deleteSysUser([...selectedRowKeys.map(key => key.toString())]).then(_ => loadPageData());
+        return API.deleteSysUser([...selectedRowKeys.map(key => key.toString())]).then(_ => {
+            loadPageData();
+            setPaginationConfig(prev => ({ ...prev, ...Constants.DEFAULT_PAGINATION_CONFIG }));
+        });
     }
 
     // 分页配置
@@ -145,7 +162,6 @@ const User: React.FC = () => {
         current: 1,
         pageSize: 10,
         position: ['bottomRight'],
-        // 分页改变携带查询条件
         onChange(pageNo, pageSize) {
             setPaginationConfig(prev => ({ ...prev, current: pageNo, pageSize: pageSize }));
         }
@@ -156,13 +172,15 @@ const User: React.FC = () => {
     const [searchForm] = Form.useForm<SysUserPageDTO>();
     const handleSubmitSearchForm = () => {
         setSearchFormLading(true);
-        API.sysUserPage({ ...searchForm.getFieldsValue(), pageNo: paginationConfig.current, pageSize: paginationConfig.pageSize })
+        API.sysUserPage({ ...searchForm.getFieldsValue(), pageNo: Constants.DEFAULT_PAGINATION_CONFIG.current, pageSize: Constants.DEFAULT_PAGINATION_CONFIG.pageSize })
             .then(response => {
                 const pageData = response.data.data;
-                setData(
-                    pageData?.records.map(user => ({ ...user, key: user.userId }))
-                );
-                setPaginationConfig(prev => ({ ...prev, current: pageData.current, pageSize: pageData.size, total: pageData.total }));
+                if (pageData) {
+                    setData(
+                        pageData.records.map(user => ({ ...user, key: user.userId }))
+                    );
+                    setPaginationConfig(prev => ({ ...prev, current: pageData.current, pageSize: pageData.size, total: pageData.total }));
+                }
                 setSearchFormLading(false);
             });
     };
@@ -185,56 +203,62 @@ const User: React.FC = () => {
     }
 
     return (<>
-        <Form
-            layout={'inline'}
-            form={searchForm}
-            style={{ marginBottom: "15px" }}
-            onFinish={() => handleSubmitSearchForm()}
-        >
-            <Form.Item label="姓名" name="name">
-                <Input placeholder='请输入搜索姓名' />
-            </Form.Item>
+        <ResourceController identifier={ResourceIdentifiers.USER_PAGE}>
+            <Form
+                layout={'inline'}
+                form={searchForm}
+                style={{ marginBottom: "15px" }}
+                onFinish={() => handleSubmitSearchForm()}
+            >
+                <Form.Item label="姓名" name="name">
+                    <Input placeholder='请输入搜索姓名' />
+                </Form.Item>
 
-            <Form.Item label="邮箱" name="email">
-                <Input placeholder='请输入搜索邮箱'/>
-            </Form.Item>
+                <Form.Item label="邮箱" name="email">
+                    <Input placeholder='请输入搜索邮箱' />
+                </Form.Item>
 
-            <Form.Item label="状态" name="status">
-                <Select
-                    placeholder="请输入搜索状态"
-                    style={{ minWidth: 90 }}
-                    allowClear
-                    options={[
-                        { value: 'NORMAL', label: '正常' },
-                        { value: 'DISABLED', label: '禁用' }
-                    ]}
-                />
-            </Form.Item>
+                <Form.Item label="状态" name="status">
+                    <Select
+                        placeholder="请输入搜索状态"
+                        style={{ minWidth: 90 }}
+                        allowClear
+                        options={[
+                            { value: 'NORMAL', label: '正常' },
+                            { value: 'DISABLED', label: '禁用' }
+                        ]}
+                    />
+                </Form.Item>
 
-            <Form.Item>
-                <Space>
-                    <Tooltip title="搜索">
-                        <Button type="primary" loading={searchFormLading} htmlType="submit" icon={<SearchOutlined />}/>
-                    </Tooltip>
-                    <Tooltip title="重置">
-                        <Button icon={<RedoOutlined />} onClick={() => searchForm.resetFields()} />
-                    </Tooltip>
-                </Space>
-            </Form.Item>
-        </Form>
+                <Form.Item>
+                    <Space>
+                        <Tooltip title="搜索">
+                            <Button type="primary" loading={searchFormLading} htmlType="submit" icon={<SearchOutlined />} />
+                        </Tooltip>
+                        <Tooltip title="重置">
+                            <Button icon={<RedoOutlined />} onClick={() => searchForm.resetFields()} />
+                        </Tooltip>
+                    </Space>
+                </Form.Item>
+            </Form>
+        </ResourceController>
 
         <div style={{ marginBottom: "15px" }}>
             <Space>
-                <Button type="primary" onClick={() => popupAddModal()}>新增</Button>
-                <Popconfirm
-                    title    
-                    description="确定是否要删除?"
-                    onConfirm={() => handleBatchDelete()}
-                    okText="确认"
-                    cancelText="取消"
-                >
-                    <Button danger>删除</Button>
-                </Popconfirm>
+                <ResourceController identifier={MenuButtonIdentifiers.USER_ADD}>
+                    <Button type="primary" onClick={() => popupAddModal()}>新增</Button>
+                </ResourceController>
+                <ResourceController identifier={MenuButtonIdentifiers.USER_DELETE}>
+                    <Popconfirm
+                        title
+                        description="确定是否要删除?"
+                        onConfirm={() => handleBatchDelete()}
+                        okText="确认"
+                        cancelText="取消"
+                    >
+                        <Button danger>删除</Button>
+                    </Popconfirm>
+                </ResourceController>
             </Space>
         </div>
 
@@ -262,10 +286,10 @@ const User: React.FC = () => {
             <UserModal type={modalType.current} initData={editRow.current} open={open} onCancel={hideModal} />
         </Form.Provider> 
         */}
-        <UserModal 
-            type={modalType.current} 
-            initData={editRow.current} 
-            open={open} 
+        <UserModal
+            type={modalType.current}
+            initData={editRow.current}
+            open={open}
             onConfirm={() => {
                 hideModal();
                 loadPageData();
@@ -273,11 +297,11 @@ const User: React.FC = () => {
             onCancel={hideModal}
         />
         <Table
-                rowSelection={rowSelection}
-                columns={columns}
-                dataSource={data}
-                pagination={paginationConfig}
-                scroll={{ x: 1200, y: 500 }}
+            rowSelection={rowSelection}
+            columns={columns}
+            dataSource={data}
+            pagination={paginationConfig}
+            scroll={{ x: 1200, y: 500 }}
         />
     </>);
 }
