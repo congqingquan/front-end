@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + Vue + TS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            height: 100vh;
+            width: 100vw;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        div {
+            border: 1px solid;
+            padding: 50px;
+
+            margin: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+       文本：<input type="text" v-model="data.defInput"/>
+    </div>
+
+    <script type="module">
+        import { createApp, reactive, watch } from '../vue3.5.8.esm-browser.js'
+
+        const data = reactive({
+            defInput: "Hello"
+        })
+
+        // 1. 监听的数据必须是响应式的！
+
+        // 2. 监听 reactive 对象的属性时，需要通过函数的方式暴露需要监听的属性，否则不会生效！
+        // can only be a 
+        //  1. getter/effect function
+        //  2. a ref
+        //  3. a reactive object
+        //  4. or an array of these types
+        // const watchInput = data.defInput // [Vue warn]: Invalid watch source:  Hello A watch source can only be a getter/effect function, a ref, a reactive object, or an array of these types.
+        const watchInput = () => data.defInput
+        watch(watchInput, (newValue, oldValue) => {
+           console.log(`new > ${newValue} \n old > ${oldValue}`);
+        });
+
+        createApp({
+            setup() {
+                return {
+                    data
+                }
+            }
+        }).mount("#app")
+    </script>
+</body>
+
+</html>

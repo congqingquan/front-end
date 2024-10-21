@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + Vue + TS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            height: 100vh;
+            width: 100vw;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        div {
+            border: 1px solid;
+            padding: 50px;
+
+            margin: 10px;
+        }
+
+        #app ul li * {
+            margin: 0 10px 0 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <b>TODO List</b>
+        <ul>
+            <li v-if="data.list.length > 0" v-for="dataElement in data.list" v-bind:key="data.id">
+
+                <span>{{ dataElement.id }}</span>
+
+                <input v-if="dataElement.editActive" type="text" v-bind:value="dataElement.name"
+                    v-on:input="event => dataElement.name = event.target.value" />
+                <span v-else>{{ dataElement.name }}</span>
+
+                <input v-if="dataElement.editActive" type="number" v-model="dataElement.age" />
+                <span v-else>{{ dataElement.age }}</span>
+
+                <button v-if="!dataElement.editActive" v-on:click="data.changeEditActive(dataElement.id)">Edit</button>
+                <button v-else v-on:click="data.editRow(dataElement)">Confirm edit</button>
+
+                <button v-on:click="data.deleteRow(dataElement.id)">Delete</button>
+            </li>
+        </ul>
+
+        <button v-if="!opetions.addActive" v-on:click="opetions.changeAddActive()">Add</button>
+        <div v-else>
+            姓名：<input type="text" v-model="addData.name" />
+            年龄：<input type="number" v-model="addData.age" />
+            <button v-on:click="data.addRow()">Confirm add</button>
+        </div>
+    </div>
+
+    <script type="module">
+        import { createApp, reactive } from '../vue3.5.8.esm-browser.js'
+
+        createApp({
+            setup() {
+                const addData = reactive({ name: '', age: 0, editActive: false })
+
+                const data = reactive({
+                    list: [
+                        {
+                            id: 1,
+                            name: "ZhangSan",
+                            age: 20
+                        }
+                    ],
+                    addRow() {
+                        this.list.push({
+                            ...addData,
+                            id: this.list.length + 1
+                        })
+
+                        // reset
+                        opetions.addActive = false
+                        addData.name = ''
+                        addData.age = 0
+                    },
+                    changeEditActive(id) {
+                        this.list.forEach(e => {
+                            if (e.id === id) {
+                                e.editActive = !e.editActive
+                            }
+                        })
+                    },
+                    editRow(data) {
+                        this.list.map(e => {
+                            if (e.id === data.id) {
+                                return { ...data }
+                            }
+                        })
+                        data.editActive = false
+                    },
+                    deleteRow(id) {
+                        this.list = this.list.filter(e => e.id != id)
+                    }
+                })
+
+                const opetions = reactive({
+                    addActive: false,
+                    changeAddActive() {
+                        this.addActive = !this.addActive
+                    }
+                });
+
+                return {
+                    data,
+                    addData,
+                    opetions
+                }
+            }
+        }).mount("#app")
+    </script>
+</body>
+
+</html>

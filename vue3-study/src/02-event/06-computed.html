@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + Vue + TS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            height: 100vh;
+            width: 100vw;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        div {
+            border: 1px solid;
+            padding: 50px;
+
+            margin: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 
+            computed 可以将一些数据缓存起来，只有当 return 的数据发生变更时，才会重新执行 
+
+            1. getValue 会执行两次，因为调用了两次 且 在没有修改的情况下没有做缓存
+            2. computed 会执行一次，因为第两次调用发现缓存的值没有改变。且当触发 Change cache value 修改了缓存的值后，才会重新触发渲染，重新执行一遍
+                        注意，computed 返回的是一个包装后的对象 ComputedRefImpl
+        -->
+
+        v-model > {{ getValue() }} / {{ getValue() }}
+
+        <br>
+        computed > {{ cache }} / {{ cache }}
+
+        <button @click="setValue('CQQ: ' + Math.random())">Change cache value</button>
+    </div>
+
+    <script type="module">
+        import { createApp, reactive, computed } from '../vue3.5.8.esm-browser.js'
+
+        const data = reactive({
+            value: "CQQ"
+        })
+
+        function setValue(newValue) {
+            data.value = newValue
+        }
+        function getValue() {
+            console.log("getValue")
+            return data.value
+        }
+        const cache = computed(() => {
+            // console.log(cache);
+            console.log("computed")
+            return data.value
+        })
+
+        createApp({
+            setup() {
+                return {
+                    data,
+                    setValue,
+                    getValue,
+                    cache
+                }
+            }
+        }).mount("#app")
+    </script>
+</body>
+
+</html>

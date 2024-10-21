@@ -10,7 +10,7 @@ const requestOnFulfilled: (config: InternalAxiosRequestConfig<any>) => InternalA
     // 如果 local storage 中有 token，每次请求都携带 token
     let adminToken = window.localStorage.getItem(Constants.LOGINED_USER_INFO_KEY);
     if (adminToken) {
-        config.headers.set("AdminToken", JSON.parse(adminToken).token);
+        config.headers.set("Authorization", JSON.parse(adminToken).token);
     }
     return config;
 }

@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + Vue + TS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            height: 100vh;
+            width: 100vw;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        div {
+            border: 1px solid;
+            padding: 50px;
+
+            margin: 10px;
+        }
+
+        .blueColor {
+            color: blue;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 
+            绑定属性的插值写法: 传递一个 key 为html属性名，value 为 boolean 值的对象
+        -->
+        <div>
+            <p :class="{ blueColor : classNames.blueColor }">测试 绑定属性的插值写法</p>
+            <p :class="{ ...classNames }">测试 绑定属性的插值写法</p>
+        </div>
+    </div>
+
+    <script type="module">
+        import { createApp, reactive } from '../vue3.5.8.esm-browser.js'
+
+        createApp({
+            setup() {
+                // 绑定属性的插值写法: 传递一个 key 为html属性名，value 为 boolean 值的对象
+                const classNames = reactive({
+                    blueColor: true
+                })
+
+                return {
+                    classNames
+                }
+            }
+        }).mount("#app")
+    </script>
+</body>
+
+</html>

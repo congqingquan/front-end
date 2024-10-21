@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + Vue + TS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            height: 100vh;
+            width: 100vw;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        div {
+            border: 1px solid;
+            padding: 50px;
+
+            margin: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+       文本1：<input type="text" v-model="data1.defInput"/>
+       文本2：<input type="text" v-model="data2.defInput"/>
+    </div>
+
+    <script type="module">
+        import { createApp, reactive, watchEffect } from '../vue3.5.8.esm-browser.js'
+
+        const data1 = reactive({
+            defInput: "Input1"
+        })
+
+        const data2 = reactive({
+            defInput: "Input2"
+        })
+
+
+        /**
+            watch 与 watchEffect 的区别：
+            1. 监听方式：
+                watch 需要手动显式指定监听的响应式数据
+                watchEffect 会自动收集函数体中的响应式数据，不需要显式指定要监听的响应式数据源，回调函数中用到的响应式数据会自动被监听。
+            2. 执行特性：
+                watch 可以设置 immediate 和 deep 选项，immediate 选项可以让回调函数在初始化时立即执行，而 deep 选项可以监听对象内部属性的变化。   
+                watchEffect 在组件挂载时立即执行一次，并且之后每次依赖数据变化时都会重新执行。
+            3. 监听灵活性：
+                watch 可以监听单个响应式数据源的变化
+                watchEffect 可以监听任意的响应式数据源变化
+         */
+        
+        watchEffect(() => {
+            console.log("监听开始");
+            
+            console.log(data2.defInput);
+
+            console.log("监听结束");
+        })
+
+        createApp({
+            setup() {
+                return {
+                    data1,
+                    data2
+                }
+            }
+        }).mount("#app")
+    </script>
+</body>
+
+</html>

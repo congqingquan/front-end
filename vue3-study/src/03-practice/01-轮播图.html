@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + Vue + TS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            height: 100vh;
+            width: 100vw;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        div {
+            border: 1px solid;
+            padding: 50px;
+            margin: 10px;
+
+            display: flex;
+            flex-direction: column;
+            /* justify-content: center; */
+            /* align-items: center; */
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+       <b> Pic {{ data.num }} </b>
+       <button @click="data.prev()">上一张</button>
+       <button @click="data.next()">下一张</button>
+
+       <ul>
+            <li v-for="num in [1, 2]">
+                <a href="#" @click="data.jump(num)">跳转至第 {{ num }} 张</a>
+            </li>
+       </ul>
+
+       <!-- <img src="./img/pic1.png" /> -->
+       <!-- 当使用 v-bind 时，可以使用模版字符串。如果是原生的 src 属性，是不支持模板字符串的 -->
+       <img :src=`./img/pic${data.num}.png` width="300px" height="300px"/>
+
+    </div>
+
+    <script type="module">
+        import { createApp, reactive, watch } from '../vue3.5.8.esm-browser.js'
+
+        const data = reactive({
+            num: 1,
+            next() {
+                if (this.num === 2) {
+                    this.num = 1
+                    return
+                }
+                this.num++;
+            },
+            prev() {
+                if (this.num === 1) {
+                    this.num = 2
+                    return
+                }
+                this.num--
+            },
+            jump(num) {
+                this.num = num
+            }
+        })
+
+        createApp({
+            setup() {
+                return {
+                    data
+                }
+            }
+        }).mount("#app")
+    </script>
+</body>
+
+</html>

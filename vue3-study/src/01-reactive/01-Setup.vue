@@ -1,7 +1,11 @@
 <!-- 
     setup 是一个新的生命周期节点，且处于第一个节点，即位于 beforeCreate 前。
 
-    setup 的作用：可以在 setup script 中编写 组合式API，来替代 Vue2 中的选项式API。
+    setup 语法糖的作用：可以在 setup script 中编写 组合式API，来替代 Vue2 中的选项式API。
+   （
+        也无需显示的定义 components 属性，自动根据导包名称即可映射为 template 中的组件标签，
+        见\src\04-component\00-define-component\DefineComponent.vue
+    ）
 -->
 
 <!-- 1. 常规写法 -->
@@ -42,7 +46,7 @@
 <template>
     <!-- 自动拆包：模板中使用 ref 时，vue 会默认调用 xxx.value -->
     <button @click="addCount()">
-        {{ count }}
+        自增 {{ count }}
     </button>
 </template>
 
