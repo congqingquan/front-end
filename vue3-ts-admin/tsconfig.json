@@ -28,5 +28,6 @@
     ]
   },
   "include": ["mock/**/*.ts", "src/**/*.ts", "src/**/*.vue", "vite.config.ts"],
+  "files": ["./src/types/components.d.ts", "./src/types/auto-imports.d.ts"],
   "exclude": ["node_modules", "dist", "**/*.js"]
 }

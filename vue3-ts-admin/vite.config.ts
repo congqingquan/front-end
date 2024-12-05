@@ -6,7 +6,7 @@ import path from 'path'
 import AutoImport from 'unplugin-auto-import/vite'
 import VueComponents from 'unplugin-vue-components/vite'
 import IconsResolver from 'unplugin-icons/resolver'
-import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers'
 import Icons from "unplugin-icons/vite"
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
 
@@ -81,10 +81,10 @@ export default defineConfig((configEnv: ConfigEnv): UserConfig => {
         imports: [],
 
         resolvers: [
-          // 自动导入 Element Plus 相关函数，如：ElMessage, ElMessageBox... (带样式)
-          ElementPlusResolver({
-            importStyle: "sass",
-          }),
+          // 自动导入 AntDesignVue 相关函数
+          // AntDesignVueResolver({
+          //   importStyle: false, // css in js
+          // }),
           // 自动导入图标组件
           IconsResolver({}),
         ],
@@ -104,18 +104,19 @@ export default defineConfig((configEnv: ConfigEnv): UserConfig => {
         vueTemplate: true,
 
         // 指定自动导入函数TS类型声明文件路径 (false:关闭自动生成)
-        dts: false,
-        // dts: path.resolve(srcPath, 'auto-imports.d.ts'),
+        // dts: false,
+        // 指定自动导入组件 dts 文件的生成路径 (同时需要在 tsconfig.json 中配置 { "files": ["./src/types/components.d.ts", "./src/types/auto-imports.d.ts"] })
+        dts: path.resolve(srcPath, 'types/auto-imports.d.ts'),
       }),
 
-      // 2. unplugin-vue-components: Vue 组件自动导入依赖插件 (icon、ep)
+      // 2. unplugin-vue-components: Vue 组件自动导入依赖插件
       VueComponents({
         resolvers: [
-          // 自动导入 Element Plus 组件
-          ElementPlusResolver({
-            importStyle: "sass",
+          // vue 文件中，自动导入 AntDesignPro 组件。（main.ts 中统一引入了 AntDesignPro，使得具体的 view.vue 文件中不需要引入具体组件）
+          AntDesignVueResolver({
+            importStyle: false,
           }),
-          // 自动注册图标组件
+          // vue 文件中，自动注册图标组件
           IconsResolver({
             // 修改Icon组件前缀，不设置则默认为 i。使用：<prefix-iconName />，如：<icon-ep-user>
             prefix: 'icon',
@@ -123,11 +124,15 @@ export default defineConfig((configEnv: ConfigEnv): UserConfig => {
             enabledCollections: ['ep']
           }),
         ],
+
         // 指定自定义组件位置(默认:src/components)
         dirs: ["src/components", "src/**/components"],
-        // 指定自动导入组件TS类型声明文件路径 (false:关闭自动生成)
-        dts: false,
-        // dts: "src/types/components.d.ts",
+        
+        // 是否生成自定义组件的 dts 文件 (false:关闭自动生成)
+        // dts: true,
+
+        // 指定自定义组件 dts 文件的生成路径 (同时需要在 tsconfig.json 中配置 { "files": ["./src/types/components.d.ts", "./src/types/auto-imports.d.ts"] })
+        dts: path.resolve(srcPath, 'types/components.d.ts'),
       }),
 
       // 3. unplugin-icons: 按项目中实际的引入，按需自动安装使用的 icon
@@ -214,71 +219,7 @@ export default defineConfig((configEnv: ConfigEnv): UserConfig => {
         "@wangeditor/editor",
         "@wangeditor/editor-for-vue",
         "vue-i18n",
-        "path-browserify",
-        "element-plus/es/components/form/style/index",
-        "element-plus/es/components/form-item/style/index",
-        "element-plus/es/components/button/style/index",
-        "element-plus/es/components/input/style/index",
-        "element-plus/es/components/input-number/style/index",
-        "element-plus/es/components/switch/style/index",
-        "element-plus/es/components/upload/style/index",
-        "element-plus/es/components/menu/style/index",
-        "element-plus/es/components/col/style/index",
-        "element-plus/es/components/icon/style/index",
-        "element-plus/es/components/row/style/index",
-        "element-plus/es/components/tag/style/index",
-        "element-plus/es/components/dialog/style/index",
-        "element-plus/es/components/loading/style/index",
-        "element-plus/es/components/radio/style/index",
-        "element-plus/es/components/radio-group/style/index",
-        "element-plus/es/components/popover/style/index",
-        "element-plus/es/components/scrollbar/style/index",
-        "element-plus/es/components/tooltip/style/index",
-        "element-plus/es/components/dropdown/style/index",
-        "element-plus/es/components/dropdown-menu/style/index",
-        "element-plus/es/components/dropdown-item/style/index",
-        "element-plus/es/components/sub-menu/style/index",
-        "element-plus/es/components/menu-item/style/index",
-        "element-plus/es/components/divider/style/index",
-        "element-plus/es/components/card/style/index",
-        "element-plus/es/components/link/style/index",
-        "element-plus/es/components/breadcrumb/style/index",
-        "element-plus/es/components/breadcrumb-item/style/index",
-        "element-plus/es/components/table/style/index",
-        "element-plus/es/components/tree-select/style/index",
-        "element-plus/es/components/table-column/style/index",
-        "element-plus/es/components/select/style/index",
-        "element-plus/es/components/option/style/index",
-        "element-plus/es/components/pagination/style/index",
-        "element-plus/es/components/tree/style/index",
-        "element-plus/es/components/alert/style/index",
-        "element-plus/es/components/radio-button/style/index",
-        "element-plus/es/components/checkbox-group/style/index",
-        "element-plus/es/components/checkbox/style/index",
-        "element-plus/es/components/tabs/style/index",
-        "element-plus/es/components/tab-pane/style/index",
-        "element-plus/es/components/rate/style/index",
-        "element-plus/es/components/date-picker/style/index",
-        "element-plus/es/components/notification/style/index",
-        "element-plus/es/components/image/style/index",
-        "element-plus/es/components/statistic/style/index",
-        "element-plus/es/components/watermark/style/index",
-        "element-plus/es/components/config-provider/style/index",
-        "element-plus/es/components/text/style/index",
-        "element-plus/es/components/drawer/style/index",
-        "element-plus/es/components/color-picker/style/index",
-        "element-plus/es/components/backtop/style/index",
-        "element-plus/es/components/message-box/style/index",
-        "element-plus/es/components/skeleton/style/index",
-        "element-plus/es/components/skeleton/style/index",
-        "element-plus/es/components/skeleton-item/style/index",
-        "element-plus/es/components/badge/style/index",
-        "element-plus/es/components/steps/style/index",
-        "element-plus/es/components/step/style/index",
-        "element-plus/es/components/avatar/style/index",
-        "element-plus/es/components/descriptions/style/index",
-        "element-plus/es/components/descriptions-item/style/index",
-        "element-plus/es/components/checkbox-group/style/index",
+        "path-browserify"
       ],
     }
   }

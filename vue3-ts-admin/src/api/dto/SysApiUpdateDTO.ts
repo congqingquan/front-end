@@ -22,4 +22,5 @@ export default interface SysApiUpdateDTO {
 
 	// sys_resource
 	status: string
+	identifier: string
 }

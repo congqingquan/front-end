@@ -22,4 +22,5 @@ export default interface SysApiViewVO {
 
 	// sys_resource
 	status: string
+	identifier: string
 }

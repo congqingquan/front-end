@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios";
-import AdminAxios from "./axios/AdminAxios";
+import ApiAxios from "./axios/ApiAxios";
 import SysApiAddDTO from "./dto/SysApiAddDTO";
 import SysApiPageDTO from "./dto/SysApiPageDTO";
 import SysApiUpdateDTO from "./dto/SysApiUpdateDTO";
@@ -12,24 +12,24 @@ import SysApiPageVO from "./vo/SysApiPageVO";
 // 1. 查询
 // 1.1) 分页
 export const sysApiPage = (param: Partial<SysApiPageDTO>): Promise<AxiosResponse<ApiPageResult<SysApiPageVO>>> => {
-    return AdminAxios.postJSON<ApiPageResult<SysApiPageVO>>("/admin/b/sysApi/page", param);
+    return ApiAxios.postJSON<ApiPageResult<SysApiPageVO>>("/b/sys-api/page", param);
 }
 // 1.2) 类别分组查询
 export const sysApiGroupByType = (): Promise<AxiosResponse<ApiResult<SysApiGroupByTypeVO[]>>> => {
-    return AdminAxios.postJSON<ApiResult<SysApiGroupByTypeVO[]>>("/admin/b/sysApi/groupByType");
+    return ApiAxios.postJSON<ApiResult<SysApiGroupByTypeVO[]>>("/b/sys-api/group-by-type");
 }
 // 2. 新增
-export const addSysApi = (param: SysApiAddDTO): Promise<AxiosResponse<ApiResult<boolean>>> => {
-    return AdminAxios.postJSON<ApiResult<boolean>>("/admin/b/sysApi/add", param);
+export const addSysApi = (param: Partial<SysApiAddDTO>): Promise<AxiosResponse<ApiResult<boolean>>> => {
+    return ApiAxios.postJSON<ApiResult<boolean>>("/b/sys-api/add", param);
 }
 // 3. 修改
 export const eidtSysApi = (param: Partial<SysApiUpdateDTO>): Promise<AxiosResponse<ApiResult<boolean>>> => {
-    return AdminAxios.postJSON<ApiResult<boolean>>("/admin/b/sysApi/edit", param);
+    return ApiAxios.postJSON<ApiResult<boolean>>("/b/sys-api/edit", param);
 }
 export const updateSysApiStatus = (param: SysApiUpdateStatusDTO): Promise<AxiosResponse<ApiResult<boolean>>> => {
-    return AdminAxios.postJSON<ApiResult<boolean>>("/admin/b/sysApi/updateStatus", param);
+    return ApiAxios.postJSON<ApiResult<boolean>>("/b/sys-api/update-status", param);
 }
 // 4. 删除
 export const deleteSysApi = (param: string[]): Promise<AxiosResponse<ApiResult<boolean>>> => {
-    return AdminAxios.postJSON<ApiResult<boolean>>("/admin/b/sysApi/delete", param);
+    return ApiAxios.postJSON<ApiResult<boolean>>("/b/sys-api/delete", param);
 }

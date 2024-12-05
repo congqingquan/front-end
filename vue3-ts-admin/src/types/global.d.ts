@@ -1,7 +1,7 @@
-import AdminApi from "@/api/AdminApi"
+import Api from "@/api/Api"
 
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
-    $adminApi: typeof AdminApi;
+    $api: typeof Api;
   }
 }

@@ -8,7 +8,7 @@ export default interface SysRoleUpdateDTO {
 	//状态(NORMAL / DISABLED)
 	status: string,
 	// 菜单资源列表
-	menuResources: number[],
+	menuResources: string[],
 	// 接口资源列表
-	apiResources: number[]
+	apiResources: string[]
 }

@@ -8,123 +8,87 @@
             </div>
 
             <div ref="leftCardBox" class="left-card">
-                <el-form :model="loginForm" label-width="auto" label-position="top" @submit.prevent="handleSubmitLoginForm()">
-                    <div class="title">登陆</div>
-                    <el-form-item label=""  label-width="100" prop="username" :rules="[
-                        {
-                            required: true,
-                            message: 'Please input username',
-                            trigger: 'blur',
-                        }
-                    ]">
-                        <el-input v-model="loginForm.username" placeholder="Username">
-                            <template #prefix>
-                                <el-icon class="el-input__icon">
-                                    <icon-ep-user />
-                                </el-icon>
+                <a-form name="loginForm" 
+                        :model="loginForm" 
+                        :labelCol="{span: 9, offset: 0}"
+                        autocomplete="off" 
+                        @finish="handleSubmitLoginForm"
+                >
+                    <a-form-item label="Username" name="username"
+                        :rules="[{ required: true, message: 'Please input your username' }]">
+                        <a-input :style="{width: '200px', height: '35px'}" v-model:value="loginForm.username">
+                            <template #suffix>
+                                <UserOutlined />
                             </template>
-                        </el-input>
-                    </el-form-item>
+                        </a-input>
+                    </a-form-item>
 
-                    <el-form-item label="" label-width="100" prop="password" :rules="[
-                        {
-                            required: true,
-                            message: 'Please input password',
-                            trigger: 'blur',
-                        }
-                    ]">
-                        <el-input v-model="loginForm.password" type="password" placeholder="Password">
-                            <template #prefix>
-                                <el-icon class="el-input__icon">
-                                    <icon-ep-lock />
-                                </el-icon>
-                            </template>
-                        </el-input>
-                    </el-form-item>
-
+                    <a-form-item label="Password" name="password"
+                        :rules="[{ required: true, message: 'Please input your password' }]">
+                        <a-input-password :style="{width: '200px', height: '35px'}" v-model:value="loginForm.password" />
+                    </a-form-item>
 
                     <button>登陆</button>
-                    <!-- <el-form-item>
-                    </el-form-item> -->
-
-                </el-form>
+                </a-form>
             </div>
 
             <div ref="rightCardBox" class="right-card">
-                <el-form :model="registerForm" label-width="auto" label-position="top" @submit.prevent="handleSubmitRegisterForm()">
+                <a-form  
+                    name="registerFrom" 
+                    :model="registerForm"
+                    :labelCol="{span: 9, offset: 0}"
+                    autocomplete="off" 
+                    @finish="handleSubmitRegisterForm" 
+                 >
                     <div class="title">注册账户</div>
-                    <el-form-item label="" label-width="100" prop="username" :rules="[
-                        {
-                            required: true,
-                            message: 'Please input username',
-                            trigger: 'blur',
-                        }
-                    ]">
-                        <el-input v-model="registerForm.username" placeholder="Username">
-                            <template #prefix>
-                                <el-icon class="el-input__icon">
-                                    <icon-ep-user />
-                                </el-icon>
+                    <a-form-item label="Username" name="username"
+                        :rules="[{ required: true, message: 'Please input your username' }]">
+                        <a-input :style="{width: '200px', height: '35px'}" v-model:value="registerForm.username">
+                            <template #suffix>
+                                <UserOutlined />
                             </template>
-                        </el-input>
-                    </el-form-item>
+                        </a-input>
+                    </a-form-item>
 
-                    <el-form-item label="" label-width="100" prop="password" :rules="[
-                        {
-                            required: true,
-                            message: 'Please input password',
-                            trigger: 'blur',
-                        }
-                    ]">
-                        <el-input v-model="registerForm.password" type="password" placeholder="Password">
-                            <template #prefix>
-                                <el-icon class="el-input__icon">
-                                    <icon-ep-lock />
-                                </el-icon>
+                    <a-form-item label="Password" name="password"
+                        :rules="[{ required: true, message: 'Please input your password' }]">
+                        <a-input-password :style="{width: '200px', height: '35px'}" v-model:value="registerForm.password" />
+                    </a-form-item>
+
+                    <a-form-item label="Email" name="email" :style="{  position: 'relative', left: '-5px' }">
+                        <a-input :style="{width: '200px', height: '35px'}" v-model="registerForm.email" >
+                            <template #suffix>
+                                <icon icon="weui:email-outlined" />
                             </template>
-                        </el-input>
-                    </el-form-item>
-
-                    <el-form-item label="" label-width="100" prop="email" :rules="[
-                        {
-                            required: true,
-                            message: 'Please input email address',
-                            trigger: 'blur',
-                        },
-                        {
-                            type: 'email',
-                            message: 'Please input correct email address',
-                            trigger: ['blur', 'change'],
-                        },
-                    ]">
-                        <el-input v-model="registerForm.email" type="email" placeholder="Email">
-                            <template #prefix>
-                                <el-icon class="el-input__icon">
-                                    <icon icon="weui:email-outlined" />
-                                </el-icon>
-                            </template>
-                        </el-input>
-                    </el-form-item>
-
+                        </a-input>
+                    </a-form-item>
 
                     <button>注册</button>
-                    <!-- <el-form-item>
-                    </el-form-item> -->
-                </el-form>
+                </a-form>
             </div>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import AdminApi from '@/api/AdminApi';
-import SysUserLoginDTO from '@/api/dto/SysUserLoginDTO';
-import SysUserRegisterDTO from '@/api/dto/SysUserRegisterDTO';
-import { ElMessage } from 'element-plus';
-import { onMounted, reactive, ref } from 'vue';
-import { useRouter } from 'vue-router';
+import Api from '@/api/Api'
+import SysUserLoginDTO from '@/api/dto/SysUserLoginDTO'
+import SysUserRegisterDTO from '@/api/dto/SysUserRegisterDTO'
+import { onMounted, reactive, ref } from 'vue'
+import { message } from 'ant-design-vue'
+import { UserOutlined } from '@ant-design/icons-vue'
 import { Icon } from '@iconify/vue';
-import { useSysLoginedUserStore } from '@/store/modules/SysLoginedUser';
+import { useSysLoginedUserStore } from '@/store/modules/SysLoginedUser'
+import { useSysUserResourcesStore } from '@/store/modules/SysUserResources'
+import { useSysMenuTreeStore } from '@/store/modules/SysMenuTree'
+import { useSysUserMenuTreeStore } from '@/store/modules/SysUserMenuTree'
+import { RouteRecordRaw, useRouter, useRoute } from 'vue-router'
+import TreeUtils from '@/util/TreeUtils'
+import { MenuTreeNode } from '@/types/Types'
+import { matchViewComponent } from '@/components/ViewPageManager'
+
+const router = useRouter()
+const route = useRoute()
 
 // 处理点击切换登录、注册页
 const isToLogin = ref<boolean>(true)
@@ -162,31 +126,66 @@ const registerForm = reactive<SysUserRegisterDTO>({
     email: ""
 })
 const handleSubmitLoginForm = async () => {
-    const response = await AdminApi.sysUserLogin(loginForm);
-    if (response.data.code === 200) {
+    const response = await Api.sysUserLogin(loginForm);
+    if (response.data.code === 0) {
         const apiData = response.data.data
+        // 登录用户缓存
         const sysLoginedUserStore = useSysLoginedUserStore()
-        sysLoginedUserStore.user.token = apiData.token
-        sysLoginedUserStore.user.info = apiData.info
-        sysLoginedUserStore.user.logined = true
-        router.push({ path: "/" })
+        sysLoginedUserStore.user = {
+            token: apiData.token,
+            info: apiData.info,
+            logined: true
+        }
+
+        // 刷新全局资源
+
+        // 全部菜单
+        const sysMenuTreeStore = useSysMenuTreeStore()
+        await sysMenuTreeStore.init()
+
+        // 用户菜单
+        const sysUserMenuTreeStore = useSysUserMenuTreeStore()
+        await sysUserMenuTreeStore.init()
+
+        // 资源控制
+        const sysUserResourcesStore = useSysUserResourcesStore()
+        await sysUserResourcesStore.init()
+
+        // 动态路由
+        const dynamicRoutes = TreeUtils.convertNode<MenuTreeNode, RouteRecordRaw>(sysUserMenuTreeStore.menuTree, node => {
+            return {
+                name: node.label,
+                path: node.url,
+                component: () => matchViewComponent(node.pageComponent),
+                children: node.children as unknown as RouteRecordRaw[],
+                meta: {
+                    requireAuth: true
+                }
+            }
+        }, node => node.children, node => node.children = [])
+
+        router.addRoute(
+            {
+                name: '主页',
+                path: '/',
+                component: () => import("@/views/Main/index.vue"),
+                children: dynamicRoutes
+            }
+        )
+        
+        const redirectUrl = router.currentRoute.value.query["redirect"] ? router.currentRoute.value.query["redirect"].toString() : '/'
+        router.push({ path: redirectUrl })
     }
 }
 const handleSubmitRegisterForm = async () => {
-    ElMessage.error("暂不支持")
+    message.error("暂不支持")
 }
 
-// 加载页面
-// const isLoading = ref<boolean>(true)
-// setTimeout(() => isLoading.value = false, 500);
-
 // ==================================== 登录提示 ====================================
-const router = useRouter();
-
 onMounted(() => {
     const tip = router.currentRoute.value.query["tip"]
     if (tip) {
-        ElMessage.error(tip.toString())
+        message.error(tip.toString())
     }
 })
 </script>

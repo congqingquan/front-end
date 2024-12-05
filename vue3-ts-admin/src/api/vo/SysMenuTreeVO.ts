@@ -13,14 +13,14 @@ export default interface SysMenuTreeVO extends KeyModel<string> {
     sort: number
     targetType: string
     type: string
-    createUser: string
+    createUser: number
     createTime: Date
-    updateUser: string
+    updateUser: number
     updateTime: Date
-    children: (SysMenuTreeVO)[]
+    children: SysMenuTreeVO[]
 
     // sys_resource
-    identifier: string,
+    identifier: string
     status: string
 
     // 适配 antd menu

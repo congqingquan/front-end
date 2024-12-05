@@ -1,3 +1,5 @@
+import { QueryType } from "@/types/Types";
+
 export default interface SysResourcePageDTO {
 	//页码
 	pageNo: number,
@@ -24,5 +26,9 @@ export default interface SysResourcePageDTO {
 	//更新人
 	updateUser: number,
 	//更新时间
-	updateTime: Date
+	updateTime: Date,
+
+
+	// 查询类型(ALL / USER)
+	queryType: QueryType
 }
