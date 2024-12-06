@@ -12,12 +12,6 @@ export interface Store {
 }
 
 export type StoreName = 'SysLoginedUser' | 'SysMenuTree' | 'SysUserMenuTree' | 'SysUserResources'
-// export const StoreNames: { [P in StoreName ]: string } = {
-//     SysLoginedUser: "SysLoginedUser",
-//     SysMenuTree: 'SysMenuTree',
-//     SysUserMenuTree: "SysUserMenuTree",
-//     SysUserResources: 'SysUserResources'
-// }
 
 export const getSotres: () => Store[] = () => [
     useSysLoginedUserStore(), 

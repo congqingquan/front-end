@@ -1,6 +1,14 @@
 import { MenuTheme } from "ant-design-vue";
 import { RendererElement, RendererNode, VNode } from "vue";
 
+// ========================== Functional ==========================
+
+// 获取对象属性值的联合类型
+export type ObjectPropValueUnionType<T> =  T extends { [key: string]: infer V } ? V : never
+
+// ========================== Biz ==========================
+
+
 // 状态
 export type Status = 'NORMAL' | 'DISABLED';
 

@@ -1,6 +1,6 @@
 import Api from '@/api/Api'
 import SysResourceViewVO from '@/api/vo/SysResourceViewVO'
-import PinaKeys from '@/common/PinaKeys'
+import PinaKeys from '@/store/PinaKeys'
 import { cloneDeep } from 'lodash'
 import { defineStore } from 'pinia'
 import { Ref, ref } from 'vue'

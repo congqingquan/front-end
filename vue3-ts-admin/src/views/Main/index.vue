@@ -11,7 +11,7 @@
             <a-menu mode='inline' theme="dark" @select="handleClickMenu" :openKeys="openKeys"
                 :selectedKeys="selectedKeys" :items="
                     TreeUtils.convertNode(
-                        cloneDeep(sysUserMenuTreeStore.menuTree),
+                        cloneDeep(sysUserMenuTreeProvider.data.menuTree.value),
                         node => {
                             return {
                                 ...node,
@@ -73,7 +73,12 @@
                             </a-dropdown>
                         </template>
                         <Suspense>
-                            <RouterView></RouterView>
+                            <template #default>
+                                <RouterView></RouterView>
+                            </template>
+                            <template #fallback>
+                                <div>Loading...</div>
+                            </template>
                         </Suspense>
                     </a-tab-pane>
                 </a-tabs>
@@ -86,10 +91,33 @@
 </template>
 
 <script lang="ts" setup>
-import { h, reactive, ref } from 'vue'
+import { h, inject, reactive, ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router';
+import { Key } from 'ant-design-vue/es/_util/type';
+import TreeUtils from '@/util/TreeUtils';
+import { MenuTreeNode } from '@/types';
+import { SelectInfo } from 'ant-design-vue/es/menu/src/interface';
+import { RouterView } from 'vue-router'
+import ArrayUtils from '@/util/ArrayUtils';
+import Icon, { LogoutOutlined } from '@ant-design/icons-vue';
+import Constants from '@/common/Constants'
+import { useSysLoginedUserStore } from '@/store/modules/SysLoginedUser';
+import { clearStores } from '@/store';
+import { cloneDeep } from 'lodash';
+import ReactLogo from '@/assets/pics/react192.png'
+import { ProviderKeys } from '@/di/ProviderKeys';
+import { sysUserMenuTreeProvider as $sysUserMenuTreeProvider, SysUserMenuTreeProvider } from '@/di/SysUserMenuTreeProvider';
+
+// ========================================= 路由 =========================================
+
+const route = useRoute()
+const router = useRouter()
+
+// ========================================= 注入全局资源 =========================================
+
+const sysUserMenuTreeProvider = inject<SysUserMenuTreeProvider>(ProviderKeys.SYS_USER_MENU_TREE, $sysUserMenuTreeProvider)
 
 // ========================================= Aside logo / collapse =========================================
-import ReactLogo from '@/assets/pics/react192.png'
 const collapsed = ref<boolean>(false);
 const logoBoxClassNames = reactive({
     "logo-box": true,
@@ -119,35 +147,29 @@ function triggerCollapse(collapse: boolean, type: any) {
 const sysLoginedUserStore = useSysLoginedUserStore()
 
 const logout = async () => {
-    await clearStores()
+    clearStores([ 'SysLoginedUser' ])
     router.push({ path: "/login" })
 }
 
 // ========================================= Aside menu =========================================
-import { useRoute, useRouter } from 'vue-router';
-import { Key } from 'ant-design-vue/es/_util/type';
-import TreeUtils from '@/util/TreeUtils';
-import { MenuTreeNode } from '@/types/Types';
-import { SelectInfo } from 'ant-design-vue/es/menu/src/interface';
-import { useSysUserMenuTreeStore } from '@/store/modules/SysUserMenuTree';
-import { RouterView } from 'vue-router'
-
-// 1. 菜单
-const sysUserMenuTreeStore = useSysUserMenuTreeStore()
-import ArrayUtils from '@/util/ArrayUtils';
-import Icon, { LogoutOutlined } from '@ant-design/icons-vue';
-import Constants from '@/common/Constants'
-import { useSysLoginedUserStore } from '@/store/modules/SysLoginedUser';
-import { clearStores } from '@/store';
-import { cloneDeep } from 'lodash';
 
 // const sysUserMenuTree = useSysUserMenuTreeStore().tree // 不能使用 tree 属性, 会使得 icon 丢失。
 // 因为这样获取的是存储在 localStorage 中的数据，但该缓存不存储函数，且 ItemType.icon 属性正是一个函数类型。
 
 // openKeys & selectedKeys
-const route = useRoute()
-const router = useRouter()
+const getMatchedMenuByRoute = (): MenuTreeNode | undefined => {
+    let matchedMenu: MenuTreeNode | undefined
+    TreeUtils.breakableForeach(sysUserMenuTreeProvider.data.menuTree.value, node => node.children, (_, node) => {
+        const equalKey = node.url === route.path
+        if (equalKey) {
+            matchedMenu = node
+        }
+        return equalKey
+    })
+    return matchedMenu
+}
 const matchedMenuByRoute = getMatchedMenuByRoute()
+
 const openKeys = ref<Key[]>([
     ...(matchedMenuByRoute?.keyPath.split(',') || [])
 ])
@@ -155,10 +177,6 @@ const selectedKeys = ref<Key[]>([
     ...(matchedMenuByRoute?.key.split(',') || [])
 ])
 const handleClickMenu = (info: SelectInfo) => {
-    console.log(cloneDeep(sysUserMenuTreeStore.menuTree));
-    
-    console.log(router.getRoutes());
-
     openKeys.value = info.keyPath || []
     selectedKeys.value = info.selectedKeys || []
 
@@ -171,10 +189,10 @@ const handleClickMenu = (info: SelectInfo) => {
             { 
                 key: treeNode.key, 
                 title: treeNode.label, 
-                icon: sysUserMenuTreeStore.menuTreeMap[treeNode.key].icon, 
+                icon: sysUserMenuTreeProvider.data.menuTreeMap.value[treeNode.key].icon, 
                 url: treeNode.url, 
-                content: "", 
-                closable: true 
+                content: "",
+                closable: true
             }
         )
     }
@@ -182,17 +200,6 @@ const handleClickMenu = (info: SelectInfo) => {
     activePaneKey.value = treeNode.key
 
     router.push({ path: info.item.url })
-}
-function getMatchedMenuByRoute(): MenuTreeNode | undefined {
-    let matchedMenu: MenuTreeNode | undefined
-    TreeUtils.breakableForeach(sysUserMenuTreeStore.menuTree, node => node.children, (_, node) => {
-        const equalKey = node.url === route.path
-        if (equalKey) {
-            matchedMenu = node
-        }
-        return equalKey
-    })
-    return matchedMenu
 }
 
 // ========================================= Content tabs =========================================
@@ -232,7 +239,7 @@ const removePane = (targetKey: string) => {
     }
 
     // 跳转至最新 activePane 的路由
-    const menuNode = sysUserMenuTreeStore.menuTreeMap[activePaneKey.value.toString()]
+    const menuNode = sysUserMenuTreeProvider.data.menuTreeMap.value[activePaneKey.value.toString()]
     if (menuNode) {
         router.push({ path: menuNode.url })
     }
@@ -256,7 +263,7 @@ const onEditPane = (targetKey: Key | MouseEvent | KeyboardEvent, action: string)
 }
 
 const onChangePane = (activeKey: Key) => {
-    const menuNode = sysUserMenuTreeStore.menuTreeMap[activeKey.toString()]
+    const menuNode = sysUserMenuTreeProvider.data.menuTreeMap.value[activeKey.toString()]
     if (menuNode) {
         openKeys.value = menuNode.parentPath.split(",")
         selectedKeys.value = [ activeKey ]

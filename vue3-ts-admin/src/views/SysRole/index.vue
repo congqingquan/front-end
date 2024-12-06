@@ -58,7 +58,7 @@
                 </span>
             </template>
         </template>
-    </a-table>
+    </a-table>  
 
     <!-- Table add / update modal -->
     <a-modal v-model:open="addUpdateModalOpenRef"
@@ -136,9 +136,7 @@ import Api from '@/api/Api';
 import SysApiGroupByTypeVO from '@/api/vo/SysApiGroupByTypeVO';
 import SysRolePageVO from '@/api/vo/SysRolePageVO';
 import Constants from '@/common/Constants';
-import { clearStores, initStores } from '@/store';
-import { useSysMenuTreeStore } from '@/store/modules/SysMenuTree';
-import { MenuButtonIdentifier, useSysUserResourcesStore } from '@/store/modules/SysUserResources';
+import { MenuButtonIdentifier } from '@/di/SysUserResourcesProvider';
 import ArrayUtils from '@/util/ArrayUtils';
 import TreeUtils from '@/util/TreeUtils';
 import Icon, { DeleteOutlined, SearchOutlined, UserOutlined } from '@ant-design/icons-vue';
@@ -146,7 +144,16 @@ import { Form, FormProps, message } from 'ant-design-vue';
 import { Key } from 'ant-design-vue/es/_util/type';
 import { ValidateErrorEntity } from 'ant-design-vue/es/form/interface';
 import { ColumnType } from 'ant-design-vue/es/table';
-import { h, onMounted, reactive, ref, watch } from 'vue';
+import { h, inject, onMounted, reactive, ref, watch } from 'vue';
+import { ProviderKeys } from '@/di/ProviderKeys';
+import { sysMenuTreeProvider as $sysMenuTreeProvider, SysMenuTreeProvider } from '@/di/SysMenuTreeProvider';
+import { sysUserResourcesProvider as $sysUserResourcesProvider, SysUserResourcesProvider } from '@/di/SysUserResourcesProvider';
+
+// ========================================= 注入全局资源 =========================================
+
+const sysMenuTreeProvider = inject<SysMenuTreeProvider>(ProviderKeys.SYS_MENU_TREE, $sysMenuTreeProvider)
+const sysUserResourcesProvider = inject<SysUserResourcesProvider>(ProviderKeys.SYS_USER_RESOURCES, $sysUserResourcesProvider)
+
 
 const useForm = Form.useForm
 // Table Search
@@ -249,11 +256,9 @@ const handelTableRecordRowDelete = async (ids: Key[]) => {
         return
     }
     await Api.deleteSysRole(ids.map(id => id.toString()))
-    loadTableData(searchFormState.value, currentRef.value, pageSizeRef.value)
 
-    // refresh stores
-    await clearStores([ 'SysUserMenuTree', 'SysUserResources' ])
-    await initStores([ 'SysUserMenuTree', 'SysUserResources' ])
+    // reload: refetch global resources / regenerate dynamic router
+    location.reload()
 }
 
 // Table add / update modal
@@ -281,8 +286,8 @@ const hideAddUpdateModal = () => {
 
 // option field: menu tree / apis
 // menu tree
-const { menuButtonsMap } = useSysUserResourcesStore()
-const { allTree } = useSysMenuTreeStore()
+const menuButtonsMap = sysUserResourcesProvider.data.menuButtonsMap.value
+const allTree = sysMenuTreeProvider.data.allTree.value
 const modalTreeData = TreeUtils.convertNode(
     allTree, 
     node => {
@@ -414,11 +419,9 @@ const onAddUpdateModalFormFinish = async (values: any) => {
     
     addUpdateModalLoadingRef.value = false
     addUpdateModalOpenRef.value = false
-    loadTableData(searchFormState.value, currentRef.value, pageSizeRef.value)
 
-    // refresh stores
-    await clearStores([ 'SysUserMenuTree', 'SysUserResources' ])
-    await initStores([ 'SysUserMenuTree', 'SysUserResources' ])
+    // reload: refetch global resources / regenerate dynamic router
+    location.reload()
 }
 const onAddUpdateModalFormFinishFailed = (errorInfo: any) => {
     message.error(errorInfo)

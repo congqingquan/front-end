@@ -1,4 +1,4 @@
-import { QueryType } from "@/types/Types";
+import { QueryType } from "@/types";
 
 export default interface SysResourcePageDTO {
 	//页码

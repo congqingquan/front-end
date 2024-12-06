@@ -136,21 +136,24 @@ import Api from '@/api/Api';
 import SysApiPageVO from '@/api/vo/SysApiPageVO';
 import SysApiViewVO from '@/api/vo/SysApiViewVO';
 import Constants from '@/common/Constants';
-import { clearStores, initStores } from '@/store';
-import { MenuButtonIdentifier, useSysUserResourcesStore } from '@/store/modules/SysUserResources';
 import ArrayUtils from '@/util/ArrayUtils';
 import { DeleteOutlined, SearchOutlined, UserOutlined } from '@ant-design/icons-vue';
 import { Form, FormProps, message } from 'ant-design-vue';
 import { Key } from 'ant-design-vue/es/_util/type';
 import { ValidateErrorEntity } from 'ant-design-vue/es/form/interface';
-import { DefaultOptionType, SelectProps } from 'ant-design-vue/es/select';
+import { SelectProps } from 'ant-design-vue/es/select';
 import { ColumnType } from 'ant-design-vue/es/table';
-import { h, onMounted, reactive, ref, } from 'vue';
+import { h, inject, onMounted, reactive, ref, } from 'vue';
+import { ProviderKeys } from '@/di/ProviderKeys';
+import { sysUserResourcesProvider as $sysUserResourcesProvider, MenuButtonIdentifier, SysUserResourcesProvider } from '@/di/SysUserResourcesProvider';
 
-const useForm = Form.useForm;
-const { menuButtonsMap } = useSysUserResourcesStore()
+// ========================================= 注入全局资源 =========================================
+const sysUserResourcesProvider = inject<SysUserResourcesProvider>(ProviderKeys.SYS_USER_RESOURCES, $sysUserResourcesProvider)
+const menuButtonsMap = sysUserResourcesProvider.data.menuButtonsMap.value
 
 // Table Search
+const useForm = Form.useForm;
+
 interface SearchFormState {
     name: string
     type: string

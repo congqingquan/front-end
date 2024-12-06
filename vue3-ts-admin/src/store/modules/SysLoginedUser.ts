@@ -1,5 +1,5 @@
 import SysUserViewVO from '@/api/vo/SysUserViewVO'
-import PinaKeys from '@/common/PinaKeys'
+import PinaKeys from '@/store/PinaKeys'
 import { defineStore } from 'pinia'
 import { Ref, ref } from 'vue'
 import { Store } from '..'

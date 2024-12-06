@@ -10,7 +10,7 @@ const requestOnFulfilled: (config: InternalAxiosRequestConfig<any>) => InternalA
     // 如果 store 中有 token，每次请求都携带 token
     const sysLoginedUserStore = useSysLoginedUserStore()
     if (sysLoginedUserStore.user.logined) {
-        config.headers.set("Authorization", sysLoginedUserStore.user.token);
+        config.headers.set("Authorization", sysLoginedUserStore.user.token)
     }
     return config
 }

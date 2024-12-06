@@ -1,17 +1,30 @@
 <template>
-  <!--
-     setup 中直接使用 async/await 可以得到数据，但页面会白屏，
-     需使用 Suspense 组件包裹 RouterView 进而解决
-  -->
-  <Suspense>
-    <RouterView></RouterView>
-     <!-- <Main /> -->
-  </Suspense>
+    <Suspense>
+        <template #default>
+            <RouterView></RouterView>
+        </template>
+        <template #fallback>
+            <a-spin tip="Loading..."
+                style="height: 100vh; width: 100vw; display: flex; justify-content: center; align-items: center;" />
+        </template>
+    </Suspense>
 </template>
 
 <script setup lang="ts">
-import { RouterView } from 'vue-router'
-import Main from "@/views/Main/index.vue"
-</script>
+import { provide } from 'vue'
+import { RouterView } from 'vue-router';
+import { ProviderKeyType } from '@/di/ProviderKeys';
+import { SysUserMenuTreeProvider, sysUserMenuTreeProvider } from '@/di/SysUserMenuTreeProvider';
+import { SysUserResourcesProvider, sysUserResourcesProvider } from '@/di/SysUserResourcesProvider';
+import { SysMenuTreeProvider, sysMenuTreeProvider } from './di/SysMenuTreeProvider';
 
-<style scoped></style>
+// ============================== 注入全局资源 ==============================
+
+// 全部菜单
+provide<SysMenuTreeProvider, ProviderKeyType>(sysMenuTreeProvider.key, sysMenuTreeProvider)
+// 用户菜单
+provide<SysUserMenuTreeProvider, ProviderKeyType>(sysUserMenuTreeProvider.key, sysUserMenuTreeProvider)
+// 用户资源
+provide<SysUserResourcesProvider, ProviderKeyType>(sysUserResourcesProvider.key, sysUserResourcesProvider)
+
+</script>

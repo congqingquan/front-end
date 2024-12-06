@@ -1,4 +1,4 @@
-import KeyModel from "@/types/Types"
+import KeyModel from "@/types"
 
 export default interface SysMenuTreeVO extends KeyModel<string> {
     menuId: string

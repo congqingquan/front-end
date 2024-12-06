@@ -1,16 +1,33 @@
 import { useSysLoginedUserStore } from '@/store/modules/SysLoginedUser';
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 
+// 新增、删除路由
+// console.log("start");
+// router.getRoutes().find(route => route.name === '主页')?.children.push(
+//     {
+//         name: '测试',
+//         path: '/Test',
+//         component: () => import("@/views/Test/index.vue"),
+//         meta: {
+//             requireAuth: true
+//         }
+//     }
+// )
+// console.log("end");
+
+// console.log(router.getRoutes());
+// router.removeRoute('主页')
+
 // 静态路由
 const statisRouterTable: RouteRecordRaw[] = [
     {
+        name: '主页',
         path: '/',
         component: () => import("@/views/Main/index.vue"),
+        children: [],
         meta: {
             requireAuth: true
-        },
-        name:'首页',
-        children:[]
+        }
     },
     {
         path: '/login',

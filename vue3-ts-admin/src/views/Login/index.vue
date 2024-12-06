@@ -78,17 +78,16 @@ import { onMounted, reactive, ref } from 'vue'
 import { message } from 'ant-design-vue'
 import { UserOutlined } from '@ant-design/icons-vue'
 import { Icon } from '@iconify/vue';
-import { useSysLoginedUserStore } from '@/store/modules/SysLoginedUser'
-import { useSysUserResourcesStore } from '@/store/modules/SysUserResources'
-import { useSysMenuTreeStore } from '@/store/modules/SysMenuTree'
-import { useSysUserMenuTreeStore } from '@/store/modules/SysUserMenuTree'
-import { RouteRecordRaw, useRouter, useRoute } from 'vue-router'
-import TreeUtils from '@/util/TreeUtils'
-import { MenuTreeNode } from '@/types/Types'
+import { useSysLoginedUserStore } from '@/store/modules/SysLoginedUser';
+import { useRouter } from 'vue-router';
+import SysMenuTreeVO from '@/api/vo/SysMenuTreeVO'
 import { matchViewComponent } from '@/components/ViewPageManager'
+import { sysUserMenuTreeProvider } from '@/di/SysUserMenuTreeProvider';
+import { sysUserResourcesProvider } from '@/di/SysUserResourcesProvider';
+import { sysMenuTreeProvider } from '@/di/SysMenuTreeProvider';
+
 
 const router = useRouter()
-const route = useRoute()
 
 // 处理点击切换登录、注册页
 const isToLogin = ref<boolean>(true)
@@ -125,6 +124,7 @@ const registerForm = reactive<SysUserRegisterDTO>({
     password: "",
     email: ""
 })
+
 const handleSubmitLoginForm = async () => {
     const response = await Api.sysUserLogin(loginForm);
     if (response.data.code === 0) {
@@ -137,42 +137,90 @@ const handleSubmitLoginForm = async () => {
             logined: true
         }
 
-        // 刷新全局资源
+        // 刷新全局资源 (Pina 的方式)
 
         // 全部菜单
-        const sysMenuTreeStore = useSysMenuTreeStore()
-        await sysMenuTreeStore.init()
+        // const sysMenuTreeStore = useSysMenuTreeStore()
+        // await sysMenuTreeStore.init()
 
-        // 用户菜单
-        const sysUserMenuTreeStore = useSysUserMenuTreeStore()
-        await sysUserMenuTreeStore.init()
+        // // 用户菜单
+        // const sysUserMenuTreeStore = useSysUserMenuTreeStore()
+        // await sysUserMenuTreeStore.init()
 
-        // 资源控制
-        const sysUserResourcesStore = useSysUserResourcesStore()
-        await sysUserResourcesStore.init()
+        // // 资源控制
+        // const sysUserResourcesStore = useSysUserResourcesStore()
+        // await sysUserResourcesStore.init()
+
+        // // 动态路由
+        // const routeMenus: SysMenuTreeVO[] = []
+        // Object.values(sysUserMenuTreeStore.menuTreeMap).forEach(menu => {
+        //     if (menu.type === 'MENU') {
+        //         routeMenus.push(menu)
+        //     }
+        // })
 
         // 动态路由
-        const dynamicRoutes = TreeUtils.convertNode<MenuTreeNode, RouteRecordRaw>(sysUserMenuTreeStore.menuTree, node => {
+        // const dynamicRoutes = routeMenus.map(routeMenu => {
+        //     return {
+        //         name: routeMenu.name,
+        //         path: routeMenu.url,
+        //         component: matchViewComponent(routeMenu.component),
+        //         children: [],
+        //         meta: {
+        //             requireAuth: true
+        //         }
+        //     }
+        // })
+
+        // router.addRoute(
+        //     {
+        //         name: '主页',
+        //         path: '/',
+        //         component: () => import("@/views/Main/index.vue"),
+        //         children: dynamicRoutes,
+        //         meta: {
+        //             requireAuth: true
+        //         }
+        //     }
+        // )
+
+        // 刷新全局资源 (全局单次缓存的方式，刷新页面后会更新)
+
+        await sysUserMenuTreeProvider.initData()
+        await sysUserResourcesProvider.initData()
+        await sysMenuTreeProvider.initData()
+
+        // ============================== 动态路由 ==============================
+
+        const routeMenus: SysMenuTreeVO[] = []
+        Object.values(sysUserMenuTreeProvider.data.menuTreeMap.value).forEach(menu => {
+            if (menu.type === 'MENU') {
+                routeMenus.push(menu)
+            }
+        })
+        const dynamicRoutes = routeMenus.map(routeMenu => {
             return {
-                name: node.label,
-                path: node.url,
-                component: () => matchViewComponent(node.pageComponent),
-                children: node.children as unknown as RouteRecordRaw[],
+                name: routeMenu.name,
+                path: routeMenu.url,
+                component: matchViewComponent(routeMenu.component),
+                children: [],
                 meta: {
                     requireAuth: true
                 }
             }
-        }, node => node.children, node => node.children = [])
+        })
 
         router.addRoute(
             {
                 name: '主页',
                 path: '/',
                 component: () => import("@/views/Main/index.vue"),
-                children: dynamicRoutes
+                children: dynamicRoutes,
+                meta: {
+                    requireAuth: true
+                }
             }
         )
-        
         const redirectUrl = router.currentRoute.value.query["redirect"] ? router.currentRoute.value.query["redirect"].toString() : '/'
         router.push({ path: redirectUrl })
     }

@@ -1,4 +1,4 @@
-import { MenuTreeQueryType, MenuItemType, Status } from "@/types/Types"
+import { MenuTreeQueryType, MenuItemType, Status } from "@/types"
 
 
 export default interface SysMenuTreeDTO {

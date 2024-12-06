@@ -147,21 +147,23 @@ import SysMenuTreeVO from '@/api/vo/SysMenuTreeVO';
 import Constants from '@/common/Constants';
 import { matchViewComponent } from '@/components/ViewPageManager';
 import router from '@/router';
-import { clearStores, initStores } from '@/store';
-import { MenuButtonIdentifier, useSysUserResourcesStore } from '@/store/modules/SysUserResources';
 import TreeUtils from '@/util/TreeUtils';
 import Icon, { DeleteOutlined, SearchOutlined, UserOutlined } from '@ant-design/icons-vue';
 import { Form, FormProps, message } from 'ant-design-vue';
-import { Key } from 'ant-design-vue/es/_util/type';
 import { ValidateErrorEntity } from 'ant-design-vue/es/form/interface';
 import { ColumnType } from 'ant-design-vue/es/table';
 import { SelectProps } from 'ant-design-vue/es/vc-select';
-import { h, onMounted, reactive, ref, } from 'vue';
+import { h, inject, onMounted, reactive, ref, } from 'vue';
+import { ProviderKeys } from '@/di/ProviderKeys';
+import { sysUserResourcesProvider as $sysUserResourcesProvider, MenuButtonIdentifier, SysUserResourcesProvider } from '@/di/SysUserResourcesProvider';
 
-const useForm = Form.useForm;
-const { menuButtonsMap } = useSysUserResourcesStore()
+// ========================================= 注入全局资源 =========================================
+const sysUserResourcesProvider = inject<SysUserResourcesProvider>(ProviderKeys.SYS_USER_RESOURCES, $sysUserResourcesProvider)
+const menuButtonsMap = sysUserResourcesProvider.data.menuButtonsMap.value
 
 // Table Search
+const useForm = Form.useForm;
+
 interface SearchFormState {
     keyword: string
 }
@@ -270,15 +272,7 @@ const handelTableRecordRowDelete = async (record: SysMenuTreeVO) => {
         return
     }
     await Api.deleteSysMenu(record.menuId)
-    loadTableData(searchFormState.value)
-    loadModalTreeData()
-
-    // remove route
-    router.removeRoute(record.name)
-
-    // refresh stores
-    await clearStores([ 'SysMenuTree', 'SysUserMenuTree', 'SysUserResources' ])
-    await initStores([ 'SysMenuTree', 'SysUserMenuTree', 'SysUserResources' ])
+    location.reload()
 }
 
 // Table add / update modal
@@ -430,19 +424,6 @@ const onAddUpdateModalFormFinish = async (values: any) => {
             case 'ADD':
                 // save data
                 await Api.addSysMenu({ ...addUpdateModalFormState })
-                // save route record (新增应该在分配完权限后重置路由表，删除可以在 菜单页更新路由)
-                console.log({
-                    name: addUpdateModalFormState.name,
-                    path: addUpdateModalFormState.url ?? '',
-                    component: () => matchViewComponent(addUpdateModalFormState.component ?? '')
-                });
-                const component = await matchViewComponent(addUpdateModalFormState.component ?? '')
-                router.addRoute({
-                    name: addUpdateModalFormState.name,
-                    path: addUpdateModalFormState.url ?? '',
-                    component: () => import("@/views/Test/index.vue")
-                })
-                console.log(router.getRoutes())
                 break
 
             case 'UPDATE': {
@@ -459,15 +440,8 @@ const onAddUpdateModalFormFinish = async (values: any) => {
         return
     }
 
-    // refresh table data
-    addUpdateModalLoadingRef.value = false
-    addUpdateModalOpenRef.value = false
-    await loadTableData(searchFormState.value)
-    await loadModalTreeData()
-
-    // refresh store
-    await clearStores([ 'SysMenuTree', 'SysUserMenuTree', 'SysUserResources' ])
-    await initStores([ 'SysMenuTree', 'SysUserMenuTree', 'SysUserResources' ])
+    // reload: refetch global resources / regenerate dynamic router
+    location.reload()
 }
 const onAddUpdateModalFormFinishFailed = (errorInfo: any) => {
     message.error(errorInfo)
