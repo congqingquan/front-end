@@ -4,8 +4,8 @@ import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 import Home from '@/pages/Home';
 import Login from "@/pages/Login";
 import Index from '@/pages/Index';
-import Role from '@/pages/Role';
-import User from '@/pages/User';
+import Role from '@/pages/SysRole';
+import User from '@/pages/SysUser';
 import Unauthenticated from '@/pages/Unauthenticated';
 import Unauthorzied from '@/pages/Unauthorized';
 import NotFountPage from '@/pages/NotFoundPage';

@@ -52,110 +52,110 @@ export default class API {
 
     // 登录鉴权
     public static sysUserLogin(param: SysUserLoginDTO): Promise<AxiosResponse<ApiResult<SysUserLoginVO>>> {
-        return AdminAxios.postJSON<ApiResult<SysUserLoginVO>>("/admin/b/sysUser/login", param);
+        return AdminAxios.postJSON<ApiResult<SysUserLoginVO>>("/b/sys-user/login", param);
     }
 
 
     // 用户管理
     // 1. 分页
     public static sysUserPage(param: Partial<SysUserPageDTO>): Promise<AxiosResponse<ApiPageResult<SysUserPageVO>>> {
-        return AdminAxios.postJSON<ApiPageResult<SysUserPageVO>>("/admin/b/sysUser/page", param);
+        return AdminAxios.postJSON<ApiPageResult<SysUserPageVO>>("/b/sys-user/page", param);
     }
     // 2. 新增
     public static addSysUser(param: SysUserAddDTO): Promise<AxiosResponse<ApiResult<boolean>>> {
-        return AdminAxios.postJSON<ApiResult<boolean>>("/admin/b/sysUser/add", param);
+        return AdminAxios.postJSON<ApiResult<boolean>>("/b/sys-user/add", param);
     }
     // 3. 修改
     public static eidtSysUser(param: Partial<SysUserUpdateDTO>): Promise<AxiosResponse<ApiResult<boolean>>> {
-        return AdminAxios.postJSON<ApiResult<boolean>>("/admin/b/sysUser/edit", param);
+        return AdminAxios.postJSON<ApiResult<boolean>>("/b/sys-user/edit", param);
     }
     // 4. 删除
     public static deleteSysUser(param: string[]): Promise<AxiosResponse<ApiResult<boolean>>> {
-        return AdminAxios.postJSON<ApiResult<boolean>>("/admin/b/sysUser/delete", param);
+        return AdminAxios.postJSON<ApiResult<boolean>>("/b/sys-user/delete", param);
     }
 
     // 角色管理
     // 1.分页
     public static sysRolePage(param: Partial<SysRolePageDTO>): Promise<AxiosResponse<ApiPageResult<SysRolePageVO>>> {
-        return AdminAxios.postJSON<ApiPageResult<SysRolePageVO>>("/admin/b/sysRole/page", param);
+        return AdminAxios.postJSON<ApiPageResult<SysRolePageVO>>("/b/sys-role/page", param);
     }
      // 2. 新增
      public static addSysRole(param: SysRoleAddDTO): Promise<AxiosResponse<ApiResult<boolean>>> {
-        return AdminAxios.postJSON<ApiResult<boolean>>("/admin/b/sysRole/add", param);
+        return AdminAxios.postJSON<ApiResult<boolean>>("/b/sys-role/add", param);
     }
     // 3. 修改
     public static eidtSysRole(param: Partial<SysRoleUpdateDTO>): Promise<AxiosResponse<ApiResult<boolean>>> {
-        return AdminAxios.postJSON<ApiResult<boolean>>("/admin/b/sysRole/edit", param);
+        return AdminAxios.postJSON<ApiResult<boolean>>("/b/sys-role/edit", param);
     }
     // 4. 删除
     public static deleteSysRole(param: string[]): Promise<AxiosResponse<ApiResult<boolean>>> {
-        return AdminAxios.postJSON<ApiResult<boolean>>("/admin/b/sysRole/delete", param);
+        return AdminAxios.postJSON<ApiResult<boolean>>("/b/sys-role/delete", param);
     }
 
     // 资源管理
     // 1.分页
     public static sysResourcePage(param: Partial<SysResourcePageDTO>): Promise<AxiosResponse<ApiPageResult<SysResourcePageVO>>> {
-        return AdminAxios.postJSON<ApiPageResult<SysResourcePageVO>>("/admin/b/sysResource/page", param);
+        return AdminAxios.postJSON<ApiPageResult<SysResourcePageVO>>("/b/sys-resource/page", param);
     }
      // 2. 新增
      public static addSysResource(param: SysResourceAddDTO): Promise<AxiosResponse<ApiResult<boolean>>> {
-        return AdminAxios.postJSON<ApiResult<boolean>>("/admin/b/sysResource/add", param);
+        return AdminAxios.postJSON<ApiResult<boolean>>("/b/sys-resource/add", param);
     }
     // 3. 修改
     public static eidtSysResource(param: Partial<SysResourceUpdateDTO>): Promise<AxiosResponse<ApiResult<boolean>>> {
-        return AdminAxios.postJSON<ApiResult<boolean>>("/admin/b/sysResource/edit", param);
+        return AdminAxios.postJSON<ApiResult<boolean>>("/b/sys-resource/edit", param);
     }
     // 4. 删除
     public static deleteSysResource(param: string[]): Promise<AxiosResponse<ApiResult<boolean>>> {
-        return AdminAxios.postJSON<ApiResult<boolean>>("/admin/b/sysResource/delete", param);
+        return AdminAxios.postJSON<ApiResult<boolean>>("/b/sys-resource/delete", param);
     }
 
     // 菜单管理
     // 1. 菜单管理树查询 & 主页左侧菜单
     public static sysMenuTree(param: Partial<SysMenuTreeDTO>): Promise<AxiosResponse<ApiResult<SysMenuTreeVO[]>>> {
-        return AdminAxios.postJSON<ApiResult<SysMenuTreeVO[]>>("/admin/b/sysMenu/tree", param);
+        return AdminAxios.postJSON<ApiResult<SysMenuTreeVO[]>>("/b/sys-menu/tree", param);
     }
      // 2. 新增
      public static addSysMenu(param: SysMenuAddDTO): Promise<AxiosResponse<ApiResult<boolean>>> {
-        return AdminAxios.postJSON<ApiResult<boolean>>("/admin/b/sysMenu/add", param);
+        return AdminAxios.postJSON<ApiResult<boolean>>("/b/sys-menu/add", param);
     }
     // 3. 修改
     public static eidtSysMenu(param: Partial<SysMenuUpdateDTO>): Promise<AxiosResponse<ApiResult<boolean>>> {
-        return AdminAxios.postJSON<ApiResult<boolean>>("/admin/b/sysMenu/edit", param);
+        return AdminAxios.postJSON<ApiResult<boolean>>("/b/sys-menu/edit", param);
     }
     public static updateSysMenuStatus(param: SysMenuUpdateStatusDTO): Promise<AxiosResponse<ApiResult<boolean>>> {
-        return AdminAxios.postJSON<ApiResult<boolean>>("/admin/b/sysMenu/updateStatus", param);
+        return AdminAxios.postJSON<ApiResult<boolean>>("/b/sys-menu/update-status", param);
     }
     // 4. 删除
     public static deleteSysMenu(param: string): Promise<AxiosResponse<ApiResult<boolean>>> {
         const formData = new FormData();
         formData.append("menuId", param)
-        return AdminAxios.post<ApiResult<boolean>>("/admin/b/sysMenu/delete", formData);
+        return AdminAxios.post<ApiResult<boolean>>("/b/sys-menu/delete", formData);
     }
 
     // 接口管理
     // 1. 查询
     // 1.1) 分页
     public static sysApiPage(param: Partial<SysApiPageDTO>): Promise<AxiosResponse<ApiPageResult<SysApiPageVO>>> {
-        return AdminAxios.postJSON<ApiPageResult<SysApiPageVO>>("/admin/b/sysApi/page", param);
+        return AdminAxios.postJSON<ApiPageResult<SysApiPageVO>>("/b/sys-api/page", param);
     }
     // 1.2) 类别分组查询
     public static sysApiGroupByType(): Promise<AxiosResponse<ApiResult<SysApiGroupByTypeVO[]>>> {
-        return AdminAxios.postJSON<ApiResult<SysApiGroupByTypeVO[]>>("/admin/b/sysApi/groupByType");
+        return AdminAxios.postJSON<ApiResult<SysApiGroupByTypeVO[]>>("/b/sys-api/group-by-type");
     }
      // 2. 新增
      public static addSysApi(param: SysApiAddDTO): Promise<AxiosResponse<ApiResult<boolean>>> {
-        return AdminAxios.postJSON<ApiResult<boolean>>("/admin/b/sysApi/add", param);
+        return AdminAxios.postJSON<ApiResult<boolean>>("/b/sys-api/add", param);
     }
     // 3. 修改
     public static eidtSysApi(param: Partial<SysApiUpdateDTO>): Promise<AxiosResponse<ApiResult<boolean>>> {
-        return AdminAxios.postJSON<ApiResult<boolean>>("/admin/b/sysApi/edit", param);
+        return AdminAxios.postJSON<ApiResult<boolean>>("/b/sys-api/edit", param);
     }
     public static updateSysApiStatus(param: SysApiUpdateStatusDTO): Promise<AxiosResponse<ApiResult<boolean>>> {
-        return AdminAxios.postJSON<ApiResult<boolean>>("/admin/b/sysApi/updateStatus", param);
+        return AdminAxios.postJSON<ApiResult<boolean>>("/b/sys-api/update-status", param);
     }
     // 4. 删除
     public static deleteSysApi(param: string[]): Promise<AxiosResponse<ApiResult<boolean>>> {
-        return AdminAxios.postJSON<ApiResult<boolean>>("/admin/b/sysApi/delete", param);
+        return AdminAxios.postJSON<ApiResult<boolean>>("/b/sys-api/delete", param);
     }
 }

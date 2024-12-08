@@ -37,5 +37,7 @@
 4. word type：文字类型，大部分的类型都可以通过文字类型进行声明
 5. never：
     1. never 表示的类型集合：{}，空集。在类型定义中，当类型不符合条件时，使用 never 作为返回类型。
-    2. 如何声明一个 never 类型的变量并赋值？`let n: never = "str" as never`
+    2. 如何声明一个 never 类型的变量并赋值？
+        1. `let n: never = "str" as never`
+        2. `type t = string & number (肯定不会存在一个同时为 string 与 number 类型的类型)`
     3. never 可以正确的被类型约束进行检查。`type T<T extends string> = T / let t: T<never> = "" as never`

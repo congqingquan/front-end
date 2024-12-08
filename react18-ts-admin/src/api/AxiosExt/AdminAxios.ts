@@ -29,7 +29,7 @@ const responseOnFulfilled: ((response: AxiosResponse<any, any>) => AxiosResponse
 
     switch (responseStatusCode) {
         case 200: {
-            if (response.data.code !== 200) {
+            if (response.data.code !== 0) {
                 message.error(response.data.message);
                 return Promise.reject(response.data.message);
             }
@@ -60,7 +60,7 @@ const responseOnRejected: (error: any) => any = (error) => {
 }
 
 const AdminAxios = new AxiosExt({
-    baseURL: "http://localhost:9090"
+    baseURL: "http://localhost:7070/api"
 });
 AdminAxios.interceptors.request.use(requestOnFulfilled, requestOnRejected);
 AdminAxios.interceptors.response.use(responseOnFulfilled, responseOnRejected, );

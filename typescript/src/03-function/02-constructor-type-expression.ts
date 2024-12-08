@@ -45,7 +45,6 @@ let constructorWordType1: new (name: string) => {} = class AnyClassName {
         this.name = name;
     }
 }
-// 类名写与不写都不重要
 let constructorWordType2: new (name: string) => {} = class {
 
     private name: string;

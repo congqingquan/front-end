@@ -105,6 +105,11 @@ function getArea(s: Shape) {
 let area = getArea({ kind: "Square", sideLength: 5.0} as Shape);
 console.log(area);
 
+// 5. never 是任何类型的子类型：空集是任何类型的子集
+let nn: never = true as never
+let nnb: boolean = nn
+let nnn: number = nn
+
 // 5. 流程控制分析数据的类型
 function controlFlow() {
     let s: string | number = "str" as any;

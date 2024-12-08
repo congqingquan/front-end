@@ -45,7 +45,7 @@ const Login: React.FC = () => {
     // 登录表单点击提交
     const handleSubmitLoginForm = async (formValues: SysUserLoginDTO) => {
         const response = await API.sysUserLogin(formValues);
-        if (response.data.code === 200) {
+        if (response.data.code === 0) {
             localStorage.setItem(Constants.LOGINED_USER_INFO_KEY, JSON.stringify(response.data.data));
             RouterTable.navigate("/");
         }

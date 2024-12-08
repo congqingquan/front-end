@@ -1,6 +1,6 @@
 <!-- 
-    ref: 可以包装所有类型数据
-    reactive: 只能包装对象类型数据
+    ref: String，Number，Boolean, Object, Array (Object / Array 类型数据内部会调用 reactive，其他的如 map / set 通过 ref 包装会出现函数调用异常)
+    reactive: Object，Array，Map，Set
 -->
 
 <!-- 1. 应用 -->
@@ -34,7 +34,6 @@
 
 <!-- 2. 原理 -->
 <script setup lang="ts">
-
     // 1) ref
     class Ref<T> {
         private _value: T;

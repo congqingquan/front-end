@@ -60,4 +60,28 @@ let hme: keyof typeof HttpMethod // let hme: "GET" | "POST" | "PUT"
 
 // 5. 类型映射：详细见 06-mapped-type
 
+// 6. keyof 应用在静态成员上
+class Clazz {
+    
+    public memberName: string = "Member-CQQ"
+
+    public printMemberName = () => {
+    }
+
+    public static staticName: string = "Static-CQQ"
+
+    public static printStaticName = () => {
+    }
+}
+
+// 如第一点提到的：keyof 用于获取对象或接口上的所有键。可以理解为获取成员性质的数据的类型。
+type ClazzMembers = keyof Clazz
+let cm: ClazzMembers = 'memberName'
+cm = 'printMemberName'
+
+// 如果需要获取静态数据的类型，那么就需要在接合 typeof 关键字。可以理解为在一般的强类型语言中，静态的都是属于类的，那么 typeof 就是在获取类的类型，然后在结合 keyof 即可获取到静态数据的类型
+type ClazzStaticMembers = keyof typeof Clazz
+let csm: ClazzStaticMembers = 'staticName'
+csm = 'printStaticName'
+
 export { };

@@ -38,6 +38,7 @@ let excludeEntityRes: Exclude<keyof ExcludeEntity, "gender"> // let excludeEntit
 // 'age'    extends 'gender' ? never : 'age'    > 'age' 
 // 'gender' extends 'gender' ? never : 'gender' > never
 
+
 // 案例二：联合类型分配条件的 extends 关系
 let excludeRes: Exclude<"A" | "B" | "C", "A" | "B"> // let excludeRes: "C"
 // 流程:

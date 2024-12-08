@@ -18,7 +18,16 @@ type ArrayElmentTypeExtract2<T> = T extends (infer ET)[] ? ET : never
 let arr2El: ArrayElmentTypeExtract2<[string]> = "Array2Element" // let arr2El: string
 
 type ObjectElementTypeExtract<T> = T extends {id: infer IdType, name: infer NameType} ? [IdType, NameType] : never
-let obj1El: ObjectElementTypeExtract<{id: string, name: string}> // let obj1El: [string, string]
+let objEl: ObjectElementTypeExtract<{id: string, name: string}> // let objEl: [string, string]
+
+// 获取对象属性值的类型
+type ObjectElementTypeExtract2<T> = T extends { [key: string]: infer V } ? V : never
+const obj = {id: 'CQQ', age: 25}
+let objE2: ObjectElementTypeExtract2<typeof obj> // let objE2: string | number
+
+// 获取对象属性值的字面量类型：需要将对象转为 const。注意不是将引用转为 const，而是将对象本身转为 const，否则无法推断出对象的字面量值类型
+let obj2 = {id: 'CQQ', age: 25} as const
+let objE3: ObjectElementTypeExtract2<typeof obj2> // let objE3: "CQQ" | 25
 
 // 5. 协变、逆变位置上使用 infer
 // 协变位置 infer: 返回联合类型
