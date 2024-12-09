@@ -87,4 +87,7 @@ const assertString = (value: unknown): asserts value is string => {
     }
 }
 
+// ==================== as 的另一种写法 ====================
+let anotherSyntax = (<number>"1").toFixed(1)
+
 export {}

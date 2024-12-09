@@ -3,11 +3,16 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {},
+  "type": "module",
+  "module": "ES2020",
   "devDependencies": {
-    "@types/node": "^20.12.10"
+    "@types/node": "^20.17.9",
+    "@types/reflect-metadata": "^0.0.5"
   },
   "dependencies": {
+    "lodash": "^4.17.21",
+    "reflect-metadata": "^0.2.2",
     "ts-node": "^10.9.2",
-    "typescript": "^5.4.5"
+    "typescript": "^5.6.3"
   }
 }
