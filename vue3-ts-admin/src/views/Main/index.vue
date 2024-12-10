@@ -51,7 +51,7 @@
                 v-if="ArrayUtils.isNotEmpty(panes)" 
                 v-model:activeKey="activePaneKey" 
                 hideAdd
-                type="editable-card"  
+                type="editable-card"
                 @edit="onEditPane"
                 @change="onChangePane"
                 >
@@ -72,16 +72,20 @@
                                 </template>
                             </a-dropdown>
                         </template>
-                        <Suspense>
-                            <template #default>
-                                <RouterView></RouterView>
-                            </template>
-                            <template #fallback>
-                                <div>Loading...</div>
-                            </template>
-                        </Suspense>
                     </a-tab-pane>
                 </a-tabs>
+                <Suspense>
+                    <template #default>
+                        <RouterView v-slot="{ Component }">
+                            <KeepAlive>
+                                <component :is="Component"/>
+                            </KeepAlive>
+                        </RouterView>
+                    </template>
+                    <template #fallback>
+                        <div>Loading...</div>
+                    </template>
+                </Suspense>
             </a-layout-content>
             <a-layout-footer style="text-align: center">
                 Cortana Admin ©2018 Created by Qingquan
@@ -179,11 +183,9 @@ const selectedKeys = ref<Key[]>([
 const handleClickMenu = (info: SelectInfo) => {
     openKeys.value = info.keyPath || []
     selectedKeys.value = info.selectedKeys || []
-
     const treeNode = info.item.originItemValue as MenuTreeNode
     
     const findPane = panes.value.find(pane => pane.key === treeNode.key)
-
     if (!findPane) {        
         panes.value.push(        
             { 
@@ -192,11 +194,11 @@ const handleClickMenu = (info: SelectInfo) => {
                 icon: sysUserMenuTreeProvider.data.menuTreeMap.value[treeNode.key].icon, 
                 url: treeNode.url, 
                 content: "",
-                closable: true
+                closable: true,
+                component: treeNode.pageComponent
             }
         )
     }
-    
     activePaneKey.value = treeNode.key
 
     router.push({ path: info.item.url })
@@ -204,12 +206,12 @@ const handleClickMenu = (info: SelectInfo) => {
 
 // ========================================= Content tabs =========================================
 interface TabPane { 
-    key: Key, title: string, icon?: string, url?: string, content?: string, closable?: boolean 
+    key: Key, title: string, icon?: string, url?: string, content?: string, closable?: boolean, component: string
 }
 const defaultPanes = [] as TabPane[]
 if (matchedMenuByRoute) {
     defaultPanes.push(
-        { key: matchedMenuByRoute.key, title: matchedMenuByRoute.label, icon: matchedMenuByRoute.icon, url: matchedMenuByRoute.url, content: "", closable: true }
+        { key: matchedMenuByRoute.key, title: matchedMenuByRoute.label, icon: matchedMenuByRoute.icon, url: matchedMenuByRoute.url, content: "", closable: true, component: matchedMenuByRoute.pageComponent }
     )
 }
 const panes = ref<TabPane[]>(defaultPanes)
@@ -217,7 +219,7 @@ const activePaneKey = ref(panes.value[0]?.key)
 const newPaneTabIndex = ref(0)
 const addPane = () => {
     activePaneKey.value = `newTab${++newPaneTabIndex.value}`
-    panes.value.push({ title: 'New Tab', content: 'Content of new Tab', key: activePaneKey.value })
+    // panes.value.push({ title: 'New Tab', content: 'Content of new Tab', key: activePaneKey.value })
 }
 
 const removePane = (targetKey: string) => {
@@ -248,6 +250,7 @@ const removePane = (targetKey: string) => {
     if (ArrayUtils.isEmpty(panes.value)) {
         openKeys.value = []
         selectedKeys.value = []
+        router.push({ path: '/' })
     } else {
         openKeys.value = menuNode.parentPath?.split(',')
         selectedKeys.value = [ menuNode.menuId ]
@@ -289,6 +292,9 @@ function handleClickPaneDropdown(pane: TabPane, type: ClickTabPaneDropdownType )
             
         case 'CLOSE_ALL':
             panes.value = []
+            openKeys.value = []
+            selectedKeys.value = []
+            router.push({ path: '/' })
             break
         default: 
             break

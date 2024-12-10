@@ -132,6 +132,7 @@ const handleSubmitLoginForm = async () => {
         // 登录用户缓存
         const sysLoginedUserStore = useSysLoginedUserStore()
         sysLoginedUserStore.user = {
+            tenantId: apiData.tenantId,
             token: apiData.token,
             info: apiData.info,
             logined: true
@@ -221,6 +222,7 @@ const handleSubmitLoginForm = async () => {
                 }
             }
         )
+
         const redirectUrl = router.currentRoute.value.query["redirect"] ? router.currentRoute.value.query["redirect"].toString() : '/'
         router.push({ path: redirectUrl })
     }

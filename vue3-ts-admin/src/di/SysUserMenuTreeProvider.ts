@@ -25,6 +25,11 @@ export interface SysUserMenuTreeProvider extends Provider {
 
 export const initData = async (): Promise<void> => {
 
+    sysUserMenuTreeProvider.data.menuTreeMap.value = {}
+    sysUserMenuTreeProvider.data.buttonMap.value = {}
+    sysUserMenuTreeProvider.data.menuTree.value = []
+    sysUserMenuTreeProvider.data.allTree.value = []
+
     const response = await Api.sysMenuTree({
         type: 'USER',
         menuTypes: ['MENU_DIC', 'MENU', 'MENU_BUTTON'],

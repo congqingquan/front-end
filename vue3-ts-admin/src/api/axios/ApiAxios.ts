@@ -7,10 +7,11 @@ import { useSysLoginedUserStore } from "@/store/modules/SysLoginedUser"
 // 1. request
 // before request
 const requestOnFulfilled: (config: InternalAxiosRequestConfig<any>) => InternalAxiosRequestConfig<any> | Promise<InternalAxiosRequestConfig<any>> = (config) => {
-    // 如果 store 中有 token，每次请求都携带 token
+    // 如果 store 中有 token，每次请求都携带 token & tenantId
     const sysLoginedUserStore = useSysLoginedUserStore()
     if (sysLoginedUserStore.user.logined) {
         config.headers.set("Authorization", sysLoginedUserStore.user.token)
+        config.headers.set("TenantId", sysLoginedUserStore.user.tenantId)
     }
     return config
 }

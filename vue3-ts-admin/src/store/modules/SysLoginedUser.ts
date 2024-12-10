@@ -4,7 +4,7 @@ import { defineStore } from 'pinia'
 import { Ref, ref } from 'vue'
 import { Store } from '..'
 
-interface SysLoginedUserData { token: string, info: SysUserViewVO, logined: boolean }
+interface SysLoginedUserData { tenantId:string, token: string, info: SysUserViewVO, logined: boolean }
 
 interface SysLoginedUserStore extends Store { 
     // 最好使用 ref，使用 reactive 有很多暂不清楚的问题
@@ -16,6 +16,7 @@ export const useSysLoginedUserStore = defineStore<string, SysLoginedUserStore>(P
     () => {
         // states
         const user = ref<SysLoginedUserData>({
+            tenantId: '',
             token: '',
             info: {
                 userId: '',
@@ -39,6 +40,7 @@ export const useSysLoginedUserStore = defineStore<string, SysLoginedUserStore>(P
         const clear = async () => {
             // clear memory
             user.value = {
+                tenantId: '',
                 token: '',
                 info: {
                     userId: '',
