@@ -18,6 +18,9 @@ export interface Prop {
     format?: "int32" | "int64" | "date-time",
     items?: {
         $ref: string
+    } | {
+        type: "integer",
+        format: "int32" | "int64"
     }
 }
 
@@ -78,16 +81,49 @@ class OpenApiDomainGenerator {
             return 'string';
         }
         else if (prop.type === 'array') {
-            return prop.items?.$ref.split("/").pop() + "[]";
+            let items = prop.items
+            if (!items) {
+                return ''
+            }
+            if ((items as { $ref: string}).$ref) {
+                //  "roles": {
+                //     "type": "array",
+                //     "description": "角色列表",
+                //     "items": {
+                //       "$ref": "#/components/schemas/BSysRoleAddDTO"
+                //     }
+                //   }
+                return (items as { $ref: string}).$ref.split("/").pop() + "[]";
+            } else {
+                //  "menuResources": {
+                //     "type": "array",
+                //     "description": "菜单资源主键",
+                //     "items": {
+                //       "type": "integer",
+                //       "description": "菜单资源主键",
+                //       "format": "int64"
+                //   }
+                items = items as {
+                    type: "integer";
+                    format: "int32" | "int64";
+                }
+                if (items.type === 'integer') {
+                    if (prop.format === 'int64') {
+                        return 'string';
+                    }
+                    return 'number'; 
+                } 
+            }
+
         }
-        console.log(`Unsupported type [${prop.type}]`);
+        // console.log(`Unsupported type [${prop.type}]`);
     }
 }
 
 const generator = new OpenApiDomainGenerator({
-    openApiUrl: 'http://localhost:9090/v3/api-docs',
+    openApiUrl: 'http://localhost:7070/api/v3/api-docs',
     outputPath: join(__dirname, './services'),
-    removePrefix: "B"
+    removePrefix: ""
 });
 
 generator.generate();
