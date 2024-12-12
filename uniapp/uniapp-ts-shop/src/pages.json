@@ -1,0 +1,85 @@
+{
+    // 自动导入 uni-ui 组件
+    "easycom": {
+		"autoscan": true,
+		"custom": {
+			"^uni-(.*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue"
+		}
+	},
+
+    // 路由: pages 数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+	"pages": [
+		{
+			"path": "pages/index/index",
+			"style": {
+                "navigationStyle": "custom",
+				"navigationBarTitleText": "首页"
+			}
+		},
+        {
+			"path": "pages/category/index",
+			"style": {
+				"navigationBarTitleText": "分类"
+			}
+		},
+        {
+			"path": "pages/cart/index",
+			"style": {
+				"navigationBarTitleText": "购物车"
+			}
+		},
+        {
+			"path": "pages/my/index",
+			"style": {
+				"navigationBarTitleText": "我的"
+			}
+		},
+        
+        {
+			"path": "pages/login/index",
+			"style": {
+				"navigationBarTitleText": "登录"
+			}
+		}
+	],
+
+    // 底部按钮
+	"tabBar": {
+        "color": "#333",
+        "selectedColor": "#27ba9b",
+        "backgroundColor": "#fff",
+        "borderStyle": "white",
+        "list": [
+            {
+                "text": "首页",
+                "pagePath": "pages/index/index",
+                "iconPath": "static/tabs/home_default.png",
+                "selectedIconPath": "static/tabs/home_selected.png"
+            },
+            {
+                "text": "分类",
+                "pagePath": "pages/category/index",
+                "iconPath": "static/tabs/category_default.png",
+                "selectedIconPath": "static/tabs/category_selected.png"
+            },
+            {
+                "text": "购物车",
+                "pagePath": "pages/cart/index",
+                "iconPath": "static/tabs/cart_default.png",
+                "selectedIconPath": "static/tabs/cart_selected.png"
+            },
+            {
+                "text": "我的",
+                "pagePath": "pages/my/index",
+                "iconPath": "static/tabs/user_default.png",
+                "selectedIconPath": "static/tabs/user_selected.png"
+            }
+        ]
+    },
+    "globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	}
+}
