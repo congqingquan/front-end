@@ -26,6 +26,11 @@ export class MenuButtonIdentifier {
     public static readonly BTN_API_ADD = 'BTN_API_ADD'
     public static readonly BTN_API_EDIT = 'BTN_API_EDIT'
     public static readonly BTN_API_DELETE = 'BTN_API_DELETE'
+    public static readonly BTN_DICTIONARY_PAGE = 'BTN_DICTIONARY_PAGE'
+    public static readonly BTN_DICTIONARY_VIEW = 'BTN_DICTIONARY_VIEW'
+    public static readonly BTN_DICTIONARY_ADD = 'BTN_DICTIONARY_ADD'
+    public static readonly BTN_DICTIONARY_EDIT = 'BTN_DICTIONARY_EDIT'
+    public static readonly BTN_DICTIONARY_DELETE = 'BTN_DICTIONARY_DELETE'
 }
 
 type ResourceMap = { 

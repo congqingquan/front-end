@@ -67,4 +67,10 @@ export default class Constants {
         MENU: '菜单管理',
         API: '接口管理',
     }
+
+    // 字典节点类型
+    public static readonly DICTIONARY_NODE_TYPE_MAPPING: {[key: string]: string} = {
+        DIRECTORY: '目录',
+        DICTIONARY: '字典项'
+    }
 }

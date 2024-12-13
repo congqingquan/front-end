@@ -1,11 +1,18 @@
 <template>
 
     <!-- Table search -->
-    <a-form layout="inline" :model="searchFormState" v-if="menuButtonsMap[MenuButtonIdentifier.BTN_ROLE_PAGE]" >
+    <a-form layout="inline" :model="searchFormState" v-if="menuButtonsMap[MenuButtonIdentifier.BTN_DICTIONARY_PAGE]" >
         <a-form-item>
-            <a-input v-model:value="searchFormState.name" placeholder="请输入搜索名称">
+            <a-input v-model:value="searchFormState.name" placeholder="请输入搜索目录名称">
                 <template #prefix>
                     <UserOutlined style="color: rgba(0, 0, 0, 0.25)" />
+                </template>
+            </a-input>
+        </a-form-item>
+        <a-form-item>
+            <a-input v-model:value="searchFormState.dictType" placeholder="请输入搜索类型">
+                <template #prefix>
+                    <OrderedListOutlined style="color: rgba(0, 0, 0, 0.25)" />
                 </template>
             </a-input>
         </a-form-item>
@@ -23,17 +30,11 @@
 
     <!-- Table add btn / batch delete btn -->
     <a-space style="margin: 15px 0 5px 0;">
-        <a-popconfirm title="是否要删除?" ok-text="确定" ok-type="danger" cancel-text="取消"
-            @confirm="handelTableRecordRowDelete(selectedTableRecordRowKeys)" @cancel="" v-if="menuButtonsMap[MenuButtonIdentifier.BTN_ROLE_DELETE]">
-            <a-button type="primary" html-type="submit" danger>批量删除</a-button>
-        </a-popconfirm>
-
-        <a-button type="primary" html-type="submit" @click="showAddUpdateModal('ADD')" v-if="menuButtonsMap[MenuButtonIdentifier.BTN_ROLE_ADD]">新增</a-button>
+        <a-button type="primary" html-type="submit" @click="showAddUpdateModal('ADD', { nodeType: 'DIRECTORY' } as DictionaryPageByDictTypeVO)" v-if="menuButtonsMap[MenuButtonIdentifier.BTN_DICTIONARY_ADD]">新增</a-button>
     </a-space>
 
     <!-- Table page -->
-    <a-table style="margin: 5px 0;" rowKey="roleId"
-        :row-selection="{ selectedRowKeys: selectedTableRecordRowKeys, onChange: onSelectTableRecordRowChange }"
+    <a-table style="margin: 5px 0;" rowKey="dictId"
         :columns="columns" :data-source="tableDataRef" :scroll="{ x: 700 }" :pagination="{
             current: currentRef,
             pageSize: pageSizeRef,
@@ -45,14 +46,22 @@
             'onUpdate:pageSize': (pageSize) => loadTableData(searchFormState, currentRef, pageSize),
         }">
         <template #bodyCell="{ column, record }">
+            <template v-if="column.key === 'nodeType'">
+                {{ Constants.DICTIONARY_NODE_TYPE_MAPPING[record.nodeType] ?? '' }}
+            </template>
             <template v-if="column.key === 'status'">
                 {{ Constants.STATUS_MAPPING[record.status] ?? '' }}
             </template>
             <template v-else-if="column.key === 'action'">
                 <span>
-                    <a-button type="link" @click="showAddUpdateModal('UPDATE', record as SysRolePageVO)" v-if="menuButtonsMap[MenuButtonIdentifier.BTN_ROLE_EDIT]">修改</a-button>
+                    <a-button type="link" 
+                        @click="showAddUpdateModal('ADD', { parentId: record.dictId, nodeType: 'DICTIONARY', dictType: record.dictType } as DictionaryPageByDictTypeVO)" 
+                        v-if="menuButtonsMap[MenuButtonIdentifier.BTN_DICTIONARY_ADD] && record.nodeType === 'DIRECTORY'">
+                        新增
+                    </a-button>
+                    <a-button type="link" @click="showAddUpdateModal('UPDATE', record as DictionaryPageByDictTypeVO)" v-if="menuButtonsMap[MenuButtonIdentifier.BTN_DICTIONARY_EDIT]">修改</a-button>
                     <a-popconfirm title="是否要删除?" ok-text="确定" ok-type="danger" cancel-text="取消"
-                        @confirm="handelTableRecordRowDelete([record.roleId])" @cancel="" v-if="menuButtonsMap[MenuButtonIdentifier.BTN_ROLE_DELETE]">
+                        @confirm="handelTableRecordRowDelete({nodeType: record.nodeType, dictIds: [record.dictId]})" @cancel="" v-if="menuButtonsMap[MenuButtonIdentifier.BTN_DICTIONARY_DELETE]">
                         <a-button type="link" danger>删除</a-button>
                     </a-popconfirm>
                 </span>
@@ -69,56 +78,21 @@
         <a-form name="basic" :model="addUpdateModalFormState"
             :label-col="{ span: 5 }" :wrapper-col="{ span: 16 }"
             autocomplete="off" @finish-failed="onAddUpdateModalFormFinishFailed">
-            <a-form-item label="业务主键" name="roleId" hidden>
-                <a-input v-model:value="addUpdateModalFormState.roleId" />
+            <a-form-item label="业务主键" name="dictId" hidden>
+                <a-input v-model:value="addUpdateModalFormState.dictId" />
+            </a-form-item>
+            <a-form-item label="父节点主键" name="parentId" hidden>
+                <a-input v-model:value="addUpdateModalFormState.parentId" />
             </a-form-item>
             <a-form-item label="名称" name="name" v-bind="addUpdateModalValidateInfos.name">
-                <a-input v-model:value="addUpdateModalFormState.name" placeholder="请输入名称"/>
+                <a-input v-model:value="addUpdateModalFormState.name" placeholder="请输入名称" />
             </a-form-item>
-            <a-form-item label="描述" name="description">
-                <a-textarea v-model:value="addUpdateModalFormState.description" show-count :maxlength="100" placeholder="请输入描述"/>
+            <a-form-item label="值" name="value" v-bind="addUpdateModalValidateInfos.value">
+                <a-input v-model:value="addUpdateModalFormState.value" placeholder="请输入值" />
             </a-form-item>
-
-            <a-form-item label="菜单资源" name="menuResources">
-                <a-tree-select
-                    v-model:value="addUpdateModalFormState.menuResources"
-                    show-search
-                    :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
-                    placeholder="请选择菜单资源"
-                    allow-clear
-                    multiple
-                    tree-checkable
-                    treeCheckStrictly
-                    showCheckedStrategy="SHOW_ALL"
-                    tree-default-expand-all
-                    :tree-data="modalTreeData"
-                    tree-node-filter-prop="label"
-                    style="width: 500px"
-                >
-                    <template #title="{ value: val, label, type }">
-                        {{ label }} 
-                        <b style="color: #a6a6a6">
-                            {{ '  <  ' }} 
-                            {{ 
-                                type === 'MENU_DIC' ? '目录' : 
-                                    type === 'MENU' ? '菜单' : 
-                                        type === 'MENU_BUTTON' ? '按钮' : '未知'
-                            }}
-                        </b>
-                    </template>
-                </a-tree-select>
+            <a-form-item label="类型" name="dictType">
+                <a-input v-model:value="addUpdateModalFormState.dictType" placeholder="请输入类型" :disabled="addUpdateModalFormState.nodeType === 'DICTIONARY'"/>
             </a-form-item>
-
-            <a-form-item label="接口资源" name="apiResources" >
-                <a-select
-                    v-model:value="addUpdateModalFormState.apiResources"
-                    :options="modalApiOptionData"
-                    mode="multiple"
-                    style="width: 500px"
-                    placeholder="请选接口资源"
-                ></a-select>
-            </a-form-item>
-
             <a-form-item label="状态" name="status">
                 <a-switch v-model:checked="addUpdateModalFormState.status" checkedValue="NORMAL" unCheckedValue="DISABLED"/>
             </a-form-item>
@@ -134,35 +108,33 @@
 </template>
 <script lang="ts" setup>
 import Api from '@/api/Api';
-import SysApiGroupByTypeVO from '@/api/vo/SysApiGroupByTypeVO';
-import SysRolePageVO from '@/api/vo/SysRolePageVO';
 import Constants from '@/common/Constants';
 import { MenuButtonIdentifier } from '@/di/SysUserResourcesProvider';
 import ArrayUtils from '@/util/ArrayUtils';
-import TreeUtils from '@/util/TreeUtils';
-import Icon, { DeleteOutlined, SearchOutlined, UserOutlined } from '@ant-design/icons-vue';
+import { DeleteOutlined, OrderedListOutlined, SearchOutlined, UserOutlined } from '@ant-design/icons-vue';
 import { Form, FormProps, message } from 'ant-design-vue';
 import { Key } from 'ant-design-vue/es/_util/type';
 import { ValidateErrorEntity } from 'ant-design-vue/es/form/interface';
 import { ColumnType } from 'ant-design-vue/es/table';
 import { h, inject, onMounted, reactive, ref, watch } from 'vue';
 import { ProviderKeys } from '@/di/ProviderKeys';
-import { sysMenuTreeProvider as $sysMenuTreeProvider, SysMenuTreeProvider } from '@/di/SysMenuTreeProvider';
 import { sysUserResourcesProvider as $sysUserResourcesProvider, SysUserResourcesProvider } from '@/di/SysUserResourcesProvider';
+import DictionaryPageByDictTypeVO from '@/api/vo/DictionaryPageByDictTypeVO';
+import BDictionaryDeleteDTO from '@/api/dto/BDictionaryDeleteDTO';
 
 // ========================================= 注入全局资源 =========================================
 
-const sysMenuTreeProvider = inject<SysMenuTreeProvider>(ProviderKeys.SYS_MENU_TREE, $sysMenuTreeProvider)
 const sysUserResourcesProvider = inject<SysUserResourcesProvider>(ProviderKeys.SYS_USER_RESOURCES, $sysUserResourcesProvider)
-
 
 const useForm = Form.useForm
 // Table Search
 interface SearchFormState {
-    name: string
+    name: string,
+    dictType: string
 }
 const searchFormState = ref<SearchFormState>({
     name: '',
+    dictType: ''
 })
 const { resetFields: searchFormStateResetFields } = useForm(
     searchFormState
@@ -175,21 +147,22 @@ const handleSearchFormFinishFailed: FormProps['onFinishFailed'] = errors => {
     message.error(errors.values)
 }
 
-// Table - selectedTableRecordRow
-const selectedTableRecordRowKeys = ref<Key[]>([])
-const onSelectTableRecordRowChange = (keys: Key[], rows: SysRolePageVO[]) => {
-    selectedTableRecordRowKeys.value = keys
-}
-
 // Table - column
 const columns: ColumnType[] = [
-    {
-        title: '业务主键',
-        dataIndex: 'roleId',
-        key: 'roleId',
-        width: 70,
-        align: 'center',
-    },
+    // {
+    //     title: '业务主键',
+    //     dataIndex: 'dictId',
+    //     key: 'dictId',
+    //     width: 70,
+    //     align: 'center',
+    // },
+    // {
+    //     title: '父节点主键',
+    //     dataIndex: 'parentId',
+    //     key: 'parentId',
+    //     width: 70,
+    //     align: 'center',
+    // },
     {
         title: '名称',
         dataIndex: 'name',
@@ -198,9 +171,23 @@ const columns: ColumnType[] = [
         align: 'center',
     },
     {
-        title: '描述',
-        key: 'description',
-        dataIndex: 'description',
+        title: '值',
+        dataIndex: 'value',
+        key: 'value',
+        width: 70,
+        align: 'center',
+    },
+    {
+        title: '字典类型',
+        key: 'dictType',
+        dataIndex: 'dictType',
+        width: 70,
+        align: 'center',
+    },
+    {
+        title: '节点类型',
+        key: 'nodeType',
+        dataIndex: 'nodeType',
         width: 70,
         align: 'center',
     },
@@ -227,13 +214,13 @@ const columns: ColumnType[] = [
 ]
 
 // Table - pagination
-const tableDataRef = ref<SysRolePageVO[]>([])
+const tableDataRef = ref<DictionaryPageByDictTypeVO[]>([])
 const currentRef = ref(1)
 const pageSizeRef = ref(10)
 const totalRef = ref(0)
 const pageSizeOptionsRef = ref<string[]>(['10', '20', '30', '40', '50'])
 const loadTableData = async (formState: SearchFormState, current: number, pageSize: number) => {
-    const response = await Api.sysRolePage({
+    const response = await Api.dictionaryPageByDictType({
         pageNo: current,
         pageSize: pageSize,
         ...formState
@@ -252,14 +239,11 @@ const loadTableData = async (formState: SearchFormState, current: number, pageSi
 }
 
 // Table - delete
-const handelTableRecordRowDelete = async (ids: Key[]) => {
-    if (ArrayUtils.isEmpty(ids)) {
-        return
-    }
-    await Api.deleteSysRole(ids.map(id => id.toString()))
+const handelTableRecordRowDelete = async (deleteDictionary: BDictionaryDeleteDTO) => {
 
-    // reload: refetch global resources / regenerate dynamic router
-    location.reload()
+    await Api.deleteDictionary(deleteDictionary)
+
+    loadTableData(searchFormState.value, currentRef.value, pageSizeRef.value)
 }
 
 // Table add / update modal
@@ -267,16 +251,12 @@ type ModalType = 'ADD' | 'UPDATE'
 const modalTypeRef = ref<ModalType>()
 const addUpdateModalLoadingRef = ref<boolean>(false)
 const addUpdateModalOpenRef = ref<boolean>(false)
-const showAddUpdateModal = (type: ModalType, record?: SysRolePageVO) => {
+const showAddUpdateModal = (type: ModalType, record?: DictionaryPageByDictTypeVO) => {
     modalTypeRef.value = type
     addUpdateModalOpenRef.value = true
     if (record) {
         Object.assign(addUpdateModalFormState, {
-            ...record,
-            menuResources: record.menuResources?.map(menu => { 
-                return {label: menu.name, value: menu.resourceId}
-            }),
-            apiResources: record.apiResources?.map(api => api.resourceId)
+            ...record
         })
     }
 }
@@ -285,74 +265,27 @@ const hideAddUpdateModal = () => {
     addUpdateModalResetFields()
 }
 
-// option field: menu tree / apis
 // menu tree
 const menuButtonsMap = sysUserResourcesProvider.data.menuButtonsMap.value
-const allTree = sysMenuTreeProvider.data.allTree.value
-const modalTreeData = TreeUtils.convertNode(
-    allTree, 
-    node => {
-        return {
-            key: node.resourceId,
-            label: node.label,
-            value: node.resourceId,
-            type: node.type,
-            children: node.children
-        }
-    },
-    node => node.children,
-    node => node.children = []
-)
-
-// apis
-interface ModalApiResource {
-    key: string,
-    label: string
-    value: string
-    options?: ModalApiResource[]
-}
-const modalApiOptionData = ref<ModalApiResource[]>([])
-const loadModalApiOptionData = async () => {
-    const response = await Api.sysApiGroupByType()
-    const responseData: SysApiGroupByTypeVO[]  = response.data.data
-    
-    if (ArrayUtils.isEmpty(responseData)) {
-        return
-    }
-
-    modalApiOptionData.value = responseData.map(sysApiGroupByType => {
-        return {
-            key: sysApiGroupByType.type,
-            label: sysApiGroupByType.type,
-            value: '',
-            options: sysApiGroupByType.items.map(item => {
-                return {
-                    key: item.resourceId,
-                    label: item.name,
-                    value: item.resourceId
-                }
-            })
-        }
-    })
-}
 
 // Table add / update modal form
-interface SysRoleModalFormState {
-    roleId: string,
+interface DictionaryModalFormState {
+    dictId: string,
+    parentId: string,
     name: string,
-    description: string,
-    status: string,
-    // treeCheckStrictly 为 true 时，要把每个选项的 label 包装到 value 中，会把 value 类型从 string 变为 {value: string, label: VNode, halfChecked(): string[] } 的格式
-    menuResources: { label: string, value: string | number }[]
-    apiResources: string[]
+    value: string,
+    dictType: string,
+    nodeType: string,
+    status: string
 }
-const addUpdateModalFormState = reactive<SysRoleModalFormState>({
-    roleId: '',
+const addUpdateModalFormState = reactive<DictionaryModalFormState>({
+    dictId: '',
+    parentId: '',
     name: '',
-    description: '',
-    status: 'DISABLED',
-    menuResources: [],
-    apiResources: []
+    value: '',
+    dictType: '',
+    nodeType: '',
+    status: 'DISABLED'
 })
 
 watch(addUpdateModalFormState, (n, o) => {
@@ -364,6 +297,12 @@ const addUpdateModalFormRules = reactive({
         {
             required: true,
             message: '请输入名称！',
+        },
+    ],
+    dictType: [
+        {
+            required: true,
+            message: '请输入类型！',
         },
     ]
 })
@@ -389,21 +328,17 @@ const onAddUpdateModalFormFinish = async (values: any) => {
     try {
         switch (modalTypeRef.value) {
             case 'ADD': 
-                await Api.addSysRole(
+                await Api.addDictionary(
                     {
-                        ...addUpdateModalFormState,
-                        menuResources: addUpdateModalFormState.menuResources?.map(menuResource => menuResource.value.toString()),
-                        apiResources: addUpdateModalFormState.apiResources?.map(apiResourceId => apiResourceId)
+                        ...addUpdateModalFormState
                     }
                 )
                 break
 
             case 'UPDATE': {
-                await Api.eidtSysRole(
+                await Api.eidtDictionary(
                     {
-                        ...addUpdateModalFormState,
-                        menuResources: addUpdateModalFormState.menuResources?.map(menuResource => menuResource.value.toString()),
-                        apiResources: addUpdateModalFormState.apiResources
+                        ...addUpdateModalFormState
                     }
                 )
                 break
@@ -421,8 +356,7 @@ const onAddUpdateModalFormFinish = async (values: any) => {
     addUpdateModalLoadingRef.value = false
     addUpdateModalOpenRef.value = false
 
-    // reload: refetch global resources / regenerate dynamic router
-    location.reload()
+    loadTableData(searchFormState.value, currentRef.value, pageSizeRef.value)
 }
 const onAddUpdateModalFormFinishFailed = (errorInfo: any) => {
     message.error(errorInfo)
@@ -431,6 +365,5 @@ const onAddUpdateModalFormFinishFailed = (errorInfo: any) => {
 // Load data
 onMounted(() => {
     loadTableData(searchFormState.value, currentRef.value, pageSizeRef.value)
-    loadModalApiOptionData()
 })
 </script>

@@ -90,13 +90,13 @@
                 <a-input v-model:value="addUpdateModalFormState.userId" />
             </a-form-item>
             <a-form-item label="用户名" name="username" v-bind="addUpdateModalValidateInfos.username">
-                <a-input v-model:value="addUpdateModalFormState.username" />
+                <a-input v-model:value="addUpdateModalFormState.username" placeholder="请输入用户名" />
             </a-form-item>
             <a-form-item label="密码" name="password" v-bind="addUpdateModalValidateInfos.password">
-                <a-input-password v-model:value="addUpdateModalFormState.password"></a-input-password>
+                <a-input-password v-model:value="addUpdateModalFormState.password" placeholder="请输入密码"></a-input-password>
             </a-form-item>
             <a-form-item label="名称" name="name" v-bind="addUpdateModalValidateInfos.name">
-                <a-input v-model:value="addUpdateModalFormState.name" />
+                <a-input v-model:value="addUpdateModalFormState.name" placeholder="请输入名称"/>
             </a-form-item>
             <a-form-item label="性别" name="gender" v-bind="addUpdateModalValidateInfos.gender">
                 <a-radio-group v-model:value="addUpdateModalFormState.gender">
@@ -106,7 +106,7 @@
                 </a-radio-group>
             </a-form-item>
             <a-form-item label="邮箱" name="email">
-                <a-input v-model:value="addUpdateModalFormState.email" />
+                <a-input v-model:value="addUpdateModalFormState.email" placeholder="请输入邮箱"/>
             </a-form-item>
             <a-form-item label="头像" name="avatar">
                 <!-- 

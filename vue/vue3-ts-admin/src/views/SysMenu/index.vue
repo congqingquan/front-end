@@ -98,18 +98,26 @@
                 <a-input v-model:value="addUpdateModalFormState.name" placeholder="请输入名称"/>
             </a-form-item>
             <a-form-item label="标识符" name="identifier" v-bind="addUpdateModalValidateInfos.identifier">
-                <a-input v-model:value="addUpdateModalFormState.identifier" />
+                <a-input v-model:value="addUpdateModalFormState.identifier" placeholder="请输入标识符"/>
             </a-form-item>
             <a-form-item label="页面组件" name="password" v-bind="addUpdateModalValidateInfos.component">
                 <a-input v-model:value="addUpdateModalFormState.component" placeholder="请输入页面组件"/>
             </a-form-item>
             <a-form-item label="icon" name="icon">
                 <a-select
+                    mode="tags"
+                    :maxTagCount="1"
                     style="width: 100%"
                     placeholder="请选择 icon"
                     :value="addUpdateModalFormState.icon"
                     :options="iconOptions"
-                    @change="(value: any) => addUpdateModalFormState.icon = value"
+                    @change="(value: any) => {
+                        if (value.length > 1) {
+                            message.error('最多可选一个icon')   
+                            return
+                        }
+                        addUpdateModalFormState.icon = value[0]
+                    }"
                 ></a-select>
             </a-form-item>
             <a-form-item label="路径" name="url">
@@ -156,6 +164,7 @@ import { SelectProps } from 'ant-design-vue/es/vc-select';
 import { h, inject, onMounted, reactive, ref, } from 'vue';
 import { ProviderKeys } from '@/di/ProviderKeys';
 import { sysUserResourcesProvider as $sysUserResourcesProvider, MenuButtonIdentifier, SysUserResourcesProvider } from '@/di/SysUserResourcesProvider';
+import { SelectValue } from 'ant-design-vue/es/select';
 
 // ========================================= 注入全局资源 =========================================
 const sysUserResourcesProvider = inject<SysUserResourcesProvider>(ProviderKeys.SYS_USER_RESOURCES, $sysUserResourcesProvider)

@@ -90,17 +90,17 @@
                 <a-input v-model:value="addUpdateModalFormState.apiId" />
             </a-form-item>
             <a-form-item label="名称" name="name" v-bind="addUpdateModalValidateInfos.name">
-                <a-input v-model:value="addUpdateModalFormState.name" />
+                <a-input v-model:value="addUpdateModalFormState.name" placeholder="请输入名称"/>
             </a-form-item>
             <a-form-item label="标识符" name="identifier" v-bind="addUpdateModalValidateInfos.identifier">
-                <a-input v-model:value="addUpdateModalFormState.identifier" />
+                <a-input v-model:value="addUpdateModalFormState.identifier" placeholder="请输入标识符"/>
             </a-form-item>
             <a-form-item label="路径" name="url" v-bind="addUpdateModalValidateInfos.url">
-                <a-input v-model:value="addUpdateModalFormState.url" />
+                <a-input v-model:value="addUpdateModalFormState.url" placeholder="请输入路径"/>
             </a-form-item>
             <a-form-item label="请求方式" name="method" v-bind="addUpdateModalValidateInfos.method">
                 <a-select
-                    placeholder="请选择类型"
+                    placeholder="请选择请求方式"
                     v-model:value="addUpdateModalFormState.method"
                     style="width: 120px"
                     allowClear
@@ -304,13 +304,13 @@ const hideAddUpdateModal = () => {
 }
 
 // Table add / update modal form
-const addUpdateModalFormState = reactive<Omit<SysApiViewVO, 'updateTime' | 'updateUser' | 'createUser'>>({
+const addUpdateModalFormState = reactive<Partial<Omit<SysApiViewVO, 'updateTime' | 'updateUser' | 'createUser'>>>({
     apiId: '',
     resourceId: '',
     name: '',
     url: '',
-    method: '',
-    type: '',
+    method: undefined,
+    type: undefined,
     createTime: null as unknown as Date,
     status: '',
     identifier: ''
