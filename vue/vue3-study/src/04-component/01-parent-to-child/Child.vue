@@ -4,7 +4,7 @@
     </div>
 </template>
 
-<script setup>
+<script lang="ts" setup>
     // defineProps 不需要导包，这个是 vue 的宏，vue 在编译时会自动进行代码替换
 
     // 1. 通过对象的方式定义
@@ -19,6 +19,16 @@
 
     // 2. 通过数组的方式定义
     // const props = defineProps(["msg"])
+
+    // 3. 通过泛型的方式定义    
+    // interface SwiperInfo {
+    //     linkUrl: string,
+    //     imageUrl: string
+    // }
+
+    // const { infos } = defineProps<{
+    //     infos: SwiperInfo[]
+    // }>()
 </script>
 
 <style>

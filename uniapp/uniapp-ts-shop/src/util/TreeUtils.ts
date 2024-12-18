@@ -1,5 +1,6 @@
 import ArrayUtils from "./ArrayUtils";
-import { Function, BiPredicate, BiConsumer, Predicate, Consumer } from "./Functions";
+import { BiConsumer, BiPredicate, Function, Predicate } from "./Functions";
+
 
 class TreeUtils {
 

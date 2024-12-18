@@ -5,11 +5,7 @@ class UniRequestExt {
 
     // =================================================== Interceptor ===================================================
 
-    private static onResponseFulfiled: (response: UniApp.RequestSuccessCallbackResult) => any = (response) => response
-
-    private static onResponseRejected: (reason: any) => any = (reason) => reason
-
-    // 注册 request 默认前置拦截
+    // 注册 request 拦截器
     public static registerDefaultRequestInterceptor() {
         // 本机发送请求前
         uni.addInterceptor('request', {
@@ -29,7 +25,12 @@ class UniRequestExt {
         })
     }
 
-    // 注册 response 默认前置拦截
+    // 注册 response 拦截器
+
+    private static onResponseFulfiled: (response: UniApp.RequestSuccessCallbackResult) => any = (response) => response
+
+    private static onResponseRejected: (reason: any) => any = (reason) => reason
+
     public static registerDefaultResponseInterceptor() {
         // 服务响应成功
         UniRequestExt.onResponseFulfiled = (response: UniApp.RequestSuccessCallbackResult) => {
@@ -75,7 +76,7 @@ class UniRequestExt {
         UniRequestExt.onResponseRejected = (reason) => {
             uni.showToast({
                 icon: 'none',
-                title: '网络异常'
+                title: '本地网络异常'
             })
             return Promise.reject(reason)
         }

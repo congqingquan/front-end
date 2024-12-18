@@ -1,5 +1,9 @@
+<script lang="ts" setup>
+const { safeAreaInsets } = uni.getSystemInfoSync()
+</script>
+
 <template>
-    <div class="nav-bar" :style="{ paddingTop: safeAreaInsets ? safeAreaInsets.top + 'px' : '0px' }">
+    <div class="nav-bar-container" :style="{ paddingTop: safeAreaInsets ? safeAreaInsets.top + 'px' : '0px' }">
         <div class="logo">
             <image class="logo-img" src="@/static/images/logo.png" />
             <div class="logo-text">新鲜 · 亲民 · 快捷</div>
@@ -11,12 +15,8 @@
     </div>
 </template>
 
-<script lang="ts" setup>
-const { safeAreaInsets } = uni.getSystemInfoSync()
-</script>
-
 <style scoped lang="scss">
-.nav-bar {
+.nav-bar-container {
     background-image: url("@/static/images/navigator_bg.png");
     background-size: cover;
     height: 200rpx;

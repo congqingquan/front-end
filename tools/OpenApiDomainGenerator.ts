@@ -1,6 +1,7 @@
-import { join, sep } from 'path';
+import { join, sep, resolve } from 'path';
 import { writeFile, mkdir } from 'fs';
-import { Axios } from 'axios';
+import yargs from 'yargs';
+import Axios from 'axios';
 
 export interface Options {
     openApiUrl: string,
@@ -28,36 +29,49 @@ class OpenApiDomainGenerator {
 
     private options: Options;
 
-    private axios: Axios = new Axios({});
+    private axios: typeof Axios
 
-    public constructor(options: Options) {
+    public constructor(options: Options, axios: typeof Axios) {
         this.options = options;
+        this.axios = axios
     }
 
-    public generate() {
+    public generate(domains: string[]) {
+
         const response = this.axios.get(this.options.openApiUrl);
-        
+
         // 1. 递归创建输出目录
-        mkdir(this.options.outputPath, { recursive: true }, (err) => {
+        mkdir(this.options.outputPath, { recursive: true }, (err: any) => {
             if (err) throw err;
         });
-    
+
         // 2. 解析并生成 ts 文件
-        response.then(response => {
-            const schmeasObj = JSON.parse(response.data).components.schemas;
+        response.then((response) => {
+            const schmeasObj = (response.data as any).components.schemas;
             for (const schmeaKey in schmeasObj) {
                 const propsObj: { [props: string]: Prop } = schmeasObj[schmeaKey]['properties'];
+
+                // schmeaKey
+                // BSysMenuUpdateStatusDTO
+                // BSysMenuTreeDTO
+                // BCategoriesEditDTO
+
+                // 如果设置了过滤的 domain，则进行判断。未设置则忽略。
+                if (domains && domains.length > 0 && !domains.find(d => schmeaKey.startsWith(d))) {
+                    continue
+                }
+
                 const tsFileName = schmeaKey.startsWith(this.options.removePrefix) ? schmeaKey.slice(this.options.removePrefix.length) : schmeaKey;
-                const tsFileContent = 
-                `export default interface ${tsFileName} {` 
-                +
-                `\n\t${Object.keys(propsObj).map(key => `//${propsObj[key].description}\n\t${key}: ${this.getPropType(propsObj[key])}`).join(",\n\t")}\n`
-                +
-                `}`;
-                
+                const tsFileContent =
+                    `export default interface ${tsFileName} {`
+                    +
+                    `\n\t${Object.keys(propsObj).map(key => `//${propsObj[key].description}\n\t${key}: ${this.getPropType(propsObj[key])}`).join(",\n\t")}\n`
+                    +
+                    `}`;
+
                 const finalTsFileName: string = `${this.options.outputPath + sep + tsFileName}.ts`;
-                writeFile(finalTsFileName, tsFileContent, (err) => {
-                    console.log(err);
+                writeFile(finalTsFileName, tsFileContent, (err: any) => {
+                    // console.log(err);
                     if (err) throw err;
                 });
             }
@@ -69,14 +83,15 @@ class OpenApiDomainGenerator {
             if (prop.format === 'int64') {
                 return 'string';
             }
-            return 'number'; 
-        } 
+            return 'number';
+        }
         else if (prop.type === 'boolean') {
-            return 'boolean'; 
+            return 'boolean';
         }
         else if (prop.type === 'string') {
             if (prop.format === 'date-time') {
-                return 'Date';
+                // 默认时间返回 Date
+                return 'string';
             }
             return 'string';
         }
@@ -85,7 +100,7 @@ class OpenApiDomainGenerator {
             if (!items) {
                 return ''
             }
-            if ((items as { $ref: string}).$ref) {
+            if ((items as { $ref: string }).$ref) {
                 //  "roles": {
                 //     "type": "array",
                 //     "description": "角色列表",
@@ -93,7 +108,7 @@ class OpenApiDomainGenerator {
                 //       "$ref": "#/components/schemas/BSysRoleAddDTO"
                 //     }
                 //   }
-                return (items as { $ref: string}).$ref.split("/").pop() + "[]";
+                return (items as { $ref: string }).$ref.split("/").pop() + "[]";
             } else {
                 //  "menuResources": {
                 //     "type": "array",
@@ -111,21 +126,43 @@ class OpenApiDomainGenerator {
                     if (prop.format === 'int64') {
                         return 'string';
                     }
-                    return 'number'; 
-                } 
+                    return 'number';
+                }
             }
 
         }
         // console.log(`Unsupported type [${prop.type}]`);
+        return
     }
 }
 
-const generator = new OpenApiDomainGenerator({
-    openApiUrl: 'http://localhost:7070/api/v3/api-docs',
-    outputPath: join(__dirname, './services'),
-    removePrefix: ""
-});
+// 包装为异步函数执行，避免顶级 await
+const exec = async () => {    
+    // 命令行参数
+    const args = await yargs([])
+    .option('domain', {
+        alias: 'd',
+        describe: 'Domain names, seperate by comma',
+        type: 'string',
+        // 是否必选
+        // demandOption: true,
+    })
+    .argv;
 
-generator.generate();
+    console.log(args);
+    let domainArgv = args.domain ? args.domain.split(',') : []
+    console.log(domainArgv);
+
+    const generator = new OpenApiDomainGenerator(
+        {
+            openApiUrl: 'http://localhost:7070/api/v3/api-docs',
+            outputPath: join(resolve(), './services'),
+            removePrefix: ""
+        },
+        Axios,
+    );
+    generator.generate(domainArgv);
+}
+exec()
 
 export default OpenApiDomainGenerator;

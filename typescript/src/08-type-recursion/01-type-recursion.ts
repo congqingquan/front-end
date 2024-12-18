@@ -1,4 +1,5 @@
 // 类型递归调用
+
 type PropType<T, Path extends string> = 
     Path extends keyof T 
     ? T[Path] /* 递归边界 */ : Path extends `${infer K}.${infer R}` 
