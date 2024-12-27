@@ -13,6 +13,8 @@ export default interface BDictionaryPageDTO {
 	parentPath: string,
 	//节点类型: DIRECTORY / DICTIONARY
 	nodeType: string,
+    //等级
+    level: number,
 	//名称
 	name: string,
 	//英文名称

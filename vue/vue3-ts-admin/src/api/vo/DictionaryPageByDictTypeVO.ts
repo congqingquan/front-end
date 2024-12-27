@@ -11,6 +11,8 @@ export default interface DictionaryPageByDictTypeVO {
     nodeType: string,
 	//字典类型(目录节点为空)
 	dictType: string,
+    //等级
+    level: number,
 	//状态: NORMAL / DISABLED
 	status: string,
 	//创建时间
