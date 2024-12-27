@@ -11,15 +11,21 @@ import { Categorynfo, SwiperInfo } from '@/types/home';
 import MySwiper from '@/components/MySwiper.vue';
 import CCategoriesTreeVO from '@/api/vo/CCategoriesTreeVO';
 import TreeUtils from '@/util/TreeUtils';
+import CCategoriesTreeDTO from '@/api/dto/CCategoriesTreeDTO';
+import Skeleton from './components/Skeleton.vue';
 
 const swiperInfos = ref<SwiperInfo[]>([])
 const primaryCategoryInfos = ref<Categorynfo[]>([])
 const secondCategoryInfos = ref<Categorynfo[]>([])
 const activePrimaryKey = ref('')
+const isLoading = ref<boolean>(false)
 
 // 顶部搜索
 const searchValue = ref('')
-const onSearchConfirm = () => {
+const onSearchConfirm = async () => {
+    isLoading.value = true
+    await loadCategroiesTree()
+    isLoading.value = false
 }
 
 // 切换主分类
@@ -35,10 +41,12 @@ const onClickPrimary = (key: string) => {
 
 // 加载数据
 onLoad(async () => {
+    isLoading.value = true
     await Promise.all([
         loadCarouselsPage(),
         loadCategroiesTree()
     ])
+    isLoading.value = false    
 })
 // 类目轮播图
 const loadCarouselsPage = async () => {
@@ -59,7 +67,7 @@ const loadCarouselsPage = async () => {
 }
 // 类目树
 const loadCategroiesTree = async () => {
-    const categoriesTreeApiResponse = await UniRequestExt.postJSON<Partial<CCategoriesPageDTO>, ApiResult<CCategoriesTreeVO[]>>(CATEGORIES_TREE, {})
+    const categoriesTreeApiResponse = await UniRequestExt.postJSON<Partial<CCategoriesTreeDTO>, ApiResult<CCategoriesTreeVO[]>>(CATEGORIES_TREE, { keyword: searchValue.value })
     primaryCategoryInfos.value = TreeUtils.convertNode(
         categoriesTreeApiResponse.data,
         node => {
@@ -82,12 +90,12 @@ const loadCategroiesTree = async () => {
 </script>
 
 <template>
-    <div class="category-container">
+    <Skeleton v-if="isLoading" />
+    <div v-else class="category-container">
 
         <div class="search">
             <uni-icons class="search-icon" type="search" size="18"></uni-icons>
-            <input class="search-input" v-model="searchValue" placeholder="请输入类别" placeholder-class="input-placeholder"
-                @input="" />
+            <input class="search-input" v-model="searchValue" placeholder="请输入类别" placeholder-class="input-placeholder" @confirm="onSearchConfirm"/>
         </div>
 
         <div class="category">

@@ -7,6 +7,10 @@ export default interface CCategoriesViewVO {
 	parentId: string,
 	//父节点路径, `,`号分隔
 	parentPath: string,
+    //节点类型: DIRECTORY / DICTIONARY
+	nodeType: string,
+    //等级
+    level: number,
 	//名称
 	name: string,
 	//图片地址
