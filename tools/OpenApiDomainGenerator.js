@@ -52,6 +52,9 @@ class OpenApiDomainGenerator {
             }
             return 'number';
         }
+        else if (prop.type === 'number') {
+            return 'number';
+        }
         else if (prop.type === 'boolean') {
             return 'boolean';
         }

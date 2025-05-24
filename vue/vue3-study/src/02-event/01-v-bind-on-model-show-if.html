@@ -54,17 +54,20 @@
             v-show & v-if : 对比 v-if，v-show 会通过添加 css display 属性控制元素隐藏。v-if 会直接卸载 dom 节点。
         -->
         <div>
-            完整写法 -> v-bind test <input type="text" v-bind:value="data.content" v-on:input="(e) => data.content = e.target.value"/>
+            v-bind & v-on 完整写法 <input type="text" v-bind:value="data.content" v-on:input="(e) => data.content = e.target.value"/>
             <button v-on:click="console.log(data.content)">Console log</button>
         </div>
 
         <div>
-            简写 -> v-bind test <input type="text" :value="data.content" @input="(e) => data.content = e.target.value"/>
+            v-bind & v-on 简写 <input type="text" :value="data.content" @input="(e) => data.content = e.target.value"/>
             <button @click="console.log(data.content)">Console log</button>
         </div>
         <div>
-            v-model test <input type="text" v-model="data.content"/>
+            v-model 完整写法 <input type="text" v-model="data.content"/>
             <button @click="console.log(data.content)">Console log</button>
+        </div>
+        <div>
+            v-model 简写: 没有简写
         </div>
         <div>
             v-model 修饰符 <input type="text" v-model.lazy="data.content"/>

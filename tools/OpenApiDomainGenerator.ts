@@ -14,7 +14,7 @@ export interface Prop {
     // Long > { type: "integer", format: "int64"}
     // LocalDateTime > { type: "string", format: "date-time"}
     // List > { type: 'array', items: { '$ref': '#/components/schemas/BSysMenuPageVO' }
-    type: "integer" | "string" | "boolean" | "array",
+    type: "integer" | "number" | "string" | "boolean" | "array",
     description?: string,
     format?: "int32" | "int64" | "date-time",
     items?: {
@@ -85,6 +85,9 @@ class OpenApiDomainGenerator {
             }
             return 'number';
         }
+        else if (prop.type === 'number') {
+            return 'number';
+        }
         else if (prop.type === 'boolean') {
             return 'boolean';
         }
@@ -135,6 +138,8 @@ class OpenApiDomainGenerator {
         return
     }
 }
+
+// ============================================== 执行直接 tsc 命令即可，会自动找到当前目录下的 tsconfig.json 配置文件 ==============================================
 
 // 包装为异步函数执行，避免顶级 await
 const exec = async () => {    
