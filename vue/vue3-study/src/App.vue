@@ -7,7 +7,7 @@
     // import Component from '@/04-component/02-child-notify-parent/Parent.vue';
     // import Component from '@/04-component/03-parent-pass-data-to-child/Parent.vue';
     // import Component from '@/04-component/03-parent-pass-data-to-grandchild/Parent.vue';
-    import Component from '@/04-component/04-child-directly-update-parent/Parent.vue';
+    import Component from '@/04-component/04-child-directly-update-parent-v-model/Parent.vue';
 
     // import Component from '@/05-slot/Parent.vue';
     // import Component from '@/06-lifecycle/LifeCycle.vue';
