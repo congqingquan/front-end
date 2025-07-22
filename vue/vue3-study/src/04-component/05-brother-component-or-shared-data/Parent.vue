@@ -19,7 +19,9 @@ import {reactive, ref, watch} from 'vue';
 import Brother1 from './Brother1.vue'
 import Brother2 from './Brother2.vue'
 
-// 利用 reactive 的响应式能力，共享数据。(reactive 也可以，共享数据的本质是包裹的对象，使该对象变为响应式的)
+// 利用响应式能力，共享数据
+
+// reactive
 const data = reactive({
     msg: "",
     arr: []
