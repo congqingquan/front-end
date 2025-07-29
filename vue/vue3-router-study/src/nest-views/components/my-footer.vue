@@ -1,10 +1,11 @@
-<script setup>
+<template>
+    <div>
+        <b>Footer</b>
+    </div>
+</template>
+
+<script setup lang="ts">
 </script>
 
-<style lang="css"></style>
-
-<template>
-  <div>
-    <b>Footer</b>
-  </div>
-</template>
+<style scoped lang="scss">
+</style>

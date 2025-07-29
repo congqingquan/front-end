@@ -1,9 +1,9 @@
-<script setup>
+<template>
+    <router-view></router-view>
+</template>
+
+<script setup lang="ts">
 </script>
 
-<style lang="css">
+<style scoped lang="scss">
 </style>
-
-<template>
-  <router-view></router-view>
-</template>

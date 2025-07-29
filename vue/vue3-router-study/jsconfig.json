@@ -1,9 +1,0 @@
-{
-    // vscode 中 @ 符号的路劲自动提示
-    "compilerOptions": {
-        "baseUrl": ".",
-        "paths": {
-            "@/*": ["src/*"]
-        }
-    }
-}

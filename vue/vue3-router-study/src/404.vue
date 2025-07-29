@@ -1,9 +1,9 @@
-<script setup>
+<template>
+    This is 404 page
+</template>
+
+<script setup lang="ts">
 </script>
 
-<style lang="css">
+<style scoped lang="scss">
 </style>
-
-<template>
-  This is 404 page
-</template>

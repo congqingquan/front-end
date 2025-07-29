@@ -1,9 +1,9 @@
-<script setup>
+<template>
+    This is nest route page1
+</template>
+
+<script setup lang="ts">
 </script>
 
-<style lang="css">
+<style scoped lang="scss">
 </style>
-
-<template>
-  This is nest route page1
-</template>

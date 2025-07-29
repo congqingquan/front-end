@@ -21,6 +21,7 @@ const data = reactive({
 // }
 
 // toRef: 解决将响应式对象 解构出的对象属性 不为响应式变量的问题
+// 解构的属性实际的类型为：ObjectRefImpl -> {"_object":{"count":0},"_key":"count","__v_isRef":true}
 const { count } = data;
 const countToRef = toRef(data, "count")
 

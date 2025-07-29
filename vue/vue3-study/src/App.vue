@@ -24,12 +24,11 @@
     // import Component from "@/04-component/07-define-component-summary/ref-in-object/Parent.vue";
 
     // import Component from '@/05-slot/Parent.vue';
-
     // import Component from '@/06-lifecycle/LifeCycle.vue';
-
     // import Component from '@/07-keepalive/Component.vue';
-
-    import Component from '@/08-suspense/Component.vue';
+    // import Component from '@/08-suspense/Component.vue';
+    // import Component from '@/09-style/01-child-root-element-scoped/Parent.vue';
+    import Component from '@/09-style/02-style-reaching/Parent.vue';
 </script>
 
 <style lang="css">
