@@ -1,0 +1,63 @@
+{
+	"name": "electron-vue3-ts-template",
+	"private": true,
+	"version": "0.0.0",
+	"main": "dist-electron/main.js",
+	"engines": {
+		"node": ">=22.9.0"
+	},
+	"scripts": {
+		"dev": "vite",
+		"build": "rimraf dist && vue-tsc -b && vite build && electron-builder build --config electron/electron-builder.json5"
+	},
+	"alias-skip.mappings": {
+		"@": "/src"
+	},
+	"dependencies": {
+		"ant-design-vue": "^4.2.6",
+		"@ant-design/icons-vue": "^7.0.1",
+		"@tinymce/tinymce-vue": "^6.2.0",
+		"axios": "1.8.2",
+		"dayjs": "^1.11.13",
+		"lodash": "^4.17.21",
+		"screenfull": "^6.0.2",
+		"uuid": "^11.1.0",
+		"pinia": "^3.0.3",
+		"pinia-plugin-persistedstate": "^4.5.0",
+		"vue": "^3.5.22",
+		"vue-draggable-next": "^2.2.1",
+		"vue-router": "^4.4.5",
+		"vue-i18n": "^11.1.10"
+	},
+	"devDependencies": {
+		"@types/lodash": "^4.17.13",
+		"@types/node": "^24.6.0",
+		"@types/tinymce": "^5.5.0",
+		"eslint": "^9.30.1",
+		"eslint-plugin-vue": "^9.33.0",
+		"@eslint/js": "^9.30.1",
+		"@iconify-json/mdi": "^1.2.3",
+		"@iconify/vue": "^4.1.2",
+		"globals": "^15.15.0",
+		"postcss": "^8.5.6",
+		"postcss-px-to-viewport": "^1.1.1",
+		"sass": "^1.79.4",
+		"typescript": "~5.9.3",
+		"typescript-eslint": "^8.45.0",
+		"unplugin-auto-import": "^0.18.3",
+		"unplugin-icons": "^0.19.3",
+		"unplugin-vue-components": "^0.27.4",
+		"rimraf": "^6.0.1",
+		"electron": "^38.2.1",
+		"electron-builder": "^26.0.12",
+		"electron-devtools-installer": "^4.0.0",
+		"vite": "^7.1.7",
+		"vue-tsc": "^3.1.0",
+		"@vue/tsconfig": "^0.8.1",
+		"@vitejs/plugin-vue": "^6.0.1",
+		"vite-plugin-svg-icons": "^2.0.1",
+		"vite-plugin-vue-devtools": "^7.3.1",
+		"vite-plugin-electron": "^0.29.0",
+		"vite-plugin-electron-renderer": "^0.14.6"
+	}
+}

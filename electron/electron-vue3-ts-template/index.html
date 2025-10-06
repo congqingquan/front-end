@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8"/>
+	<link rel="icon" type="image/svg+xml" href="/vite.svg"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<!--
+		default-src 'self'					: 配置加载策略，默认引入外部资源时，只能是同源的；
+		style-src 	'self' 'unsafe-inline'	: 样式表加载策略，引入样式时，可以是同源的，或者使用行内样式；
+		img-src 	'self' data				: 图片加载策略，可以引用同源图片；或使用data:URI来嵌入图片，这种URI模式允许将图片直接嵌入到html或css中，而不是通过外部链接引用。
+	-->
+	<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; ">
+	<title>electron-vue3-ts-template</title>
+</head>
+<body>
+<div id="app"></div>
+<script type="module" src="/src/main.ts"></script>
+</body>
+</html>

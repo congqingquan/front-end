@@ -1,0 +1,68 @@
+{
+	"compilerOptions": {
+		/* Base */
+		"baseUrl": ".",
+		"target": "esnext",
+		"module": "esnext",
+		"useDefineForClassFields": true,
+		"noLib": false,
+		"lib": [
+			"esnext",
+			"dom",
+			"dom.iterable"
+		],
+		"skipLibCheck": true,
+		"forceConsistentCasingInFileNames": true,
+		"allowJs": true,
+		"jsxFactory": "h",
+		"jsxFragmentFactory": "Fragment",
+		/* Typing */
+		"exactOptionalPropertyTypes": true,
+		"strictFunctionTypes": true,
+		/* Bundler mode */
+		"moduleResolution": "bundler",
+		"allowImportingTsExtensions": true,
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"noEmit": true,
+		"jsx": "preserve",
+		/* node */
+		// "composite": true,
+		// "skipLibCheck": true,
+		// "module": "esnext",
+		// "moduleResolution": "bundler",
+		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true,
+		"strict": true,
+		/* other */
+		"paths": {
+			"@/*": [
+				"src/*"
+			]
+		},
+		"types": [
+			"vite/client",
+			"unplugin-icons/types/vue",
+			"node"
+		]
+	},
+	"include": [
+		"mock/**/*.ts",
+		"src/**/*.ts",
+		"src/**/*.vue",
+		"vite.config.ts"
+	],
+	"files": [
+		"./electron/electron-env.d.ts",
+		"./electron/electron-preloads.d.ts",
+		"./src/types/vue-global-properties.d.ts",
+		"./src/types/auto-imports.d.ts",
+		"./src/types/auto-import-vue-components.d.ts",
+		"./src/types/postcss.d.ts"
+	],
+	"exclude": [
+		"node_modules",
+		"dist",
+		"**/*.js"
+	]
+}
